@@ -4,788 +4,919 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NewPlace — Identidade de Marca</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cormorant+SC:wght@300;400;500&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:      #0B1C35;
-      --navy-mid:  #162D52;
-      --red:       #C4201B;
-      --red-warm:  #D92B25;
-      --white:     #FFFFFF;
-      --cream:     #F7F5F1;
-      --cream-dark:#EDE9E2;
-      --ink:       #0F0F0F;
-      --gray-3:    #EBEBEB;
-      --gray-5:    #D0CEC9;
-      --gray-7:    #8A8780;
-      --gray-9:    #3A3835;
+      --navy:     #0B1C35;
+      --navy-mid: #162D52;
+      --red:      #C4201B;
+      --red-warm: #D12822;
+      --white:    #FFFFFF;
+      --cream:    #F6F4F0;
+      --parchment:#EDE8DF;
+      --ink:      #0E0E0E;
+      --g3:       #ECEAE5;
+      --g5:       #D0CCCA;
+      --g7:       #8A8680;
+      --g9:       #3A3835;
 
-      --display: 'Cormorant Garamond', Georgia, serif;
-      --sans:    'Inter', system-ui, sans-serif;
+      --cg: 'Cormorant Garamond', Georgia, serif;
+      --sc: 'Cormorant SC', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
     }
 
     html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--sans);
-      background: var(--cream);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      font-size: 14px;
-    }
+    body { font-family: var(--sans); background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
 
-    /* ════════════════════════════
-       HERO — CONCEITO
-    ════════════════════════════ */
+    /* ═══════════════════════════
+       HERO
+    ═══════════════════════════ */
     .hero {
       min-height: 100vh;
       background: var(--navy);
-      display: grid;
-      grid-template-rows: 1fr auto;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 100% 5%,  rgba(196,32,27,.22) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 40% at 0%  95%,  rgba(255,255,255,.03) 0%, transparent 50%);
-    }
-    .hero-lines {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-      background-size: 80px 80px;
-    }
-    .hero-inner {
-      position: relative;
-      z-index: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: clamp(40px, 6vw, 100px) clamp(32px, 7vw, 120px);
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    .hero-eyebrow {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.3);
-      margin-bottom: 56px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 1px;
-      background: var(--red-warm);
-    }
-    .hero-logotype {
-      font-family: var(--display);
-      font-weight: 300;
-      font-size: clamp(72px, 12vw, 160px);
-      color: var(--white);
-      letter-spacing: 6px;
-      line-height: .95;
-      margin-bottom: 36px;
-    }
-    .hero-logotype span { color: var(--red-warm); }
-    .hero-concept-line {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 48px;
-    }
-    .hero-concept-line hr {
-      flex: 1;
-      max-width: 48px;
-      border: none;
-      border-top: 1px solid rgba(255,255,255,.2);
-    }
-    .hero-tagline {
-      font-family: var(--display);
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(18px, 2.5vw, 26px);
-      color: rgba(255,255,255,.5);
-      letter-spacing: 1px;
-    }
-    .hero-concept-statement {
-      font-family: var(--display);
-      font-weight: 300;
-      font-size: clamp(28px, 4vw, 48px);
-      color: rgba(255,255,255,.85);
-      line-height: 1.25;
-      max-width: 700px;
-      letter-spacing: .5px;
-    }
-    .hero-concept-statement em {
-      font-style: italic;
-      color: var(--white);
-    }
-    .hero-footer {
+      justify-content: flex-end;
       position: relative;
-      z-index: 1;
-      border-top: 1px solid rgba(255,255,255,.07);
-      padding: 24px clamp(32px, 7vw, 120px);
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      overflow: hidden;
+      padding: clamp(48px,7vw,120px);
     }
-    .hero-footer span {
-      font-size: 9px;
-      font-weight: 400;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.2);
-    }
-    .scroll-hint {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.2);
-    }
-    .scroll-hint::after {
+    .hero::before {
       content: '';
-      display: block;
-      width: 1px;
-      height: 40px;
-      background: rgba(255,255,255,.15);
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 110% -10%, rgba(196,32,27,.28) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 40% at -5%  110%, rgba(255,255,255,.02) 0%, transparent 55%);
     }
 
-    /* ════════════════════════════
-       MANIFESTO
-    ════════════════════════════ */
-    .manifesto {
-      background: var(--white);
-      padding: clamp(80px,10vw,160px) clamp(32px,7vw,120px);
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: clamp(48px, 6vw, 100px);
-      align-items: start;
-      max-width: 1200px;
-      margin: 0 auto;
+    /* BIG background text */
+    .hero-bg-word {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(180px, 28vw, 380px);
+      color: rgba(255,255,255,.025);
+      white-space: nowrap;
+      letter-spacing: 10px;
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
     }
-    .manifesto-label {
-      font-size: 10px;
-      font-weight: 500;
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1100px;
+    }
+
+    /* Logotype mixing roman + italic */
+    .hero-logo {
+      line-height: .9;
+      margin-bottom: 40px;
+    }
+    .hero-logo-new {
+      display: block;
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: clamp(64px, 11vw, 148px);
+      color: var(--white);
+      letter-spacing: 18px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .hero-logo-place {
+      display: block;
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(72px, 12vw, 164px);
+      color: var(--red-warm);
+      letter-spacing: 3px;
+      line-height: .95;
+      margin-left: -4px;
+    }
+
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .hero-divider-line { flex: 0 0 40px; height: 1px; background: rgba(255,255,255,.2); }
+    .hero-divider-text {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 5px;
+      color: rgba(255,255,255,.3);
+    }
+
+    .hero-tagline {
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(22px, 3vw, 34px);
+      color: rgba(255,255,255,.45);
+      letter-spacing: 1px;
+      max-width: 540px;
+      line-height: 1.4;
+    }
+    .hero-tagline strong {
+      font-style: normal;
+      font-weight: 400;
+      color: rgba(255,255,255,.75);
+    }
+
+    .hero-footer-row {
+      position: absolute;
+      bottom: clamp(28px, 4vw, 56px);
+      right: clamp(48px, 7vw, 120px);
+      z-index: 2;
+      text-align: right;
+    }
+    .hero-footer-row span {
+      font-size: 9px;
+      font-weight: 200;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--red);
-      position: sticky;
-      top: 40px;
-    }
-    .manifesto-label span {
+      color: rgba(255,255,255,.18);
       display: block;
-      font-family: var(--display);
+      line-height: 2.2;
+    }
+
+    /* ═══════════════════════════
+       MANIFESTO
+    ═══════════════════════════ */
+    .manifesto-section {
+      background: var(--white);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
+    }
+    .manifesto-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: clamp(48px,6vw,100px);
+    }
+    .manifesto-side {
+      position: sticky;
+      top: 48px;
+      align-self: start;
+    }
+    .m-chapter {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .m-side-title {
+      font-family: var(--cg);
       font-weight: 300;
       font-size: 52px;
       color: var(--navy);
+      line-height: .95;
       letter-spacing: 1px;
-      line-height: 1;
-      margin-top: 12px;
-      text-transform: none;
     }
-    .manifesto-text p {
-      font-family: var(--display);
-      font-weight: 300;
-      font-size: clamp(20px, 2.5vw, 28px);
-      line-height: 1.65;
-      color: var(--gray-9);
-      letter-spacing: .3px;
-      margin-bottom: 28px;
-    }
-    .manifesto-text p strong {
-      font-weight: 500;
-      color: var(--navy);
-    }
-    .manifesto-text p em {
+    .m-side-title em {
+      display: block;
       font-style: italic;
       color: var(--red);
+      font-size: 64px;
+      margin-top: -4px;
     }
-    .manifesto-text .m-rule {
-      width: 32px;
-      height: 1px;
-      background: var(--red);
-      margin: 40px 0;
-    }
-    .manifesto-text .m-closing {
-      font-family: var(--display);
-      font-style: italic;
-      font-size: clamp(28px, 3.5vw, 42px);
+    .m-side-rule { width: 28px; height: 1px; background: var(--red); margin: 20px 0; }
+    .m-side-note {
+      font-size: 11px;
       font-weight: 300;
-      color: var(--navy);
-      letter-spacing: 1px;
-      line-height: 1.2;
+      color: var(--g7);
+      line-height: 1.8;
+      letter-spacing: .3px;
     }
 
-    /* ════════════════════════════
-       PILARES
-    ════════════════════════════ */
-    .pillars-wrap {
-      background: var(--cream);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
-    }
-    .pillars-inner { max-width: 1200px; margin: 0 auto; }
-    .pillars-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 72px;
-      align-items: end;
-    }
-    .s-num { font-size: 10px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
-    .s-title {
-      font-family: var(--display);
+    .manifesto-body p {
+      font-family: var(--cg);
       font-weight: 300;
-      font-size: clamp(36px,4vw,56px);
+      font-size: clamp(19px, 2vw, 26px);
+      line-height: 1.7;
+      color: var(--g9);
+      margin-bottom: 28px;
+      letter-spacing: .2px;
+    }
+    .manifesto-body p strong { font-weight: 500; color: var(--navy); }
+    .manifesto-body p em { font-style: italic; color: var(--red); }
+    .manifesto-body .m-pull {
+      border-left: 2px solid var(--red);
+      padding-left: 28px;
+      margin: 40px 0;
+    }
+    .manifesto-body .m-pull p {
+      font-size: clamp(24px,2.5vw,32px);
+      font-style: italic;
       color: var(--navy);
-      letter-spacing: 1px;
-      line-height: 1.05;
-    }
-    .s-desc {
-      font-size: 13px;
       font-weight: 300;
-      color: var(--gray-7);
-      line-height: 1.8;
-      max-width: 360px;
+      margin-bottom: 0;
+      line-height: 1.4;
     }
-    .pillars-grid {
+    .manifesto-body .m-closing {
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(28px, 3vw, 40px);
+      color: var(--navy);
+      border-top: 1px solid var(--g3);
+      padding-top: 40px;
+      margin-top: 40px;
+      line-height: 1.3;
+      letter-spacing: .5px;
+    }
+
+    /* ═══════════════════════════
+       PILARES
+    ═══════════════════════════ */
+    .pillars-section {
+      background: var(--cream);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
+    }
+    .pillars-inner { max-width: 1100px; margin: 0 auto; }
+    .section-head { margin-bottom: 72px; }
+    .s-num {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 5px;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+    .s-h2 {
+      font-family: var(--cg);
+      font-weight: 300;
+      font-size: clamp(36px,5vw,64px);
+      color: var(--navy);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+    .s-h2 em { font-style: italic; color: var(--red); }
+    .s-rule { width: 28px; height: 1px; background: var(--red); margin: 20px 0; }
+    .s-desc { font-size: 13px; font-weight: 300; color: var(--g7); line-height: 1.8; max-width: 400px; }
+
+    .pillars-list {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3,1fr);
       gap: 1px;
-      background: var(--gray-5);
-      border: 1px solid var(--gray-5);
+      background: var(--g5);
+      border: 1px solid var(--g5);
     }
     .pillar {
       background: var(--white);
       padding: 48px 40px;
-      position: relative;
     }
-    .pillar-num {
-      font-family: var(--display);
+    .pillar-n {
+      font-family: var(--cg);
+      font-style: italic;
       font-weight: 300;
-      font-size: 80px;
+      font-size: 96px;
+      color: var(--g3);
       line-height: 1;
-      color: var(--gray-3);
-      margin-bottom: 24px;
-      letter-spacing: -2px;
+      letter-spacing: -3px;
+      margin-bottom: 20px;
     }
-    .pillar-title {
-      font-family: var(--display);
+    .pillar-word {
+      font-family: var(--cg);
       font-weight: 400;
-      font-size: 28px;
+      font-size: 30px;
       color: var(--navy);
       letter-spacing: 1px;
-      margin-bottom: 16px;
-    }
-    .pillar-rule { width: 24px; height: 1px; background: var(--red); margin-bottom: 16px; }
-    .pillar-text { font-size: 13px; font-weight: 300; color: var(--gray-7); line-height: 1.8; }
-
-    /* ════════════════════════════
-       PERSONALIDADE
-    ════════════════════════════ */
-    .personality-wrap {
-      background: var(--navy);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
-      position: relative;
-      overflow: hidden;
-    }
-    .personality-wrap::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 100% 50%, rgba(196,32,27,.15) 0%, transparent 60%);
-    }
-    .personality-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
-    .personality-header { margin-bottom: 72px; }
-    .personality-header .s-num { color: var(--red-warm); }
-    .personality-header .s-title { color: var(--white); }
-    .traits-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .trait {
-      background: rgba(255,255,255,.03);
-      padding: 40px;
-      display: flex;
-      gap: 24px;
-    }
-    .trait-arrow {
-      font-family: var(--display);
-      font-weight: 300;
-      font-size: 32px;
-      color: var(--red-warm);
-      line-height: 1;
-      flex-shrink: 0;
-      margin-top: -2px;
-    }
-    .trait-title {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: 22px;
-      color: var(--white);
-      letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-    .trait-versus {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.25);
       margin-bottom: 6px;
     }
-    .trait-text { font-size: 12px; font-weight: 300; color: rgba(255,255,255,.4); line-height: 1.8; }
-    .vocab-row {
-      margin-top: 72px;
-      padding-top: 48px;
-      border-top: 1px solid rgba(255,255,255,.07);
-    }
-    .vocab-label { font-size: 9px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 24px; }
-    .vocab-words {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .vocab-word {
-      font-family: var(--display);
+    .pillar-word-it {
+      font-family: var(--cg);
+      font-style: italic;
       font-weight: 300;
-      font-size: 18px;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,.35);
-      padding: 6px 18px;
-      border: 1px solid rgba(255,255,255,.1);
+      font-size: 22px;
+      color: var(--red);
+      margin-bottom: 20px;
     }
-    .vocab-word.active { color: var(--white); border-color: rgba(255,255,255,.3); }
+    .pillar-rule { width: 20px; height: 1px; background: var(--red); margin-bottom: 16px; }
+    .pillar-text { font-size: 13px; font-weight: 300; color: var(--g7); line-height: 1.8; }
 
-    /* ════════════════════════════
-       CORES
-    ════════════════════════════ */
-    .colors-wrap {
-      background: var(--white);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
+    /* ═══════════════════════════
+       PERSONALIDADE
+    ═══════════════════════════ */
+    .personality-section {
+      background: var(--navy);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
+      position: relative; overflow: hidden;
     }
-    .colors-inner { max-width: 1200px; margin: 0 auto; }
-    .colors-hero {
+    .personality-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 70% at 100% 50%, rgba(196,32,27,.18) 0%, transparent 55%);
+    }
+    .personality-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+    .pers-head { margin-bottom: 64px; }
+    .pers-head .s-num { color: var(--red-warm); }
+    .pers-head .s-h2 { color: var(--white); }
+    .pers-head .s-h2 em { color: var(--red-warm); }
+
+    .traits { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.07); }
+    .trait { background: rgba(255,255,255,.03); padding: 44px; }
+    .trait-tag {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,.2);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .trait-yes {
+      font-family: var(--cg);
+      font-weight: 400;
+      font-size: 26px;
+      color: var(--white);
+      letter-spacing: .5px;
+      line-height: 1.1;
+    }
+    .trait-not {
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 20px;
+      color: rgba(255,255,255,.2);
+      letter-spacing: .5px;
+      margin-top: 4px;
+      margin-bottom: 18px;
+    }
+    .trait-rule { width: 16px; height: 1px; background: var(--red); margin-bottom: 14px; }
+    .trait-desc { font-size: 12px; font-weight: 300; color: rgba(255,255,255,.35); line-height: 1.8; }
+
+    /* vocabulary */
+    .vocab { margin-top: 72px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,.06); }
+    .vocab-label {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,.2);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .vocab-cloud { display: flex; flex-wrap: wrap; gap: 0; }
+    .vocab-w {
+      font-family: var(--cg);
+      font-weight: 300;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,.2);
+      padding: 6px 18px;
+      border: 1px solid rgba(255,255,255,.06);
+      margin: -1px 0 0 -1px;
+      transition: color .2s;
+    }
+    .vocab-w.it { font-style: italic; font-size: 24px; }
+    .vocab-w.on { color: rgba(255,255,255,.75); border-color: rgba(255,255,255,.18); }
+    .vocab-w.on.red-w { color: var(--red-warm); border-color: rgba(196,32,27,.35); }
+
+    /* ═══════════════════════════
+       CORES
+    ═══════════════════════════ */
+    .colors-section {
+      background: var(--white);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
+    }
+    .colors-inner { max-width: 1100px; margin: 0 auto; }
+    .color-big-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
       gap: 1px;
-      background: var(--gray-5);
-      margin-bottom: 1px;
-      border: 1px solid var(--gray-5);
+      background: var(--g5);
+      border: 1px solid var(--g5);
+      margin-top: 64px;
     }
-    .colors-hero-row {
+    .color-row2 {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4,1fr);
       gap: 1px;
-      background: var(--gray-5);
-      border: 1px solid var(--gray-5);
+      background: var(--g5);
+      border: 1px solid var(--g5);
+      margin-top: 1px;
     }
-    .color-panel {
-      padding: 40px;
-      min-height: 200px;
+    .cp {
+      padding: 36px 40px;
+      min-height: 180px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-    .color-panel.navy    { background: var(--navy); }
-    .color-panel.red     { background: var(--red); }
-    .color-panel.cream   { background: var(--cream); border: none; }
-    .color-panel.ink     { background: var(--ink); }
-    .color-panel.white   { background: var(--white); }
-    .color-panel.gray-3  { background: var(--gray-3); }
-    .cp-name { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; }
-    .cp-name.light { color: rgba(255,255,255,.4); }
-    .cp-name.dark  { color: var(--gray-7); }
-    .cp-hex { font-family: var(--display); font-weight: 300; font-size: 36px; letter-spacing: 2px; line-height: 1; }
-    .cp-hex.light { color: var(--white); }
-    .cp-hex.dark  { color: var(--navy); }
-    .cp-values { font-size: 10px; line-height: 1.9; }
-    .cp-values.light { color: rgba(255,255,255,.3); }
-    .cp-values.dark  { color: var(--gray-7); }
-    .tone-bar { display: flex; height: 36px; margin-top: 48px; }
-    .tone-item { flex: 1; }
-
-    /* ════════════════════════════
-       TIPOGRAFIA
-    ════════════════════════════ */
-    .type-wrap {
-      background: var(--cream);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
-    }
-    .type-inner { max-width: 1200px; margin: 0 auto; }
-    .type-showcase {
-      margin-top: 64px;
-      border-top: 1px solid var(--gray-5);
-    }
-    .type-row {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 48px;
-      padding: 48px 0;
-      border-bottom: 1px solid var(--gray-5);
-      align-items: center;
-    }
-    .type-meta { font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-7); line-height: 1.8; }
-    .type-sample-display {
-      font-family: var(--display);
+    .cp.navy    { background: var(--navy); }
+    .cp.red     { background: var(--red); }
+    .cp.cream   { background: var(--cream); }
+    .cp.ink     { background: var(--ink); }
+    .cp.white   { background: var(--white); border: none; }
+    .cp.g3      { background: var(--g3); }
+    .cp.navy-mid{ background: var(--navy-mid); }
+    .cp-label {
+      font-family: var(--sc);
       font-weight: 300;
-      font-size: clamp(40px,6vw,80px);
-      color: var(--navy);
-      letter-spacing: 3px;
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    .cp-label.l { color: rgba(255,255,255,.3); }
+    .cp-label.d { color: var(--g7); }
+    .cp-hex {
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 40px;
+      letter-spacing: 2px;
       line-height: 1;
     }
-    .type-sample-display em { font-style: italic; color: var(--red); }
-    .type-sample-h1 {
-      font-family: var(--display);
-      font-weight: 300;
-      font-size: clamp(28px,4vw,48px);
-      color: var(--navy);
-      letter-spacing: 1px;
-      line-height: 1.15;
-    }
-    .type-sample-h2 {
-      font-family: var(--display);
-      font-weight: 400;
-      font-size: clamp(22px,3vw,34px);
-      color: var(--navy);
-      letter-spacing: .5px;
-    }
-    .type-sample-body { font-size: 16px; font-weight: 300; color: var(--gray-9); line-height: 1.85; }
-    .type-sample-label { font-size: 10px; font-weight: 500; letter-spacing: 3.5px; text-transform: uppercase; color: var(--red); }
+    .cp-hex.l { color: var(--white); }
+    .cp-hex.d { color: var(--navy); }
+    .cp-vals { font-size: 10px; font-weight: 300; line-height: 1.9; }
+    .cp-vals.l { color: rgba(255,255,255,.3); }
+    .cp-vals.d { color: var(--g7); }
+    .tone-strip { display: flex; height: 36px; margin-top: 40px; }
+    .tone-strip div { flex: 1; }
 
-    /* ════════════════════════════
-       LOGO
-    ════════════════════════════ */
-    .logo-wrap {
-      background: var(--white);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
+    /* ═══════════════════════════
+       TIPOGRAFIA — showcase
+    ═══════════════════════════ */
+    .type-section {
+      background: var(--cream);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
     }
-    .logo-inner { max-width: 1200px; margin: 0 auto; }
+    .type-inner { max-width: 1100px; margin: 0 auto; }
+
+    /* big specimen */
+    .type-specimen {
+      margin-top: 72px;
+      background: var(--white);
+      border: 1px solid var(--g3);
+      padding: clamp(40px,5vw,80px);
+    }
+    .spec-row {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--g3);
+    }
+    .spec-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .spec-meta {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--g7);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* Alphabet rows */
+    .alpha {
+      font-family: var(--cg);
+      font-weight: 300;
+      font-size: clamp(20px, 3vw, 32px);
+      color: var(--navy);
+      letter-spacing: 3px;
+      line-height: 1.5;
+    }
+    .alpha.it { font-style: italic; color: var(--red); }
+    .alpha.sc-font { font-family: var(--sc); letter-spacing: 5px; }
+
+    /* Pairing examples */
+    .pair-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--g3);
+    }
+    .pair-item {}
+    .pair-label {
+      font-family: var(--sc);
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      color: var(--g7);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .pi-display {
+      font-family: var(--cg);
+      font-weight: 300;
+      font-size: clamp(32px, 4vw, 56px);
+      color: var(--navy);
+      line-height: 1.05;
+      letter-spacing: 2px;
+    }
+    .pi-display em { font-style: italic; color: var(--red); }
+    .pi-display-it {
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(32px, 4vw, 56px);
+      color: var(--navy);
+      line-height: 1.05;
+      letter-spacing: 1px;
+    }
+    .pi-body { font-size: 14px; font-weight: 300; color: var(--g9); line-height: 1.85; margin-top: 16px; }
+    .pi-body strong { font-weight: 500; color: var(--navy); }
+    .pi-label-text {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--g7);
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+    .pi-sc-big {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: clamp(28px,4vw,52px);
+      letter-spacing: 8px;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+
+    /* size ramp */
+    .size-ramp { display: flex; flex-direction: column; gap: 2px; }
+    .ramp-item { display: flex; align-items: baseline; gap: 20px; padding: 10px 0; border-bottom: 1px solid var(--g3); }
+    .ramp-size {
+      font-family: var(--sc);
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: var(--g7);
+      flex: 0 0 52px;
+      text-align: right;
+      text-transform: uppercase;
+    }
+    .ramp-text { font-family: var(--cg); font-weight: 300; color: var(--navy); }
+    .ramp-text.it { font-style: italic; color: var(--red); }
+
+    /* ═══════════════════════════
+       LOGO
+    ═══════════════════════════ */
+    .logo-section {
+      background: var(--white);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
+    }
+    .logo-inner { max-width: 1100px; margin: 0 auto; }
     .logo-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 1px;
-      background: var(--gray-5);
-      border: 1px solid var(--gray-5);
+      background: var(--g5);
+      border: 1px solid var(--g5);
       margin-top: 64px;
     }
     .logo-cell {
+      padding: 64px 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 64px 40px;
-      gap: 12px;
+      gap: 10px;
       position: relative;
     }
     .logo-cell::after {
       content: attr(data-label);
       position: absolute;
-      bottom: 16px;
-      font-size: 9px;
-      font-weight: 500;
+      bottom: 14px;
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 8px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--gray-7);
     }
-    .logo-cell.navy  { background: var(--navy); }
-    .logo-cell.cream { background: var(--cream); }
-    .logo-cell.red   { background: var(--red); }
-    .logo-cell.ink   { background: var(--ink); }
-    .logo-cell.white { background: var(--white); }
-    .logo-cell.after-dark::after { color: rgba(255,255,255,.25); }
+    .logo-cell.lc-cream { background: var(--cream); }
+    .logo-cell.lc-cream::after { color: var(--g7); }
+    .logo-cell.lc-white { background: var(--white); }
+    .logo-cell.lc-white::after { color: var(--g7); }
+    .logo-cell.lc-navy  { background: var(--navy); }
+    .logo-cell.lc-navy::after  { color: rgba(255,255,255,.2); }
+    .logo-cell.lc-red   { background: var(--red); }
+    .logo-cell.lc-red::after   { color: rgba(255,255,255,.3); }
+    .logo-cell.lc-ink   { background: var(--ink); }
+    .logo-cell.lc-ink::after   { color: rgba(255,255,255,.2); }
+    .logo-cell.lc-parch { background: var(--parchment); }
+    .logo-cell.lc-parch::after { color: var(--g7); }
 
-    /* logotype renderings */
-    .lt { font-family: var(--display); font-weight: 300; letter-spacing: 5px; line-height: 1; }
-    .lt-64  { font-size: clamp(36px, 5vw, 64px); }
-    .lt-40  { font-size: 40px; }
-    .lt-28  { font-size: 28px; }
-    .lt-on-cream  { color: var(--navy); }
-    .lt-on-cream span { color: var(--red); }
-    .lt-on-dark   { color: var(--white); }
-    .lt-on-dark span { color: var(--red-warm); }
-    .lt-on-red    { color: var(--white); }
-    .lt-on-red span { color: rgba(255,255,255,.55); }
-    .lt-on-ink    { color: var(--white); }
-    .lt-on-ink span { color: var(--red-warm); }
-    .lt-mono      { color: var(--navy); }
+    /* Logo rendering — SC + Italic combo */
+    .logo-combo { text-align: center; }
+    .l-new {
+      display: block;
+      font-family: var(--sc);
+      font-weight: 300;
+      letter-spacing: 10px;
+      line-height: 1;
+    }
+    .l-place {
+      display: block;
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      letter-spacing: 3px;
+      line-height: .95;
+    }
+    .l-rule { margin: 10px auto; }
+    .l-sub {
+      display: block;
+      font-family: var(--sc);
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
 
-    .lt-rule { width: 28px; height: 1px; }
-    .lt-rule.dark  { background: var(--red); }
-    .lt-rule.light { background: rgba(255,255,255,.3); }
+    /* Sizes */
+    .logo-lg .l-new   { font-size: clamp(40px,5vw,64px); }
+    .logo-lg .l-place { font-size: clamp(44px,5.5vw,70px); }
+    .logo-lg .l-sub   { font-size: 9px; }
 
-    .lt-sub { font-size: 9px; font-weight: 400; letter-spacing: 3.5px; text-transform: uppercase; }
-    .lt-sub.dark  { color: var(--gray-7); }
-    .lt-sub.light { color: rgba(255,255,255,.3); }
+    /* Colors */
+    .logo-on-cream .l-new   { color: var(--navy); }
+    .logo-on-cream .l-place { color: var(--red); }
+    .logo-on-cream .l-rule  { background: var(--red); }
+    .logo-on-cream .l-sub   { color: var(--g7); }
+    .logo-on-dark .l-new    { color: var(--white); }
+    .logo-on-dark .l-place  { color: var(--red-warm); }
+    .logo-on-dark .l-rule   { background: rgba(255,255,255,.2); }
+    .logo-on-dark .l-sub    { color: rgba(255,255,255,.25); }
+    .logo-on-red .l-new     { color: var(--white); }
+    .logo-on-red .l-place   { color: rgba(255,255,255,.5); }
+    .logo-on-red .l-rule    { background: rgba(255,255,255,.2); }
+    .logo-on-red .l-sub     { color: rgba(255,255,255,.35); }
+    .logo-mono .l-new       { color: var(--navy); }
+    .logo-mono .l-place     { color: var(--navy); opacity: .45; }
+    .logo-mono .l-rule      { background: var(--navy); opacity: .3; }
+    .logo-mono .l-sub       { color: var(--g7); }
 
-    /* horizontal logo */
-    .lt-h { display: flex; align-items: center; gap: 20px; }
-    .lt-h-bar { width: 2px; height: 48px; flex-shrink: 0; }
-    .lt-h-bar.red { background: var(--red); }
-    .lt-h-bar.light { background: rgba(255,255,255,.25); }
+    /* Horizontal logo */
+    .logo-h-combo { display: flex; align-items: center; gap: 20px; }
+    .logo-h-bar { width: 2px; flex-shrink: 0; }
+    .logo-h-text {}
+    .lh-new {
+      font-family: var(--sc);
+      font-weight: 300;
+      letter-spacing: 7px;
+      color: var(--navy);
+      line-height: 1;
+      font-size: clamp(24px,3vw,36px);
+    }
+    .lh-place {
+      font-family: var(--cg);
+      font-style: italic;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: var(--red);
+      line-height: .95;
+      font-size: clamp(26px,3.2vw,40px);
+      margin-top: -2px;
+    }
+    .lh-sub {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 8px;
+      letter-spacing: 3px;
+      color: var(--g7);
+      margin-top: 7px;
+      text-transform: uppercase;
+    }
+    .logo-h-combo.inv .lh-new { color: var(--white); }
+    .logo-h-combo.inv .lh-place { color: var(--red-warm); }
+    .logo-h-combo.inv .lh-sub { color: rgba(255,255,255,.25); }
 
-    /* ════════════════════════════
+    /* ═══════════════════════════
        PAPELARIA
-    ════════════════════════════ */
-    .stationery-wrap {
+    ═══════════════════════════ */
+    .stationery-section {
       background: var(--cream);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
     }
-    .stationery-inner { max-width: 1200px; margin: 0 auto; }
+    .st-inner { max-width: 1100px; margin: 0 auto; }
 
-    /* Business card */
     .biz-card {
-      width: 360px;
-      height: 200px;
-      border-radius: 2px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(11,28,53,.2);
+      width: 360px; height: 200px;
       flex-shrink: 0;
+      box-shadow: 0 20px 60px rgba(11,28,53,.18);
+      overflow: hidden;
     }
-    .biz-front {
-      background: var(--navy);
-      width: 100%; height: 100%;
+    .bc-front {
+      background: var(--navy); width: 100%; height: 100%;
       padding: 28px 32px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      display: flex; flex-direction: column; justify-content: space-between;
     }
-    .bf-logo { font-family: var(--display); font-weight: 300; font-size: 22px; letter-spacing: 3px; color: var(--white); }
-    .bf-logo span { color: var(--red-warm); }
-    .bf-sub { font-size: 8px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.25); margin-top: 4px; }
-    .bf-name { font-family: var(--display); font-weight: 400; font-size: 18px; letter-spacing: 1px; color: var(--white); }
-    .bf-role { font-size: 8px; font-weight: 400; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.3); margin-top: 3px; }
-    .bf-contact { font-size: 9px; font-weight: 300; color: rgba(255,255,255,.35); line-height: 2; }
+    .bc-logo-new   { font-family: var(--sc);  font-weight: 300; font-size: 18px; letter-spacing: 6px; color: var(--white); line-height: 1; }
+    .bc-logo-place { font-family: var(--cg);  font-style: italic; font-weight: 300; font-size: 22px; letter-spacing: 2px; color: var(--red-warm); line-height: .95; }
+    .bc-sub  { font-family: var(--sc); font-size: 7px; letter-spacing: 3px; color: rgba(255,255,255,.2); margin-top: 4px; text-transform: uppercase; }
+    .bc-name { font-family: var(--cg); font-weight: 400; font-size: 18px; letter-spacing: 1px; color: var(--white); }
+    .bc-role { font-family: var(--sc); font-size: 8px; letter-spacing: 2.5px; color: rgba(255,255,255,.3); margin-top: 3px; text-transform: uppercase; }
+    .bc-info { font-size: 9px; font-weight: 200; color: rgba(255,255,255,.35); line-height: 2; }
 
-    .biz-back {
-      background: var(--cream);
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
+    .bc-back {
+      background: var(--parchment); width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
     }
-    .bb-name { font-family: var(--display); font-weight: 300; font-size: 28px; letter-spacing: 5px; color: var(--navy); }
-    .bb-name span { color: var(--red); }
-    .bb-rule { width: 24px; height: 1px; background: var(--red); }
-    .bb-sub { font-size: 8px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--gray-7); }
+    .bcb-new   { font-family: var(--sc);  font-weight: 300; font-size: 24px; letter-spacing: 10px; color: var(--navy); }
+    .bcb-place { font-family: var(--cg);  font-style: italic; font-weight: 300; font-size: 28px; letter-spacing: 3px; color: var(--red); line-height: .9; }
+    .bcb-rule  { width: 24px; height: 1px; background: var(--red); }
+    .bcb-sub   { font-family: var(--sc);  font-size: 7px; letter-spacing: 3px; color: var(--g7); text-transform: uppercase; }
 
     /* Letterhead */
-    .lh {
-      background: var(--white);
-      border: 1px solid var(--gray-3);
-    }
-    .lh-head {
-      background: var(--navy);
-      padding: 28px 48px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-    }
-    .lh-logo { font-family: var(--display); font-weight: 300; font-size: 28px; letter-spacing: 4px; color: var(--white); line-height: 1; }
-    .lh-logo span { color: var(--red-warm); }
-    .lh-logo-sub { font-size: 8px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.25); margin-top: 5px; }
-    .lh-contact-block { text-align: right; font-size: 9px; font-weight: 300; color: rgba(255,255,255,.3); line-height: 2; }
-    .lh-accent { height: 2px; background: linear-gradient(90deg, var(--red) 0%, var(--navy-mid) 60%, transparent 100%); }
-    .lh-body { padding: 40px 48px; }
-    .lh-date { font-size: 10px; font-weight: 300; color: var(--gray-7); letter-spacing: 1px; margin-bottom: 28px; }
-    .lh-body p { font-size: 13px; font-weight: 300; color: var(--gray-9); line-height: 1.9; margin-bottom: 14px; }
-    .lh-sign { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--gray-3); }
-    .lh-sign-name { font-family: var(--display); font-weight: 400; font-size: 18px; letter-spacing: 1px; color: var(--navy); }
-    .lh-sign-role { font-size: 9px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-7); margin-top: 4px; }
-    .lh-foot {
-      border-top: 1px solid var(--gray-3);
-      padding: 12px 48px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .lh-foot span { font-size: 9px; font-weight: 300; color: var(--gray-7); letter-spacing: .5px; }
+    .lh-doc { background: var(--white); border: 1px solid var(--g3); }
+    .lhd-head { background: var(--navy); padding: 28px 48px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .lhd-logo-new   { font-family: var(--sc);  font-weight: 300; font-size: 22px; letter-spacing: 6px; color: var(--white); line-height: 1; }
+    .lhd-logo-place { font-family: var(--cg);  font-style: italic; font-weight: 300; font-size: 28px; letter-spacing: 2px; color: var(--red-warm); line-height: .9; }
+    .lhd-sub { font-family: var(--sc); font-size: 7px; letter-spacing: 3px; color: rgba(255,255,255,.2); margin-top: 5px; text-transform: uppercase; }
+    .lhd-contact { text-align: right; font-size: 9px; font-weight: 200; color: rgba(255,255,255,.25); line-height: 2; }
+    .lhd-accent { height: 2px; background: linear-gradient(90deg, var(--red) 0%, var(--navy-mid) 60%, transparent 100%); }
+    .lhd-body { padding: 40px 48px; }
+    .lhd-date { font-family: var(--sc); font-size: 9px; letter-spacing: 2px; color: var(--g7); text-transform: uppercase; margin-bottom: 28px; }
+    .lhd-body p { font-size: 13px; font-weight: 300; color: var(--g9); line-height: 1.9; margin-bottom: 14px; }
+    .lhd-sign { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--g3); }
+    .lhd-sign-name { font-family: var(--cg); font-weight: 400; font-size: 20px; letter-spacing: 1px; color: var(--navy); }
+    .lhd-sign-role { font-family: var(--sc); font-size: 8px; letter-spacing: 2px; color: var(--g7); margin-top: 4px; text-transform: uppercase; }
+    .lhd-foot { border-top: 1px solid var(--g3); padding: 12px 48px; display: flex; justify-content: space-between; }
+    .lhd-foot span { font-family: var(--sc); font-size: 8px; letter-spacing: 1px; color: var(--g7); text-transform: uppercase; }
 
-    /* ════════════════════════════
+    /* ═══════════════════════════
        SOCIAL
-    ════════════════════════════ */
-    .social-wrap {
+    ═══════════════════════════ */
+    .social-section {
       background: var(--white);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
     }
-    .social-inner { max-width: 1200px; margin: 0 auto; }
+    .social-inner { max-width: 1100px; margin: 0 auto; }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1px;
+      background: var(--g5);
+      border: 1px solid var(--g5);
+      margin-top: 64px;
+    }
     .post {
       aspect-ratio: 1;
-      position: relative;
-      overflow: hidden;
+      padding: 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 36px;
+      position: relative;
+      overflow: hidden;
     }
-    .post.navy  { background: var(--navy); }
-    .post.cream { background: var(--cream); }
-    .post.red   { background: var(--red); }
+    .post.pnavy  { background: var(--navy); }
+    .post.pcream { background: var(--cream); }
+    .post.pred   { background: var(--red); }
+    .post.pparch { background: var(--parchment); }
+    .post.pink   { background: var(--ink); }
+
     .post::before {
       content: '';
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-    .post.cream::before {
-      background-image:
-        linear-gradient(rgba(0,0,0,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,.025) 1px, transparent 1px);
-    }
-    .post-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 50% at 100% 0%, rgba(196,32,27,.3) 0%, transparent 55%);
+        linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+      background-size: 56px 56px;
       pointer-events: none;
     }
-    .post-glow.cream-glow {
-      background: radial-gradient(ellipse 60% 40% at 0% 100%, rgba(11,28,53,.06) 0%, transparent 55%);
+    .post.pcream::before, .post.pparch::before {
+      background-image:
+        linear-gradient(rgba(0,0,0,.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.02) 1px, transparent 1px);
     }
-    .p-eyebrow {
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 3.5px;
+    .post-glow { position: absolute; inset: 0; pointer-events: none; }
+    .post.pnavy .post-glow { background: radial-gradient(ellipse 80% 50% at 100% 0%, rgba(196,32,27,.3) 0%, transparent 55%); }
+    .post.pink  .post-glow { background: radial-gradient(ellipse 80% 50% at 100% 0%, rgba(196,32,27,.2) 0%, transparent 55%); }
+
+    .p-tag {
+      font-family: var(--sc);
+      font-weight: 300;
+      font-size: 8px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       position: relative; z-index: 1;
     }
-    .p-eyebrow.light { color: rgba(255,255,255,.3); }
-    .p-eyebrow.dark  { color: var(--gray-7); }
-    .p-headline {
-      font-family: var(--display);
+    .p-tag.l { color: rgba(255,255,255,.25); }
+    .p-tag.d { color: var(--g7); }
+
+    .p-head {
+      font-family: var(--cg);
       font-weight: 300;
-      font-size: clamp(24px, 3.5vw, 40px);
+      font-size: clamp(22px,2.8vw,34px);
       line-height: 1.2;
-      letter-spacing: 1px;
+      letter-spacing: .5px;
       position: relative; z-index: 1;
     }
-    .p-headline.light { color: var(--white); }
-    .p-headline.dark  { color: var(--navy); }
-    .p-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      position: relative; z-index: 1;
-    }
+    .p-head.l { color: var(--white); }
+    .p-head.d { color: var(--navy); }
+    .p-head em { font-style: italic; }
+    .p-head.l em { color: var(--red-warm); }
+    .p-head.d em { color: var(--red); }
+
+    .p-foot { display: flex; justify-content: space-between; align-items: flex-end; position: relative; z-index: 1; }
     .p-cta {
-      font-size: 9px;
-      font-weight: 500;
+      font-family: var(--sc);
+      font-size: 8px;
+      font-weight: 300;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      padding: 9px 18px;
+      padding: 8px 16px;
     }
-    .p-cta.light { border: 1px solid rgba(255,255,255,.25); color: var(--white); }
-    .p-cta.dark  { border: 1px solid var(--navy); color: var(--navy); }
-    .p-logo {
-      font-family: var(--display);
-      font-weight: 300;
-      font-size: 13px;
-      letter-spacing: 2px;
-    }
-    .p-logo.light { color: rgba(255,255,255,.25); }
-    .p-logo.dark  { color: var(--gray-7); }
-    .p-logo span  { color: var(--red); }
+    .p-cta.l { border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.65); }
+    .p-cta.d { border: 1px solid rgba(11,28,53,.25); color: var(--navy); }
+    .p-brand { text-align: right; }
+    .p-brand-new   { font-family: var(--sc);  font-weight: 300; font-size: 10px; letter-spacing: 3px; line-height: 1; }
+    .p-brand-place { font-family: var(--cg);  font-style: italic; font-weight: 300; font-size: 12px; letter-spacing: 1px; line-height: 1; }
+    .p-brand.l .p-brand-new   { color: rgba(255,255,255,.2); }
+    .p-brand.l .p-brand-place { color: rgba(255,255,255,.25); }
+    .p-brand.d .p-brand-new   { color: var(--g7); }
+    .p-brand.d .p-brand-place { color: var(--red); opacity: .5; }
 
-    .story {
+    .story-card {
       aspect-ratio: 9/16;
-      max-width: 220px;
+      max-width: 200px;
       background: var(--navy);
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 16px 48px rgba(11,28,53,.18);
-      position: relative;
-      overflow: hidden;
+      padding: 28px 22px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      box-shadow: 0 16px 56px rgba(11,28,53,.18);
+      position: relative; overflow: hidden;
     }
-    .story::before {
+    .story-card::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 100% 40% at 50% 100%, rgba(196,32,27,.22) 0%, transparent 55%);
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 100% 40% at 50% 100%, rgba(196,32,27,.22) 0%, transparent 60%);
     }
-    .s-tag { font-size: 8px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.25); position:relative;z-index:1; }
-    .s-text { font-family: var(--display); font-weight: 300; font-size: 26px; letter-spacing: 1px; color: var(--white); line-height: 1.25; position:relative;z-index:1; }
-    .s-logo { font-family: var(--display); font-weight: 300; font-size: 12px; letter-spacing: 2.5px; color: rgba(255,255,255,.25); position:relative;z-index:1; }
-    .s-logo span { color: var(--red-warm); }
-    .s-rule { width: 20px; height: 1px; background: var(--red); position:relative;z-index:1; margin-bottom: 8px; }
+    .sc-tag { font-family: var(--sc); font-size: 7px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.2); position: relative; z-index: 1; }
+    .sc-head { font-family: var(--cg); font-weight: 300; font-size: 26px; color: var(--white); line-height: 1.2; letter-spacing: .5px; position: relative; z-index: 1; }
+    .sc-head em { font-style: italic; color: var(--red-warm); }
+    .sc-foot { position: relative; z-index: 1; }
+    .sc-rule { width: 16px; height: 1px; background: var(--red); margin-bottom: 10px; }
+    .sc-logo-new   { font-family: var(--sc);  font-size: 9px; letter-spacing: 3px; color: rgba(255,255,255,.2); }
+    .sc-logo-place { font-family: var(--cg);  font-style: italic; font-size: 11px; color: rgba(255,255,255,.2); letter-spacing: 1px; margin-top: -2px; }
 
-    /* ════════════════════════════
+    /* ═══════════════════════════
        SINALIZAÇÃO
-    ════════════════════════════ */
-    .signage-wrap {
+    ═══════════════════════════ */
+    .sign-section {
       background: var(--cream);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
     }
-    .signage-inner { max-width: 1200px; margin: 0 auto; }
-    .sign-facade {
-      background: var(--navy);
-      padding: 48px 56px;
-      text-align: center;
-    }
-    .sf-name { font-family: var(--display); font-weight: 300; font-size: clamp(56px,8vw,96px); letter-spacing: 10px; color: var(--white); line-height: 1; }
-    .sf-name span { color: var(--red-warm); }
-    .sf-rule { width: 40px; height: 1px; background: var(--red); margin: 20px auto; }
-    .sf-sub { font-size: 10px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,.3); }
-    .sign-base { background: var(--gray-3); padding: 16px 56px; text-align: center; font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gray-7); }
-    .sign-board { border: 1px solid var(--gray-5); overflow: hidden; }
-    .sb-top { background: var(--navy); padding: 20px 28px; }
-    .sb-category { font-size: 8px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 6px; }
-    .sb-logo { font-family: var(--display); font-weight: 300; font-size: 26px; letter-spacing: 3px; color: var(--white); }
-    .sb-logo span { color: var(--red-warm); }
-    .sb-body { background: var(--white); padding: 20px 28px; }
-    .sb-phone { font-family: var(--display); font-weight: 400; font-size: 24px; letter-spacing: 1px; color: var(--navy); }
-    .sb-url { font-size: 10px; letter-spacing: 2px; color: var(--gray-7); margin-top: 4px; }
+    .sign-inner { max-width: 1100px; margin: 0 auto; }
+    .facade-block { overflow: hidden; border: 1px solid var(--g5); }
+    .facade-top { background: var(--navy); padding: 56px; text-align: center; }
+    .facade-new   { font-family: var(--sc);  font-weight: 300; font-size: clamp(52px,9vw,96px); letter-spacing: 14px; color: var(--white); line-height: 1; }
+    .facade-place { font-family: var(--cg);  font-style: italic; font-weight: 300; font-size: clamp(56px,10vw,108px); letter-spacing: 5px; color: var(--red-warm); line-height: .95; }
+    .facade-rule  { width: 40px; height: 1px; background: rgba(255,255,255,.15); margin: 18px auto; }
+    .facade-sub   { font-family: var(--sc); font-size: 10px; letter-spacing: 6px; color: rgba(255,255,255,.2); text-transform: uppercase; }
+    .facade-base  { background: var(--g3); padding: 14px 56px; text-align: center; }
+    .facade-base span { font-family: var(--sc); font-size: 8px; letter-spacing: 3px; color: var(--g7); text-transform: uppercase; }
+    .sign-board { border: 1px solid var(--g5); overflow: hidden; }
+    .sb-head { background: var(--navy); padding: 22px 32px; }
+    .sb-cat   { font-family: var(--sc);  font-size: 7px; letter-spacing: 4px; color: rgba(255,255,255,.2); text-transform: uppercase; margin-bottom: 6px; }
+    .sb-ln    { font-family: var(--sc);  font-weight: 300; font-size: 20px; letter-spacing: 5px; color: var(--white); line-height: 1; }
+    .sb-lp    { font-family: var(--cg);  font-style: italic; font-weight: 300; font-size: 24px; letter-spacing: 2px; color: var(--red-warm); line-height: .95; }
+    .sb-body  { background: var(--white); padding: 20px 32px; }
+    .sb-phone { font-family: var(--cg);  font-weight: 400; font-size: 24px; letter-spacing: 1px; color: var(--navy); }
+    .sb-url   { font-family: var(--sc);  font-size: 8px; letter-spacing: 2px; color: var(--g7); margin-top: 4px; text-transform: uppercase; }
 
-    /* ════════════════════════════
+    /* ═══════════════════════════
        UI
-    ════════════════════════════ */
-    .ui-wrap {
+    ═══════════════════════════ */
+    .ui-section {
       background: var(--white);
-      padding: clamp(80px,8vw,120px) clamp(32px,7vw,120px);
+      padding: clamp(80px,9vw,140px) clamp(32px,7vw,120px);
     }
-    .ui-inner { max-width: 1200px; margin: 0 auto; }
-    .ui-card { background: var(--cream); border: 1px solid var(--gray-3); padding: 40px; margin-top: 48px; }
+    .ui-inner { max-width: 1100px; margin: 0 auto; }
+    .ui-card { background: var(--cream); border: 1px solid var(--g3); padding: 40px; margin-top: 64px; }
+
     .btn {
-      font-family: var(--sans);
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 2.5px;
+      font-family: var(--sc);
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 3px;
       text-transform: uppercase;
       padding: 13px 28px;
       border: none;
       cursor: pointer;
       display: inline-block;
     }
-    .btn-navy    { background: var(--navy);  color: var(--white); }
-    .btn-red     { background: var(--red);   color: var(--white); }
-    .btn-outline { background: transparent;  color: var(--navy); border: 1px solid var(--navy); }
-    .btn-ghost   { background: transparent;  color: var(--red);  border: 1px solid var(--red); }
-    .btn-neutral { background: var(--gray-3); color: var(--gray-9); }
+    .btn-navy    { background: var(--navy); color: var(--white); }
+    .btn-red     { background: var(--red);  color: var(--white); }
+    .btn-outline { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+    .btn-ghost   { background: transparent; color: var(--red);  border: 1px solid var(--red); }
+    .btn-neutral { background: var(--g3); color: var(--g9); }
+
     .badge {
-      font-family: var(--sans);
-      font-size: 9px;
-      font-weight: 500;
+      font-family: var(--sc);
+      font-size: 8px;
+      font-weight: 300;
       letter-spacing: 2px;
       text-transform: uppercase;
       padding: 5px 12px;
@@ -795,60 +926,56 @@
     .badge-red     { background: var(--red);  color: var(--white); }
     .badge-outline { border: 1px solid var(--navy); color: var(--navy); }
     .badge-soft    { background: rgba(11,28,53,.07); color: var(--navy); }
-    .prop-card {
-      background: var(--white);
-      border: 1px solid var(--gray-3);
-      max-width: 260px;
-      overflow: hidden;
-    }
-    .pc-img { background: var(--gray-3); height: 140px; display: flex; align-items: center; justify-content: center; position: relative; font-size: 32px; }
-    .pc-badge-pos { position: absolute; top: 12px; left: 12px; }
-    .pc-body { padding: 20px; }
-    .pc-name { font-family: var(--display); font-weight: 400; font-size: 20px; color: var(--navy); letter-spacing: .5px; line-height: 1.2; }
-    .pc-loc { font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-7); margin-top: 5px; }
-    .pc-price { font-family: var(--display); font-weight: 300; font-size: 26px; color: var(--red); letter-spacing: 1px; margin-top: 12px; line-height: 1; }
-    .pc-price small { font-size: 11px; font-family: var(--sans); color: var(--gray-7); font-weight: 300; }
-    .pc-btn { width: 100%; margin-top: 14px; background: var(--navy); color: var(--white); border: none; padding: 11px; font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; cursor: pointer; font-family: var(--sans); font-weight: 500; }
 
-    /* ════════════════════════════
-       FOOTER / COLOFÃO
-    ════════════════════════════ */
+    .prop-card { background: var(--white); border: 1px solid var(--g3); max-width: 250px; overflow: hidden; }
+    .pc-img    { background: var(--g3); height: 140px; display: flex; align-items: center; justify-content: center; position: relative; font-size: 32px; }
+    .pc-badge  { position: absolute; top: 10px; left: 10px; }
+    .pc-body   { padding: 20px; }
+    .pc-title  { font-family: var(--cg); font-weight: 400; font-size: 20px; color: var(--navy); letter-spacing: .5px; line-height: 1.2; }
+    .pc-loc    { font-family: var(--sc);  font-size: 8px; letter-spacing: 2.5px; color: var(--g7); margin-top: 5px; text-transform: uppercase; }
+    .pc-price  { font-family: var(--cg); font-style: italic; font-weight: 300; font-size: 26px; color: var(--red); margin-top: 12px; line-height: 1; }
+    .pc-price small { font-family: var(--sans); font-size: 11px; color: var(--g7); font-weight: 300; font-style: normal; }
+    .pc-btn    { width: 100%; margin-top: 14px; background: var(--navy); color: var(--white); border: none; padding: 11px; font-family: var(--sc); font-size: 8px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; }
+
+    /* ═══════════════════════════
+       COLOFÃO
+    ═══════════════════════════ */
     .colophon {
       background: var(--ink);
-      padding: clamp(60px,6vw,100px) clamp(32px,7vw,120px);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 48px;
-      align-items: end;
-      max-width: 100%;
+      padding: clamp(64px,8vw,120px) clamp(32px,7vw,120px);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 40px;
     }
-    .col-logo { font-family: var(--display); font-weight: 300; font-size: clamp(36px,5vw,64px); letter-spacing: 5px; color: var(--white); line-height: 1; }
-    .col-logo span { color: var(--red-warm); }
-    .col-rule { width: 28px; height: 1px; background: var(--red); margin: 16px 0; }
-    .col-sub { font-size: 9px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.2); }
-    .col-meta { text-align: right; font-size: 9px; font-weight: 300; color: rgba(255,255,255,.2); line-height: 2; letter-spacing: .5px; }
+    .col-logo-new   { font-family: var(--sc);  font-weight: 300; font-size: clamp(36px,6vw,72px); letter-spacing: 12px; color: var(--white); line-height: 1; }
+    .col-logo-place { font-family: var(--cg);  font-style: italic; font-weight: 300; font-size: clamp(40px,6.5vw,80px); letter-spacing: 4px; color: var(--red-warm); line-height: .95; }
+    .col-rule  { width: 28px; height: 1px; background: var(--red); margin: 14px 0; }
+    .col-sub   { font-family: var(--sc); font-size: 9px; letter-spacing: 3px; color: rgba(255,255,255,.18); text-transform: uppercase; }
+    .col-meta  { font-family: var(--sc); font-size: 8px; font-weight: 300; color: rgba(255,255,255,.15); letter-spacing: 1.5px; line-height: 2.2; text-align: right; text-transform: uppercase; }
 
-    /* ════════════════════════════
+    /* ═══════════════════════════
        UTILS
-    ════════════════════════════ */
-    .full-bleed { max-width: 100%; }
-    .label { font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-7); text-align: center; margin-top: 12px; }
-    .label.light { color: rgba(255,255,255,.25); }
-    .flex-gap { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; }
+    ═══════════════════════════ */
+    .flex-row { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; }
     .mt-40 { margin-top: 40px; }
     .mt-64 { margin-top: 64px; }
+    .mt-24 { margin-top: 24px; }
+    .sub-label { font-family: var(--sc); font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--g7); text-align: center; margin-top: 12px; }
+    .sub-label.l { color: rgba(255,255,255,.2); }
 
     @media (max-width: 768px) {
-      .manifesto       { grid-template-columns: 1fr; }
-      .pillars-header  { grid-template-columns: 1fr; }
-      .pillars-grid    { grid-template-columns: 1fr; }
-      .traits-grid     { grid-template-columns: 1fr; }
-      .colors-hero     { grid-template-columns: 1fr; }
-      .colors-hero-row { grid-template-columns: 1fr; }
-      .logo-grid       { grid-template-columns: 1fr; }
-      .colophon        { grid-template-columns: 1fr; }
-      .type-row        { grid-template-columns: 1fr; gap: 16px; }
-      .biz-card        { width: 100%; max-width: 340px; }
+      .manifesto-grid    { grid-template-columns: 1fr; }
+      .pillars-list      { grid-template-columns: 1fr; }
+      .traits            { grid-template-columns: 1fr; }
+      .color-big-grid    { grid-template-columns: 1fr; }
+      .color-row2        { grid-template-columns: 1fr 1fr; }
+      .logo-grid         { grid-template-columns: 1fr; }
+      .posts-grid        { grid-template-columns: 1fr; }
+      .colophon          { flex-direction: column; }
+      .pair-block        { grid-template-columns: 1fr; }
+      .biz-card          { width: 100%; max-width: 340px; }
     }
   </style>
 </head>
@@ -856,55 +983,61 @@
 
 <!-- ══ HERO ══ -->
 <div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-lines"></div>
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Identidade de Marca · 2026</div>
-    <div class="hero-logotype">New<span>Place</span></div>
-    <div class="hero-concept-line">
-      <hr />
-      <div class="hero-tagline">Onde o novo começa.</div>
+  <div class="hero-bg-word">Limiar</div>
+
+  <div class="hero-content">
+    <div class="hero-logo">
+      <span class="hero-logo-new">New</span>
+      <span class="hero-logo-place">Place</span>
     </div>
-    <div class="hero-concept-statement">
-      Todo imóvel é um <em>limiar.</em><br>
-      O momento antes de uma nova história.
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <div class="hero-divider-text">Administradora de Imóveis</div>
+    </div>
+    <div class="hero-tagline">
+      Todo imóvel é um <strong>limiar.</strong><br>
+      O instante antes de uma nova história.
     </div>
   </div>
-  <div class="hero-footer">
-    <span>NewPlace · Administradora de Imóveis</span>
-    <div class="scroll-hint">Explorar</div>
+
+  <div class="hero-footer-row">
+    <span>Identidade de Marca · 2026</span>
+    <span>Integrante do Grupo Local Imóveis</span>
   </div>
 </div>
 
 
 <!-- ══ MANIFESTO ══ -->
-<div style="background:var(--white);">
-  <div class="manifesto">
-    <div class="manifesto-label">
-      Conceito
-      <span>O Limiar</span>
+<div class="manifesto-section">
+  <div class="manifesto-grid">
+    <div class="manifesto-side">
+      <div class="m-chapter">Conceito</div>
+      <div class="m-side-title">
+        O<br>
+        <em>Limiar</em>
+      </div>
+      <div class="m-side-rule"></div>
+      <div class="m-side-note">O ponto de encontro entre o que era e o que será. Entre a chave que gira e a vida que começa.</div>
     </div>
-    <div class="manifesto-text">
+    <div class="manifesto-body">
       <p>
         Existe um instante único quando uma chave gira na fechadura pela primeira vez.
         Quando um espaço vazio começa a imaginar o que pode se tornar.
-        É o instante do <strong>limiar</strong> — o ponto entre o que era e o que será.
+        É o instante do <em>limiar</em> — o ponto entre o que era e o que será.
       </p>
       <p>
         A <strong>NewPlace</strong> existe nesse instante.
         Não somos apenas uma administradora de imóveis.
         Somos a ponte entre <em>um lugar</em> e <em>o seu lugar.</em>
       </p>
-      <div class="m-rule"></div>
+      <div class="m-pull">
+        <p>"Por trás de cada endereço existe uma vida que está prestes a começar."</p>
+      </div>
       <p>
         Cada contrato é uma promessa.
         Cada visita, uma possibilidade.
         Cada gestão, uma responsabilidade que levamos
-        com precisão, transparência e cuidado genuíno.
-      </p>
-      <p>
-        Porque entendemos que por trás de cada imóvel
-        existe uma vida que está prestes a <strong>começar.</strong>
+        com precisão, <strong>transparência</strong> e cuidado genuíno.
       </p>
       <div class="m-closing">
         Onde o novo começa,<br>
@@ -916,35 +1049,33 @@
 
 
 <!-- ══ PILARES ══ -->
-<div class="pillars-wrap">
+<div class="pillars-section">
   <div class="pillars-inner">
-    <div class="pillars-header">
-      <div>
-        <div class="s-num">Pilares da Marca</div>
-        <div class="s-title">O que nos<br>define.</div>
-      </div>
-      <div class="s-desc">
-        Três valores que orientam cada decisão, cada comunicação e cada ponto de contato da NewPlace com seus clientes.
-      </div>
+    <div class="section-head">
+      <div class="s-num">Pilares da Marca</div>
+      <div class="s-h2">O que nos<br><em>define.</em></div>
     </div>
-    <div class="pillars-grid">
+    <div class="pillars-list">
       <div class="pillar">
-        <div class="pillar-num">01</div>
-        <div class="pillar-title">Precisão</div>
+        <div class="pillar-n">01</div>
+        <div class="pillar-word">Precisão</div>
+        <div class="pillar-word-it">detail matters</div>
         <div class="pillar-rule"></div>
-        <div class="pillar-text">Cada detalhe importa. Contratos, vistorias, repasses e manutenções são conduzidos com rigor e atenção. Nada é deixado ao acaso quando se trata do patrimônio de alguém.</div>
+        <div class="pillar-text">Cada detalhe importa. Contratos, vistorias, repasses e manutenções conduzidos com rigor. Nada é deixado ao acaso quando se trata do patrimônio de alguém.</div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">02</div>
-        <div class="pillar-title">Confiança</div>
+        <div class="pillar-n">02</div>
+        <div class="pillar-word">Confiança</div>
+        <div class="pillar-word-it">trust earned</div>
         <div class="pillar-rule"></div>
-        <div class="pillar-text">Transparência total em cada etapa. Proprietários e inquilinos sabem exatamente o que esperar. A confiança não se declara — se constrói, transação por transação.</div>
+        <div class="pillar-text">Transparência total em cada etapa. Proprietários e inquilinos sabem exatamente o que esperar. Confiança não se declara — se constrói, transação por transação.</div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">03</div>
-        <div class="pillar-title">Novo Começo</div>
+        <div class="pillar-n">03</div>
+        <div class="pillar-word">Novo Começo</div>
+        <div class="pillar-word-it">new beginnings</div>
         <div class="pillar-rule"></div>
-        <div class="pillar-text">Acreditamos no poder transformador de um novo espaço. Facilitamos transições de vida com empatia, agilidade e o cuidado de quem entende que mudar de endereço é mudar de capítulo.</div>
+        <div class="pillar-text">Cada imóvel é um novo capítulo. Facilitamos transições de vida com empatia, agilidade e o cuidado de quem entende que mudar de endereço é mudar de história.</div>
       </div>
     </div>
   </div>
@@ -952,62 +1083,58 @@
 
 
 <!-- ══ PERSONALIDADE ══ -->
-<div class="personality-wrap">
+<div class="personality-section">
   <div class="personality-inner">
-    <div class="personality-header">
-      <div class="s-num" style="color:var(--red-warm);">Personalidade da Marca</div>
-      <div class="s-title" style="color:var(--white);">Como soamos.<br>Como parecemos.</div>
+    <div class="pers-head">
+      <div class="s-num">Personalidade</div>
+      <div class="s-h2">Como soamos.<br><em>Como parecemos.</em></div>
     </div>
-    <div class="traits-grid">
+    <div class="traits">
       <div class="trait">
-        <div class="trait-arrow">→</div>
-        <div>
-          <div class="trait-versus">Somos · Não somos</div>
-          <div class="trait-title">Sofisticados, não frios</div>
-          <div class="trait-text">Nosso refinamento vem da competência e do cuidado. Nunca de distância ou arrogância. Falamos com clareza e elegância — próximos, mas precisos.</div>
-        </div>
+        <div class="trait-tag">Somos · Não somos</div>
+        <div class="trait-yes">Sofisticados</div>
+        <div class="trait-not">não frios</div>
+        <div class="trait-rule"></div>
+        <div class="trait-desc">Refinamento vem de competência e cuidado. Nunca de distância ou arrogância. Falamos com elegância — próximos, mas precisos.</div>
       </div>
       <div class="trait">
-        <div class="trait-arrow">→</div>
-        <div>
-          <div class="trait-versus">Somos · Não somos</div>
-          <div class="trait-title">Confiantes, não arrogantes</div>
-          <div class="trait-text">Conhecemos profundamente o mercado imobiliário. Essa segurança se manifesta em atitudes, não em palavras vazias. Provamos valor através de ações.</div>
-        </div>
+        <div class="trait-tag">Somos · Não somos</div>
+        <div class="trait-yes">Confiantes</div>
+        <div class="trait-not">não arrogantes</div>
+        <div class="trait-rule"></div>
+        <div class="trait-desc">Conhecemos profundamente o mercado imobiliário. Essa segurança se manifesta em atitudes, não em palavras vazias.</div>
       </div>
       <div class="trait">
-        <div class="trait-arrow">→</div>
-        <div>
-          <div class="trait-versus">Somos · Não somos</div>
-          <div class="trait-title">Modernos, não efêmeros</div>
-          <div class="trait-text">A NewPlace é atual sem seguir modismos. Nossa identidade visual é construída para durar décadas, não temporadas.</div>
-        </div>
+        <div class="trait-tag">Somos · Não somos</div>
+        <div class="trait-yes">Modernos</div>
+        <div class="trait-not">não efêmeros</div>
+        <div class="trait-rule"></div>
+        <div class="trait-desc">A NewPlace é atual sem seguir modismos. Nossa identidade é construída para durar décadas, não temporadas.</div>
       </div>
       <div class="trait">
-        <div class="trait-arrow">→</div>
-        <div>
-          <div class="trait-versus">Somos · Não somos</div>
-          <div class="trait-title">Humanos, não genéricos</div>
-          <div class="trait-text">Por trás de cada imóvel existe uma história. Honramos isso na forma como nos comunicamos, atendemos e gerimos o patrimônio de cada cliente.</div>
-        </div>
+        <div class="trait-tag">Somos · Não somos</div>
+        <div class="trait-yes">Humanos</div>
+        <div class="trait-not">não genéricos</div>
+        <div class="trait-rule"></div>
+        <div class="trait-desc">Por trás de cada imóvel existe uma história. Honramos isso na forma como nos comunicamos e gerimos o patrimônio de cada cliente.</div>
       </div>
     </div>
 
-    <div class="vocab-row">
+    <div class="vocab">
       <div class="vocab-label">Vocabulário de Marca</div>
-      <div class="vocab-words">
-        <span class="vocab-word active">Precisão</span>
-        <span class="vocab-word active">Confiança</span>
-        <span class="vocab-word active">Elegância</span>
-        <span class="vocab-word">Modernidade</span>
-        <span class="vocab-word active">Transparência</span>
-        <span class="vocab-word">Tradição</span>
-        <span class="vocab-word active">Novo Começo</span>
-        <span class="vocab-word">Segurança</span>
-        <span class="vocab-word active">Cuidado</span>
-        <span class="vocab-word">Inovação</span>
-        <span class="vocab-word active">Excelência</span>
-        <span class="vocab-word">Grandiosidade</span>
+      <div class="vocab-cloud">
+        <span class="vocab-w on">Precisão</span>
+        <span class="vocab-w it on red-w">elegância</span>
+        <span class="vocab-w">Modernidade</span>
+        <span class="vocab-w on">Confiança</span>
+        <span class="vocab-w it">cuidado</span>
+        <span class="vocab-w on red-w">Limiar</span>
+        <span class="vocab-w">Tradição</span>
+        <span class="vocab-w on">Transparência</span>
+        <span class="vocab-w it on">novo começo</span>
+        <span class="vocab-w">Grandeza</span>
+        <span class="vocab-w on">Excelência</span>
+        <span class="vocab-w it red-w on">heritage</span>
       </div>
     </div>
   </div>
@@ -1015,81 +1142,73 @@
 
 
 <!-- ══ CORES ══ -->
-<div class="colors-wrap">
+<div class="colors-section">
   <div class="colors-inner">
-    <div class="s-num">Paleta de Cores</div>
-    <div class="s-title">Azul Noite.<br>Vermelho Limiar.</div>
+    <div class="section-head">
+      <div class="s-num">Paleta de Cores</div>
+      <div class="s-h2">Azul Noite.<br><em>Vermelho Limiar.</em></div>
+    </div>
 
-    <div style="margin-top:64px;">
-      <div class="colors-hero">
-        <div class="color-panel navy">
-          <div class="cp-name light">Azul Noite — Primária</div>
-          <div>
-            <div class="cp-hex light">#0B1C35</div>
-            <div class="cp-values light">RGB 11 · 28 · 53<br>CMYK 79 · 47 · 0 · 79<br>Pantone 655 C</div>
-          </div>
-        </div>
-        <div class="color-panel red">
-          <div class="cp-name light">Vermelho Limiar — Acento</div>
-          <div>
-            <div class="cp-hex light">#C4201B</div>
-            <div class="cp-values light">RGB 196 · 32 · 27<br>CMYK 0 · 84 · 86 · 23</div>
-          </div>
-        </div>
-        <div class="color-panel cream">
-          <div class="cp-name dark">Creme — Fundo</div>
-          <div>
-            <div class="cp-hex dark">#F7F5F1</div>
-            <div class="cp-values dark">RGB 247 · 245 · 241<br>CMYK 0 · 1 · 3 · 3</div>
-          </div>
+    <div class="color-big-grid">
+      <div class="cp navy">
+        <div class="cp-label l">Azul Noite — Primária</div>
+        <div>
+          <div class="cp-hex l">#0B1C35</div>
+          <div class="cp-vals l">RGB 11 · 28 · 53<br>CMYK 79 · 47 · 0 · 79<br>Pantone 655 C</div>
         </div>
       </div>
-      <div class="colors-hero-row">
-        <div class="color-panel ink" style="min-height:120px;">
-          <div class="cp-name light">Tinta — Tipografia</div>
-          <div class="cp-hex light" style="font-size:28px;">#0F0F0F</div>
+      <div class="cp red">
+        <div class="cp-label l">Vermelho Limiar — Acento</div>
+        <div>
+          <div class="cp-hex l">#C4201B</div>
+          <div class="cp-vals l">RGB 196 · 32 · 27<br>CMYK 0 · 84 · 86 · 23</div>
         </div>
-        <div class="color-panel white" style="min-height:120px;">
-          <div class="cp-name dark">Branco Puro</div>
-          <div class="cp-hex dark" style="font-size:28px;">#FFFFFF</div>
+      </div>
+      <div class="cp cream">
+        <div class="cp-label d">Creme — Fundo</div>
+        <div>
+          <div class="cp-hex d">#F6F4F0</div>
+          <div class="cp-vals d">RGB 246 · 244 · 240<br>CMYK 0 · 1 · 2 · 4</div>
         </div>
-        <div class="color-panel gray-3" style="min-height:120px;">
-          <div class="cp-name dark">Cinza Estrutural</div>
-          <div class="cp-hex dark" style="font-size:28px;">#EBEBEB</div>
-        </div>
-        <div style="background:var(--navy-mid);padding:28px 40px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;">
-          <div class="cp-name light">Navy Mid — Gradiente</div>
-          <div class="cp-hex light" style="font-size:28px;">#162D52</div>
-        </div>
+      </div>
+    </div>
+    <div class="color-row2">
+      <div class="cp ink" style="min-height:100px;">
+        <div class="cp-label l">Tinta</div>
+        <div class="cp-hex l" style="font-size:26px;">#0E0E0E</div>
+      </div>
+      <div class="cp white" style="min-height:100px;border:1px solid var(--g3);">
+        <div class="cp-label d">Branco</div>
+        <div class="cp-hex d" style="font-size:26px;">#FFFFFF</div>
+      </div>
+      <div style="background:var(--parchment);padding:28px 40px;min-height:100px;display:flex;flex-direction:column;justify-content:space-between;">
+        <div class="cp-label d">Pergaminho</div>
+        <div class="cp-hex d" style="font-size:26px;">#EDE8DF</div>
+      </div>
+      <div class="cp navy-mid" style="min-height:100px;">
+        <div class="cp-label l">Navy Mid</div>
+        <div class="cp-hex l" style="font-size:26px;">#162D52</div>
       </div>
     </div>
 
     <div class="mt-64">
-      <div style="font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:12px;">Escala Azul Noite</div>
-      <div class="tone-bar">
-        <div class="tone-item" style="background:#D4DAE5;"></div>
-        <div class="tone-item" style="background:#A9B5CB;"></div>
-        <div class="tone-item" style="background:#7E91B1;"></div>
-        <div class="tone-item" style="background:#536D97;"></div>
-        <div class="tone-item" style="background:#284A7D;"></div>
-        <div class="tone-item" style="background:#162D52;"></div>
-        <div class="tone-item" style="background:#0B1C35;"></div>
-        <div class="tone-item" style="background:#060F1D;"></div>
-        <div class="tone-item" style="background:#020508;"></div>
+      <div style="font-family:var(--sc);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--g7);margin-bottom:12px;">Escala — Azul Noite</div>
+      <div class="tone-strip">
+        <div style="background:#D3DAE6;"></div><div style="background:#A7B5CD;"></div>
+        <div style="background:#7B90B4;"></div><div style="background:#4F6B9B;"></div>
+        <div style="background:#234682;"></div><div style="background:#162D52;"></div>
+        <div style="background:#0B1C35;"></div><div style="background:#060F1D;"></div>
+        <div style="background:#020508;"></div>
       </div>
     </div>
     <div class="mt-40">
-      <div style="font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:12px;">Escala Vermelho Limiar</div>
-      <div class="tone-bar">
-        <div class="tone-item" style="background:#FADADB;"></div>
-        <div class="tone-item" style="background:#F4B5B3;"></div>
-        <div class="tone-item" style="background:#E9918E;"></div>
-        <div class="tone-item" style="background:#DF6D69;"></div>
-        <div class="tone-item" style="background:#D44945;"></div>
-        <div class="tone-item" style="background:#C4201B;"></div>
-        <div class="tone-item" style="background:#981914;"></div>
-        <div class="tone-item" style="background:#6C120E;"></div>
-        <div class="tone-item" style="background:#400A08;"></div>
+      <div style="font-family:var(--sc);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--g7);margin-bottom:12px;">Escala — Vermelho Limiar</div>
+      <div class="tone-strip">
+        <div style="background:#FAD9D8;"></div><div style="background:#F4B4B1;"></div>
+        <div style="background:#EB8E8A;"></div><div style="background:#E16863;"></div>
+        <div style="background:#D8433C;"></div><div style="background:#C4201B;"></div>
+        <div style="background:#981914;"></div><div style="background:#6C120E;"></div>
+        <div style="background:#400A08;"></div>
       </div>
     </div>
   </div>
@@ -1097,63 +1216,66 @@
 
 
 <!-- ══ TIPOGRAFIA ══ -->
-<div class="type-wrap">
+<div class="type-section">
   <div class="type-inner">
-    <div class="s-num">Tipografia</div>
-    <div class="s-title">Cormorant.<br>Inter.</div>
+    <div class="section-head">
+      <div class="s-num">Tipografia</div>
+      <div class="s-h2">Cormorant.<br><em>A fonte do limiar.</em></div>
+      <div class="s-rule"></div>
+      <div class="s-desc">Cormorant Garamond carrega séculos de refinamento tipográfico. Suas serifas finas, o contraste entre traços grossos e finos, e a vitalidade do itálico são o espelho perfeito da sofisticação NewPlace.</div>
+    </div>
 
-    <div class="type-showcase">
-      <div class="type-row">
-        <div class="type-meta">
-          Cormorant<br>Garamond<br><br>
-          Display<br>
-          Weight 300<br>
-          Tracking +5px
-        </div>
-        <div class="type-sample-display">New<em>Place</em></div>
+    <!-- alfabeto completo -->
+    <div class="type-specimen">
+      <div class="spec-row">
+        <div class="spec-meta">Cormorant Garamond · Roman · Weight 300</div>
+        <div class="alpha">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+        <div class="alpha" style="margin-top:8px;">a b c d e f g h i j k l m n o p q r s t u v w x y z</div>
+        <div class="alpha" style="margin-top:8px; font-size:clamp(16px,2vw,24px);">0 1 2 3 4 5 6 7 8 9 — & @ . , : ; ! ?</div>
       </div>
-      <div class="type-row">
-        <div class="type-meta">
-          Cormorant<br>Garamond<br><br>
-          H1 · 48px<br>
-          Weight 300<br>
-          Tracking +1px
-        </div>
-        <div class="type-sample-h1">Seu imóvel em<br>boas mãos.</div>
+
+      <div class="spec-row">
+        <div class="spec-meta">Cormorant Garamond · Italic · Weight 300 — O itálico vivo</div>
+        <div class="alpha it">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+        <div class="alpha it" style="margin-top:8px;">a b c d e f g h i j k l m n o p q r s t u v w x y z</div>
+        <div class="alpha it" style="margin-top:8px;font-size:clamp(16px,2vw,24px);">0 1 2 3 4 5 6 7 8 9 — & @ . , : ; ! ?</div>
       </div>
-      <div class="type-row">
-        <div class="type-meta">
-          Cormorant<br>Garamond<br><br>
-          H2 · 34px<br>
-          Weight 400<br>
-          Italic disponível
+
+      <div class="spec-row">
+        <div class="spec-meta">Cormorant SC · Small Caps — Para labels e logotipo</div>
+        <div class="alpha sc-font">NewPlace · Administradora · Imóveis</div>
+        <div class="alpha sc-font" style="margin-top:8px;font-size:clamp(12px,1.5vw,18px);color:var(--g7);">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z · 0 1 2 3 4 5 6 7 8 9</div>
+      </div>
+
+      <!-- pairings -->
+      <div class="pair-block">
+        <div class="pair-item">
+          <div class="pair-label">Roman + Italic — Contraste de personalidade</div>
+          <div class="pi-display">O lugar certo<br><em>para começar.</em></div>
+          <div class="pi-body">A NewPlace entende que cada imóvel carrega uma promessa. <strong>Gestão completa</strong> com transparência e excelência.</div>
         </div>
-        <div>
-          <div class="type-sample-h2">Administração, Locação e Venda</div>
-          <div class="type-sample-h2" style="font-style:italic;color:var(--red);margin-top:8px;">Onde o novo começa.</div>
+        <div class="pair-item">
+          <div class="pair-label">Italic puro — Voz emocional da marca</div>
+          <div class="pi-display-it">Onde o novo começa, a NewPlace está.</div>
+          <div class="pi-label-text" style="margin-top:16px;">Tagline · Cormorant Italic 300</div>
         </div>
       </div>
-      <div class="type-row">
-        <div class="type-meta">
-          Inter<br><br>
-          Body · 15px<br>
-          Weight 300<br>
-          Leading 1.85
+
+      <div class="pair-block">
+        <div class="pair-item">
+          <div class="pair-label">Small Caps — Autoridade e estrutura</div>
+          <div class="pi-sc-big">NewPlace<br>Administradora<br>de Imóveis</div>
         </div>
-        <div class="type-sample-body">Gestão completa do seu patrimônio com segurança, agilidade e total transparência em cada etapa. A NewPlace cuida do seu imóvel como se fosse próprio — porque entendemos que por trás de cada endereço existe uma história.</div>
-      </div>
-      <div class="type-row">
-        <div class="type-meta">
-          Inter<br><br>
-          Label · 10px<br>
-          Weight 500<br>
-          Tracking +3.5px<br>
-          Uppercase
-        </div>
-        <div>
-          <div class="type-sample-label">Administradora de Imóveis</div>
-          <div class="type-sample-label" style="color:var(--navy);margin-top:12px;">Integrante do Grupo Local Imóveis</div>
-          <div class="type-sample-label" style="color:var(--gray-7);margin-top:12px;">São Paulo · SP · Brasil</div>
+        <div class="pair-item">
+          <div class="pair-label">Escala de tamanhos — Cormorant Italic</div>
+          <div class="size-ramp">
+            <div class="ramp-item"><span class="ramp-size">96px</span><span class="ramp-text it" style="font-size:clamp(36px,5vw,72px);">NewPlace</span></div>
+            <div class="ramp-item"><span class="ramp-size">64px</span><span class="ramp-text it" style="font-size:clamp(26px,4vw,52px);">Elegância</span></div>
+            <div class="ramp-item"><span class="ramp-size">40px</span><span class="ramp-text it" style="font-size:clamp(20px,3vw,36px);">Confiança genuína</span></div>
+            <div class="ramp-item"><span class="ramp-size">28px</span><span class="ramp-text it" style="font-size:clamp(16px,2vw,26px);">Administradora de Imóveis</span></div>
+            <div class="ramp-item"><span class="ramp-size">20px</span><span class="ramp-text it" style="font-size:18px;">Onde o novo começa.</span></div>
+            <div class="ramp-item"><span class="ramp-size">14px</span><span class="ramp-text" style="font-size:13px;font-weight:300;color:var(--g9);">Inter Light para corpo de texto e interface.</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1162,95 +1284,112 @@
 
 
 <!-- ══ LOGO ══ -->
-<div class="logo-wrap">
+<div class="logo-section">
   <div class="logo-inner">
-    <div class="s-num">Logo</div>
-    <div class="s-title">O Logotipo.</div>
+    <div class="section-head">
+      <div class="s-num">Logotipo</div>
+      <div class="s-h2">Small Caps<br><em>+ Itálico.</em></div>
+      <div class="s-rule"></div>
+      <div class="s-desc">A tensão entre Small Caps (estrutura, autoridade) e Itálico (movimento, elegância) é o coração visual da NewPlace. New em SC ancora. Place em itálico voa.</div>
+    </div>
 
     <div class="logo-grid">
-      <!-- Principal -->
-      <div class="logo-cell cream" data-label="Principal — Fundos Claros">
-        <div class="lt lt-64 lt-on-cream">New<span>Place</span></div>
-        <div class="lt-rule dark"></div>
-        <div class="lt-sub dark">Administradora de Imóveis</div>
+      <div class="logo-cell lc-cream" data-label="Principal · Fundos Claros">
+        <div class="logo-combo logo-lg logo-on-cream">
+          <span class="l-new">New</span>
+          <span class="l-place">Place</span>
+          <div class="l-rule dark" style="width:28px;height:1px;"></div>
+          <span class="l-sub">Administradora de Imóveis</span>
+        </div>
       </div>
-      <!-- Navy -->
-      <div class="logo-cell navy after-dark" data-label="Invertida — Fundo Navy">
-        <div class="lt lt-64 lt-on-dark">New<span>Place</span></div>
-        <div class="lt-rule light"></div>
-        <div class="lt-sub light">Administradora de Imóveis</div>
+
+      <div class="logo-cell lc-navy" data-label="Invertida · Fundo Navy">
+        <div class="logo-combo logo-lg logo-on-dark">
+          <span class="l-new">New</span>
+          <span class="l-place">Place</span>
+          <div class="l-rule light" style="width:28px;height:1px;"></div>
+          <span class="l-sub">Administradora de Imóveis</span>
+        </div>
       </div>
-      <!-- Horizontal clara -->
-      <div class="logo-cell white" data-label="Horizontal — Fundo Branco">
-        <div class="lt-h">
-          <div class="lt-h-bar red"></div>
+
+      <div class="logo-cell lc-white" data-label="Horizontal · Fundo Branco">
+        <div class="logo-h-combo">
+          <div class="logo-h-bar red" style="height:60px;"></div>
           <div>
-            <div class="lt lt-40 lt-on-cream">New<span>Place</span></div>
-            <div class="lt-sub dark" style="margin-top:6px;">Administradora de Imóveis</div>
+            <div class="lh-new">New</div>
+            <div class="lh-place">Place</div>
+            <div class="lh-sub">Administradora de Imóveis</div>
           </div>
         </div>
       </div>
-      <!-- Horizontal navy -->
-      <div class="logo-cell navy after-dark" data-label="Horizontal — Fundo Navy">
-        <div class="lt-h">
-          <div class="lt-h-bar light"></div>
+
+      <div class="logo-cell lc-navy" data-label="Horizontal · Fundo Navy">
+        <div class="logo-h-combo inv">
+          <div class="logo-h-bar" style="height:60px;background:rgba(255,255,255,.2);"></div>
           <div>
-            <div class="lt lt-40 lt-on-dark">New<span>Place</span></div>
-            <div class="lt-sub light" style="margin-top:6px;">Administradora de Imóveis</div>
+            <div class="lh-new">New</div>
+            <div class="lh-place">Place</div>
+            <div class="lh-sub">Administradora de Imóveis</div>
           </div>
         </div>
       </div>
-      <!-- Vermelho -->
-      <div class="logo-cell red after-dark" data-label="Sobre Vermelho">
-        <div class="lt lt-64 lt-on-red">New<span>Place</span></div>
-        <div class="lt-rule light"></div>
-        <div class="lt-sub light">Administradora de Imóveis</div>
+
+      <div class="logo-cell lc-parch" data-label="Sobre Pergaminho">
+        <div class="logo-combo logo-lg logo-on-cream">
+          <span class="l-new">New</span>
+          <span class="l-place">Place</span>
+          <div class="l-rule dark" style="width:28px;height:1px;"></div>
+          <span class="l-sub">Administradora de Imóveis</span>
+        </div>
       </div>
-      <!-- Monocromático -->
-      <div class="logo-cell white" data-label="Monocromático">
-        <div class="lt lt-64 lt-mono">NewPlace</div>
-        <div class="lt-rule dark"></div>
-        <div class="lt-sub dark">Administradora de Imóveis</div>
+
+      <div class="logo-cell lc-red" data-label="Sobre Vermelho">
+        <div class="logo-combo logo-lg logo-on-red">
+          <span class="l-new">New</span>
+          <span class="l-place">Place</span>
+          <div class="l-rule light" style="width:28px;height:1px;"></div>
+          <span class="l-sub">Administradora de Imóveis</span>
+        </div>
       </div>
     </div>
 
-    <!-- Escala de ícones -->
+    <!-- ícones -->
     <div class="mt-64">
-      <h3 style="font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--gray-7);margin-bottom:28px;">App Icon · Escala</h3>
-      <div style="display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap;">
+      <div style="font-family:var(--sc);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--g7);margin-bottom:28px;">App Icon · Escala</div>
+      <div style="display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap;">
         <div style="text-align:center;">
           <div style="background:var(--navy);border-radius:22px;width:96px;height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;">
-            <div style="font-family:var(--display);font-weight:300;font-size:18px;color:white;letter-spacing:2px;">New</div>
-            <div style="width:16px;height:1px;background:var(--red-warm);"></div>
-            <div style="font-family:var(--display);font-weight:300;font-size:18px;color:rgba(255,255,255,.5);letter-spacing:2px;">Place</div>
+            <div style="font-family:var(--sc);font-size:16px;color:white;letter-spacing:3px;">New</div>
+            <div style="width:14px;height:1px;background:var(--red-warm);"></div>
+            <div style="font-family:var(--cg);font-style:italic;font-size:17px;color:rgba(196,32,27,.9);letter-spacing:1px;line-height:1;">Place</div>
           </div>
-          <p class="label">96 px</p>
+          <p class="sub-label">96</p>
         </div>
         <div style="text-align:center;">
           <div style="background:var(--navy);border-radius:14px;width:64px;height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
-            <div style="font-family:var(--display);font-weight:300;font-size:12px;color:white;letter-spacing:1px;">New</div>
-            <div style="width:11px;height:1px;background:var(--red-warm);"></div>
-            <div style="font-family:var(--display);font-weight:300;font-size:12px;color:rgba(255,255,255,.5);letter-spacing:1px;">Place</div>
+            <div style="font-family:var(--sc);font-size:11px;color:white;letter-spacing:2px;">New</div>
+            <div style="width:10px;height:1px;background:var(--red-warm);"></div>
+            <div style="font-family:var(--cg);font-style:italic;font-size:12px;color:rgba(196,32,27,.9);letter-spacing:1px;line-height:1;">Place</div>
           </div>
-          <p class="label">64 px</p>
+          <p class="sub-label">64</p>
         </div>
         <div style="text-align:center;">
           <div style="background:var(--navy);border-radius:9px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;">
-            <div style="font-family:var(--display);font-weight:300;font-size:12px;color:white;letter-spacing:1px;">NP</div>
+            <div style="font-family:var(--sc);font-size:11px;color:white;letter-spacing:2px;">NP</div>
           </div>
-          <p class="label">40 px</p>
+          <p class="sub-label">40</p>
         </div>
         <div style="text-align:center;">
           <div style="background:var(--navy);border-radius:5px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">
-            <div style="font-size:8px;color:white;font-family:var(--display);font-weight:400;">NP</div>
+            <div style="font-family:var(--sc);font-size:7px;color:white;letter-spacing:1px;">NP</div>
           </div>
-          <p class="label">24 px</p>
+          <p class="sub-label">24</p>
         </div>
         <div style="text-align:center;">
           <div style="background:var(--red);border-radius:3px;width:16px;height:16px;display:flex;align-items:center;justify-content:center;">
-            <div style="font-size:6px;color:white;font-weight:600;">N</div>
+            <div style="font-family:var(--sc);font-size:6px;color:white;font-weight:500;">N</div>
           </div>
-          <p class="label">16 px</p>
+          <p class="sub-label">16</p>
         </div>
       </div>
     </div>
@@ -1259,25 +1398,28 @@
 
 
 <!-- ══ PAPELARIA ══ -->
-<div class="stationery-wrap">
-  <div class="stationery-inner">
-    <div class="s-num">Papelaria</div>
-    <div class="s-title">Cartão & Timbrado.</div>
+<div class="stationery-section">
+  <div class="st-inner">
+    <div class="section-head">
+      <div class="s-num">Papelaria</div>
+      <div class="s-h2">Cartão.<br><em>Timbrado.</em></div>
+    </div>
 
-    <div class="flex-gap mt-64">
+    <div class="flex-row mt-64">
       <div>
-        <div style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:20px;">Cartão · Frente</div>
+        <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);margin-bottom:16px;">Frente</div>
         <div class="biz-card">
-          <div class="biz-front">
+          <div class="bc-front">
             <div>
-              <div class="bf-logo">New<span>Place</span></div>
-              <div class="bf-sub">Administradora de Imóveis</div>
+              <div class="bc-logo-new">New</div>
+              <div class="bc-logo-place">Place</div>
+              <div class="bc-sub">Administradora de Imóveis</div>
             </div>
             <div>
-              <div class="bf-name">João da Silva</div>
-              <div class="bf-role">Consultor de Imóveis</div>
+              <div class="bc-name">João da Silva</div>
+              <div class="bc-role">Consultor de Imóveis</div>
             </div>
-            <div class="bf-contact">
+            <div class="bc-info">
               (11) 9 9999-9999<br>
               joao@newplace.com.br<br>
               www.newplace.com.br
@@ -1286,47 +1428,49 @@
         </div>
       </div>
       <div>
-        <div style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:20px;">Cartão · Verso</div>
+        <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);margin-bottom:16px;">Verso</div>
         <div class="biz-card">
-          <div class="biz-back">
-            <div class="bb-name">New<span>Place</span></div>
-            <div class="bb-rule"></div>
-            <div class="bb-sub">Administradora de Imóveis</div>
+          <div class="bc-back">
+            <div class="bcb-new">New</div>
+            <div class="bcb-place">Place</div>
+            <div class="bcb-rule"></div>
+            <div class="bcb-sub">Administradora de Imóveis</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="mt-64">
-      <div style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:20px;">Papel Timbrado A4</div>
-      <div class="lh">
-        <div class="lh-head">
+      <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);margin-bottom:16px;">Papel Timbrado</div>
+      <div class="lh-doc">
+        <div class="lhd-head">
           <div>
-            <div class="lh-logo">New<span>Place</span></div>
-            <div class="lh-logo-sub">Administradora de Imóveis</div>
+            <div class="lhd-logo-new">New</div>
+            <div class="lhd-logo-place">Place</div>
+            <div class="lhd-sub">Administradora de Imóveis</div>
           </div>
-          <div class="lh-contact-block">
+          <div class="lhd-contact">
             (11) 9 9999-9999<br>
             contato@newplace.com.br<br>
             www.newplace.com.br<br>
             São Paulo · SP
           </div>
         </div>
-        <div class="lh-accent"></div>
-        <div class="lh-body">
-          <div class="lh-date">São Paulo, 01 de junho de 2026</div>
+        <div class="lhd-accent"></div>
+        <div class="lhd-body">
+          <div class="lhd-date">São Paulo, 01 de junho de 2026</div>
           <p>Prezado(a) Senhor(a),</p>
           <p>Vimos por meio desta informar que o imóvel situado à Rua das Flores, nº 123, encontra-se em plena conformidade com as condições contratuais estabelecidas. A NewPlace Administradora de Imóveis agradece a confiança depositada em nossos serviços e permanece comprometida com a gestão cuidadosa do seu patrimônio.</p>
           <p>Permanecemos à disposição para quaisquer esclarecimentos adicionais.</p>
           <p>Atenciosamente,</p>
-          <div class="lh-sign">
-            <div class="lh-sign-name">João da Silva</div>
-            <div class="lh-sign-role">Consultor de Imóveis · NewPlace Administradora de Imóveis</div>
+          <div class="lhd-sign">
+            <div class="lhd-sign-name">João da Silva</div>
+            <div class="lhd-sign-role">Consultor de Imóveis · NewPlace Administradora de Imóveis</div>
           </div>
         </div>
-        <div class="lh-foot">
+        <div class="lhd-foot">
           <span>CNPJ 00.000.000/0001-00</span>
-          <span>Integrante do Grupo Local Imóveis</span>
+          <span>Grupo Local Imóveis</span>
           <span>CRECI 00.000-J</span>
         </div>
       </div>
@@ -1336,76 +1480,76 @@
 
 
 <!-- ══ SOCIAL ══ -->
-<div class="social-wrap">
+<div class="social-section">
   <div class="social-inner">
-    <div class="s-num">Social Media</div>
-    <div class="s-title">No feed.<br>Na história.</div>
+    <div class="section-head">
+      <div class="s-num">Social Media</div>
+      <div class="s-h2">No feed.<br><em>Na história.</em></div>
+    </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;background:var(--gray-5);border:1px solid var(--gray-5);margin-top:64px;">
-      <div class="post navy">
+    <div class="posts-grid">
+      <div class="post pnavy">
         <div class="post-glow"></div>
-        <div class="p-eyebrow light">Imóveis · NewPlace</div>
-        <div class="p-headline light">Seu próximo<br>lar começa<br>aqui.</div>
-        <div class="p-bottom">
-          <div class="p-cta light">Saiba Mais</div>
-          <div class="p-logo light">New<span>Place</span></div>
+        <div class="p-tag l">Imóveis · NewPlace</div>
+        <div class="p-head l">Seu próximo<br>lar começa<br><em>aqui.</em></div>
+        <div class="p-foot">
+          <div class="p-cta l">Saiba Mais</div>
+          <div class="p-brand l"><div class="p-brand-new">New</div><div class="p-brand-place">Place</div></div>
         </div>
       </div>
-      <div class="post cream">
-        <div class="post-glow cream-glow"></div>
-        <div class="p-eyebrow dark">Destaque · NewPlace</div>
-        <div class="p-headline dark">Administração<br>com excelência<br>e cuidado.</div>
-        <div class="p-bottom">
-          <div class="p-cta dark">Fale Conosco</div>
-          <div class="p-logo dark">New<span>Place</span></div>
+      <div class="post pcream">
+        <div class="p-tag d">Destaque · NewPlace</div>
+        <div class="p-head d">Administração<br>com <em>excelência</em><br>e cuidado.</div>
+        <div class="p-foot">
+          <div class="p-cta d">Fale Conosco</div>
+          <div class="p-brand d"><div class="p-brand-new">New</div><div class="p-brand-place">Place</div></div>
         </div>
       </div>
-      <div class="post red">
-        <div class="p-eyebrow light" style="color:rgba(255,255,255,.4);">Aluguel · Oportunidade</div>
-        <div class="p-headline light">O imóvel<br>que você buscava<br>está aqui.</div>
-        <div class="p-bottom">
-          <div class="p-cta light">Ver Imóveis</div>
-          <div class="p-logo light" style="color:rgba(255,255,255,.3);">New<span style="color:rgba(255,255,255,.6);">Place</span></div>
+      <div class="post pred">
+        <div class="p-tag l" style="color:rgba(255,255,255,.4);">Oportunidade</div>
+        <div class="p-head l">O imóvel<br>que você<br><em>buscava.</em></div>
+        <div class="p-foot">
+          <div class="p-cta l">Ver Imóveis</div>
+          <div class="p-brand l"><div class="p-brand-new">New</div><div class="p-brand-place">Place</div></div>
         </div>
       </div>
     </div>
 
-    <div class="flex-gap mt-64">
+    <div class="flex-row mt-64">
       <div>
-        <div style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:20px;">Story · 1080×1920</div>
-        <div class="story">
-          <div class="s-tag">NewPlace</div>
-          <div class="s-text">Alugue com<br>segurança<br>e confiança.</div>
-          <div>
-            <div class="s-rule"></div>
-            <div style="border:1px solid rgba(255,255,255,.18);padding:7px 14px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);display:inline-block;margin-bottom:12px;">Ver imóveis</div>
-            <div class="s-logo">New<span>Place</span><br><span style="font-size:7px;color:rgba(255,255,255,.2);letter-spacing:2px;text-transform:uppercase;">Adm. de Imóveis</span></div>
+        <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);margin-bottom:16px;">Story 1080 × 1920</div>
+        <div class="story-card">
+          <div class="sc-tag">NewPlace · Imóveis</div>
+          <div class="sc-head">Alugue com<br>segurança<br>e <em>elegância.</em></div>
+          <div class="sc-foot">
+            <div class="sc-rule"></div>
+            <div style="border:1px solid rgba(255,255,255,.15);padding:7px 14px;font-family:var(--sc);font-size:7px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.55);display:inline-block;margin-bottom:12px;">Ver Imóveis</div>
+            <div class="sc-logo-new">New</div>
+            <div class="sc-logo-place">Place</div>
           </div>
         </div>
       </div>
       <div style="flex:1;min-width:220px;">
-        <div style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:20px;">Avatares & Perfil</div>
-        <div style="display:flex;flex-direction:column;gap:20px;margin-top:4px;">
+        <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);margin-bottom:20px;">Avatares</div>
+        <div style="display:flex;flex-direction:column;gap:20px;">
           <div style="display:flex;align-items:center;gap:16px;">
             <div style="background:var(--navy);border-radius:50%;width:56px;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex-shrink:0;">
-              <div style="font-family:var(--display);font-weight:300;font-size:11px;color:white;letter-spacing:1px;">N</div>
+              <div style="font-family:var(--sc);font-size:10px;color:white;letter-spacing:2px;">N</div>
               <div style="width:10px;height:1px;background:var(--red-warm);"></div>
-              <div style="font-family:var(--display);font-weight:300;font-size:11px;color:rgba(255,255,255,.45);letter-spacing:1px;">P</div>
+              <div style="font-family:var(--cg);font-style:italic;font-size:11px;color:rgba(196,32,27,.9);letter-spacing:1px;">P</div>
             </div>
             <div>
-              <div style="font-family:var(--display);font-weight:400;font-size:16px;color:var(--navy);letter-spacing:1px;">NewPlace</div>
-              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-top:2px;">@newplace</div>
+              <div style="font-family:var(--sc);font-size:13px;color:var(--navy);letter-spacing:2px;">New<span style="font-family:var(--cg);font-style:italic;color:var(--red);">Place</span></div>
+              <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);margin-top:3px;">@newplace</div>
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:16px;">
             <div style="background:var(--red);border-radius:50%;width:56px;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex-shrink:0;">
-              <div style="font-family:var(--display);font-weight:300;font-size:11px;color:white;letter-spacing:1px;">N</div>
-              <div style="width:10px;height:1px;background:rgba(255,255,255,.4);"></div>
-              <div style="font-family:var(--display);font-weight:300;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:1px;">P</div>
+              <div style="font-family:var(--sc);font-size:10px;color:white;letter-spacing:2px;">N</div>
+              <div style="width:10px;height:1px;background:rgba(255,255,255,.5);"></div>
+              <div style="font-family:var(--cg);font-style:italic;font-size:11px;color:rgba(255,255,255,.6);letter-spacing:1px;">P</div>
             </div>
-            <div>
-              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);">Variação Acento</div>
-            </div>
+            <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);">Variação Vermelha</div>
           </div>
         </div>
       </div>
@@ -1415,29 +1559,33 @@
 
 
 <!-- ══ SINALIZAÇÃO ══ -->
-<div class="signage-wrap">
-  <div class="signage-inner">
-    <div class="s-num">Sinalização</div>
-    <div class="s-title">Fachada & Placa.</div>
+<div class="sign-section">
+  <div class="sign-inner">
+    <div class="section-head">
+      <div class="s-num">Sinalização</div>
+      <div class="s-h2">Fachada.<br><em>Placa.</em></div>
+    </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;margin-top:64px;">
       <div>
-        <div style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:20px;">Fachada</div>
-        <div style="overflow:hidden;border:1px solid var(--gray-5);">
-          <div class="sign-facade">
-            <div class="sf-name">New<span>Place</span></div>
-            <div class="sf-rule"></div>
-            <div class="sf-sub">Administradora de Imóveis</div>
+        <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);margin-bottom:16px;">Fachada</div>
+        <div class="facade-block">
+          <div class="facade-top">
+            <div class="facade-new">New</div>
+            <div class="facade-place">Place</div>
+            <div class="facade-rule"></div>
+            <div class="facade-sub">Administradora de Imóveis</div>
           </div>
-          <div class="sign-base">Integrante do Grupo Local Imóveis</div>
+          <div class="facade-base"><span>Integrante do Grupo Local Imóveis</span></div>
         </div>
       </div>
       <div>
-        <div style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--gray-7);margin-bottom:20px;">Placa de Imóvel</div>
+        <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--g7);margin-bottom:16px;">Placa de Imóvel</div>
         <div class="sign-board">
-          <div class="sb-top">
-            <div class="sb-category">Aluga-se</div>
-            <div class="sb-logo">New<span>Place</span></div>
+          <div class="sb-head">
+            <div class="sb-cat">Aluga-se</div>
+            <div class="sb-ln">New</div>
+            <div class="sb-lp">Place</div>
           </div>
           <div class="sb-body">
             <div class="sb-phone">(11) 9 9999-9999</div>
@@ -1451,13 +1599,15 @@
 
 
 <!-- ══ UI ══ -->
-<div class="ui-wrap">
+<div class="ui-section">
   <div class="ui-inner">
-    <div class="s-num">Interface Digital</div>
-    <div class="s-title">Componentes.</div>
+    <div class="section-head">
+      <div class="s-num">Interface Digital</div>
+      <div class="s-h2">Componentes.<br><em>Elementos.</em></div>
+    </div>
 
     <div class="ui-card">
-      <h3 style="font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray-7);">Botões</h3>
+      <div style="font-family:var(--sc);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--g7);">Botões</div>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;align-items:center;">
         <button class="btn btn-navy">Quero Alugar</button>
         <button class="btn btn-red">Ver Imóveis</button>
@@ -1466,24 +1616,21 @@
         <button class="btn btn-neutral">Cancelar</button>
       </div>
 
-      <h3 style="font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray-7);margin-top:48px;">Badges</h3>
+      <div style="font-family:var(--sc);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--g7);margin-top:48px;">Badges</div>
       <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;">
         <span class="badge badge-navy">Aluga-se</span>
         <span class="badge badge-red">Destaque</span>
         <span class="badge badge-outline">Vende-se</span>
         <span class="badge badge-soft">Administração</span>
-        <span class="badge" style="background:var(--gray-3);color:var(--gray-9);">Novo</span>
+        <span class="badge" style="background:var(--g3);color:var(--g9);">Novo</span>
       </div>
 
-      <h3 style="font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray-7);margin-top:48px;">Card de Imóvel</h3>
+      <div style="font-family:var(--sc);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--g7);margin-top:48px;">Card de Imóvel</div>
       <div style="margin-top:20px;">
         <div class="prop-card">
-          <div class="pc-img">
-            🏢
-            <div class="pc-badge-pos"><span class="badge badge-navy">Aluga-se</span></div>
-          </div>
+          <div class="pc-img">🏢<div class="pc-badge"><span class="badge badge-navy">Aluga-se</span></div></div>
           <div class="pc-body">
-            <div class="pc-name">Apartamento<br>3 Quartos</div>
+            <div class="pc-title">Apartamento 3 Quartos</div>
             <div class="pc-loc">Moema · São Paulo</div>
             <div class="pc-price">R$ 4.500 <small>/ mês</small></div>
             <button class="pc-btn">Ver Detalhes</button>
@@ -1498,16 +1645,18 @@
 <!-- ══ COLOFÃO ══ -->
 <div class="colophon">
   <div>
-    <div class="col-logo">New<span>Place</span></div>
+    <div class="col-logo-new">New</div>
+    <div class="col-logo-place">Place</div>
     <div class="col-rule"></div>
-    <div class="col-sub">Identidade de Marca · Versão 2.0 · 2026</div>
-    <div style="font-size:9px;font-weight:300;color:rgba(255,255,255,.15);margin-top:6px;letter-spacing:1px;">Integrante do Grupo Local Imóveis</div>
+    <div class="col-sub">Identidade de Marca · Versão 3.0 · 2026</div>
+    <div style="font-family:var(--sc);font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.12);margin-top:6px;text-transform:uppercase;">Integrante do Grupo Local Imóveis</div>
   </div>
   <div class="col-meta">
-    Conceito: O Limiar<br>
-    Tipografia: Cormorant Garamond + Inter<br>
-    Cores: Azul Noite #0B1C35 · Vermelho Limiar #C4201B<br>
-    Integrante do Grupo Local Imóveis
+    Conceito · O Limiar<br>
+    Display · Cormorant Garamond + Cormorant SC<br>
+    Corpo · Inter Light<br>
+    Primária · Azul Noite #0B1C35<br>
+    Acento · Vermelho Limiar #C4201B
   </div>
 </div>
 
