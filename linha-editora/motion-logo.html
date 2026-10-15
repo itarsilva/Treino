@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linha Editora — Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy:   #001F3F;
+    --silver: #A8A9AD;
+    --white:  #F8F8F8;
+    --muted:  #8E98A8; /* prata sobre marinho (versão negativa) */
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; background: var(--navy); overflow: hidden; }
+  body { display: grid; place-items: center; }
+
+  /* Palco em tamanho fixo, escalado para caber na janela */
+  #stage {
+    position: relative;
+    background: var(--navy);
+    transform-origin: center center;
+    flex: none;
+  }
+
+  #lockup {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+  }
+  #stage[data-f="h"] #lockup { flex-direction: row; gap: 196px; }
+  #stage[data-f="v"] #lockup { flex-direction: column; align-items: center; gap: 120px; }
+  #stage[data-f="s"] #lockup { flex-direction: column; align-items: center; gap: 84px; }
+
+  #symwrap { will-change: transform; }
+  #symbol { display: block; overflow: visible; }
+  #symbol line { stroke-linecap: round; stroke-width: 8; }
+
+  .wordmark { display: flex; flex-direction: column; align-items: flex-end; color: var(--white); }
+  #stage:not([data-f="h"]) .wordmark { align-items: center; }
+  .w-linha {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 300px;
+    line-height: .74;
+    letter-spacing: -2px;
+    display: flex;
+  }
+  .w-linha span { display: inline-block; will-change: transform, opacity; }
+  .w-editora {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 96px;
+    line-height: 1;
+    margin-top: 6px;
+    margin-right: 4px;
+    white-space: nowrap;
+    will-change: opacity, letter-spacing;
+  }
+  #stage[data-f="v"] .w-linha { font-size: 190px; }
+  #stage[data-f="v"] .w-editora { font-size: 60px; margin: 2px 0 0; }
+  #stage[data-f="s"] .w-linha { font-size: 150px; }
+  #stage[data-f="s"] .w-editora { font-size: 48px; margin: 2px 0 0; }
+
+  .caption {
+    position: absolute;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    letter-spacing: 6px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  #stage[data-f="h"] .caption { bottom: 96px; }
+  #stage[data-f="v"] .caption { bottom: 220px; font-size: 26px; }
+  #stage[data-f="s"] .caption { bottom: 90px; }
+
+  /* Controles do player (escondidos na exportação) */
+  #ui {
+    position: fixed; bottom: 16px; right: 16px; display: flex; gap: 8px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px;
+  }
+  #ui a, #ui button {
+    color: var(--muted); background: transparent; border: 1px solid rgba(168,169,173,.3);
+    padding: 7px 12px; text-decoration: none; cursor: pointer; font: inherit; text-transform: uppercase;
+  }
+  #ui a.on { color: var(--white); border-color: rgba(248,248,248,.6); }
+  body.export #ui { display: none; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="lockup">
+    <!-- Símbolo: lombadas numa estante (malha do brandbook, base comum) -->
+    <div id="symwrap"><svg id="symbol" viewBox="-4 -4 288 240"></svg></div>
+    <div class="wordmark">
+      <div class="w-linha"><span>L</span><span>i</span><span>n</span><span>h</span><span>a</span></div>
+      <div class="w-editora">editora</div>
+    </div>
+  </div>
+  <div class="caption">A linha que conecta histórias</div>
+</div>
+
+<div id="ui">
+  <a href="?f=h" data-f="h">16:9</a>
+  <a href="?f=v" data-f="v">9:16</a>
+  <a href="?f=s" data-f="s">1:1</a>
+  <button id="replay">↺ Repetir</button>
+</div>
+
+<script>
+  /* ---------- Formato ---------- */
+  const params = new URLSearchParams(location.search);
+  const FORMATS = { h: [1920, 1080], v: [1080, 1920], s: [1080, 1080] };
+  const F = FORMATS[params.get('f')] ? params.get('f') : 'h';
+  const [W, H] = FORMATS[F];
+  const stage = document.getElementById('stage');
+  stage.dataset.f = F;
+  stage.style.width = W + 'px';
+  stage.style.height = H + 'px';
+  if (params.has('export')) document.body.classList.add('export');
+  document.querySelectorAll('#ui a').forEach(a => a.classList.toggle('on', a.dataset.f === F));
+
+  function fit() {
+    const s = Math.min(innerWidth / W, innerHeight / H);
+    stage.style.transform = `scale(${s})`;
+  }
+  addEventListener('resize', fit); fit();
+
+  /* ---------- Símbolo ---------- */
+  const BASE = 228;
+  // [x, topo, cor] — alturas alternadas criam o ritmo de leitura
+  const SPINES = [
+    [4,   8,  'w'], [25, 23, 'g'], [45,  5, 'w'], [66, 50, 'g'], [86, 5, 'w'],
+    [107, 96, 'g'], [125, 96, 'g'], [145, 5, 'w'], [166, 31, 'g'],
+  ];
+  // Peças inclinadas: [x da base, comprimento, ângulo final em graus, cor]
+  const LEANERS = [
+    [196, 219, 8.9,  'w'],
+    [214, 213, 15.8, 'g'],
+  ];
+  const COLOR = { w: 'var(--white)', g: 'var(--muted)' };
+
+  const svg = document.getElementById('symbol');
+  const symwrap = document.getElementById('symwrap');
+  // proporção do símbolo em cada assinatura (horizontal x vertical)
+  const SYM_SCALE = { h: .86, v: 1.6, s: 1.2 }[F];
+  svg.setAttribute('width', 288 * SYM_SCALE);
+  svg.setAttribute('height', 240 * SYM_SCALE);
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (c) => {
+    const l = document.createElementNS(NS, 'line');
+    l.setAttribute('stroke', COLOR[c]);
+    svg.appendChild(l);
+    return l;
+  };
+  const spineEls = SPINES.map(s => mk(s[2]));
+  const leanEls  = LEANERS.map(s => mk(s[3]));
+
+  /* ---------- Easing ---------- */
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  const prog  = (t, a, d) => clamp((t - a) / d);
+  const outCubic   = (x) => 1 - Math.pow(1 - x, 3);
+  const outExpo    = (x) => x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+  const inOutCubic = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const outBack    = (x, s = 1.4) => 1 + (s + 1) * Math.pow(x - 1, 3) + s * Math.pow(x - 1, 2);
+
+  /* ---------- Layout: posição final x posição centralizada ---------- */
+  const lockup  = document.getElementById('lockup');
+  const letters = [...document.querySelectorAll('.w-linha span')];
+  const editora = document.querySelector('.w-editora');
+  const caption = document.querySelector('.caption');
+  let symDX = 0, symDY = 0;
+
+  function layout() {
+    symwrap.style.transform = 'none';
+    const lw = lockup.offsetWidth, lh = lockup.offsetHeight;
+    const yShift = F === 'h' ? -10 : (F === 'v' ? -60 : -40);
+    lockup.style.left = (W - lw) / 2 + 'px';
+    lockup.style.top  = (H - lh) / 2 + yShift + 'px';
+    // deslocamento para o símbolo começar no centro do palco
+    const sx = symwrap.offsetLeft + symwrap.offsetWidth / 2 + lockup.offsetLeft;
+    const sy = symwrap.offsetTop + symwrap.offsetHeight / 2 + lockup.offsetTop;
+    symDX = W / 2 - sx;
+    symDY = H / 2 - sy;
+  }
+
+  /* ---------- Linha do tempo (segundos) ---------- */
+  const DURATION = 7;
+
+  function render(t) {
+    // 1. Lombadas sobem da base comum, uma a uma
+    SPINES.forEach(([x, top], i) => {
+      const p = outExpo(prog(t, 0.35 + i * 0.085, 0.75));
+      const el = spineEls[i];
+      el.setAttribute('x1', x); el.setAttribute('x2', x);
+      el.setAttribute('y1', BASE);
+      el.setAttribute('y2', BASE - (BASE - top) * p);
+      el.style.opacity = p > 0 ? 1 : 0;
+    });
+
+    // 2. Duas peças sobem retas e se inclinam — o gesto de quem guardou um livro
+    LEANERS.forEach(([x, len, ang], i) => {
+      const grow = outExpo(prog(t, 1.15 + i * 0.1, 0.7));
+      const lean = outBack(prog(t, 1.75 + i * 0.16, 0.75), 1.2);
+      const a = ang * lean * Math.PI / 180;
+      const L = len * grow;
+      const el = leanEls[i];
+      el.setAttribute('x1', x); el.setAttribute('y1', BASE);
+      el.setAttribute('x2', x + Math.sin(a) * L);
+      el.setAttribute('y2', BASE - Math.cos(a) * L);
+      el.style.opacity = grow > 0 ? 1 : 0;
+    });
+
+    // 3. Símbolo desliza para a posição da assinatura
+    const m = inOutCubic(prog(t, 2.75, 0.95));
+    symwrap.style.transform = `translate(${symDX * (1 - m)}px, ${symDY * (1 - m)}px)`;
+
+    // 4. "Linha" entra letra a letra, como quem escreve
+    letters.forEach((el, i) => {
+      const p = outCubic(prog(t, 3.2 + i * 0.07, 0.8));
+      el.style.opacity = p;
+      el.style.transform = `translateY(${(1 - p) * 34}px)`;
+    });
+
+    // 5. "editora" assenta, com o espaçamento se fechando
+    const e = outCubic(prog(t, 3.75, 1.0));
+    editora.style.opacity = e;
+    editora.style.letterSpacing = (0.06 + (1 - e) * 0.32) + 'em';
+
+    // 6. Assinatura de apoio
+    const c = outCubic(prog(t, 4.6, 0.9));
+    caption.style.opacity = c;
+    caption.style.transform = `translateY(${(1 - c) * 10}px)`;
+  }
+
+  /* ---------- Player ---------- */
+  let start = null, stopped = false;
+  function loop(now) {
+    if (stopped) return;
+    if (start === null) start = now;
+    const t = (now - start) / 1000;
+    render(Math.min(t, DURATION));
+    if (t > DURATION + 1.2) start = now; // repete em loop
+    requestAnimationFrame(loop);
+  }
+  document.getElementById('replay').onclick = () => { start = null; };
+
+  // Exportação quadro a quadro: window.__seek(t)
+  window.__duration = DURATION;
+  window.__seek = (t) => { stopped = true; render(t); };
+
+  document.fonts.ready.then(() => {
+    layout();
+    render(0);
+    window.__ready = true;
+    if (!params.has('export')) requestAnimationFrame(loop);
+  });
+</script>
+</body>
+</html>
