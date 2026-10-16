@@ -1,4 +1,4 @@
-<title>CRM LedWave</title>
+<title>CRM WETAIL</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -144,7 +144,7 @@ tbody tr:last-child td{border-bottom:0}
 
 <header class="top">
   <div class="brand">
-    <h1><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span> CRM LedWave</h1>
+    <h1><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span> CRM WETAIL</h1>
     <span class="who">Carteira de leads · responsável padrão: Celio</span>
   </div>
   <span class="sp"></span>
@@ -450,7 +450,7 @@ async function exportCsv(){
   const csv = '﻿'+[cols.map(c=>q(c[0])).join(';')].concat(list.map(l=>cols.map(c=>q(c[1](l))).join(';'))).join('\r\n');
   const dl = await claude.use('downloads').catch(()=>null);
   if(!dl) return toast('Exportação indisponível nesta visualização.');
-  try{ await dl.save({filename:`crm-ledwave-${today()}.csv`, data:new Blob([csv],{type:'text/csv'})}); toast(`${list.length} leads exportados`); }
+  try{ await dl.save({filename:`crm-wetail-${today()}.csv`, data:new Blob([csv],{type:'text/csv'})}); toast(`${list.length} leads exportados`); }
   catch(e){ if(e && e.code!=='declined') toast('Não foi possível exportar.'); }
 }
 
