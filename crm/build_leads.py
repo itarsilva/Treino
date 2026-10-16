@@ -29,7 +29,7 @@ def load(path):
 MOJI = {'Ì': 'í', 'Í': 'ê', 'Á': 'ç', 'È': 'é', '·': 'á', '¥': "'"}
 
 def fix(s):
-    s = (s or '').replace(' ', ' ').replace('Õndio', 'Índio')
+    s = unicodedata.normalize('NFC', s or '').replace('\u00a0', ' ').replace('Õndio', 'Índio')
     s = re.sub(r'(?<=[a-zà-ü])[ÌÍÁÈ·¥]', lambda m: MOJI[m.group()], s)
     return re.sub(r'\s+', ' ', s).strip()
 
@@ -93,7 +93,8 @@ def evento(ident):
     if 'Fórum Rio de Janeiro' in ident: return '7º Fórum SA+ Rio de Janeiro'
     if 'Trade Connection 2026' in ident: return 'Trade Connection 2026'
     if SITE.search(ident): return 'Site / WhatsApp (inbound)'
-    return ident
+    # nome desconhecido: tira prefixos de planilha ("Cópia de", "Lista", "Leads"...) e fica só o evento
+    return re.sub(r'^(c[óo]pia de |lista |leads? |mailing |- )+', '', ident, flags=re.I).strip() or ident
 
 def lead_id(email):
     return re.sub(r'[^A-Za-z0-9_\-.~:@+]', '_', email)[:180]
