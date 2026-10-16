@@ -1,0 +1,544 @@
+<title>CRM LedWave</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra superior + faixa do funil; à esquerda a régua de eventos por data, à direita a lista de leads; ficha do lead em painel lateral */
+:root{
+  --bg:#f3f5f9; --surface:#ffffff; --sunk:#e9edf4; --line:#d8dee9; --fg:#121a2b; --muted:#5b667c;
+  --accent:#1d4ed8; --accent-soft:#e3eaff; --on-accent:#ffffff;
+  --ok:#11795a; --ok-soft:#ddf3ea; --warn:#a15c00; --warn-soft:#fdefd7; --bad:#b4232c; --bad-soft:#fbe3e4;
+  --a:#1d4ed8; --b:#6a7896; --c:#a8b2c4;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c111c; --surface:#141b2a; --sunk:#0f1522; --line:#26304a; --fg:#e6ebf5; --muted:#93a0b8;
+  --accent:#6e9bff; --accent-soft:#1b2a4f; --on-accent:#0c111c;
+  --ok:#4fd1a1; --ok-soft:#123327; --warn:#f2b45a; --warn-soft:#3a2a10; --bad:#ff7d84; --bad-soft:#3d1a1d;
+  --a:#6e9bff; --b:#8391ad; --c:#4c5873; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c111c; --surface:#141b2a; --sunk:#0f1522; --line:#26304a; --fg:#e6ebf5; --muted:#93a0b8;
+  --accent:#6e9bff; --accent-soft:#1b2a4f; --on-accent:#0c111c;
+  --ok:#4fd1a1; --ok-soft:#123327; --warn:#f2b45a; --warn-soft:#3a2a10; --bad:#ff7d84; --bad-soft:#3d1a1d;
+  --a:#6e9bff; --b:#8391ad; --c:#4c5873; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:14px/1.45 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+header.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding-block:18px 14px}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand h1{font:800 22px/1 var(--f-display);letter-spacing:-.01em;margin:0}
+.brand .who{font-size:13px;color:var(--muted)}
+.dots{display:inline-grid;grid-template-columns:repeat(3,5px);gap:2px;margin-right:2px;vertical-align:2px}
+.dots i{width:5px;height:5px;border-radius:1px;background:var(--accent)}
+.dots i:nth-child(2n){opacity:.45}
+.top .sp{flex:1}
+.sync{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.sync b{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.sync.on b{background:var(--ok)} .sync.ro b{background:var(--warn)}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:7px 12px;cursor:pointer;font-weight:600;font-size:13px}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.sm{padding:4px 9px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.funnel{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:10px}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:9px 10px 8px;text-align:left;cursor:pointer;min-width:0}
+.stage .n{font:700 22px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.stage .l{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stage .bar{height:3px;border-radius:2px;margin-top:7px;background:var(--sunk);overflow:hidden}
+.stage .bar i{display:block;height:100%;background:var(--st)}
+.stage[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.alerts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.alert{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:600;border:0;cursor:pointer}
+.alert.bad{background:var(--bad-soft);color:var(--bad)} .alert.warn{background:var(--warn-soft);color:var(--warn)} .alert.info{background:var(--accent-soft);color:var(--accent)}
+.alert[aria-pressed="true"]{box-shadow:inset 0 0 0 1.5px currentColor}
+
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px;align-items:start}
+aside.events{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);position:sticky;top:calc(env(safe-area-inset-top,0px) + 10px);max-height:calc(100vh - 20px);overflow:auto}
+.events h2{font:700 12px/1 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0;padding:14px 14px 8px}
+.ev-year{font:600 11px var(--f-mono);color:var(--muted);padding:10px 14px 4px;border-top:1px solid var(--line)}
+.ev{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;text-align:left;background:none;border:0;padding:6px 14px;cursor:pointer}
+.ev:hover{background:var(--sunk)}
+.ev[aria-pressed="true"]{background:var(--accent-soft)}
+.ev[aria-pressed="true"] .ev-n{color:var(--accent);font-weight:700}
+.ev-d{font:500 11px var(--f-mono);color:var(--muted)}
+.ev-t{font-size:13px;line-height:1.25;min-width:0}
+.ev-n{font:500 12px var(--f-mono);color:var(--muted)}
+.ev.all{padding-block:8px}
+.ev-mobile{display:none}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.filters input[type=search]{flex:1 1 240px;min-width:0}
+.field{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:7px 10px;min-width:0}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:0 4px}
+.resbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0 8px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.resbar b{color:var(--fg)}
+
+.tablewrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th{font:600 11px var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--sunk)}
+tbody tr:last-child td{border-bottom:0}
+.nm{font-weight:600}
+.sub{font-size:12px;color:var(--muted)}
+.score{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:5px;font:700 12px var(--f-display);color:var(--on-accent)}
+.score.A{background:var(--a)} .score.B{background:var(--b)} .score.C{background:var(--c);color:var(--fg)}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap;background:color-mix(in srgb,var(--st) 16%,transparent);color:var(--st)}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:4px;background:var(--sunk);color:var(--muted);margin:2px 3px 0 0;white-space:nowrap}
+.due{font:500 12px var(--f-mono)} .due.late{color:var(--bad)} .due.today{color:var(--warn)}
+.more{display:flex;justify-content:center;padding:14px}
+.empty{padding:40px 20px;text-align:center;color:var(--muted)}
+
+/* ficha do lead */
+.scrim{position:fixed;inset:0;background:rgb(8 12 20 / .45);z-index:20}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--surface);border-left:1px solid var(--line);z-index:21;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.dh{display:flex;gap:12px;align-items:flex-start;padding:18px 20px 14px;border-bottom:1px solid var(--line)}
+.dh h2{font:700 20px/1.2 var(--f-display);margin:0;text-wrap:balance}
+.dh .x{margin-left:auto}
+.db{overflow:auto;padding:16px 20px 30px;display:grid;gap:20px}
+.sec h3{font:700 11px/1 var(--f-display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 9px}
+.kv{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 12px;font-size:13.5px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;overflow-wrap:anywhere;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form label{display:grid;gap:4px;font-size:12px;color:var(--muted);min-width:0}
+.form .full{grid-column:1/-1}
+.form .field{color:var(--fg);font-size:14px;width:100%}
+.statusrow{display:flex;flex-wrap:wrap;gap:6px}
+.statusrow button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--st)}
+.statusrow button[aria-pressed="true"]{background:var(--st);border-color:var(--st);color:var(--surface)}
+.actrow{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+.actrow textarea{flex:1 1 100%;min-height:62px;resize:vertical}
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.timeline li{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px dashed var(--line);font-size:13px}
+.timeline li:first-child{border-top:0}
+.timeline .when{font:500 11.5px var(--f-mono);color:var(--muted);padding-top:1px}
+.timeline .k{font-weight:600}
+.timeline .ev-kind{color:var(--muted)}
+.savebar{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding:12px 20px;border-top:1px solid var(--line);background:var(--surface)}
+.savebar .msg{margin-right:auto;font-size:12.5px;color:var(--muted)}
+.banner{background:var(--warn-soft);color:var(--warn);border-radius:var(--r);padding:8px 12px;font-size:13px;margin-bottom:12px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:13px;z-index:40}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  aside.events{display:none}
+  .ev-mobile{display:block;flex:1 1 100%}
+  .funnel{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:520px){
+  .funnel{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .form{grid-template-columns:1fr}
+  .kv{grid-template-columns:90px minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="brand">
+    <h1><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span> CRM LedWave</h1>
+    <span class="who">Carteira de leads · responsável padrão: Celio</span>
+  </div>
+  <span class="sp"></span>
+  <span class="sync" id="sync"><b></b><span id="syncTxt">Conectando…</span></span>
+  <button class="btn" id="btnExport" type="button">Exportar CSV</button>
+  <button class="btn pri" id="btnNew" type="button">+ Novo lead</button>
+</header>
+
+<div id="roBanner" class="banner" hidden>Modo leitura: este acesso não grava alterações. Peça acesso de Colaborador ao dono da página para trabalhar os leads.</div>
+
+<section class="funnel" id="funnel" aria-label="Funil"></section>
+<div class="alerts" id="alerts"></div>
+
+<div class="layout">
+  <aside class="events" aria-label="Eventos">
+    <h2>Eventos</h2>
+    <div id="evList"></div>
+  </aside>
+  <main style="min-width:0">
+    <div class="filters">
+      <select class="field ev-mobile" id="evSelect" aria-label="Evento"></select>
+      <input type="search" class="field" id="q" placeholder="Buscar nome, empresa, e-mail, cargo, cidade…" aria-label="Buscar">
+      <select class="field" id="fScore" aria-label="Perfil">
+        <option value="">Perfil: todos</option><option value="A">Perfil A</option><option value="B">Perfil B</option><option value="C">Perfil C</option>
+      </select>
+      <select class="field" id="fUf" aria-label="UF"><option value="">UF: todas</option></select>
+      <select class="field" id="fLista" aria-label="Planilha"><option value="">Planilha: todas</option></select>
+      <select class="field" id="fSort" aria-label="Ordenar">
+        <option value="score">Ordenar: perfil</option>
+        <option value="recent">Conversão mais recente</option>
+        <option value="follow">Próximo follow-up</option>
+        <option value="updated">Trabalhados por último</option>
+        <option value="empresa">Empresa (A–Z)</option>
+      </select>
+      <label class="chk"><input type="checkbox" id="fFone"> Com telefone</label>
+    </div>
+    <div class="resbar"><span id="resTxt"></span><button class="btn sm" id="btnClear" type="button" hidden>Limpar filtros</button></div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Contato</th><th>Empresa</th><th>UF</th><th>Eventos</th><th>Status</th><th>Próximo passo</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden></div>
+    </div>
+    <div class="more"><button class="btn" id="btnMore" type="button" hidden>Mostrar mais</button></div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<section class="drawer" id="drawer" hidden aria-modal="true" role="dialog" aria-labelledby="dName"></section>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const STATUS = [
+  {k:'novo', l:'Novo', c:'var(--b)'},
+  {k:'contato', l:'Em contato', c:'var(--accent)'},
+  {k:'qualificado', l:'Qualificado', c:'#7c4ddb'},
+  {k:'reuniao', l:'Reunião', c:'#0e7c86'},
+  {k:'proposta', l:'Proposta', c:'var(--warn)'},
+  {k:'ganho', l:'Ganho', c:'var(--ok)'},
+  {k:'perdido', l:'Perdido', c:'var(--bad)'},
+];
+const ST = Object.fromEntries(STATUS.map(s=>[s.k,s]));
+const ATIV = ['Ligação','WhatsApp','E-mail','Reunião','Visita','Nota'];
+const PAGE = 60;
+
+const S = {base:[], manual:{}, crm:{}, ev:'', status:'', due:'', q:'', score:'', uf:'', lista:'', fone:false, sort:'score', shown:PAGE, open:null, db:null, user:null, uid:null, canWrite:false};
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const today = () => { const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+const fmtD = s => s ? s.slice(8,10)+'/'+s.slice(5,7)+'/'+s.slice(2,4) : '';
+const fmtDT = iso => { if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); };
+const brl = n => n>=1e9 ? 'R$ '+(n/1e9).toFixed(1).replace('.',',')+' bi' : n>=1e6 ? 'R$ '+Math.round(n/1e6)+' mi' : 'R$ '+Math.round(n/1e3)+' mil';
+const norm = s => String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2600); }
+function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){return null} }
+
+function allLeads(){ return S.base.concat(Object.values(S.manual)); }
+function crmOf(id){ return S.crm[id] || {}; }
+function statusOf(id){ return crmOf(id).status || 'novo'; }
+function scoreOf(l){ return crmOf(l.id).prio || l.score || 'C'; }
+
+/* ---------- eventos ---------- */
+function eventIndex(leads){
+  const m = new Map();
+  for(const l of leads) for(const [d,n] of (l.ev||[])){
+    const e = m.get(n) || {n, d, max:d, c:0}; e.c++; if(d<e.d) e.d=d; if(d>e.max) e.max=d; m.set(n,e);
+  }
+  return [...m.values()].sort((a,b)=> b.d.localeCompare(a.d) || b.c-a.c);
+}
+function renderEvents(){
+  const leads = allLeads(), evs = eventIndex(leads);
+  let html = `<button class="ev all" data-ev="" aria-pressed="${!S.ev}"><span class="ev-d">—</span><span class="ev-t"><b>Todos os eventos</b></span><span class="ev-n">${leads.length}</span></button>`;
+  let yr = '';
+  for(const e of evs){
+    const y = e.d.slice(0,4);
+    if(y!==yr){ yr=y; html += `<div class="ev-year">${y}</div>`; }
+    html += `<button class="ev" data-ev="${esc(e.n)}" aria-pressed="${S.ev===e.n}" title="${esc(e.n)} · ${fmtD(e.d)}${e.max!==e.d?' a '+fmtD(e.max):''}"><span class="ev-d">${fmtD(e.d).slice(0,5)}</span><span class="ev-t">${esc(e.n)}</span><span class="ev-n">${e.c}</span></button>`;
+  }
+  $('evList').innerHTML = html;
+  $('evSelect').innerHTML = `<option value="">Evento: todos (${leads.length})</option>` + evs.map(e=>`<option value="${esc(e.n)}" ${S.ev===e.n?'selected':''}>${fmtD(e.d)} · ${esc(e.n)} (${e.c})</option>`).join('');
+}
+
+/* ---------- filtros ---------- */
+function matches(l, skip){
+  if(S.ev && !(l.ev||[]).some(e=>e[1]===S.ev)) return false;
+  if(skip!=='status' && S.status && statusOf(l.id)!==S.status) return false;
+  if(S.score && scoreOf(l)!==S.score) return false;
+  if(S.uf && l.uf!==S.uf) return false;
+  if(S.lista && !(l.listas||[]).includes(S.lista)) return false;
+  if(S.fone && !l.fone) return false;
+  if(skip!=='due' && S.due){
+    const d = crmOf(l.id).proxData, t = today();
+    if(!d) return false;
+    if(S.due==='late' && !(d<t)) return false;
+    if(S.due==='today' && d!==t) return false;
+    if(S.due==='week' && !(d>t && d<=addDays(t,7))) return false;
+  }
+  if(S.q){
+    const hay = l._h || (l._h = norm([l.nome,l.empresa,l.email,l.cargo,l.cidade,l.uf,l.cnpj,l.fone,l.execEvento,l.segmento].join(' ')));
+    const c = crmOf(l.id);
+    if(!S.q.split(/\s+/).every(w => hay.includes(w) || norm((c.prox||'')+' '+(c.resp||'')).includes(w))) return false;
+  }
+  return true;
+}
+function addDays(s,n){ const d=new Date(s+'T12:00:00'); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+function sorter(){
+  const s = S.sort;
+  if(s==='recent') return (a,b)=> (b.ult||'').localeCompare(a.ult||'');
+  if(s==='follow') return (a,b)=> (crmOf(a.id).proxData||'9999').localeCompare(crmOf(b.id).proxData||'9999');
+  if(s==='updated') return (a,b)=> (crmOf(b.id).atualizado||'').localeCompare(crmOf(a.id).atualizado||'');
+  if(s==='empresa') return (a,b)=> norm(a.empresa||'~').localeCompare(norm(b.empresa||'~'));
+  const rank = {contato:0,qualificado:0,reuniao:0,proposta:0,novo:1,ganho:2,perdido:3};
+  return (a,b)=> rank[statusOf(a.id)]-rank[statusOf(b.id)] || scoreOf(a).localeCompare(scoreOf(b)) || (b.ult||'').localeCompare(a.ult||'');
+}
+
+function renderFunnel(){
+  const base = allLeads().filter(l=>matches(l,'status'));
+  const cnt = {}; for(const l of base){ const s=statusOf(l.id); cnt[s]=(cnt[s]||0)+1; }
+  const max = Math.max(1,...Object.values(cnt));
+  $('funnel').innerHTML = STATUS.map(s=>`<button class="stage" style="--st:${s.c}" data-st="${s.k}" aria-pressed="${S.status===s.k}"><div class="n">${cnt[s.k]||0}</div><div class="l">${s.l}</div><div class="bar"><i style="width:${(cnt[s.k]||0)/max*100}%"></i></div></button>`).join('');
+  const t = today(); let late=0, tod=0, week=0;
+  for(const l of allLeads()){ const c=crmOf(l.id); if(!c.proxData || ['ganho','perdido'].includes(c.status)) continue;
+    if(c.proxData<t) late++; else if(c.proxData===t) tod++; else if(c.proxData<=addDays(t,7)) week++; }
+  $('alerts').innerHTML =
+    `<button class="alert bad" data-due="late" aria-pressed="${S.due==='late'}">${late} follow-up${late===1?'':'s'} atrasado${late===1?'':'s'}</button>`+
+    `<button class="alert warn" data-due="today" aria-pressed="${S.due==='today'}">${tod} para hoje</button>`+
+    `<button class="alert info" data-due="week" aria-pressed="${S.due==='week'}">${week} nos próximos 7 dias</button>`;
+}
+
+function renderRows(){
+  const list = allLeads().filter(l=>matches(l)).sort(sorter());
+  const t = today();
+  const slice = list.slice(0,S.shown);
+  $('rows').innerHTML = slice.map(l=>{
+    const c = crmOf(l.id), st = ST[statusOf(l.id)], sc = scoreOf(l);
+    const evs = (l.ev||[]).slice(0,3).map(e=>`<span class="tag" title="${esc(e[1])} · ${fmtD(e[0])}">${esc(e[1])}</span>`).join('') + ((l.ev||[]).length>3?`<span class="tag">+${l.ev.length-3}</span>`:'');
+    const due = c.proxData ? `<div class="due ${c.proxData<t?'late':c.proxData===t?'today':''}">${fmtD(c.proxData)}</div>` : '';
+    return `<tr data-id="${esc(l.id)}" tabindex="0">
+      <td><span class="score ${sc}" title="Perfil ${sc}">${sc}</span></td>
+      <td><div class="nm">${esc(l.nome||l.email)}</div><div class="sub">${esc(l.cargo||'')}</div></td>
+      <td><div>${esc(l.empresa||'—')}</div><div class="sub">${esc(l.cidade||'')}${l.perfil?` · ${esc(l.perfil.toLowerCase())}`:''}</div></td>
+      <td class="mono">${esc(l.uf||'')}</td>
+      <td>${evs}</td>
+      <td><span class="pill" style="--st:${st.c}">${st.l}</span></td>
+      <td>${due}<div class="sub">${esc(c.prox||'')}</div></td></tr>`;
+  }).join('');
+  $('empty').hidden = list.length>0;
+  $('empty').textContent = allLeads().length ? 'Nenhum lead com esses filtros.' : 'Carregando leads…';
+  $('btnMore').hidden = list.length<=S.shown;
+  $('btnMore').textContent = `Mostrar mais (${list.length-S.shown} restantes)`;
+  $('resTxt').innerHTML = `<b>${list.length}</b> de ${allLeads().length} leads${S.ev?` · evento <b>${esc(S.ev)}</b>`:''}`;
+  $('btnClear').hidden = !(S.ev||S.status||S.due||S.q||S.score||S.uf||S.lista||S.fone);
+}
+function render(){ renderFunnel(); renderRows();
+  const a=document.activeElement; // não re-renderiza a ficha enquanto alguém digita nela
+  if(S.open && !(a && $('drawer').contains(a) && a.matches('input,textarea,select'))) renderDrawer(); }
+
+/* ---------- ficha ---------- */
+function waLink(f){ const d=(f||'').replace(/\D/g,''); return d.length>=10 ? 'https://wa.me/55'+d : ''; }
+let draft = null;
+function openLead(id){ S.open=id; const c=crmOf(id); draft = {status:c.status||'novo', prio:c.prio||'', resp:c.resp||'Celio', prox:c.prox||'', proxData:c.proxData||'', valor:c.valor||'', obs:c.obs||''}; renderDrawer(true); }
+function closeLead(){ S.open=null; draft=null; $('drawer').hidden=true; $('scrim').hidden=true; }
+function dirty(){ const c=crmOf(S.open); return draft && ['status','prio','prox','proxData','valor','obs'].some(k=>(draft[k]||'')!==(c[k]||(k==='status'?'novo':''))) || (draft && draft.resp!==(c.resp||'Celio')); }
+
+function renderDrawer(first){
+  const l = allLeads().find(x=>x.id===S.open); if(!l){ closeLead(); return; }
+  const c = crmOf(l.id), ro = !S.canWrite;
+  const wa = waLink(l.fone);
+  const acts = (c.ativ||[]).slice().reverse();
+  const people = [...new Set(Object.values(S.crm).map(x=>x.resp).filter(Boolean).concat(['Celio']))];
+  const dr = $('drawer');
+  // preserva o que está sendo digitado num re-render vindo de outro dispositivo
+  const keepAct = $('actTxt') ? $('actTxt').value : '';
+  dr.innerHTML = `
+  <div class="dh"><span class="score ${scoreOf(l)}">${scoreOf(l)}</span>
+    <div style="min-width:0"><h2 id="dName">${esc(l.nome||l.email)}</h2><div class="sub">${esc([l.cargo,l.empresa].filter(Boolean).join(' · '))}</div></div>
+    <button class="btn sm x" id="dClose" type="button" aria-label="Fechar">Fechar</button></div>
+  <div class="db">
+    <div class="sec"><h3>Contato</h3><dl class="kv">
+      <dt>Telefone</dt><dd>${l.fone?`<span class="mono">${esc(l.fone)}</span> <button class="btn sm" data-copy="${esc(l.fone)}" type="button">Copiar</button>${wa?` <a class="btn sm" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>`:''}`:'<span class="muted">sem telefone</span>'}</dd>
+      <dt>E-mail</dt><dd><span>${esc(l.email)}</span> <button class="btn sm" data-copy="${esc(l.email)}" type="button">Copiar</button></dd>
+      ${l.cidade||l.uf?`<dt>Local</dt><dd>${esc([l.cidade,l.uf].filter(Boolean).join(' / '))}</dd>`:''}
+      ${l.cnpj?`<dt>CNPJ/CPF</dt><dd class="mono">${esc(l.cnpj)}</dd>`:''}
+      ${l.porte?`<dt>Porte (RD)</dt><dd>${brl(l.porte)}</dd>`:''}
+      ${l.perfil?`<dt>Na APAS</dt><dd>${esc(l.perfil)}</dd>`:''}
+      ${l.segmento?`<dt>Segmento</dt><dd>${esc(l.segmento)}</dd>`:''}
+      ${l.necessidade?`<dt>Necessidade</dt><dd>${esc(l.necessidade)}</dd>`:''}
+      ${l.mensagem?`<dt>Mensagem</dt><dd>${esc(l.mensagem)}</dd>`:''}
+      ${l.execEvento?`<dt>Atendido por</dt><dd>${esc(l.execEvento)} <span class="muted">(no evento)</span></dd>`:''}
+      ${l.fit?`<dt>FitScore RD</dt><dd>${esc(l.fit)}</dd>`:''}
+      <dt>Planilhas</dt><dd>${(l.listas||[]).map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</dd>
+    </dl></div>
+
+    <div class="sec"><h3>Status</h3>
+      <div class="statusrow">${STATUS.map(s=>`<button type="button" style="--st:${s.c}" data-set-st="${s.k}" aria-pressed="${draft.status===s.k}" ${ro?'disabled':''}>${s.l}</button>`).join('')}</div>
+    </div>
+
+    <div class="sec"><h3>Negociação</h3><div class="form">
+      <label>Responsável<input class="field" id="fResp" list="peopleList" value="${esc(draft.resp)}" ${ro?'disabled':''}><datalist id="peopleList">${people.map(p=>`<option value="${esc(p)}">`).join('')}</datalist></label>
+      <label>Perfil (prioridade)<select class="field" id="fPrio" ${ro?'disabled':''}><option value="">Sugerido: ${l.score||'C'}</option>${['A','B','C'].map(x=>`<option ${draft.prio===x?'selected':''}>${x}</option>`).join('')}</select></label>
+      <label class="full">Próximo passo<input class="field" id="fProx" placeholder="Ex.: ligar para apresentar painel de fachada" value="${esc(draft.prox)}" ${ro?'disabled':''}></label>
+      <label>Data do follow-up<input type="date" class="field" id="fProxData" value="${esc(draft.proxData)}" ${ro?'disabled':''}></label>
+      <label>Valor estimado (R$)<input class="field mono" id="fValor" inputmode="decimal" placeholder="0" value="${esc(draft.valor)}" ${ro?'disabled':''}></label>
+      <label class="full">Observações do lead<textarea class="field" id="fObs" rows="3" placeholder="Quantas lojas, onde instalar, tamanho do painel, decisor…" ${ro?'disabled':''}>${esc(draft.obs)}</textarea></label>
+    </div></div>
+
+    <div class="sec"><h3>Registrar atividade</h3>
+      <div class="actrow">
+        <select class="field" id="actTipo" ${ro?'disabled':''}>${ATIV.map(a=>`<option>${a}</option>`).join('')}</select>
+        <textarea class="field" id="actTxt" placeholder="O que aconteceu? Ex.: falei com o diretor, pediu proposta para 3 lojas" ${ro?'disabled':''}></textarea>
+        <button class="btn pri sm" id="actAdd" type="button" ${ro?'disabled':''}>Registrar</button>
+      </div>
+    </div>
+
+    <div class="sec"><h3>Histórico</h3><ul class="timeline">
+      ${acts.map(a=>`<li><span class="when">${fmtDT(a.em)}</span><span><span class="k">${esc(a.tipo)}</span>${a.de?` <span class="muted">· ${esc(a.de)}</span>`:''}<br>${esc(a.txt)}</span></li>`).join('')}
+      ${(l.ev||[]).map(e=>`<li><span class="when">${fmtD(e[0])}</span><span class="ev-kind">Conversão no RD · <b>${esc(e[1])}</b></span></li>`).join('')}
+    </ul></div>
+  </div>
+  <div class="savebar"><span class="msg" id="saveMsg">${c.atualizado?'Atualizado em '+fmtDT(c.atualizado):'Ainda não trabalhado'}</span>
+    <button class="btn pri" id="dSave" type="button" ${ro?'disabled':''}>Salvar</button></div>`;
+  if(keepAct) $('actTxt').value = keepAct;
+  dr.hidden=false; $('scrim').hidden=false;
+  if(first) $('dClose').focus();
+}
+
+async function writeCrm(id, patch){
+  if(!S.db){ toast('Sem conexão com o banco: nada foi salvo.'); return false; }
+  const doc = Object.assign({}, crmOf(id), patch, {atualizado:new Date().toISOString()});
+  try{ await S.db.collection('crm').doc(id).set(doc); S.crm[id]=doc; return true; }
+  catch(e){
+    if(e && e.code==='invalid_argument'){ S.canWrite=false; $('roBanner').hidden=false; toast('Seu acesso é só de leitura.'); }
+    else if(e && e.code==='quota_exceeded') toast('O banco do CRM está cheio. Avise o dono da página.');
+    else toast('Não salvou. Verifique a conexão e tente de novo.');
+    return false;
+  }
+}
+async function myName(){ try{ return S.user ? (await S.user.name()) || '' : ''; }catch(e){ return ''; } }
+
+/* ---------- novo lead ---------- */
+function openNew(){
+  S.open=null; draft=null;
+  const evs = eventIndex(allLeads());
+  const dr=$('drawer');
+  dr.innerHTML = `<div class="dh"><div><h2 id="dName">Novo lead</h2><div class="sub">Cadastro manual, entra no CRM na hora.</div></div><button class="btn sm x" id="dClose" type="button">Fechar</button></div>
+  <form class="db" id="newForm"><div class="form">
+    <label class="full">Nome*<input class="field" id="nNome" required></label>
+    <label>Empresa<input class="field" id="nEmp"></label>
+    <label>Cargo<input class="field" id="nCargo"></label>
+    <label>Telefone / WhatsApp<input class="field" id="nFone" inputmode="tel"></label>
+    <label>E-mail<input class="field" id="nEmail" type="email"></label>
+    <label>Cidade<input class="field" id="nCid"></label>
+    <label>UF<input class="field" id="nUf" maxlength="2"></label>
+    <label class="full">Evento / origem<input class="field" id="nEv" list="evOpts" placeholder="Ex.: Indicação, ABF Franchising Expo 2026"><datalist id="evOpts">${evs.map(e=>`<option value="${esc(e.n)}">`).join('')}<option value="Indicação"><option value="Prospecção ativa"></datalist></label>
+    <label>Data do contato<input type="date" class="field" id="nData" value="${today()}"></label>
+  </div><div class="savebar" style="padding:0;border:0"><button class="btn pri" type="submit" ${S.canWrite?'':'disabled'}>Cadastrar lead</button></div></form>`;
+  dr.hidden=false; $('scrim').hidden=false; $('nNome').focus();
+}
+async function saveNew(ev){
+  ev.preventDefault();
+  if(!S.db) return toast('Sem conexão com o banco: nada foi salvo.');
+  const email = $('nEmail').value.trim().toLowerCase();
+  const id = (email || 'manual-'+Date.now().toString(36)).replace(/[^A-Za-z0-9_\-.~:@+]/g,'_').slice(0,180);
+  if(allLeads().some(l=>l.id===id)){ toast('Esse e-mail já está no CRM.'); openLead(id); return; }
+  const fone = $('nFone').value.trim();
+  const lead = {id, email: email||'', nome:$('nNome').value.trim(), empresa:$('nEmp').value.trim(), cargo:$('nCargo').value.trim(), fone,
+    cidade:$('nCid').value.trim(), uf:$('nUf').value.trim().toUpperCase(), listas:['Cadastro manual'],
+    ev:[[$('nData').value||today(), $('nEv').value.trim()||'Cadastro manual']], score:'B', criadoEm:new Date().toISOString()};
+  lead.ult = lead.ev[0][0];
+  try{ await S.db.collection('manuais').doc(id).set(lead); S.manual[id]=lead; renderEvents(); render(); toast('Lead cadastrado'); openLead(id); }
+  catch(e){ toast(e && e.code==='invalid_argument' ? 'Seu acesso é só de leitura.' : 'Não salvou. Tente de novo.'); }
+}
+
+/* ---------- exportar ---------- */
+async function exportCsv(){
+  const list = allLeads().filter(l=>matches(l)).sort(sorter());
+  const cols = [['Perfil',l=>scoreOf(l)],['Status',l=>ST[statusOf(l.id)].l],['Nome',l=>l.nome],['Cargo',l=>l.cargo],['Empresa',l=>l.empresa],['Telefone',l=>l.fone],['E-mail',l=>l.email],
+    ['Cidade',l=>l.cidade],['UF',l=>l.uf],['CNPJ',l=>l.cnpj],['Eventos',l=>(l.ev||[]).map(e=>e[1]+' ('+fmtD(e[0])+')').join(' | ')],['Responsável',l=>crmOf(l.id).resp||'Celio'],
+    ['Próximo passo',l=>crmOf(l.id).prox],['Follow-up',l=>crmOf(l.id).proxData],['Valor estimado',l=>crmOf(l.id).valor],['Observações',l=>crmOf(l.id).obs],
+    ['Última atividade',l=>{const a=(crmOf(l.id).ativ||[]).slice(-1)[0]; return a? fmtDT(a.em)+' '+a.tipo+': '+a.txt : '';}]];
+  const q = v => '"'+String(v??'').replace(/"/g,'""')+'"';
+  const csv = '﻿'+[cols.map(c=>q(c[0])).join(';')].concat(list.map(l=>cols.map(c=>q(c[1](l))).join(';'))).join('\r\n');
+  const dl = await claude.use('downloads').catch(()=>null);
+  if(!dl) return toast('Exportação indisponível nesta visualização.');
+  try{ await dl.save({filename:`crm-ledwave-${today()}.csv`, data:new Blob([csv],{type:'text/csv'})}); toast(`${list.length} leads exportados`); }
+  catch(e){ if(e && e.code!=='declined') toast('Não foi possível exportar.'); }
+}
+
+/* ---------- eventos de interface ---------- */
+document.addEventListener('click', async e=>{
+  const t = e.target.closest('button, tr[data-id], .scrim'); if(!t) return;
+  if(t.dataset.ev!==undefined){ S.ev=t.dataset.ev; S.shown=PAGE; renderEvents(); render(); return; }
+  if(t.dataset.st){ S.status = S.status===t.dataset.st?'':t.dataset.st; S.shown=PAGE; render(); return; }
+  if(t.dataset.due){ S.due = S.due===t.dataset.due?'':t.dataset.due; S.shown=PAGE; if(S.due) S.sort='follow', $('fSort').value='follow'; render(); return; }
+  if(t.matches('tr[data-id]')) return openLead(t.dataset.id);
+  if(t.id==='btnMore'){ S.shown+=PAGE; renderRows(); return; }
+  if(t.id==='btnClear'){ Object.assign(S,{ev:'',status:'',due:'',q:'',score:'',uf:'',lista:'',fone:false,shown:PAGE}); $('q').value=''; ['fScore','fUf','fLista'].forEach(i=>$(i).value=''); $('fFone').checked=false; renderEvents(); render(); return; }
+  if(t.id==='btnNew') return openNew();
+  if(t.id==='btnExport') return exportCsv();
+  if(t.id==='dClose' || t.id==='scrim'){ if(dirty() && !t.dataset.sure){ t.dataset.sure='1'; toast('Há alterações não salvas. Clique de novo para fechar sem salvar.'); return; } return closeLead(); }
+  if(t.dataset.copy){ try{ await navigator.clipboard.writeText(t.dataset.copy); toast('Copiado'); }catch(err){ toast('Selecione o texto para copiar'); } return; }
+  if(t.dataset.setSt && draft){ draft.status=t.dataset.setSt; document.querySelectorAll('[data-set-st]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.setSt===draft.status)); return; }
+  if(t.id==='dSave' && draft){
+    t.disabled=true; const prev = statusOf(S.open);
+    const patch = {...draft};
+    const ativ = (crmOf(S.open).ativ||[]).slice();
+    if(prev!==draft.status) ativ.push({em:new Date().toISOString(), tipo:'Status', txt:`${ST[prev].l} → ${ST[draft.status].l}`, de: await myName()});
+    patch.ativ = ativ;
+    if(await writeCrm(S.open, patch)){ toast('Salvo'); render(); } else t.disabled=false;
+    return;
+  }
+  if(t.id==='actAdd'){
+    const txt = $('actTxt').value.trim(); if(!txt) return toast('Escreva o que aconteceu antes de registrar.');
+    t.disabled=true;
+    const ativ = (crmOf(S.open).ativ||[]).concat([{em:new Date().toISOString(), tipo:$('actTipo').value, txt, de: await myName()}]);
+    const patch = {ativ};
+    if(statusOf(S.open)==='novo'){ patch.status='contato'; if(draft) draft.status='contato'; }
+    if(!crmOf(S.open).resp) patch.resp = draft ? draft.resp : 'Celio';
+    if(await writeCrm(S.open, patch)){ $('actTxt').value=''; toast('Atividade registrada'); render(); } else t.disabled=false;
+  }
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && e.target.matches('tr[data-id]')) openLead(e.target.dataset.id);
+  if(e.key==='Escape' && !$('drawer').hidden) closeLead();
+});
+document.addEventListener('input', e=>{
+  const id=e.target.id;
+  if(draft && {fResp:'resp',fPrio:'prio',fProx:'prox',fProxData:'proxData',fValor:'valor',fObs:'obs'}[id]) draft[{fResp:'resp',fPrio:'prio',fProx:'prox',fProxData:'proxData',fValor:'valor',fObs:'obs'}[id]] = e.target.value;
+});
+document.addEventListener('submit', e=>{ if(e.target.id==='newForm') saveNew(e); });
+let qT; $('q').addEventListener('input', e=>{ clearTimeout(qT); qT=setTimeout(()=>{ S.q=norm(e.target.value.trim()); S.shown=PAGE; render(); },150); });
+$('evSelect').addEventListener('change', e=>{ S.ev=e.target.value; S.shown=PAGE; renderEvents(); render(); });
+$('fScore').addEventListener('change', e=>{ S.score=e.target.value; S.shown=PAGE; render(); });
+$('fUf').addEventListener('change', e=>{ S.uf=e.target.value; S.shown=PAGE; render(); });
+$('fLista').addEventListener('change', e=>{ S.lista=e.target.value; S.shown=PAGE; render(); });
+$('fFone').addEventListener('change', e=>{ S.fone=e.target.checked; S.shown=PAGE; render(); });
+$('fSort').addEventListener('change', e=>{ S.sort=e.target.value; store('crm.sort',S.sort); render(); });
+
+/* ---------- carga ---------- */
+function fillSelects(){
+  const leads = allLeads();
+  const ufs = [...new Set(leads.map(l=>l.uf).filter(Boolean))].sort();
+  $('fUf').innerHTML = '<option value="">UF: todas</option>'+ufs.map(u=>`<option ${S.uf===u?'selected':''}>${u}</option>`).join('');
+  const ls = [...new Set(leads.flatMap(l=>l.listas||[]))].sort();
+  $('fLista').innerHTML = '<option value="">Planilha: todas</option>'+ls.map(u=>`<option value="${esc(u)}" ${S.lista===u?'selected':''}>${esc(u)}</option>`).join('');
+}
+function setSync(cls, txt){ $('sync').className='sync '+cls; $('syncTxt').textContent=txt; }
+
+(async function boot(){
+  const saved = store('crm.sort'); if(saved){ S.sort=saved; $('fSort').value=saved; }
+  render();
+  try{
+    const r = await fetch('leads.json'); const j = await r.json();
+    S.base = j.leads; S.geradoEm = j.geradoEm;
+  }catch(e){ $('empty').hidden=false; $('empty').textContent='Não consegui carregar a base de leads. Recarregue a página.'; return; }
+  fillSelects(); renderEvents(); render();
+
+  const [db, user] = await Promise.all([claude.use('db').catch(()=>null), claude.use('user').catch(()=>null)]);
+  S.user = user;
+  if(!db){ setSync('ro','Sem banco: só leitura'); $('roBanner').hidden=false; return; }
+  S.db = db;
+  const can = user ? await user.can('data.write') : null;
+  S.canWrite = can !== false;
+  if(!S.canWrite){ $('roBanner').hidden=false; setSync('ro','Só leitura'); }
+  if(S.open) renderDrawer();
+  const onErr = e => setSync('ro', e && e.code==='revoked' ? 'Acesso encerrado' : 'Sincronização parada, recarregue');
+  db.collection('crm').onSnapshot(snap=>{
+    const m={}; snap.docs.forEach(d=>m[d.id]=d.data()); S.crm=m;
+    if(S.canWrite) setSync('on','Sincronizado · '+Object.keys(m).length+' leads trabalhados');
+    render();
+  }, onErr);
+  db.collection('manuais').onSnapshot(snap=>{
+    const m={}; snap.docs.forEach(d=>m[d.id]=d.data()); S.manual=m; fillSelects(); renderEvents(); render();
+  }, onErr);
+})();
+</script>
