@@ -8,3 +8,6 @@ python3 -I crm/build_leads.py \
   "TradeCo 2026=$U/c1e90413-rd-ledwave-conversoes-tradeco-report-leads_rd.csv" \
   "7º Fórum RJ=$U/e1bba264-rd-ledwave-conversoes-copia-de-lista-varejistas-presentes-7-forum-rio-de-janeiro-varejistas-presentes.csv" \
   "Rede Brasil 2026=$U/3c46b37f-Lista_de_Presenc_a_Associados_-_8__Rodada_de_Nego_cios__2026.xlsx@8ª Rodada de Negócios Rede Brasil 2026@2026-09-01"
+
+# criptografa a base para publicar (senha em CRM_SENHA)
+python3 -I crm/encrypt_leads.py

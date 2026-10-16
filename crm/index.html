@@ -128,6 +128,13 @@ tbody tr:last-child td{border-bottom:0}
 .banner{background:var(--warn-soft);color:var(--warn);border-radius:var(--r);padding:8px 12px;font-size:13px;margin-bottom:12px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:13px;z-index:40}
 
+.lock{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+.lockbox{width:min(360px,100%);display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 24px}
+.lockbox h2{font:800 22px/1 var(--f-display);margin:0}
+.lockbox p{margin:0}
+.lockbox .field{width:100%;font-size:15px}
+.lockmsg{min-height:1.2em;font-size:13px;color:var(--bad)}
+
 @media (max-width:900px){
   .layout{grid-template-columns:minmax(0,1fr)}
   aside.events{display:none}
@@ -149,9 +156,23 @@ tbody tr:last-child td{border-bottom:0}
   </div>
   <span class="sp"></span>
   <span class="sync" id="sync"><b></b><span id="syncTxt">Conectando…</span></span>
+  <button class="btn" id="btnLock" type="button" title="Fecha o CRM e esquece a senha neste aparelho">Bloquear</button>
   <button class="btn" id="btnExport" type="button">Exportar CSV</button>
   <button class="btn pri" id="btnNew" type="button">+ Novo lead</button>
 </header>
+
+<div class="lock" id="lock">
+  <form class="lockbox" id="lockForm" hidden autocomplete="on">
+    <h2><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span> CRM WETAIL</h2>
+    <p class="muted">A base de leads é protegida. Digite a senha para abrir.</p>
+    <input type="text" name="username" value="CRM WETAIL" autocomplete="username" hidden>
+    <input type="password" class="field" id="senha" autocomplete="current-password" placeholder="Senha" aria-label="Senha">
+    <label class="chk"><input type="checkbox" id="lembrar"> Lembrar neste aparelho</label>
+    <button class="btn pri" id="lockBtn" type="submit">Abrir CRM</button>
+    <p class="lockmsg" id="lockMsg" role="status"></p>
+  </form>
+  <p class="muted" id="lockBusy">Carregando…</p>
+</div>
 
 <div id="roBanner" class="banner" hidden>Modo leitura: este acesso não grava alterações. Peça acesso de Colaborador ao dono da página para trabalhar os leads.</div>
 
@@ -512,15 +533,44 @@ function fillSelects(){
   const ls = [...new Set(leads.flatMap(l=>l.listas||[]))].sort();
   $('fLista').innerHTML = '<option value="">Planilha: todas</option>'+ls.map(u=>`<option value="${esc(u)}" ${S.lista===u?'selected':''}>${esc(u)}</option>`).join('');
 }
+/* ---------- senha: a base vem criptografada (AES-GCM, chave PBKDF2) e só abre com a senha ---------- */
+const b64 = s => Uint8Array.from(atob(s), c=>c.charCodeAt(0));
+async function decryptBase(enc, senha){
+  const mat = await crypto.subtle.importKey('raw', new TextEncoder().encode(senha), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({name:'PBKDF2', salt:b64(enc.salt), iterations:enc.iter, hash:'SHA-256'}, mat, {name:'AES-GCM', length:256}, false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({name:'AES-GCM', iv:b64(enc.iv)}, key, b64(enc.ct));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+async function unlock(){
+  let enc;
+  try{ enc = await (await fetch('leads.enc.json')).json(); }
+  catch(e){ $('lockBusy').textContent='Não consegui carregar a base. Recarregue a página.'; return null; }
+  const lembrada = store('crm.senha');
+  if(lembrada){ try{ const j = await decryptBase(enc, lembrada); $('lock').hidden=true; return j; }catch(e){ try{ localStorage.removeItem('crm.senha'); }catch(_){} } }
+  $('lockBusy').hidden=true; $('lockForm').hidden=false; $('senha').focus();
+  return new Promise(resolve=>{
+    $('lockForm').addEventListener('submit', async ev=>{
+      ev.preventDefault();
+      const senha = $('senha').value; if(!senha) return;
+      $('lockBtn').disabled=true; $('lockMsg').textContent='Abrindo…';
+      try{
+        const j = await decryptBase(enc, senha);
+        if($('lembrar').checked) store('crm.senha', senha);
+        $('senha').value=''; $('lock').hidden=true; resolve(j);
+      }catch(e){ $('lockMsg').textContent='Senha incorreta. Tente de novo.'; $('lockBtn').disabled=false; $('senha').select(); }
+    });
+  });
+}
+$('btnLock').addEventListener('click', ()=>{ try{ localStorage.removeItem('crm.senha'); }catch(e){} location.reload(); });
+
 function setSync(cls, txt){ $('sync').className='sync '+cls; $('syncTxt').textContent=txt; }
 
 (async function boot(){
   const saved = store('crm.sort'); if(saved){ S.sort=saved; $('fSort').value=saved; }
   render();
-  try{
-    const r = await fetch('leads.json'); const j = await r.json();
-    S.base = j.leads; S.geradoEm = j.geradoEm;
-  }catch(e){ $('empty').hidden=false; $('empty').textContent='Não consegui carregar a base de leads. Recarregue a página.'; return; }
+  const j = await unlock();
+  if(!j) return;
+  S.base = j.leads; S.geradoEm = j.geradoEm;
   fillSelects(); renderEvents(); render();
 
   const [db, user] = await Promise.all([claude.use('db').catch(()=>null), claude.use('user').catch(()=>null)]);
