@@ -212,6 +212,8 @@ class Gerador:
     def capa(self):
         s, sh = self._s("capa")
         texto(sh[163], f"{nome_mes(self.ref, cap=True)}/{self.ref[:4]}", par=2)
+        if 170 in sh:  # faixa vermelha (placeholder) do modelo
+            remover(sh[170])
 
     # --- Digital
     def _meses_ate_ref(self, aba, campo, desde_primeiro=False):
