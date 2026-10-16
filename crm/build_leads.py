@@ -103,13 +103,51 @@ SENIOR = re.compile(r'diretor|diretora|ceo|presidente|propriet|s[óo]ci|owner|fu
 MID = re.compile(r'gerente|coordenador|supervisor|manager|marketing|trade|compras|comprador|expans', re.I)
 VAREJO = re.compile(r'supermerc|mercado|atacad|varej|hiper|drogaria|farm[aá]cia|posto|loja|rede|super ', re.I)
 
+def load_rodada(path, evento_nome, data):
+    """Lista de presença de rodada de negócios (xlsx): REDE | PARTICIPANTES | CARGOS | TOTAL.
+    Uma linha pode ter vários participantes separados por "/" ou " e "."""
+    import openpyxl
+    ws = openpyxl.load_workbook(path, data_only=True).active
+    out = []
+    for row in ws.iter_rows(values_only=True):
+        cells = [c for c in row if c is not None]
+        if len(cells) < 3 or not isinstance(cells[1], str) or cells[0] in ('REDES', 'REDES PARTICIPANTES'): continue
+        rede, nomes, cargos = fix(str(cells[0])), fix(cells[1]), fix(str(cells[2]))
+        obs = '; '.join(re.findall(r'\(([^)]*)\)', cargos))
+        cargos = re.sub(r'\([^)]*\)', '', cargos).replace('Comercila', 'Comercial')
+        split = lambda t: [x.strip() for x in re.split(r'\s*/\s*|\s+e\s+', t) if x.strip()]
+        ns, cs = split(nomes), split(cargos)
+        # "Gerente Comercial e Marketing" é um cargo só: junta pedaço sem título ao anterior
+        TITULO = re.compile(r'gerente|diretor|comprador|ceo|presidente|coordenador|supervisor|analista|s[óo]ci|propriet', re.I)
+        merged = []
+        for c in cs:
+            if merged and not TITULO.search(c): merged[-1] += ' e ' + c
+            else: merged.append(c)
+        cs = merged or [cargos.strip()]
+        for i, n in enumerate(ns):
+            cargo = cs[min(i, len(cs) - 1)]
+            out.append({'Email': 'rb-' + re.sub(r'[^a-z0-9]+', '-', norm_ascii(rede + ' ' + n)).strip('-'),
+                        'Nome': n, 'Cargo': cargo, 'Empresa': rede, 'Data da Conversão': data,
+                        'Identificador': evento_nome, 'Segmento de atuação': 'Supermercado · Rede Brasil',
+                        'Mensagem/Observações': obs})
+    return out
+
+def norm_ascii(t):
+    return unicodedata.normalize('NFKD', t).encode('ascii', 'ignore').decode().lower()
+
 leads = {}
 for arg in sys.argv[1:]:
     label, path = arg.split('=', 1)
-    for r in load(path):
+    if '@' in path:  # rodada.xlsx@Nome do evento@AAAA-MM-DD
+        path, evento_nome, data = path.split('@')
+        rows = load_rodada(path, evento_nome, data)
+    else:
+        rows = load(path)
+    for r in rows:
         email = fix(r.get('Email', '')).lower()
-        if '@' not in email or email.endswith('@ledwave.com.br'): continue
-        L = leads.setdefault(email, {'id': lead_id(email), 'email': email, 'listas': [], 'ev': [], '_d': {}})
+        sem_email = email.startswith('rb-')  # participante de rodada, sem e-mail na lista
+        if not sem_email and ('@' not in email or email.endswith('@ledwave.com.br')): continue
+        L = leads.setdefault(email, {'id': lead_id(email), 'email': '' if sem_email else email, 'listas': [], 'ev': [], '_d': {}})
         if label not in L['listas']: L['listas'].append(label)
         date = r.get('Data da Conversão', '')[:10]
         ev = (date, evento(fix(r.get('Identificador', ''))))
@@ -119,7 +157,7 @@ for arg in sys.argv[1:]:
         fields = {
             'nome': nice_name(r.get('Nome', '')),
             'cargo': fix(r.get('Cargo', '')),
-            'empresa': fix(r.get('Empresa') or r.get('Nome da Empresa') or ''),
+            'empresa': nice_name(r.get('Empresa') or r.get('Nome da Empresa') or ''),
             'fone': phone(r.get('Celular') or r.get('Celular (WhatsApp)') or r.get('Telefone') or ''),
             'cidade': fix(r.get('Cidade', '')),
             'uf': fix(r.get('Estado', '')).upper()[:2],
@@ -159,7 +197,7 @@ for L in leads.values():
     if any(e[1].startswith('Site') for e in L['ev']): s += 1  # já procurou a LedWave
     if L.get('necessidade') or L.get('mensagem'): s += 2
     if L.get('perfil') in ('EXPOSITOR', 'EXPOSITOR DE 1 DIA', 'BUFFET'): s -= 1
-    if not L.get('fone'): s -= 1
+    if not L.get('fone') and not L['id'].startswith('rb-'): s -= 1
     L['score'] = 'A' if s >= 4 else ('B' if s >= 2 else 'C')
     out.append({k: v for k, v in L.items() if v not in ('', [], None)})
 

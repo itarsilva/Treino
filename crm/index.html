@@ -346,7 +346,7 @@ function renderDrawer(first){
   <div class="db">
     <div class="sec"><h3>Contato</h3><dl class="kv">
       <dt>Telefone</dt><dd>${l.fone?`<span class="mono">${esc(l.fone)}</span> <button class="btn sm" data-copy="${esc(l.fone)}" type="button">Copiar</button>${wa?` <a class="btn sm" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>`:''}`:'<span class="muted">sem telefone</span>'}</dd>
-      <dt>E-mail</dt><dd><span>${esc(l.email)}</span> <button class="btn sm" data-copy="${esc(l.email)}" type="button">Copiar</button></dd>
+      <dt>E-mail</dt><dd>${l.email?`<span>${esc(l.email)}</span> <button class="btn sm" data-copy="${esc(l.email)}" type="button">Copiar</button>`:'<span class="muted">sem e-mail na lista</span>'}</dd>
       ${l.cidade||l.uf?`<dt>Local</dt><dd>${esc([l.cidade,l.uf].filter(Boolean).join(' / '))}</dd>`:''}
       ${l.cnpj?`<dt>CNPJ/CPF</dt><dd class="mono">${esc(l.cnpj)}</dd>`:''}
       ${l.porte?`<dt>Porte (RD)</dt><dd>${brl(l.porte)}</dd>`:''}
