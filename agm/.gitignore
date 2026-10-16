@@ -1,6 +1,0 @@
-# dados da empresa ficam fora do repositório
-*.xlsx
-*.pptx
-*.pdf
-fontes/
-__pycache__/
