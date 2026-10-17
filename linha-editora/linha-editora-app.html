@@ -1,0 +1,711 @@
+<title>Linha Editora</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra lateral fixa com as áreas da editora; conteúdo à direita. No celular, a barra vira abas roláveis no topo. */
+:root {
+  --bg: #F3F5F3; --surface: #FFFFFF; --ink: #16211D; --muted: #5D6B66; --line: #DCE3DF;
+  --accent: #1F6B53; --accent-ink: #FFFFFF; --accent-soft: #E1EEE8; --chip: #ECF0EE;
+  --warn: #8F5600; --warn-soft: #FBEED6; --bad: #A8241C; --bad-soft: #F8E0DD; --good: #256B43; --good-soft: #DFF0E5;
+  --shadow: 0 10px 30px rgba(22, 33, 29, .14);
+  --display: "Literata", Georgia, "Times New Roman", serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F1513; --surface: #161E1B; --ink: #E4ECE8; --muted: #93A39C; --line: #27332F;
+  --accent: #5DBF9A; --accent-ink: #0B1411; --accent-soft: #1A2D26; --chip: #1F2926;
+  --warn: #E5AA55; --warn-soft: #33291A; --bad: #F08B81; --bad-soft: #3A201D; --good: #7CCB9A; --good-soft: #1A2E22;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .5); color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0F1513; --surface: #161E1B; --ink: #E4ECE8; --muted: #93A39C; --line: #27332F;
+  --accent: #5DBF9A; --accent-ink: #0B1411; --accent-soft: #1A2D26; --chip: #1F2926;
+  --warn: #E5AA55; --warn-soft: #33291A; --bad: #F08B81; --bad-soft: #3A201D; --good: #7CCB9A; --good-soft: #1A2E22;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .5); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.5 var(--body); }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 100%; }
+.side { background: var(--surface); border-right: 1px solid var(--line); padding-block: 24px; padding-inline: 16px; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 20px; }
+.brand { font-family: var(--display); font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.1; padding-inline: 8px; }
+.brand::after { content: ""; display: block; height: 2px; width: 100%; margin-top: 10px; background: linear-gradient(90deg, var(--accent) 0 38%, var(--line) 38%); }
+.brand small { display: block; font: 500 10px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+nav { display: flex; flex-direction: column; gap: 2px; }
+.navgroup { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 12px 10px 4px; }
+nav button { all: unset; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border-radius: 6px; color: var(--ink); }
+nav button:hover { background: var(--chip); }
+nav button[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+nav button .n { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+nav button:focus-visible { outline: 2px solid var(--accent); }
+.side .foot { margin-top: auto; font-size: 11px; color: var(--muted); padding-inline: 10px; }
+
+main { padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); min-width: 0; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 16px; display: flex; flex-direction: column; gap: 20px; }
+.head { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; justify-content: space-between; }
+h1 { font-family: var(--display); font-weight: 600; font-size: 30px; line-height: 1.15; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); margin: 4px 0 0; max-width: 62ch; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 17px; margin: 0; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.search { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 12px; width: 220px; max-width: 100%; }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 14px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.danger { color: var(--bad); }
+.btn.danger.armed { background: var(--bad); color: var(--surface); border-color: var(--bad); }
+.btn.small { padding: 4px 10px; font-size: 12px; }
+
+.banner { border: 1px solid var(--line); background: var(--warn-soft); color: var(--ink); border-radius: 8px; padding: 10px 14px; }
+.banner[hidden] { display: none; }
+
+/* Painel */
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.kpi { background: var(--surface); padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+.kpi .l { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.kpi .v { font: 600 24px/1.2 var(--display); font-variant-numeric: tabular-nums; }
+.kpi .h { font-size: 12px; color: var(--muted); }
+.kpi .v.bad { color: var(--bad); } .kpi .v.good { color: var(--good); }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.bars { display: flex; flex-direction: column; gap: 8px; }
+.bar { display: grid; grid-template-columns: 130px minmax(0, 1fr) 110px; gap: 10px; align-items: center; font-size: 13px; }
+.bar .track { height: 10px; background: var(--chip); border-radius: 5px; overflow: hidden; }
+.bar .fill { height: 100%; background: var(--accent); border-radius: 5px; }
+.bar .amt { text-align: right; font: 12px var(--mono); font-variant-numeric: tabular-nums; }
+.list { display: flex; flex-direction: column; }
+.list .it { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); align-items: center; }
+.list .it:first-child { border-top: 0; }
+.list .it .t { min-width: 0; }
+.list .it .t b { font-weight: 600; }
+.list .it .t div { color: var(--muted); font-size: 12px; }
+.empty { color: var(--muted); padding: 8px 0; }
+
+/* Tabelas */
+.tablebox { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th { text-align: left; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; background: var(--surface); position: sticky; top: 0; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr { cursor: pointer; }
+tbody tr:hover td { background: var(--chip); }
+tbody tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mono { font-family: var(--mono); font-size: 12px; }
+td.wrap { min-width: 180px; }
+.chip { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--chip); font-size: 12px; white-space: nowrap; }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+.chip.acc { background: var(--accent-soft); color: var(--accent); }
+.ex { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--warn); margin-left: 6px; }
+.tfoot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 12px; }
+.blank { text-align: center; padding: 40px 20px; color: var(--muted); display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.blank b { color: var(--ink); font-family: var(--display); font-size: 17px; font-weight: 600; }
+
+/* Funil */
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 6px; }
+.col { background: var(--chip); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 120px; }
+.col header { display: flex; justify-content: space-between; align-items: baseline; padding: 2px 4px 6px; }
+.col header b { font-weight: 600; font-size: 13px; }
+.col header span { font: 11px var(--mono); color: var(--muted); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px; cursor: pointer; }
+.card:hover { border-color: var(--muted); }
+.card .who { font-size: 12px; color: var(--muted); }
+.card .what { font-weight: 600; line-height: 1.3; }
+.card .row { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; }
+.card .val { font: 500 13px var(--mono); }
+.card select { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 3px 6px; font-size: 12px; width: 100%; }
+
+/* Formulário */
+dialog { border: 1px solid var(--line); border-radius: 12px; padding: 0; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); width: min(680px, calc(100vw - 32px)); max-height: calc(100vh - 48px); }
+dialog::backdrop { background: rgba(10, 16, 14, .45); }
+dialog form { display: flex; flex-direction: column; max-height: calc(100vh - 50px); }
+.dh { padding: 18px 22px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.db { padding: 16px 22px; overflow-y: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }
+.df { padding: 14px 22px 18px; border-top: 1px solid var(--line); display: flex; gap: 8px; justify-content: space-between; flex-wrap: wrap; }
+.df .r { display: flex; gap: 8px; margin-left: auto; }
+.f { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.f.full { grid-column: 1 / -1; }
+.f label { font-size: 12px; color: var(--muted); font-weight: 500; }
+.f input, .f select, .f textarea { border: 1px solid var(--line); background: var(--bg); border-radius: 7px; padding: 8px 10px; width: 100%; }
+.f textarea { min-height: 72px; resize: vertical; }
+.f .hint { font-size: 11px; color: var(--muted); }
+.x { all: unset; cursor: pointer; font-size: 22px; line-height: 1; color: var(--muted); padding: 4px; }
+.sec { grid-column: 1 / -1; margin: 8px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font: 600 11px var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.err { color: var(--bad); font-size: 12px; grid-column: 1 / -1; }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 8px; box-shadow: var(--shadow); font-size: 13px; z-index: 50; }
+
+@media (max-width: 1000px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid2 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 820px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+  .side { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; height: auto; border-right: 0; border-bottom: 1px solid var(--line); padding-block: 12px 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); gap: 8px; }
+  .brand { font-size: 18px; padding: 0; } .brand small { display: none; } .brand::after { margin-top: 6px; }
+  nav { flex-direction: row; overflow-x: auto; gap: 4px; padding-bottom: 4px; }
+  .navgroup, .side .foot, nav button .n { display: none; }
+  nav button { white-space: nowrap; padding: 6px 10px; }
+  main { padding-block: 18px 48px; }
+  .wrap { padding-inline: 0; }
+  h1 { font-size: 24px; }
+  .db { grid-template-columns: minmax(0, 1fr); }
+  .bar { grid-template-columns: 100px minmax(0, 1fr) 92px; }
+}
+@media (prefers-reduced-motion: no-preference) { .card, .btn, nav button { transition: background .15s, border-color .15s; } }
+</style>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">Linha Editora<small>Gestão editorial &amp; CRM</small></div>
+    <nav id="nav" aria-label="Áreas"></nav>
+    <div class="foot" id="who">Dados compartilhados com a equipe</div>
+  </aside>
+  <main><div class="wrap" id="view"></div></main>
+</div>
+
+<dialog id="dlg"><form id="frm" method="dialog" novalidate></form></dialog>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+// ---------- Configuração ----------
+const L = {
+  genero: ["Romance", "Contos", "Poesia", "Não-ficção", "Biografia", "Infantil", "Juvenil", "Ensaio", "Técnico", "HQ"],
+  formato: ["Brochura", "Capa dura", "E-book", "Audiolivro", "Box"],
+  statusTitulo: ["Em avaliação", "Contratado", "Em produção", "Pré-venda", "Publicado", "Esgotado", "Fora de catálogo"],
+  etapa: ["Recebimento de original", "Leitura crítica", "Edição", "Preparação de texto", "Revisão", "Diagramação", "Capa", "Prova gráfica", "ISBN/Ficha catalográfica", "Gráfica", "Distribuição"],
+  statusTarefa: ["Não iniciado", "Em andamento", "Aguardando", "Concluído"],
+  tipoContato: ["Livraria", "Distribuidora", "Marketplace", "Escola/Governo", "Imprensa", "Influenciador", "Evento/Feira", "Leitor", "Fornecedor", "Autor prospect"],
+  canal: ["Site próprio", "Amazon", "Livrarias", "Distribuidora", "Feiras/Eventos", "Venda direta", "Governo/Escolas", "E-book"],
+  origem: ["Indicação", "Instagram", "Site", "Feira", "Prospecção ativa", "E-mail", "Evento"],
+  tipoInteracao: ["Ligação", "E-mail", "WhatsApp", "Reunião", "Visita", "Envio de amostra", "Proposta"],
+  tipoFin: ["Receita", "Despesa"],
+  categoria: ["Venda de livros", "Direitos/Licenciamento", "Edital/Incentivo", "Livro (produção)", "Gráfica", "Revisão/Edição", "Diagramação/Capa", "Serviço", "Royalties", "Marketing", "Comunicação", "Tecnologia", "Contabilidade", "CNPJ/Registros", "Financeiro", "Operacional", "Produto", "Frete/Correios", "Eventos", "Impostos/Tributos"],
+  mov: ["Venda", "Consignação", "Acerto de consignação", "Devolução de consignação", "Doação", "Divulgação", "Direitos autorais"],
+  entrega: ["Pendente", "Enviado", "Entregue"],
+  simnao: ["Sim", "Não"],
+};
+// Probabilidade padrão por etapa do funil (referência genérica; ajuste à realidade da editora)
+const FUNIL = [["Lead", .10], ["Contato feito", .20], ["Amostra enviada", .35], ["Proposta", .50], ["Negociação", .75], ["Fechado - ganho", 1], ["Fechado - perdido", 0]];
+const PROB = Object.fromEntries(FUNIL);
+const COLS = ["titulos", "autores", "producao", "contatos", "oportunidades", "interacoes", "vendas", "financeiro"];
+const D = Object.fromEntries(COLS.map(c => [c, []]));
+const loaded = new Set();
+let db = null, canWrite = true, dbState = "loading";
+
+// ---------- Utilidades ----------
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const nf = new Intl.NumberFormat("pt-BR");
+const cf = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+const num = v => { const n = typeof v === "number" ? v : parseFloat(String(v ?? "").replace(/\./g, "").replace(",", ".")); return isFinite(n) ? n : 0; };
+const brl = v => cf.format(num(v));
+const pct = v => (v === "" || v == null || !isFinite(v)) ? "—" : (v * 100).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + "%";
+const today = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
+const dt = s => s ? s.split("-").reverse().join("/") : "—";
+const days = (a, b) => Math.round((new Date(b) - new Date(a)) / 864e5);
+const sum = (arr, f) => arr.reduce((s, x) => s + num(f(x)), 0);
+const by = (col, k, v) => D[col].find(r => r[k] === v);
+const toast = msg => { const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => t.hidden = true, 2600); };
+
+// ---------- Cálculos ----------
+const tituloDe = isbn => by("titulos", "isbn", isbn);
+const contato = id => D.contatos.find(c => c.id === id);
+const isVenda = v => v.tipo === "Venda" || v.tipo === "Acerto de consignação" || !v.tipo;
+const SEM_VENDA = ["Doação", "Divulgação", "Direitos autorais"];
+const qtd = (isbn, tipos) => sum(D.vendas.filter(v => v.isbn === isbn && tipos.includes(v.tipo || "Venda")), v => v.quantidade);
+const vendaCapa = v => num(v.quantidade) * num(tituloDe(v.isbn)?.preco);
+const vendaReceita = v => isVenda(v) ? num(v.valor) : 0;
+const vendidos = isbn => qtd(isbn, ["Venda", "Acerto de consignação"]);
+const consignado = isbn => qtd(isbn, ["Consignação"]) - qtd(isbn, ["Acerto de consignação", "Devolução de consignação"]);
+const semVenda = isbn => qtd(isbn, SEM_VENDA);
+const estoque = isbn => num(tituloDe(isbn)?.tiragem) - qtd(isbn, ["Venda", "Consignação", ...SEM_VENDA]) + qtd(isbn, ["Devolução de consignação"]);
+const CUSTOS = ["traducao", "revisao", "diagramacao", "capaCriacao", "isbnCusto", "extras", "impressao"];
+const custoTotal = t => sum(CUSTOS, k => t[k]);
+const custoUnit = t => num(t.custo) || (num(t.tiragem) ? custoTotal(t) / num(t.tiragem) : 0);
+const consigPorCliente = () => { const m = {}; for (const v of D.vendas) { const k = v.cliente || "—", s = v.tipo === "Consignação" ? 1 : ["Acerto de consignação", "Devolução de consignação"].includes(v.tipo) ? -1 : 0; if (s) { m[k] = m[k] || { q: 0, capa: 0 }; m[k].q += s * num(v.quantidade); m[k].capa += s * vendaCapa(v); } } return Object.entries(m).filter(([, x]) => x.q > 0).sort((a, b) => b[1].q - a[1].q); };
+const royaltiesGerados = a => sum(D.vendas.filter(v => isVenda(v) && tituloDe(v.isbn)?.autor === a.nome), vendaCapa) * num(a.royalty) / 100;
+const saldoAutor = a => Math.max(0, royaltiesGerados(a) - num(a.adiantamento));
+const atrasoProd = p => !p.prazo || p.status === "Concluído" && !p.conclusao ? 0 : Math.max(0, days(p.prazo, p.conclusao || today()));
+const ultimaInteracao = id => D.interacoes.filter(i => i.contatoId === id).map(i => i.data).sort().pop();
+const situacaoOp = o => {
+  if ((o.etapa || "").startsWith("Fechado")) return ["Encerrada", ""];
+  if (!o.dataAcao) return ["Sem ação", "warn"];
+  const d = days(today(), o.dataAcao);
+  return d < 0 ? ["Atrasada", "bad"] : d <= 3 ? ["Esta semana", "warn"] : ["No prazo", "good"];
+};
+const chipStatus = s => {
+  const m = { "Entregue": "good", "Enviado": "acc", "Pendente": "warn", "Venda": "good", "Acerto de consignação": "good", "Consignação": "acc", "Devolução de consignação": "", "Doação": "warn", "Divulgação": "warn", "Direitos autorais": "warn", "Publicado": "good", "Concluído": "good", "Pré-venda": "acc", "Em produção": "acc", "Em andamento": "acc", "Aguardando": "warn", "Esgotado": "bad", "Fora de catálogo": "", "Receita": "good", "Despesa": "bad", "Sim": "good", "Não": "" };
+  return s ? `<span class="chip ${m[s] ?? ""}">${esc(s)}</span>` : "—";
+};
+
+// ---------- Esquema das áreas ----------
+const refOpts = {
+  titulos: () => D.titulos.map(t => [t.isbn, `${t.titulo} · ${t.isbn}`]),
+  tituloNome: () => D.titulos.map(t => [t.titulo, t.titulo]),
+  autores: () => D.autores.map(a => [a.nome, a.nome]),
+  contatos: () => D.contatos.map(c => [c.id, c.nome]),
+  contatoNome: () => D.contatos.map(c => [c.nome, c.nome]),
+};
+const S = {
+  titulos: {
+    nav: "Catálogo", group: "Editorial", one: "título", sub: "Todos os títulos da editora, do original ao fora de catálogo. O ISBN liga vendas, estoque e royalties.",
+    fields: [
+      { k: "titulo", l: "Título", req: 1, full: 1 },
+      { k: "isbn", l: "ISBN", req: 1, mono: 1, hint: "Ex.: 978-65-00000-01-1 (978-65 é o prefixo do Brasil)" },
+      { k: "autor", l: "Autor", t: "ref", ref: "autores", hint: "Cadastre o autor na aba Autores" },
+      { k: "genero", l: "Gênero", t: "sel", o: L.genero }, { k: "formato", l: "Tipo de capa", t: "sel", o: L.formato },
+      { k: "dimensoes", l: "Formato (cm)", hint: "Ex.: 14x21 cm" }, { k: "paginas", l: "Páginas", t: "int" },
+      { k: "tiragem", l: "Tiragem (exemplares)", t: "int" }, { k: "preco", l: "Preço de capa (R$)", t: "money" },
+      { k: "lancamento", l: "Lançamento", t: "date" }, { k: "status", l: "Status", t: "sel", o: L.statusTitulo },
+      { k: "deposito", l: "Depósito / local do estoque" },
+      { sec: "Custo de produção da tiragem" },
+      { k: "traducao", l: "Tradução (R$)", t: "money" }, { k: "revisao", l: "Revisão (R$)", t: "money" },
+      { k: "diagramacao", l: "Diagramação (R$)", t: "money" }, { k: "capaCriacao", l: "Criação de capa (R$)", t: "money" },
+      { k: "isbnCusto", l: "ISBN + ficha + código de barras (R$)", t: "money" }, { k: "impressao", l: "Impressão (R$)", t: "money" },
+      { k: "extras", l: "Despesas extras (R$)", t: "money" },
+      { k: "custo", l: "Custo unitário manual (R$)", t: "money", hint: "Deixe vazio para calcular: custo total ÷ tiragem" },
+      { k: "obs", l: "Observações", t: "area", full: 1 },
+    ],
+    cols: [
+      { l: "Título", v: r => `<b>${esc(r.titulo)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div class="mono" style="color:var(--muted)">${esc(r.isbn)}</div>`, cls: "wrap" },
+      { l: "Autor", v: r => esc(r.autor || "—") },
+      { l: "Preço", v: r => brl(r.preco), cls: "num" },
+      { l: "Custo un.", v: r => custoUnit(r) ? brl(custoUnit(r)) : "—", cls: "num" },
+      { l: "Margem", v: r => num(r.preco) && custoUnit(r) ? pct((num(r.preco) - custoUnit(r)) / num(r.preco)) : "—", cls: "num" },
+      { l: "Tiragem", v: r => r.tiragem ? nf.format(num(r.tiragem)) : "—", cls: "num" },
+      { l: "Na editora", v: r => { const e = estoque(r.isbn); return r.tiragem ? `<span class="chip ${e < 50 ? "bad" : ""}">${nf.format(e)}</span>` : "—"; }, cls: "num" },
+      { l: "Consignado", v: r => nf.format(consignado(r.isbn)), cls: "num" },
+      { l: "Vendidos", v: r => nf.format(vendidos(r.isbn)), cls: "num" },
+      { l: "Doados/autor", v: r => nf.format(semVenda(r.isbn)), cls: "num" },
+      { l: "Status", v: r => chipStatus(r.status) },
+    ],
+    sort: (a, b) => (b.lancamento || "").localeCompare(a.lancamento || ""),
+    text: r => [r.titulo, r.isbn, r.autor, r.genero, r.status].join(" "),
+    foot: rows => `Investimento em produção: ${brl(sum(rows, custoTotal))}`,
+  },
+  autores: {
+    nav: "Autores", group: "Editorial", one: "autor", sub: "Contratos e royalties. Os royalties são calculados sobre o preço de capa dos exemplares vendidos, descontando o adiantamento.",
+    fields: [
+      { k: "nome", l: "Nome", req: 1, full: 1 }, { k: "email", l: "E-mail", t: "email" }, { k: "telefone", l: "Telefone" },
+      { k: "cidade", l: "Cidade/UF" }, { k: "agente", l: "Agente literário" },
+      { k: "contrato", l: "Nº do contrato" }, { k: "royalty", l: "Royalties (% s/ preço de capa)", t: "num", hint: "Referência de mercado: 8% a 12%" },
+      { k: "inicio", l: "Início do contrato", t: "date" }, { k: "fim", l: "Fim do contrato", t: "date" },
+      { k: "adiantamento", l: "Adiantamento pago (R$)", t: "money" }, { k: "redes", l: "Redes sociais" },
+      { k: "obs", l: "Observações", t: "area", full: 1 },
+    ],
+    cols: [
+      { l: "Autor", v: r => `<b>${esc(r.nome)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc(r.email || "")}</div>`, cls: "wrap" },
+      { l: "Títulos", v: r => D.titulos.filter(t => t.autor === r.nome).length, cls: "num" },
+      { l: "Royalties", v: r => r.royalty ? r.royalty + "%" : "—", cls: "num" },
+      { l: "Adiantamento", v: r => brl(r.adiantamento), cls: "num" },
+      { l: "Gerado", v: r => brl(royaltiesGerados(r)), cls: "num" },
+      { l: "A pagar", v: r => { const s = saldoAutor(r); return s > 0 ? `<span class="chip warn">${brl(s)}</span>` : brl(0); }, cls: "num" },
+      { l: "Contrato até", v: r => { if (!r.fim) return "—"; const d = days(today(), r.fim); return `<span class="chip ${d < 0 ? "bad" : d < 180 ? "warn" : ""}">${dt(r.fim)}</span>`; }, cls: "num" },
+    ],
+    sort: (a, b) => (a.nome || "").localeCompare(b.nome || ""),
+    text: r => [r.nome, r.email, r.cidade, r.agente].join(" "),
+  },
+  producao: {
+    nav: "Produção", group: "Editorial", one: "etapa", sub: "Cronograma editorial: uma linha por etapa de cada título. Prazos vencidos aparecem em vermelho.",
+    fields: [
+      { k: "titulo", l: "Título", t: "ref", ref: "tituloNome", req: 1 }, { k: "etapa", l: "Etapa", t: "sel", o: L.etapa, req: 1 },
+      { k: "responsavel", l: "Responsável" }, { k: "status", l: "Status", t: "sel", o: L.statusTarefa },
+      { k: "inicio", l: "Início", t: "date" }, { k: "prazo", l: "Prazo", t: "date" }, { k: "conclusao", l: "Concluído em", t: "date" },
+      { k: "custoPrev", l: "Custo previsto (R$)", t: "money" }, { k: "custoReal", l: "Custo real (R$)", t: "money" },
+      { k: "notas", l: "Notas", t: "area", full: 1 },
+    ],
+    cols: [
+      { l: "Título", v: r => `<b>${esc(r.titulo)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}`, cls: "wrap" },
+      { l: "Etapa", v: r => esc(r.etapa) },
+      { l: "Responsável", v: r => esc(r.responsavel || "—") },
+      { l: "Prazo", v: r => dt(r.prazo), cls: "num" },
+      { l: "Status", v: r => chipStatus(r.status) },
+      { l: "Atraso", v: r => { const a = atrasoProd(r); return a > 0 ? `<span class="chip bad">${a} dia${a > 1 ? "s" : ""}</span>` : "—"; }, cls: "num" },
+      { l: "Custo real", v: r => r.custoReal ? brl(r.custoReal) : `<span style="color:var(--muted)">${r.custoPrev ? "prev. " + brl(r.custoPrev) : "—"}</span>`, cls: "num" },
+    ],
+    sort: (a, b) => (a.titulo || "").localeCompare(b.titulo || "") || L.etapa.indexOf(a.etapa) - L.etapa.indexOf(b.etapa),
+    text: r => [r.titulo, r.etapa, r.responsavel, r.status].join(" "),
+  },
+  contatos: {
+    nav: "Contatos", group: "CRM", one: "contato", sub: "Livrarias, distribuidoras, imprensa, influenciadores, escolas e leitores com quem a editora se relaciona.",
+    fields: [
+      { k: "nome", l: "Nome / empresa", req: 1, full: 1 }, { k: "tipo", l: "Tipo", t: "sel", o: L.tipoContato },
+      { k: "pessoa", l: "Pessoa de contato" }, { k: "cargo", l: "Cargo" }, { k: "email", l: "E-mail", t: "email" },
+      { k: "telefone", l: "Telefone / WhatsApp" }, { k: "cidade", l: "Cidade/UF" }, { k: "origem", l: "Origem", t: "sel", o: L.origem },
+      { k: "responsavel", l: "Responsável na editora" }, { k: "ativo", l: "Ativo?", t: "sel", o: L.simnao },
+      { k: "obs", l: "Observações", t: "area", full: 1 },
+    ],
+    cols: [
+      { l: "Contato", v: r => `<b>${esc(r.nome)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc([r.pessoa, r.cidade].filter(Boolean).join(" · "))}</div>`, cls: "wrap" },
+      { l: "Tipo", v: r => r.tipo ? `<span class="chip">${esc(r.tipo)}</span>` : "—" },
+      { l: "E-mail / telefone", v: r => `<div>${esc(r.email || "")}</div><div class="mono">${esc(r.telefone || "")}</div>` },
+      { l: "Responsável", v: r => esc(r.responsavel || "—") },
+      { l: "Última interação", v: r => { const u = ultimaInteracao(r.id); if (!u) return "—"; const d = days(u, today()); return `<span class="chip ${d > 60 ? "warn" : ""}">${dt(u)}</span>`; }, cls: "num" },
+      { l: "Consignado", v: r => { const c = consigPorCliente().find(([k]) => k === r.nome); return c ? nf.format(c[1].q) + " ex." : "—"; }, cls: "num" },
+      { l: "Comprado", v: r => brl(sum(D.vendas.filter(v => v.cliente === r.nome), vendaReceita)), cls: "num" },
+      { l: "Ativo", v: r => chipStatus(r.ativo) },
+    ],
+    sort: (a, b) => (a.nome || "").localeCompare(b.nome || ""),
+    text: r => [r.nome, r.pessoa, r.tipo, r.cidade, r.email, r.responsavel].join(" "),
+  },
+  oportunidades: {
+    nav: "Funil de vendas", group: "CRM", one: "oportunidade", board: 1,
+    sub: "Negócios em andamento: consignação em livrarias, pedidos de distribuidoras, compras de escolas e parcerias. Mude a etapa direto no cartão.",
+    fields: [
+      { k: "oportunidade", l: "Oportunidade", req: 1, full: 1 }, { k: "contatoId", l: "Contato", t: "ref", ref: "contatos", req: 1 },
+      { k: "titulos", l: "Título(s)" }, { k: "etapa", l: "Etapa do funil", t: "sel", o: FUNIL.map(f => f[0]), req: 1 },
+      { k: "valor", l: "Valor estimado (R$)", t: "money" }, { k: "responsavel", l: "Responsável" },
+      { k: "proximaAcao", l: "Próxima ação" }, { k: "dataAcao", l: "Data da próxima ação", t: "date" },
+      { k: "fechamento", l: "Fechamento previsto", t: "date" }, { k: "obs", l: "Observações", t: "area", full: 1 },
+    ],
+    text: r => [r.oportunidade, contato(r.contatoId)?.nome, r.titulos, r.responsavel, r.proximaAcao].join(" "),
+  },
+  interacoes: {
+    nav: "Interações", group: "CRM", one: "interação", sub: "Histórico de ligações, e-mails, reuniões e amostras enviadas para cada contato.",
+    fields: [
+      { k: "data", l: "Data", t: "date", req: 1, def: today }, { k: "contatoId", l: "Contato", t: "ref", ref: "contatos", req: 1 },
+      { k: "tipo", l: "Tipo", t: "sel", o: L.tipoInteracao }, { k: "responsavel", l: "Responsável" },
+      { k: "resumo", l: "Resumo", t: "area", full: 1 }, { k: "resultado", l: "Resultado / próximo passo", full: 1 },
+    ],
+    cols: [
+      { l: "Data", v: r => dt(r.data), cls: "num" },
+      { l: "Contato", v: r => `<b>${esc(contato(r.contatoId)?.nome || "—")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}` },
+      { l: "Tipo", v: r => r.tipo ? `<span class="chip">${esc(r.tipo)}</span>` : "—" },
+      { l: "Resumo", v: r => esc(r.resumo || ""), cls: "wrap" },
+      { l: "Próximo passo", v: r => esc(r.resultado || ""), cls: "wrap" },
+      { l: "Por", v: r => esc(r.responsavel || "—") },
+    ],
+    sort: (a, b) => (b.data || "").localeCompare(a.data || ""),
+    text: r => [contato(r.contatoId)?.nome, r.tipo, r.resumo, r.resultado, r.responsavel].join(" "),
+  },
+  vendas: {
+    nav: "Estoque e faturas", group: "Comercial", one: "movimentação",
+    sub: "Toda saída ou entrada de exemplares: vendas, consignações, acertos, devoluções, doações, divulgação e exemplares de direitos autorais. O estoque de cada título é calculado daqui.",
+    fields: [
+      { k: "data", l: "Data", t: "date", req: 1, def: today }, { k: "tipo", l: "Tipo", t: "sel", o: L.mov, req: 1, def: () => "Venda" },
+      { k: "isbn", l: "Título", t: "ref", ref: "titulos", req: 1 }, { k: "quantidade", l: "Quantidade", t: "int", req: 1 },
+      { k: "cliente", l: "Cliente / destinatário", t: "list", ref: "contatoNome", hint: "Escolha um contato do CRM ou digite um nome" },
+      { k: "valor", l: "Valor total (R$)", t: "money", hint: "Em consignação, o valor a receber se tudo for vendido" },
+      { k: "canal", l: "Canal", t: "sel", o: L.canal }, { k: "pagamento", l: "Forma de pagamento" },
+      { k: "fatura", l: "Nº da fatura / NF" }, { k: "entrega", l: "Data de entrega", t: "date" },
+      { k: "statusEntrega", l: "Status da entrega", t: "sel", o: L.entrega }, { k: "obs", l: "Observação", full: 1 },
+    ],
+    cols: [
+      { l: "Data", v: r => dt(r.data), cls: "num" },
+      { l: "Tipo", v: r => chipStatus(r.tipo || "Venda") },
+      { l: "Título", v: r => `<b>${esc(tituloDe(r.isbn)?.titulo || "ISBN não cadastrado")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}`, cls: "wrap" },
+      { l: "Cliente", v: r => esc(r.cliente || "—"), cls: "wrap" },
+      { l: "Qtd.", v: r => nf.format(num(r.quantidade)), cls: "num" },
+      { l: "Valor", v: r => r.valor !== "" && r.valor != null ? (isVenda(r) ? `<b>${brl(r.valor)}</b>` : `<span style="color:var(--muted)">${brl(r.valor)}</span>`) : "—", cls: "num" },
+      { l: "Desconto", v: r => { const c = vendaCapa(r); return c && num(r.valor) && r.tipo !== "Doação" ? pct(1 - num(r.valor) / c) : "—"; }, cls: "num" },
+      { l: "Fatura", v: r => `<span class="mono">${esc(r.fatura || "—")}</span>` },
+      { l: "Entrega", v: r => r.statusEntrega ? chipStatus(r.statusEntrega) : (r.entrega ? dt(r.entrega) : "—") },
+    ],
+    sort: (a, b) => (b.data || "").localeCompare(a.data || ""),
+    text: r => [tituloDe(r.isbn)?.titulo, r.isbn, r.tipo, r.canal, r.cliente, r.fatura, r.obs].join(" "),
+    foot: rows => `${nf.format(sum(rows.filter(isVenda), r => r.quantidade))} vendidos · ${brl(sum(rows, vendaReceita))} em vendas`,
+  },
+  financeiro: {
+    nav: "Financeiro", group: "Comercial", one: "lançamento", sub: "Fluxo de caixa: tudo o que entra e sai. Despesas entram como valor positivo.",
+    fields: [
+      { k: "data", l: "Data", t: "date", req: 1, def: today }, { k: "tipo", l: "Tipo", t: "sel", o: L.tipoFin, req: 1 },
+      { k: "categoria", l: "Categoria", t: "sel", o: L.categoria }, { k: "valor", l: "Valor (R$)", t: "money", req: 1 },
+      { k: "descricao", l: "Descrição", full: 1 }, { k: "titulo", l: "Título relacionado", t: "ref", ref: "tituloNome" },
+      { k: "pago", l: "Pago / recebido?", t: "sel", o: L.simnao }, { k: "responsavel", l: "Quem pagou / responsável" },
+      { k: "frequencia", l: "Frequência", hint: "Mensal, anual, pontual…" },
+    ],
+    cols: [
+      { l: "Data", v: r => dt(r.data), cls: "num" },
+      { l: "Descrição", v: r => `<b>${esc(r.descricao || r.categoria || "—")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc(r.titulo || "")}</div>`, cls: "wrap" },
+      { l: "Categoria", v: r => esc(r.categoria || "—") },
+      { l: "Responsável", v: r => esc(r.responsavel || "—") },
+      { l: "Valor", v: r => `<span style="color:var(--${r.tipo === "Despesa" ? "bad" : "good"})">${r.tipo === "Despesa" ? "−" : "+"} ${brl(r.valor)}</span>`, cls: "num" },
+      { l: "Pago", v: r => chipStatus(r.pago) },
+    ],
+    sort: (a, b) => (b.data || "").localeCompare(a.data || ""),
+    text: r => [r.descricao, r.categoria, r.titulo, r.tipo, r.responsavel].join(" "),
+    foot: rows => { const rec = sum(rows.filter(r => r.tipo === "Receita"), r => r.valor), des = sum(rows.filter(r => r.tipo === "Despesa"), r => r.valor); return `Receitas ${brl(rec)} · Despesas ${brl(des)} · Resultado ${brl(rec - des)}`; },
+  },
+};
+
+// ---------- Navegação ----------
+const VIEWS = ["painel", ...COLS];
+let view = "painel", q = "";
+try { const h = location.hash.slice(1); if (VIEWS.includes(h)) view = h; else { const s = localStorage.getItem("le-view"); if (VIEWS.includes(s)) view = s; } } catch (e) {}
+function go(v) { view = v; q = ""; try { localStorage.setItem("le-view", v); } catch (e) {} render(); window.scrollTo(0, 0); }
+
+function renderNav() {
+  let html = "", g = "";
+  const item = (k, label, n) => `<button data-go="${k}" ${view === k ? 'aria-current="page"' : ""}><span>${label}</span>${n != null ? `<span class="n">${n}</span>` : ""}</button>`;
+  html += item("painel", "Painel");
+  for (const c of COLS) {
+    if (S[c].group !== g) { g = S[c].group; html += `<div class="navgroup">${g}</div>`; }
+    html += item(c, S[c].nav, loaded.has(c) ? D[c].length : null);
+  }
+  $("#nav").innerHTML = html;
+}
+$("#nav").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) go(b.dataset.go); });
+
+// ---------- Renderização ----------
+function render() {
+  renderNav();
+  const v = $("#view");
+  const banner = dbState === "off" ? `<div class="banner">O banco de dados compartilhado não está disponível nesta visualização. Abra a página no claude.ai, com sua conta, para ver e salvar os dados.</div>`
+    : !canWrite ? `<div class="banner">Você tem acesso só para leitura. Peça a quem administra a Linha Editora para mudar seu acesso para Colaborador.</div>` : "";
+  v.innerHTML = banner + (view === "painel" ? painel() : S[view].board ? board() : table(view));
+  const s = $("#q"); if (s && document.activeElement !== s && q) { s.value = q; }
+}
+
+function header(title, sub, actions = "") {
+  return `<div class="head"><div><h1>${title}</h1><p class="sub">${sub}</p></div><div class="tools">${actions}</div></div>`;
+}
+function tools(c) {
+  return `<input class="search" id="q" type="search" placeholder="Buscar" aria-label="Buscar" value="${esc(q)}">` +
+    `<button class="btn" data-export="${c}">Exportar CSV</button>` +
+    (canWrite && db ? `<button class="btn primary" data-new="${c}">Novo ${S[c].one}</button>` : "");
+}
+const filt = c => { const t = q.trim().toLowerCase(); return t ? D[c].filter(r => S[c].text(r).toLowerCase().includes(t)) : D[c]; };
+
+function blank(c) {
+  if (!loaded.has(c) && dbState !== "off") return `<div class="blank">Carregando…</div>`;
+  return `<div class="blank"><b>Nenhum ${S[c].one} ainda</b><span>${q ? "Nada corresponde à busca." : "Use o botão “Novo " + S[c].one + "” para cadastrar o primeiro."}</span></div>`;
+}
+
+function table(c) {
+  const s = S[c], rows = filt(c).slice().sort(s.sort);
+  const body = rows.length ? `<div class="tablebox"><table><thead><tr>${s.cols.map(x => `<th class="${x.cls === "num" ? "num" : ""}">${x.l}</th>`).join("")}</tr></thead><tbody>` +
+    rows.map(r => `<tr data-edit="${c}" data-id="${esc(r.id)}" tabindex="0">${s.cols.map(x => `<td class="${x.cls || ""}">${x.v(r)}</td>`).join("")}</tr>`).join("") +
+    `</tbody></table></div><div class="tfoot"><span>${rows.length} ${rows.length === 1 ? "registro" : "registros"}</span><span>${s.foot ? s.foot(rows) : ""}</span></div>` : blank(c);
+  return header(s.nav, s.sub, tools(c)) + body;
+}
+
+function board() {
+  const c = "oportunidades", s = S[c], rows = filt(c);
+  const aberto = D[c].filter(o => !(o.etapa || "").startsWith("Fechado"));
+  const resumo = `<div class="kpis">${kpi("Em aberto", aberto.length, "oportunidades")}${kpi("Pipeline", brl(sum(aberto, o => o.valor)), "valor estimado")}${kpi("Ponderado", brl(sum(aberto, o => num(o.valor) * (PROB[o.etapa] ?? 0))), "valor × probabilidade")}${kpi("Ações atrasadas", aberto.filter(o => situacaoOp(o)[0] === "Atrasada").length, "próxima ação vencida", aberto.some(o => situacaoOp(o)[0] === "Atrasada") ? "bad" : "")}</div>`;
+  const cols = FUNIL.map(([e, p]) => {
+    const cards = rows.filter(o => o.etapa === e).sort((a, b) => (a.dataAcao || "9").localeCompare(b.dataAcao || "9"));
+    return `<section class="col"><header><b>${e}</b><span>${Math.round(p * 100)}% · ${brl(sum(cards, o => o.valor))}</span></header>` +
+      cards.map(o => { const [st, cl] = situacaoOp(o); return `<article class="card" data-edit="${c}" data-id="${esc(o.id)}" tabindex="0">
+        <div class="who">${esc(contato(o.contatoId)?.nome || "Contato removido")}${o.exemplo ? '<span class="ex">exemplo</span>' : ""}</div>
+        <div class="what">${esc(o.oportunidade)}</div>
+        <div class="row"><span class="val">${brl(o.valor)}</span>${st !== "Encerrada" ? `<span class="chip ${cl}">${st}</span>` : ""}</div>
+        ${o.proximaAcao ? `<div class="who">→ ${esc(o.proximaAcao)}${o.dataAcao ? " · " + dt(o.dataAcao) : ""}</div>` : ""}
+        ${canWrite && db ? `<select data-stage="${esc(o.id)}" aria-label="Mover para etapa">${FUNIL.map(f => `<option ${f[0] === e ? "selected" : ""}>${f[0]}</option>`).join("")}</select>` : ""}
+      </article>`; }).join("") + `</section>`;
+  }).join("");
+  return header(s.nav, s.sub, tools(c)) + resumo + (D[c].length || !loaded.has(c) ? `<div class="board">${cols}</div>` : blank(c));
+}
+
+function kpi(l, v, h, cls = "") { return `<div class="kpi"><span class="l">${l}</span><span class="v ${cls}">${v}</span><span class="h">${h}</span></div>`; }
+function bars(items) {
+  const max = Math.max(1, ...items.map(i => i[1]));
+  return `<div class="bars">${items.map(([l, v]) => `<div class="bar"><span>${esc(l)}</span><div class="track"><div class="fill" style="width:${(v / max * 100).toFixed(1)}%"></div></div><span class="amt">${brl(v)}</span></div>`).join("")}</div>`;
+}
+
+function painel() {
+  const receita = sum(D.vendas, vendaReceita);
+  const rec = sum(D.financeiro.filter(r => r.tipo === "Receita"), r => r.valor), des = sum(D.financeiro.filter(r => r.tipo === "Despesa"), r => r.valor);
+  const fisico = sum(D.titulos.filter(t => t.tiragem), t => estoque(t.isbn));
+  const consig = consigPorCliente();
+  const aberto = D.oportunidades.filter(o => !(o.etapa || "").startsWith("Fechado"));
+  const atrasadas = D.producao.filter(p => atrasoProd(p) > 0 && p.status !== "Concluído");
+  const royal = sum(D.autores, saldoAutor);
+  const tudoVazio = COLS.every(c => loaded.has(c) && D[c].length === 0);
+  const temEx = COLS.some(c => D[c].some(r => r.exemplo));
+  const acoes = aberto.filter(o => o.dataAcao).sort((a, b) => a.dataAcao.localeCompare(b.dataAcao)).slice(0, 6);
+  const canais = L.canal.map(ch => [ch, sum(D.vendas.filter(v => v.canal === ch), vendaReceita)]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]);
+  const funil = FUNIL.slice(0, 5).map(([e]) => [e, sum(aberto.filter(o => o.etapa === e), o => o.valor)]);
+  const lanc = D.titulos.filter(t => t.lancamento && t.lancamento >= today()).sort((a, b) => a.lancamento.localeCompare(b.lancamento)).slice(0, 5);
+
+  let html = header("Painel", "Visão geral da Linha Editora. Tudo aqui é calculado a partir das outras áreas.",
+    canWrite && db && temEx ? `<button class="btn danger" id="rmEx">Remover dados de exemplo</button>` : "");
+  if (tudoVazio && canWrite && db) html += `<div class="panel"><h2>Comece por aqui</h2><p class="sub" style="margin:0">O espaço está vazio. Cadastre seus títulos no Catálogo, ou carregue alguns registros de exemplo para ver como as áreas se ligam. Os exemplos ficam marcados e podem ser removidos com um clique.</p><div class="tools"><button class="btn primary" id="seed">Carregar exemplos</button><button class="btn" data-go2="titulos">Ir para o Catálogo</button></div></div>`;
+  html += `<div class="kpis">
+    ${kpi("Títulos", D.titulos.length, `${D.titulos.filter(t => t.status === "Publicado").length} publicados · ${D.titulos.filter(t => ["Em produção", "Pré-venda"].includes(t.status)).length} a caminho`)}
+    ${kpi("Exemplares na editora", nf.format(fisico), `${nf.format(sum(D.titulos, t => vendidos(t.isbn)))} vendidos · ${nf.format(sum(D.titulos, t => semVenda(t.isbn)))} doados/autor`)}
+    ${kpi("Em consignação", nf.format(sum(consig, c => c[1].q)) + " ex.", `em ${consig.length} livraria${consig.length === 1 ? "" : "s"} · ${brl(sum(consig, c => c[1].capa))} a preço de capa`)}
+    ${kpi("Receita de vendas", brl(receita), `vendas diretas e acertos de consignação`)}
+    ${kpi("Resultado do caixa", brl(rec - des), `${brl(rec)} entradas · ${brl(des)} saídas`, rec - des < 0 ? "bad" : rec - des > 0 ? "good" : "")}
+    ${kpi("Pipeline ponderado", brl(sum(aberto, o => num(o.valor) * (PROB[o.etapa] ?? 0))), `${aberto.length} oportunidades abertas`)}
+    ${kpi("Etapas atrasadas", atrasadas.length, "na produção editorial", atrasadas.length ? "bad" : "")}
+    ${kpi("Contatos ativos", D.contatos.filter(c => c.ativo !== "Não").length, `${D.interacoes.length} interações registradas`)}
+  </div>`;
+  html += `<div class="grid2">
+    <div class="panel"><h2>Próximas ações do CRM</h2><div class="list">${acoes.length ? acoes.map(o => { const [st, cl] = situacaoOp(o); return `<div class="it" data-edit="oportunidades" data-id="${esc(o.id)}" style="cursor:pointer"><div class="t"><b>${esc(o.proximaAcao || o.oportunidade)}</b><div>${esc(contato(o.contatoId)?.nome || "")} · ${dt(o.dataAcao)}</div></div><span class="chip ${cl}">${st}</span></div>`; }).join("") : `<div class="empty">Nenhuma ação agendada no funil.</div>`}</div></div>
+    <div class="panel"><h2>Produção atrasada</h2><div class="list">${atrasadas.length ? atrasadas.slice(0, 6).map(p => `<div class="it" data-edit="producao" data-id="${esc(p.id)}" style="cursor:pointer"><div class="t"><b>${esc(p.titulo)}</b><div>${esc(p.etapa)} · prazo ${dt(p.prazo)}${p.responsavel ? " · " + esc(p.responsavel) : ""}</div></div><span class="chip bad">${atrasoProd(p)} dias</span></div>`).join("") : `<div class="empty">Nenhuma etapa atrasada.</div>`}</div></div>
+    <div class="panel"><h2>Receita por canal</h2>${canais.length ? bars(canais) : `<div class="empty">Sem vendas registradas.</div>`}</div>
+    <div class="panel"><h2>Funil de vendas por etapa</h2>${aberto.length ? bars(funil) : `<div class="empty">Sem oportunidades abertas.</div>`}</div>
+    <div class="panel"><h2>Consignações em aberto</h2><div class="list">${consig.length ? consig.map(([k, x]) => `<div class="it"><div class="t"><b>${esc(k)}</b><div>${brl(x.capa)} a preço de capa</div></div><span class="chip acc">${nf.format(x.q)} ex.</span></div>`).join("") : `<div class="empty">Nenhum exemplar em consignação.</div>`}</div></div>
+    <div class="panel"><h2>Estoque por título</h2><div class="list">${D.titulos.length ? D.titulos.map(t => `<div class="it" data-edit="titulos" data-id="${esc(t.id)}" style="cursor:pointer"><div class="t"><b>${esc(t.titulo)}</b><div>tiragem ${nf.format(num(t.tiragem))} · consignado ${nf.format(consignado(t.isbn))} · vendido ${nf.format(vendidos(t.isbn))} · doado/autor ${nf.format(semVenda(t.isbn))}</div></div><span class="chip ${estoque(t.isbn) < 50 ? "bad" : ""}">${nf.format(estoque(t.isbn))} na editora</span></div>`).join("") : `<div class="empty">Nenhum título cadastrado.</div>`}</div></div>
+    <div class="panel"><h2>Próximos lançamentos</h2><div class="list">${lanc.length ? lanc.map(t => `<div class="it" data-edit="titulos" data-id="${esc(t.id)}" style="cursor:pointer"><div class="t"><b>${esc(t.titulo)}</b><div>${esc(t.autor || "")} · ${esc(t.formato || "")}</div></div><span class="chip acc">${dt(t.lancamento)}</span></div>`).join("") : `<div class="empty">Nenhum lançamento com data futura.</div>`}</div></div>
+    <div class="panel"><h2>Royalties por autor</h2><div class="list">${D.autores.length ? D.autores.slice().sort((a, b) => saldoAutor(b) - saldoAutor(a)).slice(0, 6).map(a => `<div class="it"><div class="t"><b>${esc(a.nome)}</b><div>gerado ${brl(royaltiesGerados(a))} · adiantamento ${brl(a.adiantamento)}</div></div><span class="mono">${brl(saldoAutor(a))}</span></div>`).join("") : `<div class="empty">Nenhum autor cadastrado.</div>`}</div></div>
+  </div>`;
+  return html;
+}
+
+// ---------- Eventos da área de conteúdo ----------
+$("#view").addEventListener("input", e => {
+  if (e.target.id === "q") { q = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#q"); s.focus(); s.setSelectionRange(pos, pos); }
+});
+$("#view").addEventListener("change", async e => {
+  const sel = e.target.closest("[data-stage]"); if (!sel) return;
+  try { await db.collection("oportunidades").doc(sel.dataset.stage).update({ etapa: sel.value, atualizado: new Date().toISOString() }); toast(`Movido para ${sel.value}`); }
+  catch (err) { failed(err); }
+});
+$("#view").addEventListener("click", e => {
+  if (e.target.closest("select")) return;
+  const n = e.target.closest("[data-new]"); if (n) return openForm(n.dataset.new);
+  const ed = e.target.closest("[data-edit]"); if (ed) return openForm(ed.dataset.edit, ed.dataset.id);
+  const ex = e.target.closest("[data-export]"); if (ex) return exportCsv(ex.dataset.export);
+  const g2 = e.target.closest("[data-go2]"); if (g2) return go(g2.dataset.go2);
+  if (e.target.id === "seed") return seed();
+  if (e.target.id === "rmEx") return removeExamples(e.target);
+});
+$("#view").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("[data-edit]")) openForm(e.target.dataset.edit, e.target.dataset.id); });
+
+// ---------- Formulário ----------
+let editing = null;
+function input(f, val) {
+  const id = "f-" + f.k, v = val ?? (f.def ? f.def() : "");
+  const req = f.req ? " required" : "";
+  if (f.t === "sel" || f.t === "ref") {
+    const opts = f.t === "sel" ? f.o.map(o => [o, o]) : refOpts[f.ref]();
+    if (v && !opts.some(o => o[0] === v)) opts.unshift([v, v]);
+    return `<select id="${id}" name="${f.k}"${req}><option value="">—</option>${opts.map(([a, b]) => `<option value="${esc(a)}" ${a === v ? "selected" : ""}>${esc(b)}</option>`).join("")}</select>`;
+  }
+  if (f.t === "list") return `<input id="${id}" name="${f.k}" list="dl-${f.k}" value="${esc(v)}"><datalist id="dl-${f.k}">${refOpts[f.ref]().map(([a]) => `<option value="${esc(a)}"></option>`).join("")}</datalist>`;
+  if (f.t === "area") return `<textarea id="${id}" name="${f.k}">${esc(v)}</textarea>`;
+  const type = f.t === "date" ? "date" : f.t === "email" ? "email" : ["money", "int", "num"].includes(f.t) ? "number" : "text";
+  const step = f.t === "money" ? ' step="0.01" min="0"' : f.t === "int" ? ' step="1" min="0"' : f.t === "num" ? ' step="0.1" min="0"' : "";
+  return `<input id="${id}" name="${f.k}" type="${type}"${step}${req} value="${esc(v)}" ${f.mono ? 'class="mono"' : ""}>`;
+}
+function openForm(c, id) {
+  if (!db && !id) return;
+  const s = S[c], r = id ? D[c].find(x => x.id === id) : null;
+  if (id && !r) return;
+  editing = { c, id };
+  const ro = !canWrite || !db;
+  $("#frm").innerHTML = `<div class="dh"><h2>${r ? (ro ? "" : "Editar ") + s.one : "Novo " + s.one}</h2><button type="button" class="x" id="close" aria-label="Fechar">×</button></div>
+    <fieldset class="db" style="border:0;margin:0" ${ro ? "disabled" : ""}>${s.fields.map(f => f.sec ? `<h3 class="sec">${f.sec}</h3>` : `<div class="f ${f.full ? "full" : ""}"><label for="f-${f.k}">${f.l}${f.req ? " *" : ""}</label>${input(f, r?.[f.k])}${f.hint ? `<span class="hint">${f.hint}</span>` : ""}</div>`).join("")}<div class="err" id="ferr"></div></fieldset>
+    <div class="df">${r && !ro ? `<button type="button" class="btn danger" id="del">Excluir</button>` : ""}<div class="r"><button type="button" class="btn" id="cancel">${ro ? "Fechar" : "Cancelar"}</button>${ro ? "" : `<button type="submit" class="btn primary">Salvar</button>`}</div></div>`;
+  $("#dlg").showModal();
+}
+$("#frm").addEventListener("click", async e => {
+  if (e.target.id === "close" || e.target.id === "cancel") return $("#dlg").close();
+  if (e.target.id === "del") {
+    const b = e.target;
+    if (!b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = "Confirmar exclusão"; return; }
+    try { await db.collection(editing.c).doc(editing.id).delete(); $("#dlg").close(); toast("Excluído"); } catch (err) { failed(err); }
+  }
+});
+$("#frm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const { c, id } = editing, s = S[c], fd = new FormData(e.target), body = {};
+  const flds = s.fields.filter(f => f.k);
+  const missing = flds.filter(f => f.req && !String(fd.get(f.k) ?? "").trim());
+  if (missing.length) { $("#ferr").textContent = "Preencha: " + missing.map(f => f.l).join(", ") + "."; return; }
+  for (const f of flds) {
+    let v = String(fd.get(f.k) ?? "").trim();
+    body[f.k] = ["money", "int", "num"].includes(f.t) ? (v === "" ? "" : num(v)) : v;
+  }
+  if (c === "titulos" && D.titulos.some(t => t.isbn === body.isbn && t.id !== id)) { $("#ferr").textContent = "Já existe um título com esse ISBN."; return; }
+  body.atualizado = new Date().toISOString();
+  const btn = e.target.querySelector('[type="submit"]'); btn.disabled = true; btn.textContent = "Salvando…";
+  try {
+    if (id) {
+      const old = D[c].find(x => x.id === id) || {};
+      await db.collection(c).doc(id).update(body);
+      const links = { titulos: [["isbn", "vendas", "isbn"], ["titulo", "producao", "titulo"], ["titulo", "financeiro", "titulo"]], autores: [["nome", "titulos", "autor"]], contatos: [["nome", "vendas", "cliente"]] }[c] || [];
+      for (const [k, col, fk] of links) if (old[k] && old[k] !== body[k]) for (const r of D[col].filter(r => r[fk] === old[k])) await db.collection(col).doc(r.id).update({ [fk]: body[k] });
+    }
+    else await db.collection(c).add({ ...body, criado: body.atualizado });
+    $("#dlg").close(); toast(id ? "Alterações salvas" : `${s.one[0].toUpperCase() + s.one.slice(1)} cadastrado`);
+  } catch (err) { btn.disabled = false; btn.textContent = "Salvar"; failed(err, $("#ferr")); }
+});
+function failed(err, where) {
+  const code = err?.code;
+  const msg = code === "invalid_argument" ? "Não foi possível salvar: seu acesso não permite editar." : code === "quota_exceeded" ? "O espaço atingiu o limite de registros. Exclua registros antigos para continuar." : "Não foi possível salvar agora. Tente de novo em instantes.";
+  if (code === "invalid_argument" && !where) { canWrite = false; render(); }
+  where ? (where.textContent = msg) : toast(msg);
+}
+
+// ---------- Exportar CSV ----------
+async function exportCsv(c) {
+  const s = S[c], rows = filt(c);
+  const flds = s.fields.filter(f => f.k), fields = flds.map(f => f.k);
+  const lines = [flds.map(f => f.l).join(";"), ...rows.map(r => fields.map(k => {
+    let v = r[k] ?? ""; if (k === "contatoId") v = contato(v)?.nome || v;
+    return `"${String(v).replace(/"/g, '""')}"`;
+  }).join(";"))];
+  const dl = await claude.use("downloads");
+  if (!dl) return toast("Exportação indisponível nesta visualização.");
+  try { await dl.save({ filename: `linha-editora-${c}-${today()}.csv`, data: "﻿" + lines.join("\r\n") }); }
+  catch (e) { if (e?.code !== "declined" && e?.code !== "cancelled") toast("Não foi possível exportar."); }
+}
+
+// ---------- Exemplos ----------
+async function seed() {
+  const b = $("#seed"); b.disabled = true; b.textContent = "Carregando…";
+  const ex = { exemplo: true, criado: new Date().toISOString() };
+  const t = today(), add = n => { const d = new Date(t); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+  const docs = [
+    ["autores", "ex-a1", { nome: "Ana Exemplo", email: "ana@exemplo.com", cidade: "São Paulo/SP", contrato: "C-001", royalty: 10, adiantamento: 2000, inicio: add(-200), fim: add(1600) }],
+    ["autores", "ex-a2", { nome: "Bruno Exemplo", email: "bruno@exemplo.com", cidade: "Rio de Janeiro/RJ", contrato: "C-002", royalty: 10, adiantamento: 0, inicio: add(-300), fim: add(1500) }],
+    ["titulos", "ex-t1", { titulo: "O Limiar", isbn: "978-65-00000-01-1", autor: "Ana Exemplo", genero: "Romance", formato: "Brochura", paginas: 240, preco: 69.9, custo: 14.5, tiragem: 1000, lancamento: add(34), status: "Pré-venda" }],
+    ["titulos", "ex-t2", { titulo: "Cartas ao Mar", isbn: "978-65-00000-02-8", autor: "Bruno Exemplo", genero: "Poesia", formato: "Brochura", paginas: 112, preco: 49.9, custo: 9.8, tiragem: 500, lancamento: add(-70), status: "Publicado" }],
+    ["producao", "ex-p1", { titulo: "O Limiar", etapa: "Revisão", responsavel: "Revisor(a)", inicio: add(-30), prazo: add(-20), conclusao: add(-21), status: "Concluído", custoPrev: 900, custoReal: 950 }],
+    ["producao", "ex-p2", { titulo: "O Limiar", etapa: "Capa", responsavel: "Designer", inicio: add(-15), prazo: add(-4), status: "Em andamento", custoPrev: 1200 }],
+    ["producao", "ex-p3", { titulo: "O Limiar", etapa: "Gráfica", responsavel: "Editor(a)", inicio: add(5), prazo: add(20), status: "Não iniciado", custoPrev: 9800 }],
+    ["contatos", "ex-c1", { nome: "Livraria Exemplo", tipo: "Livraria", pessoa: "Carla", cargo: "Compradora", email: "compras@livrariaexemplo.com", cidade: "São Paulo/SP", origem: "Feira", responsavel: "Comercial", ativo: "Sim" }],
+    ["contatos", "ex-c2", { nome: "Distribuidora Exemplo", tipo: "Distribuidora", pessoa: "Diego", cargo: "Gerente", email: "diego@distexemplo.com", cidade: "Belo Horizonte/MG", origem: "Prospecção ativa", responsavel: "Editor(a)", ativo: "Sim" }],
+    ["contatos", "ex-c3", { nome: "@leiturasdaju", tipo: "Influenciador", pessoa: "Juliana", cidade: "Curitiba/PR", origem: "Instagram", responsavel: "Marketing", ativo: "Sim" }],
+    ["oportunidades", "ex-o1", { oportunidade: "Pedido de lançamento — 30 exemplares", contatoId: "ex-c1", titulos: "O Limiar", etapa: "Proposta", valor: 1258.2, responsavel: "Comercial", proximaAcao: "Enviar condições de consignação", dataAcao: add(2), fechamento: add(18) }],
+    ["oportunidades", "ex-o2", { oportunidade: "Entrada no catálogo da distribuidora", contatoId: "ex-c2", titulos: "Todos", etapa: "Negociação", valor: 8000, responsavel: "Editor(a)", proximaAcao: "Reunião de fechamento", dataAcao: add(-1), fechamento: add(25) }],
+    ["oportunidades", "ex-o3", { oportunidade: "Resenha + sorteio no perfil", contatoId: "ex-c3", titulos: "O Limiar", etapa: "Amostra enviada", valor: 0, responsavel: "Marketing", proximaAcao: "Confirmar data da publicação", dataAcao: add(9) }],
+    ["interacoes", "ex-i1", { data: add(-7), contatoId: "ex-c1", tipo: "E-mail", resumo: "Apresentação do lançamento O Limiar", resultado: "Pediu condições de consignação", responsavel: "Comercial" }],
+    ["interacoes", "ex-i2", { data: add(-3), contatoId: "ex-c3", tipo: "Envio de amostra", resumo: "Exemplar de cortesia enviado", resultado: "Resenha prevista para o próximo mês", responsavel: "Marketing" }],
+    ["vendas", "ex-v1", { data: add(-68), isbn: "978-65-00000-02-8", tipo: "Venda", quantidade: 120, valor: 5988, canal: "Site próprio", fatura: "PED-0001" }],
+    ["vendas", "ex-v2", { data: add(-45), isbn: "978-65-00000-02-8", tipo: "Consignação", quantidade: 40, valor: 998, canal: "Distribuidora", cliente: "Distribuidora Exemplo", fatura: "NF-0001" }],
+    ["vendas", "ex-v3", { data: add(-5), isbn: "978-65-00000-01-1", tipo: "Venda", quantidade: 60, valor: 3594, canal: "Site próprio", fatura: "PED-0002" }],
+    ["financeiro", "ex-f1", { data: add(-80), tipo: "Despesa", categoria: "Revisão/Edição", descricao: "Revisão — Cartas ao Mar", titulo: "Cartas ao Mar", valor: 900, pago: "Sim" }],
+    ["financeiro", "ex-f2", { data: add(-72), tipo: "Despesa", categoria: "Gráfica", descricao: "Impressão 500 ex. — Cartas ao Mar", titulo: "Cartas ao Mar", valor: 4900, pago: "Sim" }],
+    ["financeiro", "ex-f3", { data: add(-40), tipo: "Receita", categoria: "Venda de livros", descricao: "Vendas do site", titulo: "Cartas ao Mar", valor: 5988, pago: "Sim" }],
+    ["financeiro", "ex-f4", { data: add(-10), tipo: "Despesa", categoria: "Marketing", descricao: "Impulsionamento no Instagram", valor: 400, pago: "Sim" }],
+  ];
+  try { for (const [c, id, d] of docs) await db.collection(c).doc(id).set({ ...d, ...ex }); toast("Exemplos carregados"); }
+  catch (err) { failed(err); b.disabled = false; b.textContent = "Carregar exemplos"; }
+}
+async function removeExamples(b) {
+  if (!b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = "Confirmar: remover exemplos"; return; }
+  b.disabled = true; b.textContent = "Removendo…";
+  try { for (const c of COLS) for (const r of D[c].filter(r => r.exemplo)) await db.collection(c).doc(r.id).delete(); toast("Exemplos removidos"); }
+  catch (err) { failed(err); }
+}
+
+// ---------- Dados ----------
+render();
+(async () => {
+  db = await claude.use("db");
+  if (!db) { dbState = "off"; COLS.forEach(c => loaded.add(c)); render(); return; }
+  dbState = "on";
+  const user = await claude.use("user");
+  if (user) { try { if (await user.can("data.write") === false) canWrite = false; } catch (e) {} }
+  let pending = null;
+  const schedule = () => { if (pending) return; pending = requestAnimationFrame(() => { pending = null; if (!$("#dlg").open) render(); else renderNav(); }); };
+  $("#dlg").addEventListener("close", () => render());
+  for (const c of COLS) {
+    db.collection(c).onSnapshot(snap => {
+      D[c] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      loaded.add(c); schedule();
+    }, err => { loaded.add(c); if (err?.code === "revoked") { canWrite = false; } schedule(); });
+  }
+  render();
+})();
+</script>
