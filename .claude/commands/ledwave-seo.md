@@ -22,7 +22,8 @@ Pedido do usuário: $ARGUMENTS
 | Contato | 0800 943 7800 |
 | Autoridade (E-E-A-T) | Desde 2010/2011 (começou como fábrica SKD); CEO Tiago Brito; 3 anos seguidos no ranking Negócios em Expansão da Exame/BTG (70º em 2025, 1º do segmento de painéis de LED); expositora na NRF 2026 (Nova York) |
 | Público-alvo | Produtoras de eventos, organizadores de shows e feiras, clubes e eventos esportivos, igrejas, agências e anunciantes, redes de varejo/supermercados, arquitetos e clientes de alto padrão (home design) |
-| Concorrentes (2–5) | [a definir] |
+| Concorrentes diretos | **The LED** (RDA Importação, Exportação e Serviços SA, apontada pela imprensa como a maior empresa de painéis de LED do Brasil), **D Show**, **P1 LED**, **Mundo do LED**. Sites oficiais: [a confirmar com o usuário] |
+| Outros players vistos nas buscas | LED10 (aluguel, desde 2008), LED Expert (aluguel para eventos + DOOH), e.LED Painéis (Florianópolis, Região Sul). Úteis como referência, não como foco |
 | Tom de voz | Inovador, tecnológico, confiante; foco em "experiência" e impacto visual |
 | Idioma | Português (Brasil); avaliar versão em inglês para as unidades dos EUA |
 
@@ -53,7 +54,7 @@ Identifique a intenção do pedido e use a skill/agente correspondente:
 | Área | Quando | Use |
 |---|---|---|
 | Estratégia & planejamento | roadmap, plano de conteúdo, clusters de tópicos | agente `searchfit-seo:content-strategist`, skill `searchfit-seo:content-strategy` |
-| Concorrência | "o que os concorrentes fazem", gap de conteúdo | agente `searchfit-seo:competitor-analyzer` |
+| Concorrência | "o que os concorrentes fazem", gap de conteúdo | agente `searchfit-seo:competitor-analyzer`, comparando com os concorrentes diretos da seção 1. Atenção: "D Show" e "P1 LED" são nomes ambíguos na busca (P1 também é um pixel pitch), então confirme o domínio antes de analisar |
 | Palavras-chave & intenção | pesquisa, agrupamento, intenção de busca | `searchfit-seo:keyword-cluster`, `searchfit-seo:create-topic` |
 | SEO técnico & auditoria | auditoria geral, rastreamento, indexação, Core Web Vitals | agente `searchfit-seo:seo-auditor`, `searchfit-seo:technical-seo`, `searchfit-seo:broken-links` |
 | Dados estruturados | schema JSON-LD (Organization, Product, LocalBusiness, FAQ) | `searchfit-seo:generate-schema` |
