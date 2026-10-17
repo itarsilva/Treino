@@ -17,6 +17,7 @@ Pedido do usuário: $ARGUMENTS
 | O que faz | Fabricante de **painéis de LED** — **aluguel** (shows, eventos esportivos, convenções, feiras, igrejas), **venda** (indoor e outdoor, para publicidade, eventos e igrejas), **assinatura** mensal do painel e projetos completos (briefing → instalação → pós-venda), inclusive **home design** |
 | Inovações | Painel de LED 3D robótico (primeiro do país), cubo de LED portátil a bateria, painéis 360° em formato de lata usados em jogos de futebol, painéis integrados com IA |
 | Mídia / varejo | **WeOOH** (DOOH em painéis de grande formato, centenas de faces em 40+ cidades, 6 mil+ campanhas) e **Wetail** (retail media: mídia no ponto de venda, IA e dados). Cliente de destaque: Grupo Mateus (40 lojas, meta de 100). Prêmio Top Trade 2025 (case Coopercica) |
+| O que NÃO vende | Iluminação (fita de LED, lâmpada, luminária/painel de embutir), letreiro neon, acrílico com LED, venda no atacado de componentes. Mesmo portfólio da The LED: painel/telão de vídeo em LED. Use essa lista para palavras negativas e para não criar conteúdo fora do público |
 | Modelo | B2B (empresas, agências, produtoras de eventos, varejistas, igrejas) com orçamento sob consulta; parte B2C em home design |
 | Região | Sede e fábrica em **Goiânia-GO** (Av. Vereador José Monteiro, 1390, Setor Nova Vila); unidades em **São Paulo, Brasília, Orlando e Los Angeles**; atende todo o Brasil; exporta para EUA e Paraguai |
 | Contato | 0800 943 7800 |
