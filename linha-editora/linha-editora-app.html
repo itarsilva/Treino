@@ -206,7 +206,7 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const nf = new Intl.NumberFormat("pt-BR");
 const cf = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-const num = v => { const n = typeof v === "number" ? v : parseFloat(String(v ?? "").replace(/\./g, "").replace(",", ".")); return isFinite(n) ? n : 0; };
+const num = v => { if (typeof v === "number") return isFinite(v) ? v : 0; const t = String(v ?? "").trim(); const n = /^-?\d+(\.\d+)?$/.test(t) ? parseFloat(t) : parseFloat(t.replace(/\./g, "").replace(",", ".")); return isFinite(n) ? n : 0; };
 const brl = v => cf.format(num(v));
 const pct = v => (v === "" || v == null || !isFinite(v)) ? "—" : (v * 100).toLocaleString("pt-BR", { maximumFractionDigits: 1 }) + "%";
 const today = () => { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); };
@@ -329,7 +329,7 @@ const S = {
     text: r => [r.nome, r.email, r.cidade, r.agente].join(" "),
   },
   producao: {
-    nav: "Produção", group: "Editorial", one: "etapa", sub: "Cronograma editorial: uma linha por etapa de cada título. Prazos vencidos aparecem em vermelho.",
+    nav: "Produção", group: "Editorial", one: "etapa", fem: 1, sub: "Cronograma editorial: uma linha por etapa de cada título. Prazos vencidos aparecem em vermelho.",
     fields: [
       { k: "titulo", l: "Título", t: "ref", ref: "tituloNome", req: 1 }, { k: "etapa", l: "Etapa", t: "sel", o: L.etapa, req: 1 },
       { k: "responsavel", l: "Responsável" }, { k: "status", l: "Status", t: "sel", o: L.statusTarefa },
@@ -372,7 +372,7 @@ const S = {
     text: r => [r.nome, r.pessoa, r.tipo, r.cidade, r.email, r.responsavel].join(" "),
   },
   oportunidades: {
-    nav: "Funil de vendas", group: "CRM", one: "oportunidade", board: 1,
+    nav: "Funil de vendas", group: "CRM", one: "oportunidade", fem: 1, board: 1,
     sub: "Negócios em andamento: consignação em livrarias, pedidos de distribuidoras, compras de escolas e parcerias. Mude a etapa direto no cartão.",
     fields: [
       { k: "oportunidade", l: "Oportunidade", req: 1, full: 1 }, { k: "contatoId", l: "Contato", t: "ref", ref: "contatos", req: 1 },
@@ -384,7 +384,7 @@ const S = {
     text: r => [r.oportunidade, contato(r.contatoId)?.nome, r.titulos, r.responsavel, r.proximaAcao].join(" "),
   },
   interacoes: {
-    nav: "Interações", group: "CRM", one: "interação", sub: "Histórico de ligações, e-mails, reuniões e amostras enviadas para cada contato.",
+    nav: "Interações", group: "CRM", one: "interação", fem: 1, sub: "Histórico de ligações, e-mails, reuniões e amostras enviadas para cada contato.",
     fields: [
       { k: "data", l: "Data", t: "date", req: 1, def: today }, { k: "contatoId", l: "Contato", t: "ref", ref: "contatos", req: 1 },
       { k: "tipo", l: "Tipo", t: "sel", o: L.tipoInteracao }, { k: "responsavel", l: "Responsável" },
@@ -402,7 +402,7 @@ const S = {
     text: r => [contato(r.contatoId)?.nome, r.tipo, r.resumo, r.resultado, r.responsavel].join(" "),
   },
   vendas: {
-    nav: "Estoque e faturas", group: "Comercial", one: "movimentação",
+    nav: "Estoque e faturas", group: "Comercial", one: "movimentação", fem: 1,
     sub: "Toda saída ou entrada de exemplares: vendas, consignações, acertos, devoluções, doações, divulgação e exemplares de direitos autorais. O estoque de cada título é calculado daqui.",
     fields: [
       { k: "data", l: "Data", t: "date", req: 1, def: today }, { k: "tipo", l: "Tipo", t: "sel", o: L.mov, req: 1, def: () => "Venda" },
@@ -488,13 +488,13 @@ function header(title, sub, actions = "") {
 function tools(c) {
   return `<input class="search" id="q" type="search" placeholder="Buscar" aria-label="Buscar" value="${esc(q)}">` +
     `<button class="btn" data-export="${c}">Exportar CSV</button>` +
-    (canWrite && db ? `<button class="btn primary" data-new="${c}">Novo ${S[c].one}</button>` : "");
+    (canWrite && db ? `<button class="btn primary" data-new="${c}">${S[c].fem ? "Nova" : "Novo"} ${S[c].one}</button>` : "");
 }
 const filt = c => { const t = q.trim().toLowerCase(); return t ? D[c].filter(r => S[c].text(r).toLowerCase().includes(t)) : D[c]; };
 
 function blank(c) {
   if (!loaded.has(c) && dbState !== "off") return `<div class="blank">Carregando…</div>`;
-  return `<div class="blank"><b>Nenhum ${S[c].one} ainda</b><span>${q ? "Nada corresponde à busca." : "Use o botão “Novo " + S[c].one + "” para cadastrar o primeiro."}</span></div>`;
+  return `<div class="blank"><b>${S[c].fem ? "Nenhuma" : "Nenhum"} ${S[c].one} ainda</b><span>${q ? "Nada corresponde à busca." : "Use o botão “" + (S[c].fem ? "Nova " : "Novo ") + S[c].one + "” para cadastrar " + (S[c].fem ? "a primeira." : "o primeiro.")}</span></div>`;
 }
 
 function table(c) {
@@ -653,7 +653,7 @@ function openForm(c, id) {
   if (id && !r) return;
   editing = { c, id };
   const ro = !canWrite || !db;
-  $("#frm").innerHTML = `<div class="dh"><h2>${r ? (ro ? "" : "Editar ") + s.one : "Novo " + s.one}</h2><button type="button" class="x" id="close" aria-label="Fechar">×</button></div>
+  $("#frm").innerHTML = `<div class="dh"><h2>${r ? (ro ? "" : "Editar ") + s.one : (s.fem ? "Nova " : "Novo ") + s.one}</h2><button type="button" class="x" id="close" aria-label="Fechar">×</button></div>
     <fieldset class="db" style="border:0;margin:0" ${ro ? "disabled" : ""}>${s.fields.map(f => f.sec ? `<h3 class="sec">${f.sec}</h3>` : `<div class="f ${f.full ? "full" : ""}"><label for="f-${f.k}">${f.l}${f.req ? " *" : ""}</label>${input(f, r?.[f.k])}${f.hint ? `<span class="hint">${f.hint}</span>` : ""}</div>`).join("")}<div class="err" id="ferr"></div></fieldset>
     <div class="df">${r && !ro ? `<button type="button" class="btn danger" id="del">Excluir</button>` : ""}<div class="r"><button type="button" class="btn" id="cancel">${ro ? "Fechar" : "Cancelar"}</button>${ro ? "" : `<button type="submit" class="btn primary">Salvar</button>`}</div></div>`;
   $("#dlg").showModal();
@@ -689,7 +689,7 @@ $("#frm").addEventListener("submit", async e => {
       for (const [k, col, fk] of links) if (old[k] && old[k] !== body[k]) for (const r of D[col].filter(r => r[fk] === old[k])) await db.collection(col).doc(r.id).update({ [fk]: body[k] });
     }
     else { await db.collection(c).add({ ...body, criado: body.atualizado }); logEvt("criou", c, rotulo(c, body), diff(c, {}, body)); }
-    $("#dlg").close(); toast(id ? "Alterações salvas" : `${s.one[0].toUpperCase() + s.one.slice(1)} cadastrado`);
+    $("#dlg").close(); toast(id ? "Alterações salvas" : `${s.one[0].toUpperCase() + s.one.slice(1)} ${s.fem ? "cadastrada" : "cadastrado"}`);
   } catch (err) { btn.disabled = false; btn.textContent = "Salvar"; failed(err, $("#ferr")); }
 });
 function failed(err, where) {
