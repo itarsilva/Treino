@@ -197,6 +197,9 @@ const COLS = ["titulos", "autores", "producao", "contatos", "oportunidades", "in
 const D = Object.fromEntries(COLS.map(c => [c, []]));
 const loaded = new Set();
 let db = null, canWrite = true, dbState = "loading";
+let userApi = null, uid = null, isOwner = false;
+const AUD = {}; // eventos do registro de atividades, por pessoa (só o administrador carrega)
+let audLoaded = false, audQ = "", audWho = "";
 
 // ---------- Utilidades ----------
 const $ = s => document.querySelector(s);
@@ -243,6 +246,20 @@ const chipStatus = s => {
   const m = { "Entregue": "good", "Enviado": "acc", "Pendente": "warn", "Venda": "good", "Acerto de consignação": "good", "Consignação": "acc", "Devolução de consignação": "", "Doação": "warn", "Divulgação": "warn", "Direitos autorais": "warn", "Publicado": "good", "Concluído": "good", "Pré-venda": "acc", "Em produção": "acc", "Em andamento": "acc", "Aguardando": "warn", "Esgotado": "bad", "Fora de catálogo": "", "Receita": "good", "Despesa": "bad", "Sim": "good", "Não": "" };
   return s ? `<span class="chip ${m[s] ?? ""}">${esc(s)}</span>` : "—";
 };
+
+// ---------- Registro de atividades ----------
+const rotulo = (c, r) => !r ? "" : c === "vendas" ? `${r.tipo || "Venda"} · ${tituloDe(r.isbn)?.titulo || r.isbn} · ${r.quantidade || 0} ex.${r.cliente ? " · " + r.cliente : ""}`
+  : c === "interacoes" ? `${contato(r.contatoId)?.nome || ""} · ${r.tipo || ""} · ${dt(r.data)}`
+  : c === "producao" ? `${r.titulo} · ${r.etapa}` : c === "financeiro" ? `${r.descricao || r.categoria || ""} · ${brl(r.valor)}`
+  : r.titulo || r.nome || r.oportunidade || r.id || "";
+const mostra = (k, v) => k === "contatoId" ? (contato(v)?.nome || v) : k === "isbn" ? (tituloDe(v)?.titulo || v) : v;
+function diff(c, old, body) {
+  return S[c].fields.filter(f => f.k && String(old[f.k] ?? "") !== String(body[f.k] ?? "")).map(f => ({ campo: f.l, de: String(mostra(f.k, old[f.k]) ?? ""), para: String(mostra(f.k, body[f.k]) ?? "") }));
+}
+async function logEvt(acao, area, registro, mudancas) {
+  if (!db || !uid) return;
+  try { await db.doc("auditoria/" + uid).collection("eventos").add({ em: new Date().toISOString(), uid, acao, area: area || "", registro: String(registro || "").slice(0, 300), mudancas: (mudancas || []).slice(0, 40) }); } catch (e) {}
+}
 
 // ---------- Esquema das áreas ----------
 const refOpts = {
@@ -435,7 +452,7 @@ const S = {
 };
 
 // ---------- Navegação ----------
-const VIEWS = ["painel", ...COLS];
+const VIEWS = ["painel", ...COLS, "auditoria"];
 let view = "painel", q = "";
 try { const h = location.hash.slice(1); if (VIEWS.includes(h)) view = h; else { const s = localStorage.getItem("le-view"); if (VIEWS.includes(s)) view = s; } } catch (e) {}
 function go(v) { view = v; q = ""; try { localStorage.setItem("le-view", v); } catch (e) {} render(); window.scrollTo(0, 0); }
@@ -448,6 +465,7 @@ function renderNav() {
     if (S[c].group !== g) { g = S[c].group; html += `<div class="navgroup">${g}</div>`; }
     html += item(c, S[c].nav, loaded.has(c) ? D[c].length : null);
   }
+  if (isOwner) html += `<div class="navgroup">Administração</div>` + item("auditoria", "Registro de atividades");
   $("#nav").innerHTML = html;
 }
 $("#nav").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) go(b.dataset.go); });
@@ -458,7 +476,9 @@ function render() {
   const v = $("#view");
   const banner = dbState === "off" ? `<div class="banner">O banco de dados compartilhado não está disponível nesta visualização. Abra a página no claude.ai, com sua conta, para ver e salvar os dados.</div>`
     : !canWrite ? `<div class="banner">Você tem acesso só para leitura. Peça a quem administra a Linha Editora para mudar seu acesso para Colaborador.</div>` : "";
-  v.innerHTML = banner + (view === "painel" ? painel() : S[view].board ? board() : table(view));
+  if (view === "auditoria" && !isOwner) view = "painel";
+  v.innerHTML = banner + (view === "painel" ? painel() : view === "auditoria" ? auditoria() : S[view].board ? board() : table(view));
+  fillNames();
   const s = $("#q"); if (s && document.activeElement !== s && q) { s.value = q; }
 }
 
@@ -502,6 +522,44 @@ function board() {
   }).join("");
   return header(s.nav, s.sub, tools(c)) + resumo + (D[c].length || !loaded.has(c) ? `<div class="board">${cols}</div>` : blank(c));
 }
+
+const ACAO = { criou: "good", alterou: "acc", excluiu: "bad", moveu: "acc", acessou: "", importou: "warn" };
+function auditoria() {
+  const all = Object.values(AUD).flat().sort((a, b) => b.em.localeCompare(a.em));
+  const t = audQ.trim().toLowerCase();
+  const rows = all.filter(e => (!audWho || e.uid === audWho) && (!t || [e.acao, e.area, e.registro, ...(e.mudancas || []).flatMap(m => [m.campo, m.de, m.para])].join(" ").toLowerCase().includes(t)));
+  const pessoas = Object.keys(AUD);
+  const quando = iso => { const d = new Date(iso); return d.toLocaleDateString("pt-BR") + " " + d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }); };
+  const tools = `<select class="search" id="audWho" aria-label="Pessoa"><option value="">Todas as pessoas</option>${pessoas.map(p => `<option value="${esc(p)}" ${p === audWho ? "selected" : ""} data-uid="${esc(p)}">…</option>`).join("")}</select>
+    <input class="search" id="audQ" type="search" placeholder="Buscar no registro" aria-label="Buscar no registro" value="${esc(audQ)}">`;
+  const hoje = all.filter(e => e.em.slice(0, 10) === today());
+  let html = header("Registro de atividades", "Quem entrou e o que mudou no espaço da Linha Editora. Só você, como administrador, vê esta página.", tools);
+  html += `<div class="kpis">${kpi("Pessoas com acesso registrado", pessoas.length, "desde a ativação do registro")}${kpi("Acessos hoje", hoje.filter(e => e.acao === "acessou").length, "aberturas do espaço")}${kpi("Mudanças hoje", hoje.filter(e => e.acao !== "acessou").length, "criações, edições e exclusões")}${kpi("Eventos no total", all.length, "últimos 300 por pessoa")}</div>`;
+  if (!audLoaded) return html + `<div class="blank">Carregando registro…</div>`;
+  if (!rows.length) return html + `<div class="blank"><b>Nada registrado ainda</b><span>${all.length ? "Nada corresponde ao filtro." : "Os acessos e mudanças aparecem aqui a partir de agora."}</span></div>`;
+  return html + `<div class="tablebox"><table><thead><tr><th>Quando</th><th>Quem</th><th>Ação</th><th>Área</th><th>Registro</th><th>O que mudou</th></tr></thead><tbody>` +
+    rows.slice(0, 500).map(e => `<tr style="cursor:default"><td class="num">${quando(e.em)}</td><td><b data-uid="${esc(e.uid)}">…</b></td><td><span class="chip ${ACAO[e.acao] ?? ""}">${esc(e.acao)}</span></td><td>${esc(S[e.area]?.nav || e.area || "—")}</td><td class="wrap">${esc(e.registro || "—")}</td>
+      <td class="wrap">${(e.mudancas || []).length ? e.mudancas.map(m => `<div><span style="color:var(--muted)">${esc(m.campo)}:</span> ${m.de ? `<s style="color:var(--muted)">${esc(m.de)}</s> → ` : ""}${esc(m.para || "(vazio)")}</div>`).join("") : "—"}</td></tr>`).join("") +
+    `</tbody></table></div><div class="tfoot"><span>${rows.length} eventos</span><span>Horários no fuso deste aparelho</span></div>`;
+}
+async function fillNames() {
+  const els = [...document.querySelectorAll("[data-uid]")]; if (!els.length || !userApi) return;
+  const ps = await userApi.profiles([...new Set(els.map(e => e.dataset.uid))]);
+  for (const el of els) { const p = ps[el.dataset.uid]; el.textContent = (p?.name || "Pessoa sem nome visível") + (p?.isMe ? " (você)" : ""); }
+}
+function startAudit() {
+  const subs = {};
+  db.collection("auditoria").onSnapshot(snap => {
+    for (const d of snap.docs) if (!subs[d.id]) {
+      subs[d.id] = db.doc("auditoria/" + d.id).collection("eventos").orderBy("em", "desc").limit(300).onSnapshot(s2 => {
+        AUD[d.id] = s2.docs.map(x => ({ id: x.id, ...x.data() })); audLoaded = true; if (view === "auditoria") scheduleR();
+      }, () => {});
+    }
+    if (snap.empty) audLoaded = true;
+    if (view === "auditoria") scheduleR();
+  }, () => { audLoaded = true; });
+}
+let scheduleR = () => {};
 
 function kpi(l, v, h, cls = "") { return `<div class="kpi"><span class="l">${l}</span><span class="v ${cls}">${v}</span><span class="h">${h}</span></div>`; }
 function bars(items) {
@@ -552,11 +610,14 @@ function painel() {
 
 // ---------- Eventos da área de conteúdo ----------
 $("#view").addEventListener("input", e => {
+  if (e.target.id === "audQ") { audQ = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#audQ"); s.focus(); s.setSelectionRange(pos, pos); return; }
   if (e.target.id === "q") { q = e.target.value; const pos = e.target.selectionStart; render(); const s = $("#q"); s.focus(); s.setSelectionRange(pos, pos); }
 });
 $("#view").addEventListener("change", async e => {
+  if (e.target.id === "audWho") { audWho = e.target.value; return render(); }
   const sel = e.target.closest("[data-stage]"); if (!sel) return;
-  try { await db.collection("oportunidades").doc(sel.dataset.stage).update({ etapa: sel.value, atualizado: new Date().toISOString() }); toast(`Movido para ${sel.value}`); }
+  const op = D.oportunidades.find(o => o.id === sel.dataset.stage);
+  try { await db.collection("oportunidades").doc(sel.dataset.stage).update({ etapa: sel.value, atualizado: new Date().toISOString() }); toast(`Movido para ${sel.value}`); logEvt("moveu", "oportunidades", rotulo("oportunidades", op), [{ campo: "Etapa do funil", de: op?.etapa || "", para: sel.value }]); }
   catch (err) { failed(err); }
 });
 $("#view").addEventListener("click", e => {
@@ -602,7 +663,8 @@ $("#frm").addEventListener("click", async e => {
   if (e.target.id === "del") {
     const b = e.target;
     if (!b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = "Confirmar exclusão"; return; }
-    try { await db.collection(editing.c).doc(editing.id).delete(); $("#dlg").close(); toast("Excluído"); } catch (err) { failed(err); }
+    const old = D[editing.c].find(x => x.id === editing.id);
+    try { await db.collection(editing.c).doc(editing.id).delete(); $("#dlg").close(); toast("Excluído"); logEvt("excluiu", editing.c, rotulo(editing.c, old), S[editing.c].fields.filter(f => f.k && old?.[f.k] !== "" && old?.[f.k] != null).map(f => ({ campo: f.l, de: String(mostra(f.k, old[f.k])), para: "" }))); } catch (err) { failed(err); }
   }
 });
 $("#frm").addEventListener("submit", async e => {
@@ -623,9 +685,10 @@ $("#frm").addEventListener("submit", async e => {
       const old = D[c].find(x => x.id === id) || {};
       await db.collection(c).doc(id).update(body);
       const links = { titulos: [["isbn", "vendas", "isbn"], ["titulo", "producao", "titulo"], ["titulo", "financeiro", "titulo"]], autores: [["nome", "titulos", "autor"]], contatos: [["nome", "vendas", "cliente"]] }[c] || [];
+      logEvt("alterou", c, rotulo(c, { ...old, ...body }), diff(c, old, body));
       for (const [k, col, fk] of links) if (old[k] && old[k] !== body[k]) for (const r of D[col].filter(r => r[fk] === old[k])) await db.collection(col).doc(r.id).update({ [fk]: body[k] });
     }
-    else await db.collection(c).add({ ...body, criado: body.atualizado });
+    else { await db.collection(c).add({ ...body, criado: body.atualizado }); logEvt("criou", c, rotulo(c, body), diff(c, {}, body)); }
     $("#dlg").close(); toast(id ? "Alterações salvas" : `${s.one[0].toUpperCase() + s.one.slice(1)} cadastrado`);
   } catch (err) { btn.disabled = false; btn.textContent = "Salvar"; failed(err, $("#ferr")); }
 });
@@ -679,13 +742,13 @@ async function seed() {
     ["financeiro", "ex-f3", { data: add(-40), tipo: "Receita", categoria: "Venda de livros", descricao: "Vendas do site", titulo: "Cartas ao Mar", valor: 5988, pago: "Sim" }],
     ["financeiro", "ex-f4", { data: add(-10), tipo: "Despesa", categoria: "Marketing", descricao: "Impulsionamento no Instagram", valor: 400, pago: "Sim" }],
   ];
-  try { for (const [c, id, d] of docs) await db.collection(c).doc(id).set({ ...d, ...ex }); toast("Exemplos carregados"); }
+  try { for (const [c, id, d] of docs) await db.collection(c).doc(id).set({ ...d, ...ex }); toast("Exemplos carregados"); logEvt("importou", "", "Carregou dados de exemplo"); }
   catch (err) { failed(err); b.disabled = false; b.textContent = "Carregar exemplos"; }
 }
 async function removeExamples(b) {
   if (!b.classList.contains("armed")) { b.classList.add("armed"); b.textContent = "Confirmar: remover exemplos"; return; }
   b.disabled = true; b.textContent = "Removendo…";
-  try { for (const c of COLS) for (const r of D[c].filter(r => r.exemplo)) await db.collection(c).doc(r.id).delete(); toast("Exemplos removidos"); }
+  try { for (const c of COLS) for (const r of D[c].filter(r => r.exemplo)) await db.collection(c).doc(r.id).delete(); toast("Exemplos removidos"); logEvt("excluiu", "", "Removeu os dados de exemplo"); }
   catch (err) { failed(err); }
 }
 
@@ -695,10 +758,21 @@ render();
   db = await claude.use("db");
   if (!db) { dbState = "off"; COLS.forEach(c => loaded.add(c)); render(); return; }
   dbState = "on";
-  const user = await claude.use("user");
-  if (user) { try { if (await user.can("data.write") === false) canWrite = false; } catch (e) {} }
+  const user = userApi = await claude.use("user");
+  if (user) {
+    try { if (await user.can("data.write") === false) canWrite = false; } catch (e) {}
+    uid = await user.id(); isOwner = await user.isOwner();
+    const me = await user.me();
+    $("#who").textContent = me.name ? `Conectado como ${me.name}` : "Conectado com sua conta Claude";
+  }
+  if (uid && canWrite) {
+    try { await db.doc("auditoria/" + uid).set({ ultimoAcesso: new Date().toISOString() }); } catch (e) {}
+    logEvt("acessou", "", "Abriu o espaço da Linha Editora");
+  }
+  if (isOwner) startAudit();
   let pending = null;
   const schedule = () => { if (pending) return; pending = requestAnimationFrame(() => { pending = null; if (!$("#dlg").open) render(); else renderNav(); }); };
+  scheduleR = schedule;
   $("#dlg").addEventListener("close", () => render());
   for (const c of COLS) {
     db.collection(c).onSnapshot(snap => {
