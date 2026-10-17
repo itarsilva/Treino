@@ -8,19 +8,41 @@ Pedido do usuário: $ARGUMENTS
 
 ## 1. Contexto da marca
 
-> Preencha uma vez. Se algum campo estiver `[a definir]`, **pergunte ao usuário antes de seguir** (ou descubra pelo site com WebFetch e confirme) e depois atualize este arquivo com as respostas.
+> Levantado em out/2026 a partir de resultados de busca e matérias de imprensa (o site não pôde ser acessado diretamente). Campos `[a definir]`: **pergunte ao usuário antes de usá-los** e atualize este arquivo com as respostas. Se algo abaixo parecer desatualizado, confirme no site.
 
 | Campo | Valor |
 |---|---|
-| Site | [a definir] |
-| O que a LedWave vende/faz | [a definir] |
-| Modelo | [a definir — e-commerce, B2B, serviço local, etc.] |
-| Região de atuação | [a definir — cidade/estado/Brasil] |
-| Público-alvo | [a definir] |
+| Site | https://ledwave.com.br |
+| Slogan | "Inovando Experiências" |
+| O que faz | Fabricante de **painéis de LED** — **aluguel** (shows, eventos esportivos, convenções, feiras, igrejas), **venda** (indoor e outdoor, para publicidade, eventos e igrejas), **assinatura** mensal do painel e projetos completos (briefing → instalação → pós-venda), inclusive **home design** |
+| Inovações | Painel de LED 3D robótico (primeiro do país), cubo de LED portátil a bateria, painéis 360° em formato de lata usados em jogos de futebol, painéis integrados com IA |
+| Mídia / varejo | **WeOOH** (DOOH em painéis de grande formato, centenas de faces em 40+ cidades, 6 mil+ campanhas) e **Wetail** (retail media: mídia no ponto de venda, IA e dados). Cliente de destaque: Grupo Mateus (40 lojas, meta de 100). Prêmio Top Trade 2025 (case Coopercica) |
+| Modelo | B2B (empresas, agências, produtoras de eventos, varejistas, igrejas) com orçamento sob consulta; parte B2C em home design |
+| Região | Sede e fábrica em **Goiânia-GO** (Av. Vereador José Monteiro, 1390, Setor Nova Vila); unidades em **São Paulo, Brasília, Orlando e Los Angeles**; atende todo o Brasil; exporta para EUA e Paraguai |
+| Contato | 0800 943 7800 |
+| Autoridade (E-E-A-T) | Desde 2010/2011 (começou como fábrica SKD); CEO Tiago Brito; 3 anos seguidos no ranking Negócios em Expansão da Exame/BTG (70º em 2025, 1º do segmento de painéis de LED); expositora na NRF 2026 (Nova York) |
+| Público-alvo | Produtoras de eventos, organizadores de shows e feiras, clubes e eventos esportivos, igrejas, agências e anunciantes, redes de varejo/supermercados, arquitetos e clientes de alto padrão (home design) |
 | Concorrentes (2–5) | [a definir] |
-| Palavras-chave principais | [a definir] |
-| Tom de voz | [a definir] |
-| Idioma | Português (Brasil) |
+| Tom de voz | Inovador, tecnológico, confiante; foco em "experiência" e impacto visual |
+| Idioma | Português (Brasil); avaliar versão em inglês para as unidades dos EUA |
+
+### Palavras-chave base (validar volumes com dados reais)
+
+| Cluster | Exemplos |
+|---|---|
+| Aluguel (transacional/local) | aluguel de painel de LED, locação de telão de LED, aluguel de painel de LED + [cidade], painel de LED para eventos/shows/casamento |
+| Venda (comercial) | painel de LED preço, comprar painel de LED, painel de LED outdoor, painel de LED indoor, fabricante de painel de LED |
+| Segmentos | painel de LED para igreja, painel de LED para fachada de loja, telão de LED para estádio, painel de LED residencial/home theater |
+| Mídia & varejo | DOOH, mídia digital out-of-home, retail media, mídia em supermercado, painéis de LED para varejo |
+| Informacional | o que é pixel pitch, P2.5 vs P3.9, painel de LED vs telão de projeção, quanto custa um painel de LED, como escolher painel de LED |
+
+### Estrutura do site e pontos de atenção já observados
+
+- Há páginas por cidade (ex.: `/aluguel-de-painel-de-led-goiania/`, `/ledwave-goiania/`, `/ledwave-atende-todo-o-brasil/`). **Ampliar** para São Paulo, Brasília e outras praças, cada uma com conteúdo próprio (evitar páginas duplicadas que só trocam o nome da cidade).
+- **Títulos longos demais:** o padrão é `Página - Aluguel e Venda de Painel de LED - LedWave - Inovando Experiências`. Só o sufixo já tem ~55 caracteres, então o Google corta o título. Usar `Palavra-chave principal | LedWave`.
+- Preço "sob consulta": criar conteúdo informativo sobre faixas de custo para capturar buscas de "preço" sem expor tabela.
+- Marcar sede e unidades com schema `LocalBusiness`/`Organization`, perfis do Google Business Profile por unidade e NAP idêntico em todos.
+- WeOOH e Wetail: definir se ganham páginas no site principal ou domínios próprios, e conectar as entidades (schema `parentOrganization`/`subOrganization`).
 
 ---
 
