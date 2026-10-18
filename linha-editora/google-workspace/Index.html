@@ -155,6 +155,12 @@ body { margin: 0; }
 .socio .track { height: 8px; background: var(--chip); border-radius: 4px; overflow: hidden; }
 .socio .fill { height: 100%; background: var(--accent); border-radius: 4px; }
 .socio.outro .fill { background: var(--muted); }
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: -6px; }
+.filtros select, .filtros input { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 10px; font-size: 13px; max-width: 100%; }
+.filtros select.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+.filtros .fl { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.filtros .fchk { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.filtros .fchk.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 .err { color: var(--bad); font-size: 12px; grid-column: 1 / -1; }
 
 .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 8px; box-shadow: var(--shadow); font-size: 13px; z-index: 50; }
@@ -209,6 +215,7 @@ const L = {
   entrega: ["Pendente", "Enviado", "Entregue"],
   simnao: ["Sim", "Não"],
   pagoPor: ["Marcelo", "Adauto", "Conta da editora", "Outro"],
+  pagamento: ["Pix", "Boleto", "Transferência", "Cartão", "Dinheiro", "Consignação", "Doação", "Direitos autorais", "Divulgação"],
 };
 // Sócios que pagam despesas (o Painel soma por pessoa). "Adaulto" veio assim da planilha antiga.
 const SOCIOS = ["Marcelo", "Adauto"];
@@ -303,12 +310,12 @@ const S = {
     nav: "Catálogo", group: "Editorial", one: "título", sub: "Todos os títulos da editora, do original ao fora de catálogo. O ISBN liga vendas, estoque e royalties.",
     fields: [
       { k: "titulo", l: "Título", req: 1, full: 1 },
-      { k: "isbn", l: "ISBN", req: 1, mono: 1, hint: "Ex.: 978-65-00000-01-1 (978-65 é o prefixo do Brasil)" },
-      { k: "autor", l: "Autor", t: "ref", ref: "autores", hint: "Cadastre o autor na aba Autores" },
+      { k: "isbn", l: "ISBN", req: 1, mono: 1, hint: "13 dígitos, ex.: 978-85-359-0277-8. Enquanto não tiver, use ISBN-PENDENTE" },
+      { k: "autor", l: "Autor", t: "ref", ref: "autores", req: 1, hint: "Cadastre o autor na aba Autores" },
       { k: "genero", l: "Gênero", t: "sel", o: L.genero }, { k: "formato", l: "Tipo de capa", t: "sel", o: L.formato },
       { k: "dimensoes", l: "Formato (cm)", hint: "Ex.: 14x21 cm" }, { k: "paginas", l: "Páginas", t: "int" },
-      { k: "tiragem", l: "Tiragem (exemplares)", t: "int" }, { k: "preco", l: "Preço de capa (R$)", t: "money" },
-      { k: "lancamento", l: "Lançamento", t: "date" }, { k: "status", l: "Status", t: "sel", o: L.statusTitulo },
+      { k: "tiragem", l: "Tiragem (exemplares)", t: "int", req: 1 }, { k: "preco", l: "Preço de capa (R$)", t: "money", req: 1 },
+      { k: "lancamento", l: "Lançamento", t: "date" }, { k: "status", l: "Status", t: "sel", o: L.statusTitulo, req: 1 },
       { k: "deposito", l: "Depósito / local do estoque" },
       { sec: "Custo de produção da tiragem" },
       { k: "traducao", l: "Tradução (R$)", t: "money" }, { k: "revisao", l: "Revisão (R$)", t: "money" },
@@ -338,9 +345,10 @@ const S = {
   autores: {
     nav: "Autores", group: "Editorial", one: "autor", sub: "Contratos e royalties. Os royalties são calculados sobre o preço de capa dos exemplares vendidos, descontando o adiantamento.",
     fields: [
-      { k: "nome", l: "Nome", req: 1, full: 1 }, { k: "email", l: "E-mail", t: "email" }, { k: "telefone", l: "Telefone" },
+      { k: "nome", l: "Nome", req: 1, full: 1 }, { k: "cpf", l: "CPF", mono: 1 },
+      { k: "email", l: "E-mail", t: "email", hint: "Informe e-mail ou telefone" }, { k: "telefone", l: "Telefone" },
       { k: "cidade", l: "Cidade/UF" }, { k: "agente", l: "Agente literário" },
-      { k: "contrato", l: "Nº do contrato" }, { k: "royalty", l: "Royalties (% s/ preço de capa)", t: "num", hint: "Referência de mercado: 8% a 12%" },
+      { k: "contrato", l: "Nº do contrato" }, { k: "royalty", l: "Royalties (% s/ preço de capa)", t: "num", req: 1, hint: "Referência de mercado: 8% a 12%" },
       { k: "inicio", l: "Início do contrato", t: "date" }, { k: "fim", l: "Fim do contrato", t: "date" },
       { k: "adiantamento", l: "Adiantamento pago (R$)", t: "money" }, { k: "redes", l: "Redes sociais" },
       { k: "obs", l: "Observações", t: "area", full: 1 },
@@ -381,9 +389,13 @@ const S = {
   contatos: {
     nav: "Contatos", group: "CRM", one: "contato", sub: "Livrarias, distribuidoras, imprensa, influenciadores, escolas e leitores com quem a editora se relaciona.",
     fields: [
-      { k: "nome", l: "Nome / empresa", req: 1, full: 1 }, { k: "tipo", l: "Tipo", t: "sel", o: L.tipoContato },
-      { k: "pessoa", l: "Pessoa de contato" }, { k: "cargo", l: "Cargo" }, { k: "email", l: "E-mail", t: "email" },
-      { k: "telefone", l: "Telefone / WhatsApp" }, { k: "cidade", l: "Cidade/UF" }, { k: "origem", l: "Origem", t: "sel", o: L.origem },
+      { k: "nome", l: "Nome / razão social", req: 1, full: 1 }, { k: "tipo", l: "Tipo", t: "sel", o: L.tipoContato, req: 1 },
+      { k: "cnpj", l: "CNPJ", mono: 1, hint: "Obrigatório para livraria e distribuidora" },
+      { k: "pessoa", l: "Pessoa de contato" }, { k: "cargo", l: "Cargo" },
+      { k: "email", l: "E-mail", t: "email", hint: "Informe e-mail ou telefone" }, { k: "telefone", l: "Telefone / WhatsApp" },
+      { k: "cidade", l: "Cidade/UF", req: 1 }, { k: "endereco", l: "Endereço de entrega", full: 1 },
+      { k: "desconto", l: "Desconto padrão (%)", t: "num", hint: "Ex.: 50 para consignação a 50%" }, { k: "prazoAcerto", l: "Prazo de acerto da consignação (dias)", t: "int" },
+      { k: "origem", l: "Origem", t: "sel", o: L.origem },
       { k: "responsavel", l: "Responsável na editora" }, { k: "ativo", l: "Ativo?", t: "sel", o: L.simnao },
       { k: "obs", l: "Observações", t: "area", full: 1 },
     ],
@@ -436,10 +448,10 @@ const S = {
     fields: [
       { k: "data", l: "Data", t: "date", req: 1, def: today }, { k: "tipo", l: "Tipo", t: "sel", o: L.mov, req: 1, def: () => "Venda" },
       { k: "isbn", l: "Título", t: "ref", ref: "titulos", req: 1 }, { k: "quantidade", l: "Quantidade", t: "int", req: 1 },
-      { k: "cliente", l: "Cliente / destinatário", t: "list", ref: "contatoNome", hint: "Escolha um contato do CRM ou digite um nome" },
-      { k: "valor", l: "Valor total (R$)", t: "money", hint: "Em consignação, o valor a receber se tudo for vendido" },
-      { k: "canal", l: "Canal", t: "sel", o: L.canal }, { k: "pagamento", l: "Forma de pagamento" },
-      { k: "fatura", l: "Nº da fatura / NF" }, { k: "entrega", l: "Data de entrega", t: "date" },
+      { k: "cliente", l: "Cliente / destinatário", t: "list", ref: "contatoNome", req: 1, hint: "Escolha um contato do CRM ou digite um nome" },
+      { k: "valor", l: "Valor total (R$)", t: "money", hint: "Obrigatório em venda e acerto. Em consignação, o valor a receber se tudo for vendido" },
+      { k: "canal", l: "Canal", t: "sel", o: L.canal }, { k: "pagamento", l: "Forma de pagamento", t: "sel", o: L.pagamento, hint: "Obrigatório em venda e acerto" },
+      { k: "fatura", l: "Nº da fatura / NF", hint: "Obrigatório na consignação" }, { k: "entrega", l: "Data de entrega", t: "date" },
       { k: "statusEntrega", l: "Status da entrega", t: "sel", o: L.entrega }, { k: "obs", l: "Observação", full: 1 },
     ],
     cols: [
@@ -461,8 +473,8 @@ const S = {
     nav: "Financeiro", group: "Comercial", one: "lançamento", sub: "Fluxo de caixa: tudo o que entra e sai. Despesas entram como valor positivo.",
     fields: [
       { k: "data", l: "Data", t: "date", req: 1, def: today }, { k: "tipo", l: "Tipo", t: "sel", o: L.tipoFin, req: 1 },
-      { k: "categoria", l: "Categoria", t: "sel", o: L.categoria }, { k: "valor", l: "Valor (R$)", t: "money", req: 1 },
-      { k: "descricao", l: "Descrição", full: 1 }, { k: "titulo", l: "Título relacionado", t: "ref", ref: "tituloNome" },
+      { k: "categoria", l: "Categoria", t: "sel", o: L.categoria, req: 1 }, { k: "valor", l: "Valor (R$)", t: "money", req: 1 },
+      { k: "descricao", l: "Descrição", full: 1, req: 1 }, { k: "titulo", l: "Título relacionado", t: "ref", ref: "tituloNome" },
       { k: "pago", l: "Pago / recebido?", t: "sel", o: L.simnao }, { k: "responsavel", l: "Pago por", t: "sel", o: L.pagoPor, req: 1, hint: "Despesas pagas por um sócio entram na soma dele no Painel" },
       { k: "frequencia", l: "Frequência", hint: "Mensal, anual, pontual…" },
     ],
@@ -479,6 +491,93 @@ const S = {
     foot: rows => { const rec = sum(rows.filter(r => r.tipo === "Receita"), r => r.valor), des = sum(rows.filter(r => r.tipo === "Despesa"), r => r.valor); return `Receitas ${brl(rec)} · Despesas ${brl(des)} (${SOCIOS.map(n => n + " " + brl(sum(rows.filter(r => r.tipo === "Despesa" && pagoPor(r) === n), r => r.valor))).join(" · ")}) · Resultado ${brl(rec - des)}`; },
   },
 };
+
+// ---------- Filtros ----------
+let F = {};
+try { F = JSON.parse(localStorage.getItem("le-filtros") || "{}") || {}; } catch (e) {}
+const salvarF = () => { try { localStorage.setItem("le-filtros", JSON.stringify(F)); } catch (e) {} };
+const PER = [["", "Todo o período"], ["mes", "Este mês"], ["mesant", "Mês passado"], ["30d", "Últimos 30 dias"], ["ano", "Este ano"], ["anoant", "Ano passado"], ["pers", "Personalizado…"]];
+function intervalo(st) {
+  const t = today(), y = +t.slice(0, 4), m = +t.slice(5, 7), p2 = n => String(n).padStart(2, "0");
+  switch (st?.per) {
+    case "mes": return [t.slice(0, 8) + "01", t.slice(0, 8) + "31"];
+    case "mesant": { const yy = m === 1 ? y - 1 : y, mm = m === 1 ? 12 : m - 1; return [`${yy}-${p2(mm)}-01`, `${yy}-${p2(mm)}-31`]; }
+    case "30d": { const d = new Date(t + "T12:00:00"); d.setDate(d.getDate() - 30); return [d.toISOString().slice(0, 10), t]; }
+    case "ano": return [`${y}-01-01`, `${y}-12-31`];
+    case "anoant": return [`${y - 1}-01-01`, `${y - 1}-12-31`];
+    case "pers": return [st.de || "0000-00-00", st.ate || "9999-12-31"];
+    default: return null;
+  }
+}
+const dentro = (d, iv) => !iv || (!!d && d >= iv[0] && d <= iv[1]);
+const distintos = (c, fn) => [...new Set(D[c].map(fn).filter(Boolean))].sort((a, b) => String(a).localeCompare(String(b))).map(v => [v, v]);
+const opts = arr => arr.map(v => [v, v]);
+const FILTROS = {
+  vendas: [
+    { k: "per", t: "per", campo: "data" },
+    { k: "tipo", l: "Tipo", o: () => opts(L.mov), f: (r, v) => (r.tipo || "Venda") === v },
+    { k: "isbn", l: "Título", o: () => D.titulos.map(t => [t.isbn, t.titulo]), f: (r, v) => r.isbn === v },
+    { k: "cliente", l: "Cliente", o: () => distintos("vendas", r => r.cliente), f: (r, v) => r.cliente === v },
+    { k: "ent", l: "Entrega", o: () => [...opts(L.entrega), ["__vazio", "Sem status"]], f: (r, v) => v === "__vazio" ? !r.statusEntrega : r.statusEntrega === v },
+  ],
+  financeiro: [
+    { k: "per", t: "per", campo: "data" },
+    { k: "tipo", l: "Tipo", o: () => opts(L.tipoFin), f: (r, v) => r.tipo === v },
+    { k: "cat", l: "Categoria", o: () => distintos("financeiro", r => r.categoria), f: (r, v) => r.categoria === v },
+    { k: "socio", l: "Pago por", o: () => distintos("financeiro", pagoPor), f: (r, v) => pagoPor(r) === v },
+    { k: "pago", l: "Pago?", o: () => [["Sim", "Pago"], ["Não", "Não pago"], ["__vazio", "Sem informação"]], f: (r, v) => v === "__vazio" ? !r.pago : r.pago === v },
+  ],
+  titulos: [
+    { k: "status", l: "Status", o: () => [...opts(L.statusTitulo), ["__vazio", "Sem status"]], f: (r, v) => v === "__vazio" ? !r.status : r.status === v },
+    { k: "autor", l: "Autor", o: () => distintos("titulos", r => r.autor), f: (r, v) => r.autor === v },
+    { k: "baixo", t: "chk", l: "Estoque baixo (menos de 50)", f: r => !!r.tiragem && estoque(r.isbn) < 50 },
+  ],
+  autores: [{ k: "saldo", t: "chk", l: "Com royalties a pagar", f: r => saldoAutor(r) > 0 }],
+  contatos: [
+    { k: "tipo", l: "Tipo", o: () => distintos("contatos", r => r.tipo), f: (r, v) => r.tipo === v },
+    { k: "cidade", l: "Cidade", o: () => distintos("contatos", r => r.cidade), f: (r, v) => r.cidade === v },
+    { k: "resp", l: "Responsável", o: () => distintos("contatos", r => r.responsavel), f: (r, v) => r.responsavel === v },
+    { k: "ativo", l: "Situação", o: () => [["Sim", "Ativos"], ["Não", "Inativos"]], f: (r, v) => (r.ativo || "Sim") === v },
+    { k: "consig", t: "chk", l: "Com consignação em aberto", f: r => consigPorCliente().some(([k]) => k === r.nome) },
+  ],
+  oportunidades: [
+    { k: "resp", l: "Responsável", o: () => distintos("oportunidades", r => r.responsavel), f: (r, v) => r.responsavel === v },
+    { k: "atr", t: "chk", l: "Só ações atrasadas", f: r => situacaoOp(r)[0] === "Atrasada" },
+  ],
+  producao: [
+    { k: "tit", l: "Título", o: () => distintos("producao", r => r.titulo), f: (r, v) => r.titulo === v },
+    { k: "etapa", l: "Etapa", o: () => opts(L.etapa), f: (r, v) => r.etapa === v },
+    { k: "status", l: "Status", o: () => opts(L.statusTarefa), f: (r, v) => r.status === v },
+    { k: "atr", t: "chk", l: "Só atrasadas", f: r => atrasoProd(r) > 0 && r.status !== "Concluído" },
+  ],
+  interacoes: [
+    { k: "per", t: "per", campo: "data" },
+    { k: "contato", l: "Contato", o: () => D.contatos.map(c => [c.id, c.nome]), f: (r, v) => r.contatoId === v },
+    { k: "tipo", l: "Tipo", o: () => opts(L.tipoInteracao), f: (r, v) => r.tipo === v },
+  ],
+};
+const filtrosAtivos = scope => Object.entries(F[scope] || {}).some(([k, v]) => v && k !== "de" && k !== "ate");
+function aplicaFiltros(defs, st, rows) {
+  for (const d of defs || []) {
+    const v = st[d.k];
+    if (d.t === "per") { const iv = intervalo(st); if (iv) rows = rows.filter(r => dentro(d.campo ? r[d.campo] : d.data(r), iv)); }
+    else if (d.t === "chk") { if (v) rows = rows.filter(d.f); }
+    else if (v) rows = rows.filter(r => d.f(r, v));
+  }
+  return rows;
+}
+function barraFiltros(scope, defs) {
+  if (!defs?.length) return "";
+  const st = F[scope] || {};
+  return `<div class="filtros" data-scope="${scope}">` + defs.map(d => {
+    if (d.t === "per") return `<select data-f="per" aria-label="Período" class="${st.per ? "on" : ""}">${PER.map(([v, l]) => `<option value="${v}" ${v === (st.per || "") ? "selected" : ""}>${l}</option>`).join("")}</select>` +
+      (st.per === "pers" ? `<label class="fl">de <input type="date" data-f="de" value="${esc(st.de || "")}"></label><label class="fl">até <input type="date" data-f="ate" value="${esc(st.ate || "")}"></label>` : "");
+    if (d.t === "chk") return `<label class="fchk ${st[d.k] ? "on" : ""}"><input type="checkbox" data-f="${d.k}" ${st[d.k] ? "checked" : ""}> ${d.l}</label>`;
+    const ops = d.o(), v = st[d.k] || "";
+    if (v && !ops.some(o => o[0] === v)) ops.unshift([v, v]);
+    return `<select data-f="${d.k}" aria-label="${d.l}" class="${v ? "on" : ""}"><option value="">${d.l}: todos</option>${ops.map(([a, b]) => `<option value="${esc(a)}" ${a === v ? "selected" : ""}>${esc(b)}</option>`).join("")}</select>`;
+  }).join("") + (filtrosAtivos(scope) ? `<button class="btn small" data-limpar="${scope}">Limpar filtros</button>` : "") + `</div>`;
+}
 
 // ---------- Navegação ----------
 const VIEWS = ["painel", ...COLS, "equipe", "auditoria"];
@@ -521,11 +620,11 @@ function tools(c) {
   return `<input class="search" id="q" type="search" placeholder="Buscar" aria-label="Buscar" value="${esc(q)}">` +
     (pode(c) ? `<button class="btn primary" data-new="${c}">${S[c].fem ? "Nova" : "Novo"} ${S[c].one}</button>` : "");
 }
-const filt = c => { const t = q.trim().toLowerCase(); return t ? D[c].filter(r => S[c].text(r).toLowerCase().includes(t)) : D[c]; };
+const filt = c => { const t = q.trim().toLowerCase(); const rows = t ? D[c].filter(r => S[c].text(r).toLowerCase().includes(t)) : D[c]; return aplicaFiltros(FILTROS[c], F[c] || {}, rows); };
 
 function blank(c) {
   if (!loaded.has(c) && dbState !== "off") return `<div class="blank">Carregando…</div>`;
-  return `<div class="blank"><b>${S[c].fem ? "Nenhuma" : "Nenhum"} ${S[c].one} ainda</b><span>${q ? "Nada corresponde à busca." : "Use o botão “" + (S[c].fem ? "Nova " : "Novo ") + S[c].one + "” para cadastrar " + (S[c].fem ? "a primeira." : "o primeiro.")}</span></div>`;
+  return `<div class="blank"><b>${S[c].fem ? "Nenhuma" : "Nenhum"} ${S[c].one} ainda</b><span>${q || filtrosAtivos(c) ? "Nada corresponde à busca ou aos filtros." : "Use o botão “" + (S[c].fem ? "Nova " : "Novo ") + S[c].one + "” para cadastrar " + (S[c].fem ? "a primeira." : "o primeiro.")}</span></div>`;
 }
 
 function table(c) {
@@ -533,7 +632,7 @@ function table(c) {
   const body = rows.length ? `<div class="tablebox"><table><thead><tr>${s.cols.map(x => `<th class="${x.cls === "num" ? "num" : ""}">${x.l}</th>`).join("")}</tr></thead><tbody>` +
     rows.map(r => `<tr data-edit="${c}" data-id="${esc(r.id)}" tabindex="0">${s.cols.map(x => `<td class="${x.cls || ""}">${x.v(r)}</td>`).join("")}</tr>`).join("") +
     `</tbody></table></div><div class="tfoot"><span>${rows.length} ${rows.length === 1 ? "registro" : "registros"}</span><span>${s.foot ? s.foot(rows) : ""}</span></div>` : blank(c);
-  return header(s.nav, s.sub, tools(c)) + body;
+  return header(s.nav, s.sub, tools(c)) + barraFiltros(c, FILTROS[c]) + body;
 }
 
 function board() {
@@ -551,7 +650,7 @@ function board() {
         ${pode("oportunidades") ? `<select data-stage="${esc(o.id)}" aria-label="Mover para etapa">${FUNIL.map(f => `<option ${f[0] === e ? "selected" : ""}>${f[0]}</option>`).join("")}</select>` : ""}
       </article>`; }).join("") + `</section>`;
   }).join("");
-  return header(s.nav, s.sub, tools(c)) + resumo + (D[c].length || !loaded.has(c) ? `<div class="board">${cols}</div>` : blank(c));
+  return header(s.nav, s.sub, tools(c)) + barraFiltros(c, FILTROS[c]) + resumo + (D[c].length || !loaded.has(c) ? `<div class="board">${cols}</div>` : blank(c));
 }
 
 const ACAO = { criou: "good", alterou: "acc", excluiu: "bad", moveu: "acc", acessou: "", importou: "warn" };
@@ -565,13 +664,14 @@ function carregarRegistro() {
 }
 function auditoria() {
   const t = audQ.trim().toLowerCase();
-  const rows = AUD.filter(e => (!audWho || e.email === audWho) && (!t || [e.acao, e.area, e.registro, e.email, ...(e.mudancas || []).flatMap(m => [m.campo, m.de, m.para])].join(" ").toLowerCase().includes(t)));
+  const rows = aplicaFiltros(FILTROS_AUD, F.auditoria || {}, AUD.filter(e => (!audWho || e.email === audWho) && (!t || [e.acao, e.area, e.registro, e.email, ...(e.mudancas || []).flatMap(m => [m.campo, m.de, m.para])].join(" ").toLowerCase().includes(t))));
   const pessoas = [...new Set(AUD.map(e => e.email))];
   const quando = iso => { const d = new Date(iso); return d.toLocaleDateString("pt-BR") + " " + d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }); };
   const tools = `<select class="search" id="audWho" aria-label="Pessoa"><option value="">Todas as pessoas</option>${pessoas.map(p => `<option value="${esc(p)}" ${p === audWho ? "selected" : ""}>${esc(nomeDe(p))}</option>`).join("")}</select>
     <input class="search" id="audQ" type="search" placeholder="Buscar no registro" aria-label="Buscar no registro" value="${esc(audQ)}"><button class="btn" id="audRefresh">Atualizar</button>`;
   const hoje = AUD.filter(e => e.quando.slice(0, 10) === today());
   let html = header("Registro de atividades", "Quem entrou e o que mudou. Só o administrador vê esta página; os colaboradores não têm acesso à planilha nem ao registro.", tools);
+  html += barraFiltros("auditoria", FILTROS_AUD);
   html += `<div class="kpis">${kpi("Pessoas no registro", pessoas.length, "que já acessaram")}${kpi("Acessos hoje", hoje.filter(e => e.acao === "acessou").length, "aberturas do app")}${kpi("Mudanças hoje", hoje.filter(e => e.acao !== "acessou").length, "criações, edições e exclusões")}${kpi("Eventos carregados", AUD.length, "os 2.000 mais recentes")}</div>`;
   if (audLoaded !== true) return html + `<div class="blank">Carregando registro…</div>`;
   if (!rows.length) return html + `<div class="blank"><b>Nada registrado ainda</b><span>${AUD.length ? "Nada corresponde ao filtro." : "Os acessos e mudanças aparecem aqui."}</span></div>`;
@@ -581,6 +681,11 @@ function auditoria() {
       <td class="wrap">${(e.mudancas || []).length ? e.mudancas.map(m => `<div><span style="color:var(--muted)">${esc(LABEL[e.area]?.[m.campo] || m.campo)}:</span> ${m.de ? `<s style="color:var(--muted)">${esc(val(e.area, m.campo, m.de))}</s> → ` : ""}${esc(m.para ? val(e.area, m.campo, m.para) : "(vazio)")}</div>`).join("") : "—"}</td></tr>`).join("") +
     `</tbody></table></div><div class="tfoot"><span>${rows.length} eventos</span><span>Horários no fuso deste aparelho</span></div>`;
 }
+const FILTROS_AUD = [
+  { k: "per", t: "per", data: e => String(e.quando).slice(0, 10) },
+  { k: "acao", l: "Ação", o: () => Object.keys(ACAO).map(a => [a, a]), f: (e, v) => e.acao === v },
+  { k: "area", l: "Área", o: () => Object.entries(AREA_NOME), f: (e, v) => e.area === v },
+];
 const NIVEL = [["editar", "Edita"], ["ver", "Só vê"], ["nenhum", "Sem acesso"]];
 function equipe() {
   const sel = (name, v) => `<select data-m="${name}" aria-label="${esc(S[name]?.nav || name)}">${NIVEL.map(([k, l]) => `<option value="${k}" ${k === (v || "nenhum") ? "selected" : ""}>${l}</option>`).join("")}</select>`;
@@ -608,8 +713,10 @@ function bars(items) {
 }
 
 function painel() {
-  const receita = sum(D.vendas, vendaReceita);
-  const rec = sum(D.financeiro.filter(r => r.tipo === "Receita"), r => r.valor), des = sum(D.financeiro.filter(r => r.tipo === "Despesa"), r => r.valor);
+  const ivP = intervalo(F.painel), noPer = ivP ? " no período" : "";
+  const vendP = D.vendas.filter(v => dentro(v.data, ivP)), finP = D.financeiro.filter(r => dentro(r.data, ivP));
+  const receita = sum(vendP, vendaReceita);
+  const rec = sum(finP.filter(r => r.tipo === "Receita"), r => r.valor), des = sum(finP.filter(r => r.tipo === "Despesa"), r => r.valor);
   const fisico = sum(D.titulos.filter(t => t.tiragem), t => estoque(t.isbn));
   const consig = consigPorCliente();
   const aberto = D.oportunidades.filter(o => !(o.etapa || "").startsWith("Fechado"));
@@ -618,36 +725,38 @@ function painel() {
   const tudoVazio = COLS.every(c => loaded.has(c) && D[c].length === 0);
   const temEx = COLS.some(c => D[c].some(r => r.exemplo));
   const acoes = aberto.filter(o => o.dataAcao).sort((a, b) => a.dataAcao.localeCompare(b.dataAcao)).slice(0, 6);
-  const canais = L.canal.map(ch => [ch, sum(D.vendas.filter(v => v.canal === ch), vendaReceita)]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]);
+  const canais = L.canal.map(ch => [ch, sum(vendP.filter(v => v.canal === ch), vendaReceita)]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]);
   const funil = FUNIL.slice(0, 5).map(([e]) => [e, sum(aberto.filter(o => o.etapa === e), o => o.valor)]);
   const lanc = D.titulos.filter(t => t.lancamento && t.lancamento >= today()).sort((a, b) => a.lancamento.localeCompare(b.lancamento)).slice(0, 5);
 
   let html = header("Painel", "Visão geral da Linha Editora. Tudo aqui é calculado a partir das outras áreas.",
     isOwner && PLAN_URL ? `<a class="btn" href="${esc(PLAN_URL)}" target="_blank" rel="noopener">Abrir planilha</a>` : "");
+  html += barraFiltros("painel", [{ k: "per", t: "per" }]);
+  if (ivP) html += `<p class="sub" style="margin:-8px 0 0">Vendas, caixa e despesas mostram só o período escolhido. Estoque e consignações mostram sempre a posição de hoje.</p>`;
   if (false) html += `<div class="panel"><h2>Comece por aqui</h2><p class="sub" style="margin:0">O espaço está vazio. Cadastre seus títulos no Catálogo, ou carregue alguns registros de exemplo para ver como as áreas se ligam. Os exemplos ficam marcados e podem ser removidos com um clique.</p><div class="tools"><button class="btn primary" id="seed">Carregar exemplos</button><button class="btn" data-go2="titulos">Ir para o Catálogo</button></div></div>`;
   html += `<div class="kpis">
     ${kpi("Títulos", D.titulos.length, `${D.titulos.filter(t => t.status === "Publicado").length} publicados · ${D.titulos.filter(t => ["Em produção", "Pré-venda"].includes(t.status)).length} a caminho`)}
     ${kpi("Exemplares na editora", nf.format(fisico), `${nf.format(sum(D.titulos, t => vendidos(t.isbn)))} vendidos · ${nf.format(sum(D.titulos, t => semVenda(t.isbn)))} doados/autor`)}
     ${kpi("Em consignação", nf.format(sum(consig, c => c[1].q)) + " ex.", `em ${consig.length} livraria${consig.length === 1 ? "" : "s"} · ${brl(sum(consig, c => c[1].capa))} a preço de capa`)}
-    ${kpi("Receita de vendas", brl(receita), `vendas diretas e acertos de consignação`)}
-    ${!pode("financeiro", "ver") ? "" : kpi("Resultado do caixa", brl(rec - des), `${brl(rec)} entradas · ${brl(des)} saídas`, rec - des < 0 ? "bad" : rec - des > 0 ? "good" : "")}
+    ${kpi("Receita de vendas", brl(receita), `vendas diretas e acertos de consignação${noPer}`)}
+    ${!pode("financeiro", "ver") ? "" : kpi("Resultado do caixa", brl(rec - des), `${brl(rec)} entradas · ${brl(des)} saídas${noPer}`, rec - des < 0 ? "bad" : rec - des > 0 ? "good" : "")}
     ${kpi("Pipeline ponderado", brl(sum(aberto, o => num(o.valor) * (PROB[o.etapa] ?? 0))), `${aberto.length} oportunidades abertas`)}
     ${kpi("Etapas atrasadas", atrasadas.length, "na produção editorial", atrasadas.length ? "bad" : "")}
     ${kpi("Contatos ativos", D.contatos.filter(c => c.ativo !== "Não").length, `${D.interacoes.length} interações registradas`)}
   </div>`;
   if (pode("financeiro", "ver")) {
-    const desp = D.financeiro.filter(r => r.tipo === "Despesa");
+    const desp = finP.filter(r => r.tipo === "Despesa");
     const grupos = [...SOCIOS, ...[...new Set(desp.map(pagoPor))].filter(n => !SOCIOS.includes(n)).sort()];
     const total = sum(desp, r => r.valor);
     const mes = today().slice(0, 7);
-    html += `<div class="panel"><h2>Despesas por sócio</h2><div class="socios">${grupos.map(n => { const rs = desp.filter(r => pagoPor(r) === n), v = sum(rs, r => r.valor), vm = sum(rs.filter(r => (r.data || "").startsWith(mes)), r => r.valor);
+    html += `<div class="panel"><h2>Despesas por sócio${ivP ? " no período" : ""}</h2><div class="socios">${grupos.map(n => { const rs = desp.filter(r => pagoPor(r) === n), v = sum(rs, r => r.valor), vm = sum(rs.filter(r => (r.data || "").startsWith(mes)), r => r.valor);
       return `<div class="socio${SOCIOS.includes(n) ? "" : " outro"}"><span class="l">${esc(n)}</span><span class="v">${brl(v)}</span><div class="track"><div class="fill" style="width:${total ? (v / total * 100).toFixed(1) : 0}%"></div></div><span class="h">${total ? pct(v / total) : "—"} do total · ${rs.length} ${rs.length === 1 ? "lançamento" : "lançamentos"} · este mês ${brl(vm)}</span></div>`; }).join("")}</div>
-      <div class="tfoot"><span>Total de despesas: ${brl(total)}</span><button class="btn small" data-go2="financeiro">Ver lançamentos</button></div></div>`;
+      <div class="tfoot"><span>Total de despesas${noPer}: ${brl(total)}</span><button class="btn small" data-go2="financeiro">Ver lançamentos</button></div></div>`;
   }
   html += `<div class="grid2">
     <div class="panel"><h2>Próximas ações do CRM</h2><div class="list">${acoes.length ? acoes.map(o => { const [st, cl] = situacaoOp(o); return `<div class="it" data-edit="oportunidades" data-id="${esc(o.id)}" style="cursor:pointer"><div class="t"><b>${esc(o.proximaAcao || o.oportunidade)}</b><div>${esc(contato(o.contatoId)?.nome || "")} · ${dt(o.dataAcao)}</div></div><span class="chip ${cl}">${st}</span></div>`; }).join("") : `<div class="empty">Nenhuma ação agendada no funil.</div>`}</div></div>
     <div class="panel"><h2>Produção atrasada</h2><div class="list">${atrasadas.length ? atrasadas.slice(0, 6).map(p => `<div class="it" data-edit="producao" data-id="${esc(p.id)}" style="cursor:pointer"><div class="t"><b>${esc(p.titulo)}</b><div>${esc(p.etapa)} · prazo ${dt(p.prazo)}${p.responsavel ? " · " + esc(p.responsavel) : ""}</div></div><span class="chip bad">${atrasoProd(p)} dias</span></div>`).join("") : `<div class="empty">Nenhuma etapa atrasada.</div>`}</div></div>
-    <div class="panel"><h2>Receita por canal</h2>${canais.length ? bars(canais) : `<div class="empty">Sem vendas registradas.</div>`}</div>
+    <div class="panel"><h2>Receita por canal${noPer}</h2>${canais.length ? bars(canais) : `<div class="empty">Sem vendas registradas.</div>`}</div>
     <div class="panel"><h2>Funil de vendas por etapa</h2>${aberto.length ? bars(funil) : `<div class="empty">Sem oportunidades abertas.</div>`}</div>
     <div class="panel"><h2>Consignações em aberto</h2><div class="list">${consig.length ? consig.map(([k, x]) => `<div class="it"><div class="t"><b>${esc(k)}</b><div>${brl(x.capa)} a preço de capa</div></div><span class="chip acc">${nf.format(x.q)} ex.</span></div>`).join("") : `<div class="empty">Nenhum exemplar em consignação.</div>`}</div></div>
     <div class="panel"><h2>Estoque por título</h2><div class="list">${D.titulos.length ? D.titulos.map(t => `<div class="it" data-edit="titulos" data-id="${esc(t.id)}" style="cursor:pointer"><div class="t"><b>${esc(t.titulo)}</b><div>tiragem ${nf.format(num(t.tiragem))} · consignado ${nf.format(consignado(t.isbn))} · vendido ${nf.format(vendidos(t.isbn))} · doado/autor ${nf.format(semVenda(t.isbn))}</div></div><span class="chip ${estoque(t.isbn) < 50 ? "bad" : ""}">${nf.format(estoque(t.isbn))} na editora</span></div>`).join("") : `<div class="empty">Nenhum título cadastrado.</div>`}</div></div>
@@ -664,6 +773,8 @@ $("#view").addEventListener("input", e => {
 });
 $("#view").addEventListener("change", async e => {
   if (e.target.id === "audWho") { audWho = e.target.value; return render(); }
+  const fe = e.target.closest("[data-f]");
+  if (fe) { const sc = fe.closest("[data-scope]").dataset.scope; F[sc] = F[sc] || {}; F[sc][fe.dataset.f] = fe.type === "checkbox" ? fe.checked : fe.value; salvarF(); return render(); }
   const sel = e.target.closest("[data-stage]"); if (!sel) return;
   try { aplicar(await api("salvar", "oportunidades", { id: sel.dataset.stage, etapa: sel.value })); render(); toast(`Movido para ${sel.value}`); }
   catch (err) { failed(err); }
@@ -674,6 +785,7 @@ $("#view").addEventListener("click", e => {
   const ed = e.target.closest("[data-edit]"); if (ed) return openForm(ed.dataset.edit, ed.dataset.id);
   const g2 = e.target.closest("[data-go2]"); if (g2) return go(g2.dataset.go2);
   if (e.target.id === "audRefresh") return carregarRegistro();
+  const lf = e.target.closest("[data-limpar]"); if (lf) { F[lf.dataset.limpar] = {}; salvarF(); return render(); }
   const sm = e.target.closest("[data-salvar-membro]"); if (sm) return salvarMembroUI(sm.closest("tr"), sm);
   const rm = e.target.closest("[data-remover-membro]"); if (rm) return removerMembroUI(rm.closest("tr"), rm);
 });
@@ -725,7 +837,13 @@ $("#frm").addEventListener("submit", async e => {
     body[f.k] = ["money", "int", "num"].includes(f.t) ? (v === "" ? "" : num(v)) : v;
   }
   if (c === "titulos" && D.titulos.some(t => t.isbn === body.isbn && t.id !== id)) { $("#ferr").textContent = "Já existe um título com esse ISBN."; return; }
-  const btn = e.target.querySelector('[type="submit"]'); btn.disabled = true; btn.textContent = "Salvando…";
+  const btn = e.target.querySelector('[type="submit"]');
+  if (body.data && btn.dataset.ok !== body.data) {
+    const dd = days(body.data, today());
+    const aviso = dd < 0 ? `A data ${dt(body.data)} está no futuro.` : dd > 365 ? `A data ${dt(body.data)} é de mais de um ano atrás.` : "";
+    if (aviso) { $("#ferr").textContent = aviso + " Se estiver certa, clique em Salvar de novo."; btn.dataset.ok = body.data; return; }
+  }
+  btn.disabled = true; btn.textContent = "Salvando…";
   try {
     aplicar(await api("salvar", c, id ? { ...body, id } : body));
     $("#dlg").close(); toast(id ? "Alterações salvas" : `${s.one[0].toUpperCase() + s.one.slice(1)} ${s.fem ? "cadastrada" : "cadastrado"}`);
@@ -733,7 +851,8 @@ $("#frm").addEventListener("submit", async e => {
 });
 function failed(err, where) {
   const m = String(err?.message || err || "");
-  const msg = m.includes("SEM_PERMISSAO_EXCLUIR") ? "Só administradores podem excluir. Fale com o Itamar."
+  const msg = m.includes("VALIDACAO:") ? m.slice(m.indexOf("VALIDACAO:") + 10).split("|").join(" · ") + "."
+    : m.includes("SEM_PERMISSAO_EXCLUIR") ? "Só administradores podem excluir. Fale com o Itamar."
     : m.includes("SEM_PERMISSAO") ? "Seu acesso não permite fazer isso. Fale com o administrador."
     : m.includes("ISBN_DUPLICADO") ? "Já existe um título com esse ISBN."
     : m.includes("SEM_ACESSO") ? "Seu e-mail não tem mais acesso. Recarregue a página."

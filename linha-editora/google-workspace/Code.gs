@@ -138,6 +138,91 @@ function diferencas_(antes, depois) {
     .map(k => ({ campo: k, de: antes[k] === undefined ? '' : String(antes[k]), para: depois[k] === undefined ? '' : String(depois[k]) }));
 }
 
+// ---------- Regras de cadastro ----------
+// Campos obrigatórios por área. O app mostra a mesma lista com *; aqui é a garantia final.
+const OBRIGATORIOS = {
+  titulos: [['titulo', 'Título'], ['isbn', 'ISBN'], ['autor', 'Autor'], ['preco', 'Preço de capa'], ['tiragem', 'Tiragem'], ['status', 'Status']],
+  autores: [['nome', 'Nome'], ['royalty', '% de royalties']],
+  contatos: [['nome', 'Nome / empresa'], ['tipo', 'Tipo'], ['cidade', 'Cidade/UF']],
+  vendas: [['data', 'Data'], ['tipo', 'Tipo'], ['isbn', 'Título'], ['quantidade', 'Quantidade'], ['cliente', 'Cliente / destinatário']],
+  financeiro: [['data', 'Data'], ['tipo', 'Tipo'], ['categoria', 'Categoria'], ['descricao', 'Descrição'], ['valor', 'Valor'], ['responsavel', 'Pago por']],
+  producao: [['titulo', 'Título'], ['etapa', 'Etapa']],
+  oportunidades: [['oportunidade', 'Oportunidade'], ['contatoId', 'Contato'], ['etapa', 'Etapa do funil']],
+  interacoes: [['data', 'Data'], ['contatoId', 'Contato']],
+};
+const SAIDAS = ['Venda', 'Consignação', 'Doação', 'Divulgação', 'Direitos autorais'];
+const vazio_ = v => v === undefined || v === null || String(v).trim() === '';
+const digitos_ = v => String(v || '').replace(/\D/g, '');
+function isbnValido_(v) {
+  const d = digitos_(v);
+  if (d.length !== 13) return false;
+  let soma = 0;
+  for (let i = 0; i < 12; i++) soma += Number(d[i]) * (i % 2 ? 3 : 1);
+  return (10 - soma % 10) % 10 === Number(d[12]);
+}
+function cnpjValido_(v) {
+  const d = digitos_(v);
+  if (d.length !== 14 || /^(\d)\1+$/.test(d)) return false;
+  const dv = n => { const p = n === 12 ? [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2] : [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]; const r = p.reduce((s, x, i) => s + x * Number(d[i]), 0) % 11; return r < 2 ? 0 : 11 - r; };
+  return dv(12) === Number(d[12]) && dv(13) === Number(d[13]);
+}
+function cpfValido_(v) {
+  const d = digitos_(v);
+  if (d.length !== 11 || /^(\d)\1+$/.test(d)) return false;
+  const dv = n => { let s = 0; for (let i = 0; i < n; i++) s += Number(d[i]) * (n + 1 - i); const r = (s * 10) % 11; return r === 10 ? 0 : r; };
+  return dv(9) === Number(d[9]) && dv(10) === Number(d[10]);
+}
+const mesmoNome_ = (a, b) => String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
+function validar_(area, r) {
+  const erros = (OBRIGATORIOS[area] || []).filter(([k]) => vazio_(r[k])).map(([, l]) => 'Preencha ' + l);
+  const email = v => vazio_(v) || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(String(v));
+  if (['autores', 'contatos'].indexOf(area) >= 0) {
+    if (vazio_(r.email) && vazio_(r.telefone)) erros.push('Informe telefone ou e-mail');
+    if (!email(r.email)) erros.push('E-mail inválido');
+  }
+  if (area === 'titulos') {
+    if (!vazio_(r.isbn) && !/^ISBN-PENDENTE/i.test(String(r.isbn)) && !isbnValido_(r.isbn)) erros.push('ISBN inválido: confira os 13 dígitos');
+    if (!vazio_(r.preco) && !(Number(r.preco) > 0)) erros.push('Preço de capa deve ser maior que zero');
+    if (!vazio_(r.tiragem) && !(Number(r.tiragem) > 0)) erros.push('Tiragem deve ser maior que zero');
+  }
+  if (area === 'autores') {
+    if (!vazio_(r.cpf) && !cpfValido_(r.cpf)) erros.push('CPF inválido');
+    if (!vazio_(r.royalty) && !(Number(r.royalty) >= 0 && Number(r.royalty) <= 100)) erros.push('Royalties deve ficar entre 0 e 100%');
+  }
+  if (area === 'contatos') {
+    if (['Livraria', 'Distribuidora'].indexOf(r.tipo) >= 0 && vazio_(r.cnpj)) erros.push('Preencha o CNPJ (obrigatório para ' + r.tipo.toLowerCase() + ')');
+    if (!vazio_(r.cnpj) && !cnpjValido_(r.cnpj)) erros.push('CNPJ inválido');
+  }
+  if (area === 'vendas') {
+    const n = Number(r.quantidade);
+    if (!vazio_(r.quantidade) && !(n > 0 && Math.floor(n) === n)) erros.push('Quantidade deve ser um número inteiro maior que zero');
+    if (['Venda', 'Acerto de consignação'].indexOf(r.tipo) >= 0) {
+      if (!(Number(r.valor) > 0)) erros.push('Preencha o Valor da venda');
+      if (vazio_(r.pagamento)) erros.push('Preencha a Forma de pagamento');
+    }
+    if (r.tipo === 'Consignação' && vazio_(r.fatura)) erros.push('Preencha o Nº da fatura da consignação');
+  }
+  if (area === 'financeiro' && !vazio_(r.valor) && !(Number(r.valor) > 0)) erros.push('Valor deve ser maior que zero');
+  if (!erros.length && area === 'vendas') checarEstoque_(r, erros);
+  if (erros.length) throw new Error('VALIDACAO:' + erros.join('|'));
+}
+// Não deixa sair mais do que há na editora, nem acertar/devolver mais do que a livraria tem consignado
+function checarEstoque_(r, erros) {
+  const t = lerAba_('titulos').find(x => x.isbn === r.isbn);
+  if (!t) { erros.push('Título não encontrado no Catálogo'); return; }
+  const movs = lerAba_('vendas').filter(v => v.isbn === r.isbn && v.id !== String(r.id));
+  const soma = (tipos, filtro) => movs.filter(v => tipos.indexOf(v.tipo || 'Venda') >= 0 && (!filtro || filtro(v))).reduce((s, v) => s + Number(v.quantidade || 0), 0);
+  const n = Number(r.quantidade);
+  if (SAIDAS.indexOf(r.tipo) >= 0) {
+    const naEditora = Number(t.tiragem || 0) - soma(SAIDAS) + soma(['Devolução de consignação']);
+    if (n > naEditora) erros.push('Estoque insuficiente: há ' + naEditora + ' exemplares de "' + t.titulo + '" na editora');
+  } else if (['Acerto de consignação', 'Devolução de consignação'].indexOf(r.tipo) >= 0) {
+    const doCliente = v => mesmoNome_(v.cliente, r.cliente);
+    const aberto = soma(['Consignação'], doCliente) - soma(['Acerto de consignação', 'Devolução de consignação'], doCliente);
+    if (n > aberto) erros.push(r.cliente + ' tem ' + aberto + ' exemplares de "' + t.titulo + '" em consignação');
+  }
+}
+
 // ---------- Funções chamadas pelo app ----------
 function carregar() {
   const u = quem_();
@@ -173,6 +258,7 @@ function salvar(area, reg) {
     let novo;
     if (antes) {
       novo = Object.assign({}, antes, limpo, { atualizado: agora, atualizadoPor: u.email });
+      validar_(area, novo);
       gravar_(area, novo);
       registrar_(u, 'alterou', area, rotulo_(area, novo), diferencas_(antes, novo));
       (LIGACOES[area] || []).forEach(l => {
@@ -185,6 +271,7 @@ function salvar(area, reg) {
       });
     } else {
       novo = Object.assign({}, limpo, { id: Utilities.getUuid(), criado: agora, atualizado: agora, criadoPor: u.email, atualizadoPor: u.email });
+      validar_(area, novo);
       gravar_(area, novo);
       registrar_(u, 'criou', area, rotulo_(area, novo), diferencas_({}, novo));
     }
