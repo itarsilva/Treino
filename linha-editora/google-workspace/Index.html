@@ -102,7 +102,7 @@ tbody tr:hover td { background: var(--chip); }
 tbody tr:last-child td { border-bottom: 0; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .mono { font-family: var(--mono); font-size: 12px; }
-td.wrap { min-width: 180px; }
+td.txt { min-width: 180px; }
 .chip { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--chip); font-size: 12px; white-space: nowrap; }
 .chip.good { background: var(--good-soft); color: var(--good); }
 .chip.warn { background: var(--warn-soft); color: var(--warn); }
@@ -326,7 +326,7 @@ const S = {
       { k: "obs", l: "Observações", t: "area", full: 1 },
     ],
     cols: [
-      { l: "Título", v: r => `<b>${esc(r.titulo)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div class="mono" style="color:var(--muted)">${esc(r.isbn)}</div>`, cls: "wrap" },
+      { l: "Título", v: r => `<b>${esc(r.titulo)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div class="mono" style="color:var(--muted)">${esc(r.isbn)}</div>`, cls: "txt" },
       { l: "Autor", v: r => esc(r.autor || "—") },
       { l: "Preço", v: r => brl(r.preco), cls: "num" },
       { l: "Custo un.", v: r => custoUnit(r) ? brl(custoUnit(r)) : "—", cls: "num" },
@@ -354,7 +354,7 @@ const S = {
       { k: "obs", l: "Observações", t: "area", full: 1 },
     ],
     cols: [
-      { l: "Autor", v: r => `<b>${esc(r.nome)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc(r.email || "")}</div>`, cls: "wrap" },
+      { l: "Autor", v: r => `<b>${esc(r.nome)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc(r.email || "")}</div>`, cls: "txt" },
       { l: "Títulos", v: r => D.titulos.filter(t => t.autor === r.nome).length, cls: "num" },
       { l: "Royalties", v: r => r.royalty ? r.royalty + "%" : "—", cls: "num" },
       { l: "Adiantamento", v: r => brl(r.adiantamento), cls: "num" },
@@ -375,7 +375,7 @@ const S = {
       { k: "notas", l: "Notas", t: "area", full: 1 },
     ],
     cols: [
-      { l: "Título", v: r => `<b>${esc(r.titulo)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}`, cls: "wrap" },
+      { l: "Título", v: r => `<b>${esc(r.titulo)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}`, cls: "txt" },
       { l: "Etapa", v: r => esc(r.etapa) },
       { l: "Responsável", v: r => esc(r.responsavel || "—") },
       { l: "Prazo", v: r => dt(r.prazo), cls: "num" },
@@ -400,7 +400,7 @@ const S = {
       { k: "obs", l: "Observações", t: "area", full: 1 },
     ],
     cols: [
-      { l: "Contato", v: r => `<b>${esc(r.nome)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc([r.pessoa, r.cidade].filter(Boolean).join(" · "))}</div>`, cls: "wrap" },
+      { l: "Contato", v: r => `<b>${esc(r.nome)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc([r.pessoa, r.cidade].filter(Boolean).join(" · "))}</div>`, cls: "txt" },
       { l: "Tipo", v: r => r.tipo ? `<span class="chip">${esc(r.tipo)}</span>` : "—" },
       { l: "E-mail / telefone", v: r => `<div>${esc(r.email || "")}</div><div class="mono">${esc(r.telefone || "")}</div>` },
       { l: "Responsável", v: r => esc(r.responsavel || "—") },
@@ -435,8 +435,8 @@ const S = {
       { l: "Data", v: r => dt(r.data), cls: "num" },
       { l: "Contato", v: r => `<b>${esc(contato(r.contatoId)?.nome || "—")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}` },
       { l: "Tipo", v: r => r.tipo ? `<span class="chip">${esc(r.tipo)}</span>` : "—" },
-      { l: "Resumo", v: r => esc(r.resumo || ""), cls: "wrap" },
-      { l: "Próximo passo", v: r => esc(r.resultado || ""), cls: "wrap" },
+      { l: "Resumo", v: r => esc(r.resumo || ""), cls: "txt" },
+      { l: "Próximo passo", v: r => esc(r.resultado || ""), cls: "txt" },
       { l: "Por", v: r => esc(r.responsavel || "—") },
     ],
     sort: (a, b) => (b.data || "").localeCompare(a.data || ""),
@@ -457,8 +457,8 @@ const S = {
     cols: [
       { l: "Data", v: r => dt(r.data), cls: "num" },
       { l: "Tipo", v: r => chipStatus(r.tipo || "Venda") },
-      { l: "Título", v: r => `<b>${esc(tituloDe(r.isbn)?.titulo || "ISBN não cadastrado")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}`, cls: "wrap" },
-      { l: "Cliente", v: r => esc(r.cliente || "—"), cls: "wrap" },
+      { l: "Título", v: r => `<b>${esc(tituloDe(r.isbn)?.titulo || "ISBN não cadastrado")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}`, cls: "txt" },
+      { l: "Cliente", v: r => esc(r.cliente || "—"), cls: "txt" },
       { l: "Qtd.", v: r => nf.format(num(r.quantidade)), cls: "num" },
       { l: "Valor", v: r => r.valor !== "" && r.valor != null ? (isVenda(r) ? `<b>${brl(r.valor)}</b>` : `<span style="color:var(--muted)">${brl(r.valor)}</span>`) : "—", cls: "num" },
       { l: "Desconto", v: r => { const c = vendaCapa(r); return c && num(r.valor) && r.tipo !== "Doação" ? pct(1 - num(r.valor) / c) : "—"; }, cls: "num" },
@@ -480,7 +480,7 @@ const S = {
     ],
     cols: [
       { l: "Data", v: r => dt(r.data), cls: "num" },
-      { l: "Descrição", v: r => `<b>${esc(r.descricao || r.categoria || "—")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc(r.titulo || "")}</div>`, cls: "wrap" },
+      { l: "Descrição", v: r => `<b>${esc(r.descricao || r.categoria || "—")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc(r.titulo || "")}</div>`, cls: "txt" },
       { l: "Categoria", v: r => esc(r.categoria || "—") },
       { l: "Pago por", v: r => esc(pagoPor(r)) },
       { l: "Valor", v: r => `<span style="color:var(--${r.tipo === "Despesa" ? "bad" : "good"})">${r.tipo === "Despesa" ? "−" : "+"} ${brl(r.valor)}</span>`, cls: "num" },
@@ -677,8 +677,8 @@ function auditoria() {
   if (!rows.length) return html + `<div class="blank"><b>Nada registrado ainda</b><span>${AUD.length ? "Nada corresponde ao filtro." : "Os acessos e mudanças aparecem aqui."}</span></div>`;
   const val = (area, k, v) => k === "isbn" && area !== "titulos" ? (tituloDe(v)?.titulo || v) : k === "contatoId" ? (contato(v)?.nome || v) : v;
   return html + `<div class="tablebox"><table><thead><tr><th>Quando</th><th>Quem</th><th>Ação</th><th>Área</th><th>Registro</th><th>O que mudou</th></tr></thead><tbody>` +
-    rows.slice(0, 500).map(e => `<tr style="cursor:default"><td class="num">${quando(e.quando)}</td><td><b>${esc(nomeDe(e.email))}</b><div style="color:var(--muted);font-size:12px">${esc(e.email)}</div></td><td><span class="chip ${ACAO[e.acao] ?? ""}">${esc(e.acao)}</span></td><td>${esc(AREA_NOME[e.area] || e.area || "—")}</td><td class="wrap">${esc(e.registro || "—")}</td>
-      <td class="wrap">${(e.mudancas || []).length ? e.mudancas.map(m => `<div><span style="color:var(--muted)">${esc(LABEL[e.area]?.[m.campo] || m.campo)}:</span> ${m.de ? `<s style="color:var(--muted)">${esc(val(e.area, m.campo, m.de))}</s> → ` : ""}${esc(m.para ? val(e.area, m.campo, m.para) : "(vazio)")}</div>`).join("") : "—"}</td></tr>`).join("") +
+    rows.slice(0, 500).map(e => `<tr style="cursor:default"><td class="num">${quando(e.quando)}</td><td><b>${esc(nomeDe(e.email))}</b><div style="color:var(--muted);font-size:12px">${esc(e.email)}</div></td><td><span class="chip ${ACAO[e.acao] ?? ""}">${esc(e.acao)}</span></td><td>${esc(AREA_NOME[e.area] || e.area || "—")}</td><td class="txt">${esc(e.registro || "—")}</td>
+      <td class="txt">${(e.mudancas || []).length ? e.mudancas.map(m => `<div><span style="color:var(--muted)">${esc(LABEL[e.area]?.[m.campo] || m.campo)}:</span> ${m.de ? `<s style="color:var(--muted)">${esc(val(e.area, m.campo, m.de))}</s> → ` : ""}${esc(m.para ? val(e.area, m.campo, m.para) : "(vazio)")}</div>`).join("") : "—"}</td></tr>`).join("") +
     `</tbody></table></div><div class="tfoot"><span>${rows.length} eventos</span><span>Horários no fuso deste aparelho</span></div>`;
 }
 const FILTROS_AUD = [
