@@ -38,12 +38,14 @@ function quem_() {
   if (!email) throw new Error('SEM_LOGIN');
   const todas = {};
   AREAS.forEach(a => todas[a] = 'editar');
-  if (email === ADMIN) return { email, nome: 'Administrador', admin: true, perm: todas };
+  // admin = dono do sistema (equipe e registro); podeExcluir = perfil Administrador
+  if (email === ADMIN) return { email, nome: 'Administrador', admin: true, perfil: 'Administrador', podeExcluir: true, perm: todas };
   const membro = lerEquipe_().find(m => m.email === email);
   if (!membro || membro.ativo === 'Não') throw new Error('SEM_ACESSO:' + email);
   const perm = {};
   AREAS.forEach(a => perm[a] = ['editar', 'ver'].indexOf(membro[a]) >= 0 ? membro[a] : 'nenhum');
-  return { email, nome: membro.nome || email, admin: false, perm };
+  const perfil = membro.perfil === 'Administrador' ? 'Administrador' : 'Colaborador';
+  return { email, nome: membro.nome || email, admin: false, perfil, podeExcluir: perfil === 'Administrador', perm };
 }
 function exigir_(u, area, nivel) {
   const p = u.perm[area];
@@ -194,6 +196,7 @@ function excluir(area, id) {
   const u = quem_();
   if (AREAS.indexOf(area) < 0) throw new Error('AREA_INVALIDA');
   exigir_(u, area, 'editar');
+  if (!u.podeExcluir) throw new Error('SEM_PERMISSAO_EXCLUIR');
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
@@ -231,9 +234,9 @@ function salvarMembro(m) {
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
     const antes = lerEquipe_().find(x => x.email === email);
-    const reg = { id: antes ? antes.id : email, email, nome: String(m.nome || ''), ativo: m.ativo === 'Não' ? 'Não' : 'Sim' };
+    const reg = { id: antes ? antes.id : email, email, nome: String(m.nome || ''), perfil: m.perfil === 'Administrador' ? 'Administrador' : 'Colaborador', ativo: m.ativo === 'Não' ? 'Não' : 'Sim' };
     AREAS.forEach(a => reg[a] = ['editar', 'ver'].indexOf(m[a]) >= 0 ? m[a] : 'nenhum');
-    const sh = aba_(ABA_EQUIPE, ['id', 'email', 'nome', 'ativo'].concat(AREAS));
+    const sh = aba_(ABA_EQUIPE, ['id', 'email', 'nome', 'perfil', 'ativo'].concat(AREAS));
     garantirColunas_(sh, Object.keys(reg));
     const cab = cabecalho_(sh);
     const linha = cab.map(k => celula_(reg[k]));
@@ -255,7 +258,7 @@ function removerMembro(email) {
 // Rode UMA vez pelo editor (selecione "configurar" e clique em Executar).
 function configurar() {
   const ss = planilha_();
-  aba_(ABA_EQUIPE, ['id', 'email', 'nome', 'ativo'].concat(AREAS));
+  aba_(ABA_EQUIPE, ['id', 'email', 'nome', 'perfil', 'ativo'].concat(AREAS));
   aba_(ABA_REGISTRO, ['quando', 'email', 'acao', 'area', 'registro', 'mudancas']);
   const admin = { email: ADMIN, perm: {} };
   let importados = 0;

@@ -60,6 +60,7 @@ h2 { font-family: var(--display); font-weight: 600; font-size: 17px; margin: 0; 
 .search { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 12px; width: 220px; max-width: 100%; }
 .btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 8px 14px; cursor: pointer; font-weight: 500; white-space: nowrap; }
 .btn:hover { border-color: var(--muted); }
+a.btn { color: var(--ink); text-decoration: none; display: inline-block; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .btn.primary:hover { filter: brightness(1.08); }
 .btn.danger { color: var(--bad); }
@@ -146,6 +147,14 @@ table.equipe td { vertical-align: middle; }
 table.equipe select, table.equipe input { border: 1px solid var(--line); background: var(--bg); border-radius: 6px; padding: 5px 7px; font-size: 12px; max-width: 100%; }
 [hidden] { display: none !important; }
 body { margin: 0; }
+.socios { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.socio { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.socio .l { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.socio .v { font: 600 24px/1.2 var(--display); font-variant-numeric: tabular-nums; }
+.socio .h { font-size: 12px; color: var(--muted); }
+.socio .track { height: 8px; background: var(--chip); border-radius: 4px; overflow: hidden; }
+.socio .fill { height: 100%; background: var(--accent); border-radius: 4px; }
+.socio.outro .fill { background: var(--muted); }
 .err { color: var(--bad); font-size: 12px; grid-column: 1 / -1; }
 
 .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 8px; box-shadow: var(--shadow); font-size: 13px; z-index: 50; }
@@ -199,7 +208,11 @@ const L = {
   mov: ["Venda", "Consignação", "Acerto de consignação", "Devolução de consignação", "Doação", "Divulgação", "Direitos autorais"],
   entrega: ["Pendente", "Enviado", "Entregue"],
   simnao: ["Sim", "Não"],
+  pagoPor: ["Marcelo", "Adauto", "Conta da editora", "Outro"],
 };
+// Sócios que pagam despesas (o Painel soma por pessoa). "Adaulto" veio assim da planilha antiga.
+const SOCIOS = ["Marcelo", "Adauto"];
+const pagoPor = r => { const n = String(r.responsavel || "").trim(), k = n.toLowerCase(); return k.startsWith("marcel") ? "Marcelo" : (k === "adauto" || k === "adaulto") ? "Adauto" : n || "Sem responsável"; };
 // Probabilidade padrão por etapa do funil (referência genérica; ajuste à realidade da editora)
 const FUNIL = [["Lead", .10], ["Contato feito", .20], ["Amostra enviada", .35], ["Proposta", .50], ["Negociação", .75], ["Fechado - ganho", 1], ["Fechado - perdido", 0]];
 const PROB = Object.fromEntries(FUNIL);
@@ -215,7 +228,7 @@ function aplicar(r) {
   ME = r.usuario; isOwner = !!ME.admin; EQUIPE = r.equipe || []; PLAN_URL = r.planilhaUrl;
   for (const c of COLS) { D[c] = r.dados[c] || []; loaded.add(c); }
   carregado = true;
-  $("#who").textContent = "Conectado como " + ME.email;
+  $("#who").textContent = `Conectado como ${ME.email} · ${ME.perfil || "Colaborador"}`;
 }
 
 // ---------- Utilidades ----------
@@ -450,20 +463,20 @@ const S = {
       { k: "data", l: "Data", t: "date", req: 1, def: today }, { k: "tipo", l: "Tipo", t: "sel", o: L.tipoFin, req: 1 },
       { k: "categoria", l: "Categoria", t: "sel", o: L.categoria }, { k: "valor", l: "Valor (R$)", t: "money", req: 1 },
       { k: "descricao", l: "Descrição", full: 1 }, { k: "titulo", l: "Título relacionado", t: "ref", ref: "tituloNome" },
-      { k: "pago", l: "Pago / recebido?", t: "sel", o: L.simnao }, { k: "responsavel", l: "Quem pagou / responsável" },
+      { k: "pago", l: "Pago / recebido?", t: "sel", o: L.simnao }, { k: "responsavel", l: "Pago por", t: "sel", o: L.pagoPor, req: 1, hint: "Despesas pagas por um sócio entram na soma dele no Painel" },
       { k: "frequencia", l: "Frequência", hint: "Mensal, anual, pontual…" },
     ],
     cols: [
       { l: "Data", v: r => dt(r.data), cls: "num" },
       { l: "Descrição", v: r => `<b>${esc(r.descricao || r.categoria || "—")}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc(r.titulo || "")}</div>`, cls: "wrap" },
       { l: "Categoria", v: r => esc(r.categoria || "—") },
-      { l: "Responsável", v: r => esc(r.responsavel || "—") },
+      { l: "Pago por", v: r => esc(pagoPor(r)) },
       { l: "Valor", v: r => `<span style="color:var(--${r.tipo === "Despesa" ? "bad" : "good"})">${r.tipo === "Despesa" ? "−" : "+"} ${brl(r.valor)}</span>`, cls: "num" },
       { l: "Pago", v: r => chipStatus(r.pago) },
     ],
     sort: (a, b) => (b.data || "").localeCompare(a.data || ""),
     text: r => [r.descricao, r.categoria, r.titulo, r.tipo, r.responsavel].join(" "),
-    foot: rows => { const rec = sum(rows.filter(r => r.tipo === "Receita"), r => r.valor), des = sum(rows.filter(r => r.tipo === "Despesa"), r => r.valor); return `Receitas ${brl(rec)} · Despesas ${brl(des)} · Resultado ${brl(rec - des)}`; },
+    foot: rows => { const rec = sum(rows.filter(r => r.tipo === "Receita"), r => r.valor), des = sum(rows.filter(r => r.tipo === "Despesa"), r => r.valor); return `Receitas ${brl(rec)} · Despesas ${brl(des)} (${SOCIOS.map(n => n + " " + brl(sum(rows.filter(r => r.tipo === "Despesa" && pagoPor(r) === n), r => r.valor))).join(" · ")}) · Resultado ${brl(rec - des)}`; },
   },
 };
 
@@ -544,7 +557,7 @@ function board() {
 const ACAO = { criou: "good", alterou: "acc", excluiu: "bad", moveu: "acc", acessou: "", importou: "warn" };
 const LABEL = Object.fromEntries(Object.entries(S).map(([c, x]) => [c, Object.fromEntries(x.fields.filter(f => f.k).map(f => [f.k, f.l]))]));
 const AREA_NOME = { ...Object.fromEntries(COLS.map(c => [c, S[c].nav])), equipe: "Equipe e acessos" };
-LABEL.equipe = { email: "E-mail", nome: "Nome", ativo: "Ativo", ...Object.fromEntries(COLS.map(c => [c, S[c].nav])) };
+LABEL.equipe = { email: "E-mail", nome: "Nome", perfil: "Perfil", ativo: "Ativo", ...Object.fromEntries(COLS.map(c => [c, S[c].nav])) };
 const nomeDe = email => email === ME?.email ? "Você" : (EQUIPE.find(m => m.email === email)?.nome || email);
 function carregarRegistro() {
   audLoaded = "carregando";
@@ -573,11 +586,12 @@ function equipe() {
   const sel = (name, v) => `<select data-m="${name}" aria-label="${esc(S[name]?.nav || name)}">${NIVEL.map(([k, l]) => `<option value="${k}" ${k === (v || "nenhum") ? "selected" : ""}>${l}</option>`).join("")}</select>`;
   const linha = (m, novo) => `<tr data-membro="${esc(m.email || "")}" style="cursor:default">
       <td>${novo ? `<input data-m="email" type="email" placeholder="nome@linhaeditora.com.br" aria-label="E-mail" style="min-width:210px">` : `<b>${esc(m.email)}</b>`}<div style="margin-top:6px"><input data-m="nome" placeholder="Nome" value="${esc(m.nome || "")}" aria-label="Nome"></div></td>
+      <td><select data-m="perfil" aria-label="Perfil"><option ${m.perfil !== "Administrador" ? "selected" : ""}>Colaborador</option><option ${m.perfil === "Administrador" ? "selected" : ""}>Administrador</option></select></td>
       ${COLS.map(c => `<td>${sel(c, m[c] || (novo ? "ver" : "nenhum"))}</td>`).join("")}
       <td><select data-m="ativo" aria-label="Ativo"><option ${m.ativo !== "Não" ? "selected" : ""}>Sim</option><option ${m.ativo === "Não" ? "selected" : ""}>Não</option></select></td>
       <td style="white-space:nowrap"><button class="btn small primary" data-salvar-membro>${novo ? "Adicionar" : "Salvar"}</button>${novo ? "" : ` <button class="btn small danger" data-remover-membro>Remover</button>`}</td></tr>`;
-  return header("Equipe e acessos", "Quem pode entrar no app e o que cada pessoa pode fazer em cada área. Só e-mails cadastrados aqui conseguem entrar; você, como administrador, tem acesso total.") +
-    `<div class="tablebox"><table class="equipe"><thead><tr><th>Pessoa</th>${COLS.map(c => `<th>${esc(S[c].nav)}</th>`).join("")}<th>Ativo</th><th></th></tr></thead><tbody>` +
+  return header("Equipe e acessos", "Quem pode entrar no app e o que cada pessoa pode fazer em cada área. Só e-mails cadastrados aqui conseguem entrar. Colaborador cria e edita conforme as áreas liberadas; Administrador também pode excluir. Equipe e registro de atividades ficam só com você.") +
+    `<div class="tablebox"><table class="equipe"><thead><tr><th>Pessoa</th><th>Perfil</th>${COLS.map(c => `<th>${esc(S[c].nav)}</th>`).join("")}<th>Ativo</th><th></th></tr></thead><tbody>` +
     linha({}, true) + EQUIPE.slice().sort((a, b) => a.email.localeCompare(b.email)).map(m => linha(m, false)).join("") +
     `</tbody></table></div><div class="tfoot"><span>${EQUIPE.length} ${EQUIPE.length === 1 ? "pessoa cadastrada" : "pessoas cadastradas"}</span><span>Para tirar o acesso de alguém na hora, marque Ativo: Não ou remova.</span></div>`;
 }
@@ -621,6 +635,15 @@ function painel() {
     ${kpi("Etapas atrasadas", atrasadas.length, "na produção editorial", atrasadas.length ? "bad" : "")}
     ${kpi("Contatos ativos", D.contatos.filter(c => c.ativo !== "Não").length, `${D.interacoes.length} interações registradas`)}
   </div>`;
+  if (pode("financeiro", "ver")) {
+    const desp = D.financeiro.filter(r => r.tipo === "Despesa");
+    const grupos = [...SOCIOS, ...[...new Set(desp.map(pagoPor))].filter(n => !SOCIOS.includes(n)).sort()];
+    const total = sum(desp, r => r.valor);
+    const mes = today().slice(0, 7);
+    html += `<div class="panel"><h2>Despesas por sócio</h2><div class="socios">${grupos.map(n => { const rs = desp.filter(r => pagoPor(r) === n), v = sum(rs, r => r.valor), vm = sum(rs.filter(r => (r.data || "").startsWith(mes)), r => r.valor);
+      return `<div class="socio${SOCIOS.includes(n) ? "" : " outro"}"><span class="l">${esc(n)}</span><span class="v">${brl(v)}</span><div class="track"><div class="fill" style="width:${total ? (v / total * 100).toFixed(1) : 0}%"></div></div><span class="h">${total ? pct(v / total) : "—"} do total · ${rs.length} ${rs.length === 1 ? "lançamento" : "lançamentos"} · este mês ${brl(vm)}</span></div>`; }).join("")}</div>
+      <div class="tfoot"><span>Total de despesas: ${brl(total)}</span><button class="btn small" data-go2="financeiro">Ver lançamentos</button></div></div>`;
+  }
   html += `<div class="grid2">
     <div class="panel"><h2>Próximas ações do CRM</h2><div class="list">${acoes.length ? acoes.map(o => { const [st, cl] = situacaoOp(o); return `<div class="it" data-edit="oportunidades" data-id="${esc(o.id)}" style="cursor:pointer"><div class="t"><b>${esc(o.proximaAcao || o.oportunidade)}</b><div>${esc(contato(o.contatoId)?.nome || "")} · ${dt(o.dataAcao)}</div></div><span class="chip ${cl}">${st}</span></div>`; }).join("") : `<div class="empty">Nenhuma ação agendada no funil.</div>`}</div></div>
     <div class="panel"><h2>Produção atrasada</h2><div class="list">${atrasadas.length ? atrasadas.slice(0, 6).map(p => `<div class="it" data-edit="producao" data-id="${esc(p.id)}" style="cursor:pointer"><div class="t"><b>${esc(p.titulo)}</b><div>${esc(p.etapa)} · prazo ${dt(p.prazo)}${p.responsavel ? " · " + esc(p.responsavel) : ""}</div></div><span class="chip bad">${atrasoProd(p)} dias</span></div>`).join("") : `<div class="empty">Nenhuma etapa atrasada.</div>`}</div></div>
@@ -680,7 +703,7 @@ function openForm(c, id) {
   const ro = !pode(c);
   $("#frm").innerHTML = `<div class="dh"><h2>${r ? (ro ? "" : "Editar ") + s.one : (s.fem ? "Nova " : "Novo ") + s.one}</h2><button type="button" class="x" id="close" aria-label="Fechar">×</button></div>
     <fieldset class="db" style="border:0;margin:0" ${ro ? "disabled" : ""}>${s.fields.map(f => f.sec ? `<h3 class="sec">${f.sec}</h3>` : `<div class="f ${f.full ? "full" : ""}"><label for="f-${f.k}">${f.l}${f.req ? " *" : ""}</label>${input(f, r?.[f.k])}${f.hint ? `<span class="hint">${f.hint}</span>` : ""}</div>`).join("")}<div class="err" id="ferr"></div></fieldset>
-    <div class="df">${r && !ro ? `<button type="button" class="btn danger" id="del">Excluir</button>` : ""}<div class="r"><button type="button" class="btn" id="cancel">${ro ? "Fechar" : "Cancelar"}</button>${ro ? "" : `<button type="submit" class="btn primary">Salvar</button>`}</div></div>`;
+    <div class="df">${r && !ro && ME?.podeExcluir ? `<button type="button" class="btn danger" id="del">Excluir</button>` : ""}<div class="r"><button type="button" class="btn" id="cancel">${ro ? "Fechar" : "Cancelar"}</button>${ro ? "" : `<button type="submit" class="btn primary">Salvar</button>`}</div></div>`;
   $("#dlg").showModal();
 }
 $("#frm").addEventListener("click", async e => {
@@ -710,7 +733,8 @@ $("#frm").addEventListener("submit", async e => {
 });
 function failed(err, where) {
   const m = String(err?.message || err || "");
-  const msg = m.includes("SEM_PERMISSAO") ? "Seu acesso não permite fazer isso. Fale com o administrador."
+  const msg = m.includes("SEM_PERMISSAO_EXCLUIR") ? "Só administradores podem excluir. Fale com o Itamar."
+    : m.includes("SEM_PERMISSAO") ? "Seu acesso não permite fazer isso. Fale com o administrador."
     : m.includes("ISBN_DUPLICADO") ? "Já existe um título com esse ISBN."
     : m.includes("SEM_ACESSO") ? "Seu e-mail não tem mais acesso. Recarregue a página."
     : m.includes("EMAIL_INVALIDO") ? "Confira o e-mail: ele parece incompleto."
