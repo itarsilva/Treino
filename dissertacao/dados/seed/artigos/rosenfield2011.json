@@ -1,0 +1,20 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Rosenfield",
+   "nome": "Cinara L."
+  }
+ ],
+ "ano": "2011",
+ "titulo": "Trabalho decente e precarização",
+ "periodico": "Tempo Social",
+ "doi": "10.1590/S0103-20702011000100012",
+ "acesso": "aberto",
+ "secoes": [
+  "2.6"
+ ],
+ "porque": "Mostra o 'empreendedorismo de si mesmo' entre trabalhadores qualificados (executivos de TI). Útil para pejotização de administradores. Conferir volume e páginas.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

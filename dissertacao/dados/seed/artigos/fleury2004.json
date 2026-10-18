@@ -1,0 +1,19 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Fleury",
+   "nome": ""
+  }
+ ],
+ "ano": "2004",
+ "titulo": "Competências e habilidades para empregabilidade dos egressos de Administração",
+ "url": "https://www.researchgate.net/publication/333874443",
+ "secoes": [
+  "2.2",
+  "2.5"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

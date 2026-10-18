@@ -1,0 +1,25 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Fleury",
+   "nome": "Maria Tereza Leme"
+  },
+  {
+   "sobrenome": "Fleury",
+   "nome": "Afonso"
+  }
+ ],
+ "ano": "2001",
+ "titulo": "Construindo o conceito de competência",
+ "periodico": "Revista de Administração Contemporânea",
+ "volume": "5",
+ "numero": "esp.",
+ "paginas": "183-196",
+ "secoes": [
+  "2.3",
+  "2.5"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

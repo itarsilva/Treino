@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Sposati",
+   "nome": "Aldaíza"
+  }
+ ],
+ "ano": "2010",
+ "titulo": "(referência a completar)",
+ "secoes": [
+  "3.2"
+ ],
+ "status": "faltando",
+ "alerta": "Citada na seção 3.2, sem referência na lista.",
+ "origem": "dissertacao"
+}

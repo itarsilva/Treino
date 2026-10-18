@@ -1,0 +1,19 @@
+{
+ "tipo": "relatorio",
+ "autores": [
+  {
+   "instituicao": "Instituto Brasileiro de Geografia e Estatística"
+  }
+ ],
+ "ano": "2025",
+ "titulo": "Pesquisa Nacional por Amostra de Domicílios Contínua: educação 2024",
+ "editora": "IBGE",
+ "url": "https://sidra.ibge.gov.br/tabela/7135",
+ "acesso": "aberto",
+ "secoes": [
+  "1"
+ ],
+ "porque": "Substitui a PNAD 2019 (pedido da orientadora). Em 2024, 47,8% dos jovens que deixaram o ensino médio citaram a necessidade de trabalhar. Conferir os números na tabela 7135 do SIDRA.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

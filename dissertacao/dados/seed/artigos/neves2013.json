@@ -1,0 +1,26 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Neves",
+   "nome": ""
+  },
+  {
+   "sobrenome": "Trevisan",
+   "nome": ""
+  },
+  {
+   "sobrenome": "João",
+   "nome": ""
+  }
+ ],
+ "ano": "2013",
+ "titulo": "Carreira proteana: revisão teórica e análise bibliométrica",
+ "url": "https://www.redalyc.org/journal/1334/133460324007/html/",
+ "secoes": [
+  "2.4"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

@@ -1,0 +1,18 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Gil",
+   "nome": "Antônio Carlos"
+  }
+ ],
+ "ano": "2002",
+ "titulo": "Como elaborar projetos de pesquisa",
+ "edicao": "4",
+ "editora": "Atlas",
+ "secoes": [
+  "4.1"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

@@ -1,0 +1,23 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Leal",
+   "nome": ""
+  },
+  {
+   "sobrenome": "Dalmau",
+   "nome": ""
+  }
+ ],
+ "ano": "",
+ "titulo": "Formação baseada em competências? Estudo em cursos de Administração",
+ "periodico": "RAM: Revista de Administração Mackenzie",
+ "url": "https://www.scielo.br/j/ram/a/7yBjP6CLCpHVSwfNTt9sPdP/",
+ "secoes": [
+  "2.2"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

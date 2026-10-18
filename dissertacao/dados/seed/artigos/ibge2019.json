@@ -1,0 +1,17 @@
+{
+ "tipo": "relatorio",
+ "autores": [
+  {
+   "instituicao": "Instituto Brasileiro de Geografia e Estatística"
+  }
+ ],
+ "ano": "2019",
+ "titulo": "Pesquisa Nacional por Amostra de Domicílios Contínua (PNAD Contínua) 2019",
+ "editora": "IBGE",
+ "secoes": [
+  "1"
+ ],
+ "alerta": "A orientadora perguntou se há dado mais novo. Há: PNAD Contínua Educação 2024 (ver IBGE, 2025).",
+ "origem": "dissertacao",
+ "status": "citado"
+}

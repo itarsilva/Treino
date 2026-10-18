@@ -1,0 +1,19 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Dutra",
+   "nome": "Joel Souza"
+  }
+ ],
+ "ano": "2002",
+ "titulo": "Gestão de pessoas por competências",
+ "editora": "Atlas",
+ "secoes": [
+  "2.5"
+ ],
+ "acesso": "biblioteca",
+ "alerta": "A dissertação já cita Dutra (2004). Talvez não precise dos três livros do Dutra.",
+ "origem": "planilha",
+ "status": "conferir"
+}

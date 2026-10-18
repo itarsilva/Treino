@@ -1,0 +1,23 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Abílio",
+   "nome": "Ludmila Costhek"
+  }
+ ],
+ "ano": "2020",
+ "titulo": "Uberização: a era do trabalhador just-in-time?",
+ "periodico": "Estudos Avançados",
+ "volume": "34",
+ "numero": "98",
+ "paginas": "111-126",
+ "doi": "10.1590/s0103-4014.2020.3498.008",
+ "acesso": "aberto",
+ "secoes": [
+  "2.6"
+ ],
+ "porque": "Base para a seção 2.6 (vazia): autogerenciamento, 'empreendedor de si' e precarização.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

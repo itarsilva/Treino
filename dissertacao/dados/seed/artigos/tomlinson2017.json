@@ -1,0 +1,21 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Tomlinson",
+   "nome": "Michael"
+  }
+ ],
+ "ano": "2017",
+ "titulo": "Forms of graduate capital and their relationship to graduate employability",
+ "periodico": "Education + Training",
+ "volume": "59",
+ "numero": "4",
+ "paginas": "338-352",
+ "doi": "10.1108/ET-05-2016-0090",
+ "secoes": [
+  "2.3"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

@@ -1,0 +1,31 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Amaral",
+   "nome": "Daniela Patti"
+  },
+  {
+   "sobrenome": "Oliveira",
+   "nome": "Fátima Bayma de"
+  }
+ ],
+ "ano": "2011",
+ "titulo": "O Prouni e a conclusão do ensino superior: novas trajetórias pessoais e profissionais dos egressos",
+ "periodico": "Ensaio: Avaliação e Políticas Públicas em Educação",
+ "volume": "19",
+ "numero": "73",
+ "paginas": "861-890",
+ "doi": "10.1590/S0104-40362011000500008",
+ "acesso": "aberto",
+ "secoes": [
+  "1",
+  "3",
+  "5.3",
+  "5.4"
+ ],
+ "porque": "Estudo empírico com egressos do ProUni (2010-2011) sobre trajetórias profissionais. Provavelmente é o 'Amaral e Oliveira (2011)' que você cita na Introdução sem referência: conferir.",
+ "origem": "dissertacao",
+ "status": "citado",
+ "alerta": "Você já cita este texto na Introdução (Nunes, 2007, apud Amaral e Oliveira, 2011), marcado como lido na planilha. Falta entrar na lista de referências."
+}

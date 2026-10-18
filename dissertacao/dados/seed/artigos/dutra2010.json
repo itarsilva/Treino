@@ -1,0 +1,19 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Dutra",
+   "nome": "Joel Souza"
+  }
+ ],
+ "ano": "2010",
+ "titulo": "Gestão de carreiras na empresa contemporânea",
+ "editora": "Atlas",
+ "secoes": [
+  "2.4"
+ ],
+ "acesso": "biblioteca",
+ "alerta": "A planilha diz 2009: conferir o ano da edição que você tem.",
+ "origem": "planilha",
+ "status": "conferir"
+}

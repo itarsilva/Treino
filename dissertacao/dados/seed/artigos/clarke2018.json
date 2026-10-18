@@ -1,0 +1,23 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Clarke",
+   "nome": "Marilyn"
+  }
+ ],
+ "ano": "2018",
+ "titulo": "Rethinking graduate employability: the role of capital, individual attributes and context",
+ "periodico": "Studies in Higher Education",
+ "volume": "43",
+ "numero": "11",
+ "paginas": "1923-1937",
+ "doi": "10.1080/03075079.2017.1294152",
+ "acesso": "capes",
+ "secoes": [
+  "2.3"
+ ],
+ "porque": "Modelo com seis dimensões (capital humano, capital social, atributos, comportamentos, empregabilidade percebida e mercado). Atualiza Yorke e Fugate e conversa com Bourdieu.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

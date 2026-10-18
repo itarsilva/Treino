@@ -1,0 +1,21 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Cunha",
+   "nome": "Luiz Antônio"
+  }
+ ],
+ "ano": "2007",
+ "titulo": "A universidade temporã: o ensino superior, da Colônia à Era Vargas",
+ "edicao": "3",
+ "editora": "Editora Unesp",
+ "url": "https://books.scielo.org/id/tmz6r",
+ "acesso": "aberto",
+ "secoes": [
+  "2.1"
+ ],
+ "alerta": "Conferir a edição e o ano da versão no SciELO Livros.",
+ "origem": "planilha",
+ "status": "conferir"
+}

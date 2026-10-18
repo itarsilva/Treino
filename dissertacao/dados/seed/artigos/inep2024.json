@@ -1,0 +1,20 @@
+{
+ "tipo": "relatorio",
+ "autores": [
+  {
+   "instituicao": "Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira"
+  }
+ ],
+ "ano": "2024",
+ "titulo": "Censo da Educação Superior 2023: notas estatísticas",
+ "editora": "Inep",
+ "url": "http://portal.inep.gov.br/web/guest/microdados",
+ "secoes": [
+  "1",
+  "2.1",
+  "2.2"
+ ],
+ "status": "faltando",
+ "alerta": "Texto cita INEP (2023) para dados do Censo 2023 (publicado em 2024). Conferir dados e ano na publicação.",
+ "origem": "dissertacao"
+}

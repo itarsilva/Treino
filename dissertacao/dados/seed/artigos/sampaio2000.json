@@ -1,0 +1,19 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Sampaio",
+   "nome": ""
+  }
+ ],
+ "ano": "2000",
+ "titulo": "O ensino superior no Brasil nos anos 90",
+ "periodico": "São Paulo em Perspectiva",
+ "url": "https://www.scielo.br/j/spp/a/9mVz3rLgsChQbW9LNMnrLjD/",
+ "secoes": [
+  "2.1"
+ ],
+ "alerta": "Até onde sei, 'O ensino superior brasileiro nos anos 90' (São Paulo em Perspectiva, 2000) é de Carlos Benedito Martins, não de Sampaio. Conferir o autor no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

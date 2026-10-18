@@ -1,0 +1,25 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Bourdieu",
+   "nome": "Pierre"
+  },
+  {
+   "sobrenome": "Passeron",
+   "nome": "Jean-Claude"
+  }
+ ],
+ "ano": "2008",
+ "titulo": "A reprodução: elementos para uma teoria do sistema de ensino",
+ "edicao": "3",
+ "editora": "Vozes",
+ "secoes": [
+  "1",
+  "3.2",
+  "3.3"
+ ],
+ "alerta": "Na seção 3.3 aparece 'Bourdieu (1998, 2008)'. Se for esta obra, citar como Bourdieu e Passeron (2008).",
+ "origem": "dissertacao",
+ "status": "citado"
+}

@@ -1,0 +1,21 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Harvey",
+   "nome": "Lee"
+  }
+ ],
+ "ano": "2001",
+ "titulo": "Defining and measuring employability",
+ "periodico": "Quality in Higher Education",
+ "volume": "7",
+ "numero": "2",
+ "paginas": "97-109",
+ "doi": "10.1080/13538320120059990",
+ "secoes": [
+  "2.3"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

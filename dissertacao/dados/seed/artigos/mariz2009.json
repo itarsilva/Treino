@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Mariz",
+   "nome": ""
+  }
+ ],
+ "ano": "2009",
+ "titulo": "(referência a completar)",
+ "secoes": [
+  "3"
+ ],
+ "status": "faltando",
+ "alerta": "Citado no Cap. 3, sem referência na lista.",
+ "origem": "dissertacao"
+}

@@ -1,0 +1,26 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Frey",
+   "nome": "Carl Benedikt"
+  },
+  {
+   "sobrenome": "Osborne",
+   "nome": "Michael A."
+  }
+ ],
+ "ano": "2017",
+ "titulo": "The future of employment: how susceptible are jobs to computerisation?",
+ "periodico": "Technological Forecasting and Social Change",
+ "volume": "114",
+ "paginas": "254-280",
+ "doi": "10.1016/j.techfore.2016.08.019",
+ "acesso": "capes",
+ "secoes": [
+  "2.4"
+ ],
+ "porque": "Estudo clássico sobre automação e risco por ocupação. Bom contraponto para IA e carreira do administrador.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

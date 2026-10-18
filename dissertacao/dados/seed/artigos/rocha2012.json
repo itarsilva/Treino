@@ -1,0 +1,24 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Rocha-de-Oliveira",
+   "nome": "Sidinei"
+  },
+  {
+   "sobrenome": "Piccinini",
+   "nome": "Valmíria Carolina"
+  }
+ ],
+ "ano": "2012",
+ "titulo": "Inserção profissional de estudantes de Administração no Brasil",
+ "url": "https://periodicos.uniarp.edu.br/index.php/visao/article/view/3113",
+ "secoes": [
+  "2.2",
+  "2.5",
+  "3.3"
+ ],
+ "alerta": "Muito pertinente: trata de inserção profissional no próprio curso de Administração. Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

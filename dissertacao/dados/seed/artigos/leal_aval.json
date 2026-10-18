@@ -1,0 +1,24 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Leal",
+   "nome": ""
+  },
+  {
+   "sobrenome": "Dalmau",
+   "nome": ""
+  }
+ ],
+ "ano": "",
+ "titulo": "Alunos de Administração estão em sintonia com o mercado?",
+ "periodico": "Avaliação: Revista da Avaliação da Educação Superior",
+ "url": "https://www.scielo.br/j/aval/a/6wHbb4kFFW5wvyP3M7G4wGF/",
+ "secoes": [
+  "2.2",
+  "2.5"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

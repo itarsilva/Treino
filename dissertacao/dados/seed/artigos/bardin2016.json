@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Bardin",
+   "nome": "Laurence"
+  }
+ ],
+ "ano": "2016",
+ "titulo": "Análise de conteúdo",
+ "editora": "Edições 70",
+ "secoes": [
+  "4.4"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Negrão",
+   "nome": ""
+  }
+ ],
+ "ano": "2016",
+ "titulo": "(referência a completar)",
+ "secoes": [
+  "1"
+ ],
+ "status": "faltando",
+ "alerta": "Citado na Introdução (p. 15), sem referência. A orientadora pediu levar este trecho para os capítulos.",
+ "origem": "dissertacao"
+}

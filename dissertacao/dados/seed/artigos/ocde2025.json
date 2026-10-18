@@ -1,0 +1,20 @@
+{
+ "tipo": "relatorio",
+ "autores": [
+  {
+   "instituicao": "Organisation for Economic Co-operation and Development"
+  }
+ ],
+ "ano": "2025",
+ "titulo": "Education at a glance 2025: OECD indicators",
+ "editora": "OECD Publishing",
+ "url": "https://www.oecd.org/en/publications/education-at-a-glance-2025_1c0d9c79-en.html",
+ "secoes": [
+  "1",
+  "3.3"
+ ],
+ "acesso": "aberto",
+ "alerta": "O link da planilha é uma notícia da SBPC. Cite o relatório da OCDE.",
+ "origem": "planilha",
+ "status": "conferir"
+}

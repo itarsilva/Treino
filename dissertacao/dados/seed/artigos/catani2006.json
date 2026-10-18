@@ -1,0 +1,30 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Catani",
+   "nome": "Afrânio Mendes"
+  },
+  {
+   "sobrenome": "Hey",
+   "nome": "Ana Paula"
+  },
+  {
+   "sobrenome": "Gilioli",
+   "nome": "Renato de Sousa Porto"
+  }
+ ],
+ "ano": "2006",
+ "titulo": "PROUNI: democratização do acesso às instituições de ensino superior?",
+ "periodico": "Educar em Revista",
+ "numero": "28",
+ "paginas": "125-140",
+ "secoes": [
+  "2.1",
+  "3"
+ ],
+ "origem": "dissertacao",
+ "status": "citado",
+ "alerta": "Na planilha ele aparece duas vezes, e uma delas aponta para a revista Sociologias, que é de outro artigo. O link certo é o da Educar em Revista.",
+ "url": "https://www.scielo.br/j/er/a/6kD9QTwtmfKbtBqMjYGrVNd/"
+}

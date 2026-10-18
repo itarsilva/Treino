@@ -1,0 +1,1022 @@
+<title>Dissertação PROUNI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: mesa de trabalho em abas; na Leitura, o artigo à esquerda e a ficha à direita (empilha no celular). */
+:root{
+  --paper:#F4F5F7; --surface:#FFFFFF; --sunk:#ECEEF2; --ink:#17202B; --muted:#5A6575; --line:#D9DEE6;
+  --accent:#2E49B5; --accent-ink:#FFFFFF; --hl:#FFE27A; --hl-ink:#17202B;
+  --ok:#1E7A4C; --ok-bg:#E3F3EA; --warn:#9A6200; --warn-bg:#FBF0D9; --bad:#B3261E; --bad-bg:#FBE6E4; --info-bg:#E6EBFA;
+  --f-read:"Newsreader", Georgia, "Times New Roman", serif;
+  --f-ui:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11151B; --surface:#192029; --sunk:#141A21; --ink:#E5E9EF; --muted:#9BA6B4; --line:#2A3341;
+  --accent:#93A8FF; --accent-ink:#0E1420; --hl:#5E4F10; --hl-ink:#F4EBC4;
+  --ok:#62C48F; --ok-bg:#16301F; --warn:#E3A640; --warn-bg:#33270F; --bad:#F08A80; --bad-bg:#3A1A18; --info-bg:#1C2440;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11151B; --surface:#192029; --sunk:#141A21; --ink:#E5E9EF; --muted:#9BA6B4; --line:#2A3341;
+  --accent:#93A8FF; --accent-ink:#0E1420; --hl:#5E4F10; --hl-ink:#F4EBC4;
+  --ok:#62C48F; --ok-bg:#16301F; --warn:#E3A640; --warn-bg:#33270F; --bad:#F08A80; --bad-bg:#3A1A18; --info-bg:#1C2440;
+  color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--paper);color:var(--ink);font:14px/1.5 var(--f-ui)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Cabeçalho */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding-block:12px 0;max-width:1440px;margin:0 auto}
+.brand{display:flex;flex-direction:column;min-width:0;flex:1 1 260px}
+.brand h1{font:600 20px/1.2 var(--f-read);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.brand small{color:var(--muted);font-size:12px}
+.tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.saved{font:12px var(--f-mono);color:var(--muted);min-width:9ch;text-align:right}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.seg button{border:0;background:transparent;padding:4px 10px;cursor:pointer;font-size:12px;font-weight:500;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;width:100%;scrollbar-width:none}
+nav.tabs button{border:0;background:none;padding:10px 12px 9px;cursor:pointer;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+nav.tabs .n{font:11px var(--f-mono);color:var(--muted);margin-left:4px}
+
+main{max-width:1440px;margin:0 auto;padding-block:20px 48px}
+section.view[hidden]{display:none}
+h2{font:600 22px/1.25 var(--f-read);margin:0 0 4px;text-wrap:balance}
+h3{font:600 16px/1.3 var(--f-read);margin:0}
+.lede{color:var(--muted);margin:0 0 16px;max-width:70ch}
+.eyebrow{font:500 11px var(--f-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* Controles */
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:6px 12px;cursor:pointer;font-weight:500;font-size:13px;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--accent);padding-inline:6px}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.sm{padding:3px 8px;font-size:12px}
+input[type=text],input[type=search],input[type=number],select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px;width:100%;min-width:0}
+textarea{resize:vertical;min-height:64px;line-height:1.5}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:500;color:var(--muted)}
+label.f > span{display:flex;justify-content:space-between;gap:8px}
+
+/* Pílulas de status */
+.pill{display:inline-flex;align-items:center;gap:5px;font:500 11px/1 var(--f-ui);padding:4px 8px;border-radius:999px;white-space:nowrap;background:var(--sunk);color:var(--muted)}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st-citado,.st-redigida,.st-pronta{background:var(--ok-bg);color:var(--ok)}
+.st-fichado{background:var(--info-bg);color:var(--accent)}
+.st-lendo,.st-rascunho{background:var(--warn-bg);color:var(--warn)}
+.st-sugerido{background:var(--hl);color:var(--hl-ink)}
+.st-conferir,.st-faltando,.st-vazia{background:var(--bad-bg);color:var(--bad)}
+.st-aguardando,.st-descartado{background:var(--sunk);color:var(--muted)}
+.chip{font:500 11px var(--f-mono);border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--muted);background:var(--surface);cursor:pointer}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+
+/* Painel */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.stat b{font:600 28px/1 var(--f-read);font-variant-numeric:tabular-nums}
+.stat .bar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--sunk);margin:10px 0 6px}
+.stat .bar i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.legend span::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--c)}
+.chapter{margin-bottom:22px}
+.chapter > h3{margin-bottom:8px;display:flex;gap:10px;align-items:baseline}
+.chapter > h3 .eyebrow{font-family:var(--f-mono)}
+.sec{display:grid;grid-template-columns:3.2rem minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-top:1px solid var(--line);align-items:start}
+.sec .num{font:500 13px var(--f-mono);color:var(--muted);padding-top:2px}
+.sec .t{font-weight:600}
+.sec .refs{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.sec ul{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.sec li label{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--ink);cursor:pointer}
+.sec li input{margin-top:3px;accent-color:var(--accent)}
+.sec li.done label{color:var(--muted);text-decoration:line-through}
+.sec .side{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+@media (max-width:640px){.sec{grid-template-columns:2.6rem minmax(0,1fr)}.sec .side{grid-column:2;flex-direction:row;align-items:center;justify-content:flex-start}}
+
+/* Biblioteca */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.filters input[type=search]{flex:1 1 220px;width:auto}
+.filters select{width:auto;flex:0 1 auto}
+.fchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.fchips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;font-size:12px;cursor:pointer;color:var(--muted)}
+.fchips button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.fchips .n{font-family:var(--f-mono);margin-left:4px;opacity:.75}
+.lib{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding:14px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .cite{font:500 12px var(--f-mono);color:var(--accent)}
+.row .ti{font:500 16px/1.35 var(--f-read);margin:2px 0}
+.row .src{color:var(--muted);font-size:12.5px}
+.row .why{font-size:13px;margin-top:6px;padding-left:10px;border-left:3px solid var(--hl)}
+.row .alert{font-size:12.5px;margin-top:6px;color:var(--warn);display:flex;gap:6px}
+.row .alert::before{content:"!";font:600 11px var(--f-mono);border:1px solid currentColor;border-radius:50%;width:15px;height:15px;display:inline-grid;place-items:center;flex:none;margin-top:1px}
+.row .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.row .act{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.row .act select{width:auto;font-size:12px;padding:4px 6px}
+@media (max-width:640px){.row{grid-template-columns:minmax(0,1fr)}.row .act{flex-direction:row;align-items:center;justify-content:flex-start}}
+.empty{padding:28px 16px;text-align:center;color:var(--muted)}
+
+/* Leitura */
+.reader{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:980px){.reader{grid-template-columns:minmax(0,1fr)}}
+.pane{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);min-width:0}
+.pane-h{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
+.pane-h select{flex:1 1 240px;width:auto}
+.doc{height:calc(100vh - 210px);min-height:420px;overflow:auto;background:var(--sunk);padding:12px;position:relative}
+@media (max-width:980px){.doc{height:70vh}}
+.doc canvas{display:block;margin:0 auto 12px;max-width:100%;height:auto;box-shadow:0 1px 3px rgba(0,0,0,.18);background:#fff}
+.doc .pg-label{font:11px var(--f-mono);color:var(--muted);text-align:center;margin:-6px 0 14px}
+.doc .txtpage{background:var(--surface);max-width:68ch;margin:0 auto 14px;padding:18px 22px;border-radius:4px;font:16px/1.65 var(--f-read);white-space:pre-wrap;word-wrap:break-word}
+.doc .txtpage h4{font:500 11px var(--f-mono);color:var(--muted);margin:0 0 8px;letter-spacing:.06em}
+.drop{display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;text-align:center;height:100%;min-height:380px;border:2px dashed var(--line);border-radius:var(--r);padding:24px;color:var(--muted)}
+.drop.over{border-color:var(--accent);background:var(--info-bg)}
+.drop h3{color:var(--ink)}
+.drop .links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.floatcite{position:absolute;z-index:3;background:var(--ink);color:var(--surface);border:0;border-radius:var(--r);padding:6px 10px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.card{padding:14px 16px;display:flex;flex-direction:column;gap:14px}
+.refbox{background:var(--sunk);border-radius:var(--r);padding:10px 12px;font:15px/1.5 var(--f-read)}
+.refbox .k{font:500 12px var(--f-mono);color:var(--accent);display:block;margin-bottom:4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}}
+.quotes{display:flex;flex-direction:column;gap:10px}
+.quote{border:1px solid var(--line);border-left:4px solid var(--hl);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;gap:8px}
+.quote .qrow{display:grid;grid-template-columns:5.5rem minmax(0,1fr) auto;gap:8px;align-items:center}
+.quote .prev{font:14.5px/1.5 var(--f-read);background:var(--sunk);border-radius:4px;padding:8px 10px}
+.quote .prev mark{background:var(--hl);color:var(--hl-ink);padding:0 2px}
+.quote .tag{font:11px var(--f-mono);color:var(--warn)}
+.secbox{display:flex;flex-wrap:wrap;gap:6px}
+.secbox label{display:inline-flex;gap:4px;align-items:center;font:500 12px var(--f-mono);border:1px solid var(--line);border-radius:4px;padding:2px 6px;cursor:pointer}
+.secbox input{accent-color:var(--accent);margin:0}
+.ai{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:var(--info-bg);border-radius:var(--r);font-size:13px}
+.ai p{margin:0;flex:1 1 220px}
+.note{font-size:12px;color:var(--muted)}
+
+/* Referências */
+.refs-list{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 24px;max-width:860px}
+.refs-list p{font:16px/1.6 var(--f-read);margin:0 0 12px;padding-left:2em;text-indent:-2em}
+.refs-list.abnt p{padding-left:0;text-indent:0}
+.refs-list p.flag{background:var(--bad-bg);border-radius:4px;padding-block:2px}
+.refs-tools{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-bottom:14px}
+.refs-tools label{display:inline-flex;gap:6px;align-items:center;font-size:13px}
+
+/* Diálogos */
+.modal{position:fixed;inset:0;z-index:20;background:rgba(10,14,20,.45);display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+.modal[hidden]{display:none!important}
+.dlg{background:var(--surface);border-radius:8px;width:100%;max-width:720px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.dlg-h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.dlg-b{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.dlg-f{display:flex;justify-content:flex-end;gap:8px;padding:12px 18px;border-top:1px solid var(--line)}
+.out{font:15.5px/1.65 var(--f-read);white-space:pre-wrap;background:var(--sunk);border-radius:var(--r);padding:14px;min-height:120px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:8px 14px;border-radius:var(--r);font-size:13px;z-index:30;max-width:calc(100% - 32px)}
+.notice{background:var(--warn-bg);color:var(--warn);border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:13px}
+@media (prefers-reduced-motion:no-preference){.btn,.chip,nav.tabs button{transition:border-color .15s,color .15s,background .15s}}
+</style>
+
+<header class="top wrap">
+  <div class="top-in">
+    <div class="brand">
+      <h1>PROUNI: carreira e empregabilidade dos egressos</h1>
+      <small>Dissertação · Mestrado em Administração · PUC-SP · Orientação: Valdenise Leziér Martyniuk</small>
+    </div>
+    <div class="tools">
+      <span class="saved" id="saved" aria-live="polite"></span>
+      <span class="eyebrow">Norma</span>
+      <div class="seg" role="group" aria-label="Norma de citação">
+        <button type="button" id="normApa" aria-pressed="true">APA 7</button>
+        <button type="button" id="normAbnt" aria-pressed="false">ABNT</button>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Seções do painel">
+      <button role="tab" data-tab="painel" aria-selected="true">Painel</button>
+      <button role="tab" data-tab="biblioteca" aria-selected="false">Biblioteca<span class="n" id="nLib"></span></button>
+      <button role="tab" data-tab="leitura" aria-selected="false">Leitura e fichamento</button>
+      <button role="tab" data-tab="referencias" aria-selected="false">Referências<span class="n" id="nRef"></span></button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="notice" id="noDb" hidden>Abra esta página no claude.ai, com sua conta, para carregar e salvar a biblioteca e os fichamentos.</div>
+
+  <!-- PAINEL -->
+  <section class="view" id="v-painel">
+    <h2>Onde a dissertação está</h2>
+    <p class="lede">Cada seção do sumário com seu status, as pendências tiradas dos comentários do documento e os autores que a sustentam. Marque as pendências conforme resolver.</p>
+    <div class="stats" id="stats"></div>
+    <div id="chapters"><p class="empty">Carregando as seções…</p></div>
+  </section>
+
+  <!-- BIBLIOTECA -->
+  <section class="view" id="v-biblioteca" hidden>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:12px">
+      <div><h2>Biblioteca</h2><p class="lede" style="margin:0">Referências da dissertação e sugestões novas. Clique em <b>Ler e fichar</b> para abrir o artigo ao lado da ficha.</p></div>
+      <button class="btn primary" id="addBtn" type="button">+ Adicionar artigo</button>
+    </div>
+    <div class="filters">
+      <input type="search" id="q" placeholder="Buscar por autor, título ou periódico" aria-label="Buscar">
+      <select id="fSec" aria-label="Filtrar por seção"><option value="">Todas as seções</option></select>
+    </div>
+    <div class="fchips" id="fStatus"></div>
+    <div class="lib" id="lib"><p class="empty">Carregando a biblioteca…</p></div>
+  </section>
+
+  <!-- LEITURA -->
+  <section class="view" id="v-leitura" hidden>
+    <div class="reader">
+      <div class="pane">
+        <div class="pane-h">
+          <select id="pick" aria-label="Escolher artigo"><option value="">Escolha um artigo…</option></select>
+          <div class="seg" role="group" aria-label="Modo de leitura" id="modeSeg" hidden>
+            <button type="button" data-mode="pag" aria-pressed="true">Página</button>
+            <button type="button" data-mode="txt" aria-pressed="false">Texto</button>
+          </div>
+          <button class="btn sm" type="button" id="zoomOut" hidden aria-label="Diminuir">−</button>
+          <button class="btn sm" type="button" id="zoomIn" hidden aria-label="Aumentar">+</button>
+        </div>
+        <div class="doc" id="doc">
+          <div class="drop"><h3>Escolha um artigo para ler</h3><p>Use a lista acima ou o botão <b>Ler e fichar</b> na Biblioteca.</p></div>
+        </div>
+      </div>
+      <div class="pane" id="fichaPane">
+        <div class="card"><p class="empty">A ficha do artigo aparece aqui.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERÊNCIAS -->
+  <section class="view" id="v-referencias" hidden>
+    <h2>Lista de referências</h2>
+    <p class="lede">Montada sozinha a partir da Biblioteca, em ordem alfabética, na norma escolhida no topo. Itens em vermelho ainda têm dados faltando.</p>
+    <div class="refs-tools">
+      <button class="btn primary" type="button" id="copyRefs">Copiar lista formatada</button>
+      <label><input type="checkbox" id="incSug"> Incluir sugeridos e em leitura</label>
+      <span class="note" id="refCount"></span>
+    </div>
+    <div class="refs-list" id="refsList"><p class="empty">Carregando…</p></div>
+  </section>
+</main>
+
+<!-- Diálogo: adicionar artigo -->
+<div class="modal" id="mAdd" hidden>
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="mAddT">
+    <div class="dlg-h"><h3 id="mAddT">Adicionar artigo</h3><button class="btn ghost" type="button" data-close>Fechar</button></div>
+    <div class="dlg-b">
+      <div class="ai" id="parseBox">
+        <p>Cole a referência como está (de qualquer norma), o DOI ou o resumo da página do artigo. O Claude preenche os campos.</p>
+        <textarea id="aPaste" rows="3" placeholder="Ex.: CLARKE, M. Rethinking graduate employability… Studies in Higher Education, v. 43, n. 11, 2018."></textarea>
+        <button class="btn primary sm" type="button" id="aParse">Preencher com o Claude</button>
+      </div>
+      <div class="grid2">
+        <label class="f"><span>Tipo</span><select id="aTipo"><option value="artigo">Artigo de periódico</option><option value="livro">Livro</option><option value="capitulo">Capítulo de livro</option><option value="tese">Tese ou dissertação</option><option value="relatorio">Relatório / documento oficial</option><option value="lei">Lei / norma</option><option value="site">Página da web</option></select></label>
+        <label class="f"><span>Ano</span><input type="text" id="aAno" inputmode="numeric"></label>
+      </div>
+      <label class="f"><span>Autores <em class="note">um por linha: Sobrenome, Nome. Instituição: comece com @</em></span><textarea id="aAut" rows="3" placeholder="Clarke, Marilyn"></textarea></label>
+      <label class="f"><span>Título</span><input type="text" id="aTit"></label>
+      <label class="f"><span id="aPerL">Periódico, livro ou editora</span><input type="text" id="aPer"></label>
+      <div class="grid2">
+        <label class="f"><span>Volume</span><input type="text" id="aVol"></label>
+        <label class="f"><span>Número</span><input type="text" id="aNum"></label>
+        <label class="f"><span>Páginas</span><input type="text" id="aPag" placeholder="125-140"></label>
+        <label class="f"><span>DOI</span><input type="text" id="aDoi" placeholder="10.1590/…"></label>
+      </div>
+      <label class="f"><span>Link (URL)</span><input type="text" id="aUrl"></label>
+      <div><span class="eyebrow">Onde usar na dissertação</span><div class="secbox" id="aSecs" style="margin-top:6px"></div></div>
+      <label class="f"><span>Por que este artigo</span><textarea id="aWhy" rows="2"></textarea></label>
+      <p class="note" id="aMsg"></p>
+    </div>
+    <div class="dlg-f"><button class="btn" type="button" data-close>Cancelar</button><button class="btn primary" type="button" id="aSave">Salvar na biblioteca</button></div>
+  </div>
+</div>
+
+<!-- Diálogo: rascunho de parágrafo -->
+<div class="modal" id="mDraft" hidden>
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="mDraftT">
+    <div class="dlg-h"><h3 id="mDraftT">Rascunho da seção</h3><button class="btn ghost" type="button" data-close>Fechar</button></div>
+    <div class="dlg-b">
+      <p class="note" id="draftInfo"></p>
+      <div class="out" id="draftOut"></div>
+      <p class="note">Rascunho para você reescrever com a sua voz. Confira cada citação no fichamento antes de levar ao texto.</p>
+    </div>
+    <div class="dlg-f"><button class="btn" type="button" id="draftStop" hidden>Parar</button><button class="btn primary" type="button" id="draftCopy" disabled>Copiar texto</button></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+(() => {
+"use strict";
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+                set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
+
+const STATUS = [
+  ["sugerido", "Sugerido"], ["lendo", "Lendo"], ["fichado", "Fichado"], ["citado", "Citado"],
+  ["conferir", "Conferir dados"], ["faltando", "Falta referência"], ["descartado", "Descartado"]];
+const STATUS_LABEL = Object.fromEntries(STATUS);
+const SEC_STATUS = { vazia: "Vazia", rascunho: "Rascunho", redigida: "Redigida", pronta: "Pronta", aguardando: "Aguardando dados" };
+const CHAPTERS = { "1": "Introdução", "2": "Aportes teóricos", "3": "O PROUNI", "4": "Caminho metodológico", "5": "Apresentação e análise dos dados", "6": "Considerações finais", "ref": "Pós-textuais", "ap": "Pós-textuais" };
+
+const S = {
+  db: null, assets: null, sample: null,
+  artigos: new Map(), fichas: new Map(), secoes: [],
+  norm: store.get("norm", "apa"), tab: "painel",
+  fStatus: store.get("fStatus", ""), fSec: "", q: "",
+  current: null, pdf: null, pdfText: [], mode: "pag", zoom: 1.2,
+  loaded: { artigos: false, secoes: false },
+};
+
+/* ---------- Formatação de referências ---------- */
+const PART = new Set(["de", "da", "do", "das", "dos", "e", "von", "van", "der", "du", "la", "le"]);
+function initials(nome) {
+  return String(nome || "").split(/\s+/).filter(w => w && !PART.has(w.toLowerCase()))
+    .map(w => w.split("-").map(p => p.charAt(0).toUpperCase() + ".").join("-")).join(" ");
+}
+const isInst = a => !!a.instituicao;
+const fam = a => isInst(a) ? a.instituicao : (a.sobrenome || "");
+function joinList(xs, amp) {
+  if (xs.length <= 1) return xs.join("");
+  if (xs.length === 2) return xs[0] + (amp === "&" ? ", & " : " e ") + xs[1];
+  return xs.slice(0, -1).join(", ") + (amp === "&" ? ", & " : " e ") + xs[xs.length - 1];
+}
+function apaAuthors(list) {
+  const xs = (list || []).map(a => isInst(a) ? a.instituicao : (a.sobrenome + (a.nome ? ", " + initials(a.nome) : "")));
+  if (xs.length > 20) return xs.slice(0, 19).join(", ") + ", … " + xs[xs.length - 1];
+  return joinList(xs, "&");
+}
+function apaEditors(list) {
+  return joinList((list || []).map(a => isInst(a) ? a.instituicao : ((a.nome ? initials(a.nome) + " " : "") + a.sobrenome)), "&");
+}
+function abntName(a) { return isInst(a) ? a.instituicao.toUpperCase() : (a.sobrenome || "").toUpperCase() + (a.nome ? ", " + a.nome : ""); }
+const abntAuthors = list => (list || []).map(abntName).join("; ");
+const dash = p => String(p || "").replace(/\s*[-–]\s*/g, "–");
+const ed = (n, norm) => n ? (norm === "apa" ? `${n}ª ed.` : `${n}. ed.`) : "";
+const doiUrl = d => d ? "https://doi.org/" + String(d).replace(/^https?:\/\/(dx\.)?doi\.org\//, "") : "";
+const endDot = s => /[.?!]$/.test(s) ? s : s + ".";
+
+/** Devolve a referência em HTML (itálico/negrito conforme a norma). */
+function refHTML(a, norm = S.norm) {
+  if (!a) return "";
+  if (a.status === "faltando" && (!a.titulo || a.titulo.startsWith("(")))
+    return esc(norm === "apa" ? `${apaAuthors(a.autores)} (${a.ano}). ` : `${abntAuthors(a.autores)} `) + "<em>(referência a completar)</em>";
+  return norm === "apa" ? apaRef(a) : abntRef(a);
+}
+function apaRef(a) {
+  const t = a.tipo, au = apaAuthors(a.autores);
+  const head = esc(au ? endDot(au + (a.orgs ? (a.autores.length > 1 ? " (Orgs.)" : " (Org.)") : "")) : "") + ` (${esc(a.ano || "s.d.")}). `;
+  const link = a.doi ? " " + esc(doiUrl(a.doi)) : (a.url ? " " + esc(a.url) : "");
+  if (t === "artigo") {
+    let s = head + esc(endDot(a.titulo || "")) + " <i>" + esc(a.periodico || "") + "</i>";
+    if (a.volume) s += ", <i>" + esc(a.volume) + "</i>" + (a.numero ? "(" + esc(a.numero) + ")" : "");
+    else if (a.numero) s += ", (" + esc(a.numero) + ")";
+    if (a.artigoNum) s += ", " + esc(a.artigoNum);
+    if (a.paginas) s += ", " + esc(dash(a.paginas));
+    return s + "." + link;
+  }
+  if (t === "capitulo") {
+    const extra = [ed(a.edicao, "apa"), a.paginas ? "pp. " + dash(a.paginas) : ""].filter(Boolean).join(", ");
+    const eds = a.organizadores?.length ? apaEditors(a.organizadores) + (a.organizadores.length > 1 ? " (Orgs.), " : " (Org.), ") : "";
+    return head + esc(endDot(a.titulo || "")) + " In " + esc(eds) + "<i>" + esc(a.livro || "") + "</i>" + (extra ? " (" + esc(extra) + ")" : "") + ". " + esc(a.editora ? endDot(a.editora) : "") + link;
+  }
+  if (t === "tese") return head + "<i>" + esc(a.titulo || "") + "</i> [" + esc([a.grau || "Tese", a.instituicao].filter(Boolean).join(", ")) + "]." + link;
+  const paren = [a.tradutor ? initials(a.tradutor.split(" ").slice(0, -1).join(" ")) + " " + a.tradutor.split(" ").slice(-1) + ", Trad." : "", ed(a.edicao, "apa")].filter(Boolean).join("; ");
+  const sameAsAuthor = a.editora && a.autores?.length === 1 && isInst(a.autores[0]) && (a.autores[0].instituicao === a.editora || a.editora.length <= 5 && a.autores[0].instituicao.includes(a.editora));
+  return head + "<i>" + esc(a.titulo || "") + "</i>" + (paren ? " (" + esc(paren) + ")" : "") + "." + (a.editora && !sameAsAuthor ? " " + esc(endDot(a.editora)) : "") + link;
+}
+function abntRef(a) {
+  const t = a.tipo, au = abntAuthors(a.autores);
+  const head = au ? esc(endDot(au + (a.orgs ? " (org.)" : ""))) + " " : "";
+  const link = a.doi ? " DOI: " + esc(doiUrl(a.doi)) + "." : (a.url ? " Disponível em: " + esc(a.url) + "." : "");
+  if (t === "artigo") {
+    const parts = [a.volume && "v. " + a.volume, a.numero && "n. " + a.numero, a.artigoNum, a.paginas && "p. " + a.paginas.replace(/–/g, "-"), a.ano].filter(Boolean);
+    return head + esc(endDot(a.titulo || "")) + " <b>" + esc(a.periodico || "") + "</b>, " + esc(parts.join(", ")) + "." + link;
+  }
+  if (t === "capitulo") {
+    const eds = (a.organizadores || []).map(abntName).join("; ");
+    return head + esc(endDot(a.titulo || "")) + " In: " + esc(eds ? eds + " (org.). " : "") + "<b>" + esc(a.livro || "") + "</b>. " + esc([ed(a.edicao, "abnt"), (a.editora || "[s. n.]") + ", " + a.ano].filter(Boolean).join(" ")) + "." + (a.paginas ? " p. " + esc(a.paginas.replace(/–/g, "-")) + "." : "") + link;
+  }
+  if (t === "tese") return head + "<b>" + esc(a.titulo || "") + "</b>. " + esc(a.ano) + ". " + esc((a.grau || "Tese").replace("Dissertação de mestrado", "Dissertação (Mestrado)").replace("Tese de doutorado", "Tese (Doutorado)")) + " – " + esc(a.instituicao || "") + ", " + esc(a.ano) + "." + link;
+  const trad = a.tradutor ? " Tradução: " + esc(a.tradutor) + "." : "";
+  return head + "<b>" + esc(a.titulo || "") + "</b>." + trad + " " + esc([ed(a.edicao, "abnt"), (a.editora || "[s. n.]") + ", " + a.ano].filter(Boolean).join(" ")) + "." + link;
+}
+/** Citação no texto: parentética ou narrativa, com página opcional. */
+function cite(a, { narrative = false, page = "", norm = S.norm } = {}) {
+  if (!a) return "";
+  const au = a.autores || [];
+  const names = au.map(x => fam(x));
+  const apa = norm === "apa";
+  const up = s => apa || narrative ? s : s.toUpperCase();
+  let who;
+  if (names.length === 0) who = (a.titulo || "").split(" ").slice(0, 3).join(" ");
+  else if (names.length === 1) who = up(names[0]);
+  else if (names.length === 2) who = up(names[0]) + (narrative ? " e " : apa ? " & " : "; ") + up(names[1]);
+  else who = up(names[0]) + " et al.";
+  const yr = a.ano || "s.d.";
+  const pg = page ? (/[-–]/.test(page) ? ", pp. " : ", p. ") + page : "";
+  return narrative ? `${who} (${yr}${pg})` : `(${who}, ${yr}${pg})`;
+}
+const plain = html => { const d = document.createElement("div"); d.innerHTML = html; return d.textContent; };
+const sortKey = a => (fam((a.autores || [])[0] || {}) + " " + (a.ano || "")).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+/* ---------- Utilidades de interface ---------- */
+let toastT;
+function toast(msg) {
+  let t = $(".toast"); if (!t) { t = document.createElement("div"); t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+  t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 2600);
+}
+async function copyText(text, html) {
+  try {
+    if (html && window.ClipboardItem && navigator.clipboard?.write) {
+      await navigator.clipboard.write([new ClipboardItem({ "text/html": new Blob([html], { type: "text/html" }), "text/plain": new Blob([text], { type: "text/plain" }) })]);
+    } else await navigator.clipboard.writeText(text);
+    toast("Copiado");
+  } catch {
+    const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand("copy"); } catch {}
+    ta.remove(); toast(ok ? "Copiado" : "Não deu para copiar. Selecione o texto e copie à mão.");
+  }
+}
+function setSaved(txt) { $("#saved").textContent = txt; }
+function openModal(id) { const m = $(id); m.hidden = false; const f = m.querySelector("textarea, input, button:not([data-close])"); f?.focus(); }
+function closeModal(m) { m.hidden = true; }
+$$(".modal").forEach(m => {
+  m.addEventListener("click", e => { if (e.target === m || e.target.closest("[data-close]")) closeModal(m); });
+  m.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(m); });
+});
+const sectionNums = () => S.secoes.filter(s => /^\d/.test(s.numero) && s.numero.includes(".") || ["1", "3", "6"].includes(s.numero)).map(s => s.numero);
+const secTitle = n => S.secoes.find(s => s.numero === n)?.titulo || "";
+
+/* ---------- Abas ---------- */
+function setTab(t, push = true) {
+  S.tab = t;
+  $$("nav.tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === t)));
+  $$("section.view").forEach(v => { v.hidden = v.id !== "v-" + t; });
+  if (push) try { history.replaceState(null, "", "#" + t); } catch {}
+  if (t === "referencias") renderRefs();
+}
+$$("nav.tabs button").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
+function setNorm(n) {
+  S.norm = n; store.set("norm", n);
+  $("#normApa").setAttribute("aria-pressed", String(n === "apa"));
+  $("#normAbnt").setAttribute("aria-pressed", String(n === "abnt"));
+  renderAll();
+}
+$("#normApa").onclick = () => setNorm("apa");
+$("#normAbnt").onclick = () => setNorm("abnt");
+
+/* ---------- Painel ---------- */
+const SEC_COLORS = { pronta: "var(--ok)", redigida: "var(--ok)", rascunho: "var(--warn)", vazia: "var(--bad)", aguardando: "var(--line)" };
+const ART_COLORS = { citado: "var(--ok)", fichado: "var(--accent)", lendo: "var(--warn)", sugerido: "var(--hl)", conferir: "var(--bad)", faltando: "var(--bad)", descartado: "var(--line)" };
+function barHTML(counts, colors, labels) {
+  const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
+  const keys = Object.keys(colors).filter(k => counts[k]);
+  return `<div class="bar">${keys.map(k => `<i style="width:${(counts[k] / total * 100).toFixed(1)}%;background:${colors[k]}" title="${esc(labels[k])}: ${counts[k]}"></i>`).join("")}</div>
+    <div class="legend">${keys.map(k => `<span style="--c:${colors[k]}">${esc(labels[k])} ${counts[k]}</span>`).join("")}</div>`;
+}
+function renderPainel() {
+  if (!S.loaded.secoes) return;
+  const secs = S.secoes;
+  const sc = {}; secs.forEach(s => { sc[s.status] = (sc[s.status] || 0) + 1; });
+  const ac = {}; S.artigos.forEach(a => { ac[a.status] = (ac[a.status] || 0) + 1; });
+  const pendTotal = secs.reduce((n, s) => n + (s.pendencias || []).length, 0);
+  const pendDone = secs.reduce((n, s) => n + (s.feitas || []).filter(i => i < (s.pendencias || []).length).length, 0);
+  const fichadas = [...S.fichas.values()].filter(f => hasContent(f)).length;
+  $("#stats").innerHTML = `
+    <div class="stat"><span class="eyebrow">Seções do sumário</span><div><b>${secs.length}</b></div>${barHTML(sc, SEC_COLORS, SEC_STATUS)}</div>
+    <div class="stat"><span class="eyebrow">Biblioteca</span><div><b>${S.artigos.size}</b> <span class="note">referências</span></div>${barHTML(ac, ART_COLORS, STATUS_LABEL)}</div>
+    <div class="stat"><span class="eyebrow">Pendências resolvidas</span><div><b>${pendDone}</b><span class="note"> de ${pendTotal}</span></div>
+      <div class="bar"><i style="width:${pendTotal ? (pendDone / pendTotal * 100).toFixed(1) : 0}%;background:var(--ok)"></i></div><div class="legend"><span style="--c:var(--accent)">${fichadas} fichamentos com conteúdo</span></div></div>`;
+  const byCh = new Map();
+  secs.forEach(s => { const ch = s.numero.split(".")[0]; if (!byCh.has(ch)) byCh.set(ch, []); byCh.get(ch).push(s); });
+  let html = "";
+  byCh.forEach((list, ch) => {
+    html += `<div class="chapter"><h3><span class="eyebrow">${/^\d/.test(ch) ? "Cap. " + esc(ch) : ""}</span>${esc(CHAPTERS[ch] || "")}</h3>`;
+    list.forEach(s => {
+      const arts = [...S.artigos.entries()].filter(([, a]) => (a.secoes || []).includes(s.numero) && a.status !== "descartado");
+      const done = new Set(s.feitas || []);
+      html += `<div class="sec" data-sec="${esc(s._id)}">
+        <div class="num">${/^\d/.test(s.numero) ? esc(s.numero) : ""}</div>
+        <div><div class="t">${esc(s.titulo)}</div>
+          ${arts.length ? `<div class="refs">${arts.map(([id, a]) => `<button class="chip" type="button" data-open="${esc(id)}" title="${esc(STATUS_LABEL[a.status] || "")}: ${esc(a.titulo)}">${esc(cite(a, { narrative: true }))}</button>`).join("")}</div>` : ""}
+          ${(s.pendencias || []).length ? `<ul>${s.pendencias.map((p, i) => `<li class="${done.has(i) ? "done" : ""}"><label><input type="checkbox" data-pend="${i}" ${done.has(i) ? "checked" : ""}> <span>${esc(p)}</span></label></li>`).join("")}</ul>` : ""}
+        </div>
+        <div class="side">
+          <select aria-label="Status da seção ${esc(s.numero)}" data-secst>${Object.entries(SEC_STATUS).map(([k, v]) => `<option value="${k}" ${k === s.status ? "selected" : ""}>${v}</option>`).join("")}</select>
+          ${/^\d/.test(s.numero) && arts.some(([id]) => hasContent(S.fichas.get(id))) ? `<button class="btn sm" type="button" data-draft="${esc(s.numero)}" ${S.sample ? "" : "hidden"}>Rascunhar com fichamentos</button>` : ""}
+          ${/^\d/.test(s.numero) ? `<button class="btn ghost sm" type="button" data-libsec="${esc(s.numero)}">Ver artigos</button>` : ""}
+        </div></div>`;
+    });
+    html += `</div>`;
+  });
+  $("#chapters").innerHTML = html;
+}
+$("#chapters").addEventListener("change", async e => {
+  const row = e.target.closest("[data-sec]"); if (!row || !S.db) return;
+  const s = S.secoes.find(x => x._id === row.dataset.sec); if (!s) return;
+  try {
+    if (e.target.matches("[data-pend]")) {
+      const i = +e.target.dataset.pend; const set = new Set(s.feitas || []);
+      e.target.checked ? set.add(i) : set.delete(i);
+      await S.db.doc("secoes/" + s._id).update({ feitas: [...set].sort((a, b) => a - b) });
+    } else if (e.target.matches("[data-secst]")) {
+      await S.db.doc("secoes/" + s._id).update({ status: e.target.value });
+    }
+    setSaved("Salvo");
+  } catch (err) { toast(writeErr(err)); }
+});
+$("#chapters").addEventListener("click", e => {
+  const o = e.target.closest("[data-open]"); if (o) return openArticle(o.dataset.open);
+  const l = e.target.closest("[data-libsec]"); if (l) { S.fSec = l.dataset.libsec; $("#fSec").value = S.fSec; renderLib(); return setTab("biblioteca"); }
+  const d = e.target.closest("[data-draft]"); if (d) draftSection(d.dataset.draft);
+});
+
+/* ---------- Biblioteca ---------- */
+function renderLib() {
+  $("#nLib").textContent = S.artigos.size || "";
+  if (!S.loaded.artigos) return;
+  const opts = sectionNums();
+  const fs = $("#fSec"); const cur = S.fSec;
+  fs.innerHTML = `<option value="">Todas as seções</option>` + opts.map(n => `<option value="${n}">${n} ${esc(secTitle(n)).slice(0, 48)}</option>`).join("");
+  fs.value = cur;
+  const counts = {}; S.artigos.forEach(a => { counts[a.status] = (counts[a.status] || 0) + 1; });
+  $("#fStatus").innerHTML = `<button type="button" data-st="" aria-pressed="${!S.fStatus}">Todos<span class="n">${S.artigos.size}</span></button>` +
+    STATUS.filter(([k]) => counts[k]).map(([k, v]) => `<button type="button" data-st="${k}" aria-pressed="${S.fStatus === k}">${v}<span class="n">${counts[k]}</span></button>`).join("");
+  const q = S.q.trim().toLowerCase();
+  const list = [...S.artigos.entries()].filter(([, a]) =>
+    (!S.fStatus || a.status === S.fStatus) && (!S.fSec || (a.secoes || []).includes(S.fSec)) &&
+    (!q || [a.titulo, a.periodico, a.livro, a.editora, (a.autores || []).map(x => fam(x) + " " + (x.nome || "")).join(" "), a.ano].join(" ").toLowerCase().includes(q)))
+    .sort((x, y) => sortKey(x[1]).localeCompare(sortKey(y[1])));
+  if (!list.length) { $("#lib").innerHTML = `<p class="empty">Nenhum artigo com esses filtros.</p>`; return; }
+  $("#lib").innerHTML = list.map(([id, a]) => {
+    const f = S.fichas.get(id);
+    const src = a.tipo === "artigo" ? [a.periodico, a.volume && "v. " + a.volume, a.numero && "n. " + a.numero].filter(Boolean).join(", ")
+      : a.tipo === "capitulo" ? "Capítulo em " + (a.livro || "") : a.tipo === "tese" ? [a.grau, a.instituicao].filter(Boolean).join(", ") : (a.editora || "");
+    const acesso = a.acesso === "aberto" ? "Acesso aberto" : a.acesso === "capes" ? "Portal CAPES" : a.acesso === "biblioteca" ? "Biblioteca / livro" : "";
+    return `<div class="row">
+      <div style="min-width:0">
+        <span class="cite">${esc(cite(a))}</span>
+        <div class="ti">${esc(a.titulo)}</div>
+        <div class="src">${esc(src)}${a.doi ? ` · <a href="${esc(doiUrl(a.doi))}" target="_blank" rel="noopener">DOI</a>` : a.url ? ` · <a href="${esc(a.url)}" target="_blank" rel="noopener">link</a>` : ""}${acesso ? " · " + acesso : ""}</div>
+        ${a.porque ? `<div class="why">${esc(a.porque)}</div>` : ""}
+        ${a.alerta ? `<div class="alert"><span>${esc(a.alerta)}</span></div>` : ""}
+        <div class="meta"><span class="pill st-${esc(a.status)}">${esc(STATUS_LABEL[a.status] || a.status)}</span>
+          ${(a.secoes || []).map(n => `<button class="chip" type="button" data-fsec="${esc(n)}" title="${esc(secTitle(n))}">${esc(n)}</button>`).join("")}
+          ${hasContent(f) ? `<span class="note">· fichamento com ${(f.citacoes || []).length} citação(ões)</span>` : ""}
+          ${a.pdf ? `<span class="note">· PDF anexado</span>` : ""}</div>
+      </div>
+      <div class="act">
+        <button class="btn sm primary" type="button" data-open="${esc(id)}">Ler e fichar</button>
+        <select aria-label="Status de ${esc(a.titulo)}" data-artst="${esc(id)}">${STATUS.map(([k, v]) => `<option value="${k}" ${k === a.status ? "selected" : ""}>${v}</option>`).join("")}</select>
+      </div></div>`;
+  }).join("");
+}
+$("#q").addEventListener("input", e => { S.q = e.target.value; renderLib(); });
+$("#fSec").addEventListener("change", e => { S.fSec = e.target.value; renderLib(); });
+$("#fStatus").addEventListener("click", e => { const b = e.target.closest("[data-st]"); if (!b) return; S.fStatus = b.dataset.st; store.set("fStatus", S.fStatus); renderLib(); });
+$("#lib").addEventListener("click", e => {
+  const o = e.target.closest("[data-open]"); if (o) return openArticle(o.dataset.open);
+  const c = e.target.closest("[data-fsec]"); if (c) { S.fSec = c.dataset.fsec; renderLib(); }
+});
+$("#lib").addEventListener("change", e => { const s = e.target.closest("[data-artst]"); if (s) setArtStatus(s.dataset.artst, s.value); });
+async function setArtStatus(id, status) {
+  if (!S.db) return;
+  try { await S.db.doc("artigos/" + id).update({ status }); setSaved("Salvo"); } catch (err) { toast(writeErr(err)); }
+}
+function writeErr(err) {
+  if (err?.code === "quota_exceeded") return "O espaço do banco de dados acabou. Remova artigos descartados.";
+  if (err?.code === "invalid_argument") return "Você não tem permissão para alterar esta página.";
+  return "Não foi possível salvar agora. Tente de novo em instantes.";
+}
+
+/* ---------- Adicionar artigo ---------- */
+function fillSecBox(el, selected = []) {
+  const sel = new Set(selected);
+  el.innerHTML = sectionNums().map(n => `<label title="${esc(secTitle(n))}"><input type="checkbox" value="${n}" ${sel.has(n) ? "checked" : ""}>${n}</label>`).join("");
+}
+$("#addBtn").onclick = () => {
+  ["aPaste", "aAno", "aAut", "aTit", "aPer", "aVol", "aNum", "aPag", "aDoi", "aUrl", "aWhy"].forEach(id => { $("#" + id).value = ""; });
+  $("#aTipo").value = "artigo"; $("#aMsg").textContent = ""; fillSecBox($("#aSecs"), S.fSec ? [S.fSec] : []);
+  $("#parseBox").hidden = !S.sample; openModal("#mAdd");
+};
+$("#aParse").onclick = async () => {
+  const txt = $("#aPaste").value.trim(); if (!txt || !S.sample) return;
+  const btn = $("#aParse"); btn.disabled = true; $("#aMsg").textContent = "O Claude está lendo a referência…";
+  try {
+    const r = await S.sample.json(`Extraia os dados bibliográficos do texto abaixo. Responda só com um objeto JSON com estas chaves (use "" quando não houver):
+{"tipo":"artigo|livro|capitulo|tese|relatorio|lei|site","autores":[{"sobrenome":"","nome":""}] (para instituição use {"instituicao":""}),"ano":"","titulo":"","periodico":"","livro":"","editora":"","volume":"","numero":"","paginas":"","doi":"","url":""}
+Não invente dados ausentes. Nomes completos quando houver.
+
+TEXTO:
+${txt}`, { modelTier: "quick" });
+    const tipo = ["artigo", "livro", "capitulo", "tese", "relatorio", "lei", "site"].includes(r.tipo) ? r.tipo : "artigo";
+    $("#aTipo").value = tipo; $("#aAno").value = r.ano || ""; $("#aTit").value = r.titulo || "";
+    $("#aAut").value = (r.autores || []).map(a => a.instituicao ? "@" + a.instituicao : `${a.sobrenome || ""}, ${a.nome || ""}`).join("\n");
+    $("#aPer").value = (tipo === "artigo" ? r.periodico : tipo === "capitulo" ? r.livro : r.editora) || r.periodico || r.editora || "";
+    $("#aVol").value = r.volume || ""; $("#aNum").value = r.numero || ""; $("#aPag").value = r.paginas || "";
+    $("#aDoi").value = r.doi || ""; $("#aUrl").value = r.url || "";
+    $("#aMsg").textContent = "Campos preenchidos. Confira antes de salvar.";
+  } catch (e) { $("#aMsg").textContent = e?.code === "not_granted" ? "Sem permissão para usar o Claude nesta página. Preencha à mão." : "Não consegui ler a referência. Preencha os campos à mão."; }
+  btn.disabled = false;
+};
+$("#aSave").onclick = async () => {
+  if (!S.db) return;
+  const tit = $("#aTit").value.trim(); if (!tit) { $("#aMsg").textContent = "Informe ao menos o título."; return; }
+  const autores = $("#aAut").value.split("\n").map(l => l.trim()).filter(Boolean).map(l => l.startsWith("@") ? { instituicao: l.slice(1).trim() } : { sobrenome: l.split(",")[0].trim(), nome: l.split(",").slice(1).join(",").trim() });
+  const tipo = $("#aTipo").value, per = $("#aPer").value.trim();
+  const data = { tipo, autores, ano: $("#aAno").value.trim(), titulo: tit, volume: $("#aVol").value.trim(), numero: $("#aNum").value.trim(),
+    paginas: $("#aPag").value.trim(), doi: $("#aDoi").value.trim().replace(/^https?:\/\/(dx\.)?doi\.org\//, ""), url: $("#aUrl").value.trim(),
+    secoes: $$("#aSecs input:checked").map(i => i.value), porque: $("#aWhy").value.trim(), status: "sugerido", origem: "manual", criadoEm: new Date().toISOString() };
+  if (tipo === "artigo") data.periodico = per; else if (tipo === "capitulo") data.livro = per; else data.editora = per;
+  const base = ((autores[0] ? fam(autores[0]) : tit).normalize("NFD").replace(/[^\w]/g, "").toLowerCase().slice(0, 20) || "ref") + (data.ano || "");
+  let id = base, k = 2; while (S.artigos.has(id)) id = base + "-" + k++;
+  try { await S.db.doc("artigos/" + id).set(data); closeModal($("#mAdd")); toast("Artigo salvo na biblioteca"); }
+  catch (err) { $("#aMsg").textContent = writeErr(err); }
+};
+
+/* ---------- Leitura ---------- */
+function renderPick() {
+  const sel = $("#pick"); const cur = S.current;
+  const list = [...S.artigos.entries()].filter(([, a]) => a.status !== "descartado").sort((x, y) => sortKey(x[1]).localeCompare(sortKey(y[1])));
+  sel.innerHTML = `<option value="">Escolha um artigo…</option>` + list.map(([id, a]) => `<option value="${esc(id)}">${esc(cite(a, { narrative: true }))} · ${esc((a.titulo || "").slice(0, 70))}</option>`).join("");
+  sel.value = cur || "";
+}
+$("#pick").addEventListener("change", e => { if (e.target.value) openArticle(e.target.value); });
+let fichaUnsub = null;
+function openArticle(id) {
+  const a = S.artigos.get(id); if (!a) return;
+  if (S.current !== id) {
+    flushSave();
+    S.current = id; store.set("current", id); S.pdf = null; S.pdfText = []; draft = null; dirty = false;
+    renderDoc(); renderFicha();
+    if (a.status === "sugerido" && S.db) setArtStatus(id, "lendo");
+  }
+  $("#pick").value = id; setTab("leitura");
+}
+
+function setReaderTools(on) { $("#modeSeg").hidden = !on; $("#zoomIn").hidden = !on || S.mode !== "pag"; $("#zoomOut").hidden = !on || S.mode !== "pag"; }
+function renderDoc() {
+  const a = S.artigos.get(S.current); const doc = $("#doc");
+  setReaderTools(false);
+  if (!a) return;
+  if (a.pdf) { loadPdfFromAsset(a.pdf); return; }
+  const links = [a.doi && `<a class="btn" href="${esc(doiUrl(a.doi))}" target="_blank" rel="noopener">Abrir pelo DOI</a>`,
+    a.url && `<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">Abrir o link</a>`,
+    `<a class="btn" href="https://scholar.google.com/scholar?q=${encodeURIComponent((a.titulo || "") + " " + fam((a.autores || [])[0] || {}))}" target="_blank" rel="noopener">Procurar no Google Acadêmico</a>`,
+    a.acesso === "capes" && `<a class="btn" href="https://www.periodicos.capes.gov.br/" target="_blank" rel="noopener">Portal CAPES</a>`].filter(Boolean).join("");
+  doc.innerHTML = `<label class="drop" id="drop" for="pdfIn">
+      <h3>Envie o PDF de ${esc(cite(a, { narrative: true }))}</h3>
+      <p>Arraste o arquivo para cá ou clique para escolher. ${S.assets ? "O PDF fica guardado junto com o artigo." : "O PDF abre só nesta sessão (anexar exige permissão de edição)."}</p>
+      <input type="file" id="pdfIn" accept="application/pdf" hidden>
+      <div class="links">${links}</div>
+      <p class="note">Sem PDF? Leia no site e cole os trechos na ficha ao lado, com a página.</p>
+    </label>`;
+  const drop = $("#drop"), inp = $("#pdfIn");
+  inp.onchange = () => inp.files[0] && handlePdfFile(inp.files[0]);
+  drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+  drop.addEventListener("drop", e => { e.preventDefault(); drop.classList.remove("over"); const f = e.dataTransfer.files[0]; if (f) handlePdfFile(f); });
+  $$(".links a", drop).forEach(x => x.addEventListener("click", e => e.stopPropagation()));
+}
+async function handlePdfFile(file) {
+  if (file.type && file.type !== "application/pdf") { toast("Escolha um arquivo PDF."); return; }
+  const id = S.current; const buf = await file.arrayBuffer();
+  showPdf(buf.slice(0));
+  if (S.assets && S.db) {
+    setSaved("Enviando PDF…");
+    try {
+      const r = await S.assets.upload(file, { type: "application/pdf" });
+      await S.db.doc("artigos/" + id).update({ pdf: r.id });
+      setSaved("PDF anexado");
+    } catch (e) {
+      setSaved("");
+      toast(e?.code === "too_large" ? "PDF maior que 20 MB: não foi anexado, mas está aberto aqui." : e?.code === "quota_or_state" ? "Espaço de arquivos cheio: o PDF não foi anexado." : "Não consegui anexar o PDF. Ele continua aberto aqui.");
+    }
+  }
+}
+async function loadPdfFromAsset(assetId) {
+  $("#doc").innerHTML = `<p class="empty">Abrindo o PDF…</p>`;
+  try { const r = await fetch("/_blob/" + assetId); if (!r.ok) throw 0; showPdf(await r.arrayBuffer()); }
+  catch { S.artigos.get(S.current) && ($("#doc").innerHTML = `<p class="empty">Não consegui abrir o PDF anexado. Envie de novo.</p>`); }
+}
+let workerReady = null;
+function ensurePdfWorker() {
+  if (window.pdfjsWorker) return Promise.resolve();
+  if (!workerReady) workerReady = new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    s.onload = res; s.onerror = rej; document.head.appendChild(s);
+  });
+  return workerReady;
+}
+async function showPdf(buf) {
+  const doc = $("#doc"); const forId = S.current;
+  doc.innerHTML = `<p class="empty">Abrindo o PDF…</p>`;
+  try {
+    if (!window.pdfjsLib) throw new Error("pdfjs");
+    await ensurePdfWorker();
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf), isEvalSupported: false }).promise;
+    if (S.current !== forId) return;
+    S.pdf = pdf; S.pdfText = new Array(pdf.numPages).fill(null);
+    setReaderTools(true); paintPdf();
+    extractText(pdf, forId);
+  } catch { doc.innerHTML = `<p class="empty">Não consegui abrir este PDF. Ele pode estar protegido ou corrompido.</p>`; }
+}
+async function extractText(pdf, forId) {
+  for (let i = 1; i <= pdf.numPages; i++) {
+    if (S.current !== forId) return;
+    try {
+      const tc = await (await pdf.getPage(i)).getTextContent();
+      let out = "", lastY = null;
+      tc.items.forEach(it => { const y = it.transform?.[5]; if (lastY !== null && y !== undefined && Math.abs(y - lastY) > 4) out += "\n"; out += it.str + (it.hasEOL ? "\n" : ""); lastY = y; });
+      S.pdfText[i - 1] = out.replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n");
+    } catch { S.pdfText[i - 1] = ""; }
+    if (S.mode === "txt") { const el = $(`#doc .txtpage[data-page="${i}"] .body`); if (el) el.textContent = S.pdfText[i - 1] || "(página sem texto selecionável)"; }
+  }
+}
+let pageObs = null;
+function paintPdf() {
+  const doc = $("#doc"), pdf = S.pdf; if (!pdf) return;
+  pageObs?.disconnect(); doc.innerHTML = "";
+  if (S.mode === "txt") {
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const d = document.createElement("div"); d.className = "txtpage"; d.dataset.page = i;
+      d.innerHTML = `<h4>PÁGINA ${i} DO PDF</h4><div class="body"></div>`;
+      d.querySelector(".body").textContent = S.pdfText[i - 1] ?? "Extraindo texto…";
+      doc.appendChild(d);
+    }
+    return;
+  }
+  pageObs = new IntersectionObserver(ents => ents.forEach(en => { if (en.isIntersecting && !en.target.dataset.done) { en.target.dataset.done = "1"; renderPage(en.target); } }), { root: doc, rootMargin: "600px 0px" });
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const c = document.createElement("canvas"); c.dataset.page = i; c.width = 600; c.height = 800; c.setAttribute("aria-label", "Página " + i);
+    const lbl = document.createElement("div"); lbl.className = "pg-label"; lbl.textContent = "p. " + i + " do PDF";
+    doc.append(c, lbl); pageObs.observe(c);
+  }
+}
+async function renderPage(canvas) {
+  try {
+    const page = await S.pdf.getPage(+canvas.dataset.page);
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    const vp = page.getViewport({ scale: S.zoom * ratio });
+    canvas.width = vp.width; canvas.height = vp.height; canvas.style.width = (vp.width / ratio) + "px";
+    await page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise;
+  } catch {}
+}
+$("#modeSeg").addEventListener("click", e => {
+  const b = e.target.closest("[data-mode]"); if (!b) return;
+  S.mode = b.dataset.mode; $$("#modeSeg button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); setReaderTools(true); paintPdf();
+});
+$("#zoomIn").onclick = () => { S.zoom = Math.min(S.zoom + 0.2, 3); paintPdf(); };
+$("#zoomOut").onclick = () => { S.zoom = Math.max(S.zoom - 0.2, 0.6); paintPdf(); };
+
+/* Selecionar trecho no modo Texto -> citação com página */
+let floatBtn = null;
+document.addEventListener("selectionchange", () => {
+  const sel = document.getSelection();
+  const host = sel && sel.rangeCount && sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement)?.closest?.(".txtpage");
+  const text = sel ? sel.toString().trim() : "";
+  if (!host || text.length < 3) { if (floatBtn) floatBtn.hidden = true; return; }
+  const doc = $("#doc"); const r = sel.getRangeAt(0).getBoundingClientRect(); const dr = doc.getBoundingClientRect();
+  if (!floatBtn) { floatBtn = document.createElement("button"); floatBtn.type = "button"; floatBtn.className = "floatcite"; doc.appendChild(floatBtn);
+    floatBtn.addEventListener("mousedown", e => e.preventDefault());
+    floatBtn.addEventListener("click", () => { addQuote(floatBtn.dataset.text, floatBtn.dataset.page); document.getSelection().removeAllRanges(); floatBtn.hidden = true; }); }
+  if (!floatBtn.isConnected) doc.appendChild(floatBtn);
+  floatBtn.dataset.text = text.replace(/\s*\n\s*/g, " "); floatBtn.dataset.page = host.dataset.page;
+  floatBtn.textContent = "+ Citação (p. " + host.dataset.page + ")";
+  floatBtn.style.top = (r.top - dr.top + doc.scrollTop - 38) + "px"; floatBtn.style.left = Math.max(8, r.left - dr.left) + "px"; floatBtn.hidden = false;
+});
+
+/* ---------- Ficha ---------- */
+const FIELDS = [["objetivo", "Objetivo e problema do estudo"], ["metodo", "Método, amostra e contexto"], ["resultados", "Principais resultados e argumentos"]];
+const hasContent = f => !!f && (FIELDS.some(([k]) => (f[k] || "").trim()) || (f.citacoes || []).length || (f.resumo || "").trim() || (f.analise || "").trim());
+let draft = null, dirty = false, saveT = null, saving = Promise.resolve();
+const emptyFicha = () => ({ objetivo: "", metodo: "", resultados: "", conceitos: "", resumo: "", analise: "", uso: "", citacoes: [] });
+function renderFicha() {
+  const pane = $("#fichaPane"); const id = S.current; const a = S.artigos.get(id);
+  if (!a) { pane.innerHTML = `<div class="card"><p class="empty">A ficha do artigo aparece aqui.</p></div>`; return; }
+  if (!dirty) draft = { ...emptyFicha(), ...(S.fichas.get(id) || {}) };
+  const f = draft; const secs = sectionNums();
+  pane.innerHTML = `<div class="card">
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap">
+      <span class="eyebrow">Fichamento</span>
+      <select id="fSt" aria-label="Status do artigo" style="width:auto">${STATUS.map(([k, v]) => `<option value="${k}" ${k === a.status ? "selected" : ""}>${v}</option>`).join("")}</select>
+    </div>
+    <div class="refbox"><span class="k">${esc(cite(a))} · ${esc(cite(a, { narrative: true }))}</span>${refHTML(a)}
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" type="button" id="cpRef">Copiar referência</button><button class="btn sm" type="button" id="cpCite">Copiar citação ${esc(cite(a))}</button></div></div>
+    ${a.alerta ? `<div class="row" style="padding:0;border:0"><div class="alert"><span>${esc(a.alerta)}</span></div></div>` : ""}
+    ${S.sample ? `<div class="ai"><p id="aiMsg">${S.pdf ? "O Claude lê o PDF aberto e propõe um pré-fichamento. Ele só preenche os campos vazios." : "Abra o PDF (ou cole um trecho no Resumo) para o Claude propor um pré-fichamento."}</p><button class="btn sm primary" type="button" id="preBtn">Pré-fichar com o Claude</button></div>` : ""}
+    ${FIELDS.map(([k, l]) => `<label class="f"><span>${l}</span><textarea data-k="${k}" rows="3">${esc(f[k])}</textarea></label>`).join("")}
+    <label class="f"><span>Conceitos-chave <em class="note">separe por vírgula</em></span><input type="text" data-k="conceitos" value="${esc(f.conceitos)}"></label>
+    <div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px"><span class="eyebrow">Citações diretas</span><button class="btn sm" type="button" id="addQ">+ Citação</button></div>
+      <div class="quotes" id="quotes"></div>
+      <p class="note" style="margin-top:6px">${S.pdf ? "Dica: no modo Texto, selecione um trecho do PDF e clique em “+ Citação”. A página entra sozinha." : "Cole o trecho e informe a página. A citação já sai formatada para colar na dissertação."}</p></div>
+    <label class="f"><span>Paráfrase / resumo com suas palavras</span><textarea data-k="resumo" rows="4">${esc(f.resumo)}</textarea></label>
+    <label class="f"><span>Análise crítica <em class="note">limites, diálogo com Bourdieu, com seus dados</em></span><textarea data-k="analise" rows="3">${esc(f.analise)}</textarea></label>
+    <div><span class="eyebrow">Usar nas seções</span><div class="secbox" id="fSecs" style="margin-top:6px">${secs.map(n => `<label title="${esc(secTitle(n))}"><input type="checkbox" value="${n}" ${(a.secoes || []).includes(n) ? "checked" : ""}>${n}</label>`).join("")}</div></div>
+    <label class="f"><span>Como entra na dissertação</span><textarea data-k="uso" rows="2">${esc(f.uso)}</textarea></label>
+    ${f.atualizadoEm ? `<p class="note">Última alteração: ${esc(new Date(f.atualizadoEm).toLocaleString("pt-BR"))}</p>` : ""}
+  </div>`;
+  renderQuotes();
+  $("#cpRef").onclick = () => copyText(plain(refHTML(a)), refHTML(a));
+  $("#cpCite").onclick = () => copyText(cite(a));
+  $("#fSt").onchange = e => setArtStatus(id, e.target.value);
+  $("#addQ").onclick = () => addQuote("", "");
+  $("#preBtn") && ($("#preBtn").onclick = preFichar);
+  $("#fSecs").onchange = async () => { if (!S.db) return; try { await S.db.doc("artigos/" + id).update({ secoes: $$("#fSecs input:checked").map(i => i.value) }); setSaved("Salvo"); } catch (err) { toast(writeErr(err)); } };
+  $$("[data-k]", pane).forEach(el => el.addEventListener("input", () => { draft[el.dataset.k] = el.value; touch(); }));
+}
+function renderQuotes() {
+  const a = S.artigos.get(S.current); const box = $("#quotes"); if (!box || !a) return;
+  const secs = sectionNums();
+  box.innerHTML = (draft.citacoes || []).length ? draft.citacoes.map((q, i) => `<div class="quote" data-i="${i}">
+      <textarea data-q="texto" rows="2" aria-label="Trecho citado">${esc(q.texto)}</textarea>
+      <div class="qrow"><input type="text" data-q="pagina" value="${esc(q.pagina)}" placeholder="página" aria-label="Página">
+        <select data-q="secao" aria-label="Seção onde usar"><option value="">Seção…</option>${secs.map(n => `<option value="${n}" ${q.secao === n ? "selected" : ""}>${n} ${esc(secTitle(n)).slice(0, 36)}</option>`).join("")}</select>
+        <button class="btn ghost sm" type="button" data-del aria-label="Remover citação">Remover</button></div>
+      <div class="prev" data-prev></div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><button class="btn sm" type="button" data-cp>Copiar com citação</button>${q.sugerida ? `<span class="tag">sugerida pelo Claude: confira no PDF</span>` : ""}</div>
+    </div>`).join("") : `<p class="note">Nenhuma citação ainda.</p>`;
+  $$(".quote", box).forEach(el => updatePrev(el));
+}
+function quoteText(q, a) {
+  const t = (q.texto || "").trim(); if (!t) return "";
+  const c = cite(a, { page: (q.pagina || "").trim() });
+  return t.split(/\s+/).length >= 40 ? `${t} ${c}` : `“${t}” ${c}`;
+}
+function updatePrev(el) {
+  const q = draft.citacoes[+el.dataset.i]; const a = S.artigos.get(S.current);
+  el.querySelector("[data-prev]").innerHTML = q.texto ? esc(quoteText(q, a)).replace(esc(cite(a, { page: (q.pagina || "").trim() })), m => `<mark>${m}</mark>`) + (!(q.pagina || "").trim() ? ` <span class="tag">falta a página</span>` : "") : `<span class="note">A citação formatada aparece aqui.</span>`;
+}
+$("#fichaPane").addEventListener("input", e => {
+  const el = e.target.closest(".quote"); if (!el || !e.target.dataset.q) return;
+  draft.citacoes[+el.dataset.i][e.target.dataset.q] = e.target.value; delete draft.citacoes[+el.dataset.i].sugerida; updatePrev(el); touch();
+});
+$("#fichaPane").addEventListener("change", e => {
+  const el = e.target.closest(".quote"); if (!el || e.target.dataset.q !== "secao") return;
+  draft.citacoes[+el.dataset.i].secao = e.target.value; touch();
+});
+$("#fichaPane").addEventListener("click", e => {
+  const el = e.target.closest(".quote"); if (!el) return;
+  const i = +el.dataset.i;
+  if (e.target.closest("[data-del]")) { draft.citacoes.splice(i, 1); renderQuotes(); touch(); }
+  if (e.target.closest("[data-cp]")) copyText(quoteText(draft.citacoes[i], S.artigos.get(S.current)));
+});
+function addQuote(texto, pagina) {
+  if (!S.current || !draft) return;
+  draft.citacoes = [...(draft.citacoes || []), { texto: texto || "", pagina: pagina || "", secao: "" }];
+  renderQuotes(); touch();
+  if (texto) toast("Citação adicionada (p. " + pagina + ")");
+  else $("#quotes .quote:last-child textarea")?.focus();
+}
+function touch() { dirty = true; setSaved("Editando…"); clearTimeout(saveT); saveT = setTimeout(flushSave, 1100); }
+function flushSave() {
+  clearTimeout(saveT);
+  if (!dirty || !S.current || !S.db || !draft) return saving;
+  const id = S.current; const body = { ...draft, atualizadoEm: new Date().toISOString() }; delete body._v;
+  dirty = false; setSaved("Salvando…");
+  saving = saving.then(() => S.db.doc("fichamentos/" + id).set(body)).then(() => { if (!dirty) setSaved("Salvo"); }).catch(err => { dirty = true; setSaved("Não salvo"); toast(writeErr(err)); });
+  return saving;
+}
+window.addEventListener("pagehide", flushSave);
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") flushSave(); });
+
+/* ---------- Claude: pré-fichamento ---------- */
+async function preFichar() {
+  const a = S.artigos.get(S.current); if (!a || !S.sample) return;
+  let corpus = "";
+  if (S.pdf) {
+    const pages = S.pdfText.map((t, i) => t ? `[p. ${i + 1}]\n${t}` : "").filter(Boolean);
+    corpus = pages.join("\n\n").slice(0, 120000);
+    if (!corpus) { $("#aiMsg").textContent = "Ainda extraindo o texto do PDF. Tente de novo em alguns segundos."; return; }
+  } else if ((draft.resumo || "").trim().length > 200) corpus = draft.resumo;
+  else { $("#aiMsg").textContent = "Abra o PDF ou cole um trecho longo do artigo no campo Resumo."; return; }
+  const btn = $("#preBtn"); btn.disabled = true; $("#aiMsg").textContent = "O Claude está lendo o artigo. Isso leva até um minuto…";
+  const forId = S.current;
+  try {
+    const r = await S.sample.json(`Você ajuda um mestrando em Administração (PUC-SP) a fichar artigos para a dissertação "PROUNI: carreira e empregabilidade dos egressos dos cursos de graduação em Administração da cidade de São Paulo". Referencial: Bourdieu (capital cultural e social), empregabilidade (Yorke, Fugate, Tomlinson), teorias de carreira.
+
+Leia o texto do artigo abaixo (as marcas [p. N] indicam a página do PDF) e responda SÓ com JSON:
+{"objetivo":"", "metodo":"", "resultados":"", "conceitos":"termo1, termo2", "resumo":"paráfrase de 4-6 frases em português", "analise":"2-3 frases sobre como dialoga com a dissertação e limites", "citacoes":[{"texto":"trecho LITERAL copiado do texto", "pagina":"N"}]}
+Regras: escreva em português; até 5 citações curtas e relevantes, copiadas palavra por palavra do texto, com a página da marca [p. N] anterior; não invente nada que não esteja no texto.
+
+REFERÊNCIA: ${plain(refHTML(a, "apa"))}
+
+TEXTO:
+${corpus}`, { modelTier: "default" });
+    if (S.current !== forId) return;
+    ["objetivo", "metodo", "resultados", "conceitos", "resumo", "analise"].forEach(k => { if (!(draft[k] || "").trim() && r[k]) draft[k] = String(r[k]); });
+    (r.citacoes || []).slice(0, 8).forEach(q => { if (q?.texto) draft.citacoes.push({ texto: String(q.texto), pagina: String(q.pagina || ""), secao: "", sugerida: true }); });
+    dirty = true; renderFicha(); touch();
+    $("#aiMsg") && ($("#aiMsg").textContent = "Pré-fichamento feito. Revise cada campo e confira as citações no PDF.");
+  } catch (e) {
+    $("#aiMsg") && ($("#aiMsg").textContent = e?.code === "not_granted" ? "Você não permitiu o uso do Claude nesta página." : e?.code === "rate_limited" ? "Muitos pedidos seguidos. Espere um minuto." : "Não consegui fazer o pré-fichamento agora.");
+  }
+  $("#preBtn") && ($("#preBtn").disabled = false);
+}
+
+/* ---------- Claude: rascunho de seção ---------- */
+let draftCtl = null;
+async function draftSection(num) {
+  if (!S.sample) return;
+  const arts = [...S.artigos.entries()].filter(([id, a]) => (a.secoes || []).includes(num) && hasContent(S.fichas.get(id)));
+  const sec = S.secoes.find(s => s.numero === num);
+  $("#mDraftT").textContent = `Rascunho da seção ${num}`;
+  $("#draftInfo").textContent = `${sec?.titulo || ""} · a partir de ${arts.length} fichamento(s).`;
+  $("#draftOut").textContent = "Pensando…"; $("#draftCopy").disabled = true; $("#draftStop").hidden = false;
+  openModal("#mDraft");
+  const fontes = arts.map(([id, a]) => {
+    const f = S.fichas.get(id);
+    return `FONTE ${cite(a, { norm: "apa" })} | cite como ${cite(a, { narrative: true, norm: S.norm })} ou ${cite(a, { norm: S.norm })}
+Objetivo: ${f.objetivo || ""}\nMétodo: ${f.metodo || ""}\nResultados: ${f.resultados || ""}\nConceitos: ${f.conceitos || ""}\nResumo: ${f.resumo || ""}\nAnálise: ${f.analise || ""}\nUso previsto: ${f.uso || ""}
+Citações diretas: ${(f.citacoes || []).filter(q => q.texto).map(q => `"${q.texto}" ${cite(a, { page: q.pagina, norm: S.norm })}`).join(" || ")}`;
+  }).join("\n\n");
+  draftCtl = new AbortController();
+  try {
+    const { text } = await S.sample(`Escreva um rascunho de 3 a 4 parágrafos, em português acadêmico (registro de dissertação de mestrado em Administração), para a seção "${num} ${sec?.titulo || ""}" da dissertação "PROUNI: carreira e empregabilidade dos egressos dos cursos de graduação em Administração da cidade de São Paulo".
+Use SOMENTE as fontes abaixo. Cite no formato ${S.norm === "apa" ? "APA 7" : "ABNT"} exatamente como indicado em cada fonte; citações diretas entre aspas com página. Não invente autores, dados nem páginas. Faça os autores dialogarem entre si e com o problema da pesquisa. Sem títulos nem listas; só os parágrafos.
+
+${fontes}`, { signal: draftCtl.signal, cache: false, onText: ({ text }) => { $("#draftOut").textContent = text; } });
+    $("#draftOut").textContent = text; $("#draftCopy").disabled = false;
+  } catch (e) {
+    if (e?.text) $("#draftOut").textContent = e.text;
+    else $("#draftOut").textContent = e?.code === "cancelled" ? "Interrompido." : e?.code === "not_granted" ? "Você não permitiu o uso do Claude nesta página." : "Não consegui escrever o rascunho agora.";
+    $("#draftCopy").disabled = !e?.text;
+  }
+  $("#draftStop").hidden = true;
+}
+$("#draftStop").onclick = () => draftCtl?.abort();
+$("#draftCopy").onclick = () => copyText($("#draftOut").textContent);
+
+/* ---------- Referências ---------- */
+const REF_ST = new Set(["citado", "fichado", "conferir", "faltando"]);
+function refItems() {
+  const inc = $("#incSug").checked;
+  return [...S.artigos.values()].filter(a => REF_ST.has(a.status) || (inc && ["sugerido", "lendo"].includes(a.status))).sort((x, y) => sortKey(x).localeCompare(sortKey(y)));
+}
+function renderRefs() {
+  const items = refItems();
+  $("#nRef").textContent = items.length || "";
+  if (!S.loaded.artigos) return;
+  const box = $("#refsList"); box.classList.toggle("abnt", S.norm === "abnt");
+  const flagged = items.filter(a => ["conferir", "faltando"].includes(a.status)).length;
+  $("#refCount").textContent = `${items.length} referências${flagged ? ` · ${flagged} com dados a conferir` : ""} · norma ${S.norm === "apa" ? "APA 7" : "ABNT NBR 6023"}`;
+  box.innerHTML = items.length ? items.map(a => `<p class="${["conferir", "faltando"].includes(a.status) ? "flag" : ""}">${refHTML(a)}</p>`).join("") : `<p class="empty">Nenhuma referência ainda.</p>`;
+}
+$("#incSug").onchange = renderRefs;
+$("#copyRefs").onclick = () => {
+  const items = refItems();
+  const html = items.map(a => `<p>${refHTML(a)}</p>`).join("");
+  copyText(items.map(a => plain(refHTML(a))).join("\n\n"), `<div style="font-family:'Times New Roman',serif;font-size:12pt">${html}</div>`);
+};
+
+function renderAll() { renderPainel(); renderLib(); renderPick(); renderRefs(); if (S.current) renderFicha(); }
+
+/* ---------- Dados ---------- */
+async function boot() {
+  const h = (location.hash || "").slice(1);
+  setTab(["painel", "biblioteca", "leitura", "referencias"].includes(h) ? h : store.get("tab", "painel"), false);
+  setNorm(S.norm);
+  const c = window.claude;
+  if (!c?.use) { $("#noDb").hidden = false; return; }
+  const [db, assets, sample] = await Promise.all([c.use("db"), c.use("assets").catch(() => null), c.use("sample").catch(() => null)]);
+  S.assets = assets; S.sample = sample;
+  if (!db) { $("#noDb").hidden = false; $("#chapters").innerHTML = $("#lib").innerHTML = `<p class="empty">Sem acesso aos dados nesta visualização.</p>`; return; }
+  S.db = db;
+  const onErr = () => toast("A conexão com os dados caiu. Recarregue a página.");
+  db.collection("artigos").onSnapshot(snap => {
+    S.artigos = new Map(snap.docs.map(d => [d.id, d.data()])); S.loaded.artigos = true;
+    renderPainel(); renderLib(); renderPick(); renderRefs();
+    if (S.current && S.artigos.has(S.current)) {
+      const a = S.artigos.get(S.current);
+      const docHasPdf = !!S.pdf;
+      if (a.pdf && !docHasPdf && !$("#doc canvas, #doc .txtpage")) renderDoc();
+      if (!dirty) renderFicha();
+    } else if (!S.current) {
+      const last = store.get("current", null); if (last && S.artigos.has(last)) { S.current = last; renderDoc(); renderFicha(); $("#pick").value = last; }
+    }
+  }, onErr);
+  db.collection("secoes").orderBy("ordem").onSnapshot(snap => {
+    S.secoes = snap.docs.map(d => ({ _id: d.id, ...d.data() })); S.loaded.secoes = true;
+    renderPainel(); renderLib();
+  }, onErr);
+  db.collection("fichamentos").onSnapshot(snap => {
+    S.fichas = new Map(snap.docs.map(d => [d.id, d.data()]));
+    renderPainel();
+    if (S.current && !dirty && !document.activeElement?.closest?.("#fichaPane")) renderFicha();
+  }, onErr);
+}
+$$("nav.tabs button").forEach(b => b.addEventListener("click", () => store.set("tab", b.dataset.tab)));
+boot();
+})();
+</script>

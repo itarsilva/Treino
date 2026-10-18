@@ -1,0 +1,18 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Sennett",
+   "nome": "Richard"
+  }
+ ],
+ "ano": "1999",
+ "titulo": "A corrosão do caráter: consequências pessoais do trabalho no novo capitalismo",
+ "editora": "Record",
+ "secoes": [
+  "3.3"
+ ],
+ "status": "faltando",
+ "alerta": "O texto cita Sennett (2006) falando de 'A corrosão do caráter', que é de 1999. Sennett (2006) é 'A cultura do novo capitalismo'. Escolher e corrigir o ano.",
+ "origem": "dissertacao"
+}

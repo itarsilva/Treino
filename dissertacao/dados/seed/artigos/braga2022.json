@@ -1,0 +1,36 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Braga",
+   "nome": "Daniel Santos"
+  },
+  {
+   "sobrenome": "Inácio",
+   "nome": "Márcia Helena"
+  },
+  {
+   "sobrenome": "Salomé",
+   "nome": "Nivalda Chaves dos Santos"
+  },
+  {
+   "sobrenome": "Brescia",
+   "nome": "Amanda Tolomelli"
+  }
+ ],
+ "ano": "2022",
+ "titulo": "Empregabilidade e destino ocupacional de egressos da educação superior: uma revisão da literatura",
+ "periodico": "Revista de Educação PUC-Campinas",
+ "volume": "27",
+ "artigoNum": "e225382",
+ "doi": "10.24220/2318-0870v27e2022a5382",
+ "acesso": "aberto",
+ "secoes": [
+  "2.3",
+  "3.3"
+ ],
+ "porque": "Revisão de 30 estudos brasileiros sobre egressos. Aponta que bolsistas do ProUni têm urgência maior de inserção profissional. Conferir a lista de autores na página da revista.",
+ "origem": "sugestao",
+ "status": "sugerido",
+ "alerta": "Na sua planilha aparece como 'Sá & Alves (2019)', mas o link é deste artigo."
+}

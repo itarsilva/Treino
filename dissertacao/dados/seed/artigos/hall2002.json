@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Hall",
+   "nome": "Douglas T."
+  }
+ ],
+ "ano": "2002",
+ "titulo": "Careers in and out of organizations",
+ "editora": "Sage",
+ "secoes": [
+  "2.4"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

@@ -1,0 +1,17 @@
+{
+ "tipo": "tese",
+ "autores": [
+  {
+   "sobrenome": "Tudda",
+   "nome": "Luciane"
+  }
+ ],
+ "ano": "2011",
+ "titulo": "O currículo projetado e o currículo vivido no Curso de Graduação em Administração da PUC-SP",
+ "grau": "Tese de doutorado",
+ "instituicao": "Pontifícia Universidade Católica de São Paulo",
+ "alerta": "Não é citada no texto. Boa candidata para a seção 2.2 (curso de Administração na PUC-SP).",
+ "origem": "dissertacao",
+ "status": "citado",
+ "secoes": []
+}

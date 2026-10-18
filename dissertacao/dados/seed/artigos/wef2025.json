@@ -1,0 +1,21 @@
+{
+ "tipo": "relatorio",
+ "autores": [
+  {
+   "instituicao": "World Economic Forum"
+  }
+ ],
+ "ano": "2025",
+ "titulo": "The future of jobs report 2025",
+ "editora": "World Economic Forum",
+ "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/",
+ "acesso": "aberto",
+ "secoes": [
+  "2.4",
+  "2.5"
+ ],
+ "porque": "Atualiza o WEF (2020) e traz IA e big data como competências que mais crescem. Atende seu comentário 'falar sobre IA' na seção 2.4.",
+ "origem": "sugestao",
+ "status": "sugerido",
+ "alerta": "A planilha traz a edição 2023; prefira a de 2025."
+}

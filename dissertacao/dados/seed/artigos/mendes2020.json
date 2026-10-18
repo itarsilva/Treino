@@ -1,0 +1,21 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Mendes",
+   "nome": "Maíra Tavares"
+  }
+ ],
+ "ano": "2020",
+ "titulo": "Políticas de reconhecimento e de redistribuição na permanência estudantil",
+ "periodico": "Educação & Realidade",
+ "volume": "45",
+ "numero": "4",
+ "secoes": [
+  "1",
+  "3.1"
+ ],
+ "alerta": "Faltam número do artigo/páginas e DOI.",
+ "origem": "dissertacao",
+ "status": "citado"
+}

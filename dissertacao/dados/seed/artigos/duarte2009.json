@@ -1,0 +1,33 @@
+{
+ "tipo": "capitulo",
+ "autores": [
+  {
+   "sobrenome": "Duarte",
+   "nome": "Marco Éden"
+  }
+ ],
+ "ano": "2009",
+ "titulo": "O indivíduo e a organização: perspectivas de desenvolvimento",
+ "organizadores": [
+  {
+   "sobrenome": "Zanelli",
+   "nome": "José Carlos"
+  },
+  {
+   "sobrenome": "Borges-Andrade",
+   "nome": "Jairo Eduardo"
+  },
+  {
+   "sobrenome": "Bastos",
+   "nome": "Antonio Virgílio Bittencourt"
+  }
+ ],
+ "livro": "Psicologia, organizações e trabalho no Brasil",
+ "editora": "Artmed",
+ "secoes": [
+  "2.4"
+ ],
+ "status": "conferir",
+ "alerta": "Conferir autor e capítulo: o nome do autor parece incorreto. Faltam páginas.",
+ "origem": "dissertacao"
+}

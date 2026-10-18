@@ -1,0 +1,26 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Arthur",
+   "nome": "Michael B."
+  },
+  {
+   "sobrenome": "Hall",
+   "nome": "Douglas T."
+  },
+  {
+   "sobrenome": "Lawrence",
+   "nome": "Barbara S."
+  }
+ ],
+ "ano": "1989",
+ "titulo": "Handbook of career theory",
+ "editora": "Cambridge University Press",
+ "secoes": [
+  "2.4"
+ ],
+ "origem": "dissertacao",
+ "status": "citado",
+ "orgs": true
+}

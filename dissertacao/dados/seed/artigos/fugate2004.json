@@ -1,0 +1,29 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Fugate",
+   "nome": "Mel"
+  },
+  {
+   "sobrenome": "Kinicki",
+   "nome": "Angelo J."
+  },
+  {
+   "sobrenome": "Ashforth",
+   "nome": "Blake E."
+  }
+ ],
+ "ano": "2004",
+ "titulo": "Employability: a psycho-social construct, its dimensions, and applications",
+ "periodico": "Journal of Vocational Behavior",
+ "volume": "65",
+ "numero": "1",
+ "paginas": "14-38",
+ "doi": "10.1016/j.jvb.2003.10.005",
+ "secoes": [
+  "2.3"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

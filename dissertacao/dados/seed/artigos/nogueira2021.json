@@ -1,0 +1,24 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Nogueira",
+   "nome": "Maria Alice"
+  }
+ ],
+ "ano": "2021",
+ "titulo": "O capital cultural e a produção das desigualdades escolares contemporâneas",
+ "periodico": "Cadernos de Pesquisa",
+ "volume": "51",
+ "artigoNum": "e07468",
+ "doi": "10.1590/198053147468",
+ "acesso": "aberto",
+ "secoes": [
+  "3.2",
+  "3.3"
+ ],
+ "porque": "Responde ao seu comentário 'trazer pra hoje' sobre Bourdieu: revisão atual do conceito de capital cultural, pela organizadora dos Escritos de Educação.",
+ "origem": "sugestao",
+ "status": "sugerido",
+ "alerta": "Na sua planilha está como Nogueira (2017); o ano correto é 2021."
+}

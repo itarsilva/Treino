@@ -1,0 +1,23 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Borges",
+   "nome": ""
+  },
+  {
+   "sobrenome": "Yamamoto",
+   "nome": ""
+  }
+ ],
+ "ano": "",
+ "titulo": "Empregabilidade e sociedade disciplinar",
+ "periodico": "Organizações & Sociedade",
+ "url": "https://www.scielo.br/j/osoc/a/dcTf7vcqRVNf4zdp5DqKvKD/",
+ "secoes": [
+  "2.3"
+ ],
+ "alerta": "Leitura crítica (foucaultiana) da empregabilidade: bom contraponto a Yorke e Fugate. Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

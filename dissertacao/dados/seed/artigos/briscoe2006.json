@@ -1,0 +1,27 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Briscoe",
+   "nome": "Jon P."
+  },
+  {
+   "sobrenome": "Hall",
+   "nome": "Douglas T."
+  }
+ ],
+ "ano": "2006",
+ "titulo": "The interplay of boundaryless and protean careers: combinations and implications",
+ "periodico": "Journal of Vocational Behavior",
+ "volume": "69",
+ "numero": "1",
+ "paginas": "4-18",
+ "doi": "10.1016/j.jvb.2005.09.002",
+ "acesso": "capes",
+ "secoes": [
+  "2.4"
+ ],
+ "alerta": "O link da planilha é de um artigo brasileiro de 2011 (RAC), não deste. Decida qual dos dois quer usar.",
+ "origem": "planilha",
+ "status": "conferir"
+}

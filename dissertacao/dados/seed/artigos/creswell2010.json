@@ -1,0 +1,18 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Creswell",
+   "nome": "John W."
+  }
+ ],
+ "ano": "2010",
+ "titulo": "Projeto de pesquisa: métodos qualitativo, quantitativo e misto",
+ "edicao": "3",
+ "editora": "Artmed",
+ "secoes": [
+  "4.1"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

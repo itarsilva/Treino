@@ -1,0 +1,10 @@
+{
+ "numero": "2.1",
+ "titulo": "Ensino Superior no Brasil: expansão, privatização e acesso",
+ "status": "rascunho",
+ "pendencias": [
+  "Só tem a Tabela 1. Falta o texto sobre expansão e privatização.",
+  "Refazer a Tabela 1 com microdados do INEP: valores com ~ são estimativas e a série salta de 99 para ~900 cursos."
+ ],
+ "ordem": 2
+}

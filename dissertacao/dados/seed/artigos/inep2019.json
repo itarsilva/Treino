@@ -1,0 +1,15 @@
+{
+ "tipo": "relatorio",
+ "autores": [
+  {
+   "instituicao": "Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira"
+  }
+ ],
+ "ano": "2019",
+ "titulo": "Censo da Educação Superior 2019",
+ "url": "http://portal.inep.gov.br",
+ "alerta": "O texto cita INEP (2023) e Censo 2023, mas a referência é de 2019. Atualizar (ver INEP, 2024).",
+ "origem": "dissertacao",
+ "status": "citado",
+ "secoes": []
+}

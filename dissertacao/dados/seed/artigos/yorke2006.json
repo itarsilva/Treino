@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Yorke",
+   "nome": "Mantz"
+  }
+ ],
+ "ano": "2006",
+ "titulo": "Employability in higher education: what it is, what it is not",
+ "editora": "Higher Education Academy",
+ "secoes": [
+  "2.3"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

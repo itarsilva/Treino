@@ -1,0 +1,25 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Ikuta",
+   "nome": "Camila Yuri Santana"
+  },
+  {
+   "sobrenome": "Barreyro",
+   "nome": "Gladys Beatriz"
+  }
+ ],
+ "ano": "2025",
+ "titulo": "Análise da trajetória do Programa Universidade para Todos (ProUni) nos governos Temer e Bolsonaro (2016-2022)",
+ "periodico": "Educação e Pesquisa",
+ "volume": "51",
+ "doi": "10.1590/S1678-4634202551286690por",
+ "acesso": "aberto",
+ "secoes": [
+  "3"
+ ],
+ "porque": "Atualiza a história do ProUni até 2022 (mudança de público-alvo em 2021). O Cap. 3 hoje para em 2009-2014.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

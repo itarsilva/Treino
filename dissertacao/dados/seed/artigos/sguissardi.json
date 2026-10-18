@@ -1,0 +1,22 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Sguissardi",
+   "nome": "Valdemar"
+  },
+  {
+   "sobrenome": "Silva Júnior",
+   "nome": "João dos Reis"
+  }
+ ],
+ "ano": "",
+ "titulo": "Universidade pública brasileira no século XXI",
+ "url": "https://www.redalyc.org/pdf/3845/384539805007.pdf",
+ "secoes": [
+  "2.1"
+ ],
+ "alerta": "Faltam ano e periódico.",
+ "origem": "planilha",
+ "status": "conferir"
+}

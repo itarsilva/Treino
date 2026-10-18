@@ -1,0 +1,19 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Faguer",
+   "nome": ""
+  }
+ ],
+ "ano": "",
+ "titulo": "Sociologia da educação, reprodução das desigualdades e novas formas de dominação",
+ "periodico": "Educação e Pesquisa",
+ "url": "https://www.scielo.br/j/ep/a/MDjSZr3WqdJN7YSnGg5PSqz/",
+ "secoes": [
+  "3.2"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

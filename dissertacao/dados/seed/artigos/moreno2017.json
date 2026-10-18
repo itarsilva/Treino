@@ -1,0 +1,18 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Moreno",
+   "nome": "J."
+  }
+ ],
+ "ano": "2017",
+ "titulo": "Empregabilidade e o mercado de trabalho: desenvolvimento de competências para o sucesso profissional",
+ "editora": "Editora Acadêmica",
+ "secoes": [
+  "2.3"
+ ],
+ "status": "conferir",
+ "alerta": "Referência incompleta e não localizada (nome do autor e editora). Confirmar a fonte ou trocar por Vieira et al. (2022).",
+ "origem": "dissertacao"
+}

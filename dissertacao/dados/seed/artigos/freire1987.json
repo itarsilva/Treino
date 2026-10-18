@@ -1,0 +1,21 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Freire",
+   "nome": "Paulo"
+  }
+ ],
+ "ano": "1987",
+ "titulo": "Pedagogia do oprimido",
+ "edicao": "17",
+ "editora": "Paz e Terra",
+ "secoes": [
+  "3.2",
+  "3.3"
+ ],
+ "acesso": "biblioteca",
+ "alerta": "Cite o livro, não o PDF do link. A epígrafe da dissertação é de Freire, mas parece vir de 'Educação como prática da liberdade', não da Pedagogia do oprimido: confirmar a fonte e incluir nas referências.",
+ "origem": "planilha",
+ "status": "conferir"
+}

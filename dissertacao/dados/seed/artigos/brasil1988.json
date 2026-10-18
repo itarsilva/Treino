@@ -1,0 +1,17 @@
+{
+ "tipo": "lei",
+ "autores": [
+  {
+   "instituicao": "Brasil"
+  }
+ ],
+ "ano": "1988",
+ "titulo": "Constituição da República Federativa do Brasil de 1988",
+ "editora": "Presidência da República",
+ "url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm",
+ "secoes": [
+  "1"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

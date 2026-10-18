@@ -1,0 +1,16 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "João Paulo II",
+   "nome": ""
+  }
+ ],
+ "ano": "1981",
+ "titulo": "Laborem exercens: sobre o trabalho humano",
+ "editora": "Paulinas",
+ "alerta": "Está nas referências, mas não é citada no texto. Citar ou remover.",
+ "origem": "dissertacao",
+ "status": "citado",
+ "secoes": []
+}

@@ -1,0 +1,48 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Polli",
+   "nome": "Gislei Mocelin"
+  },
+  {
+   "sobrenome": "Martinelli",
+   "nome": "Jamille"
+  },
+  {
+   "sobrenome": "Zugman",
+   "nome": "Ari"
+  },
+  {
+   "sobrenome": "Oliveira",
+   "nome": "Fabio"
+  },
+  {
+   "sobrenome": "Doi",
+   "nome": "Francislaine Wiczneski"
+  },
+  {
+   "sobrenome": "Dias",
+   "nome": "Maria Sara de Lima"
+  },
+  {
+   "sobrenome": "Tavares",
+   "nome": "Juliana"
+  }
+ ],
+ "ano": "2021",
+ "titulo": "Políticas públicas e mobilidade social: egressos do Programa Universidade para Todos (PROUNI)",
+ "periodico": "Psicologia da Educação",
+ "numero": "53",
+ "paginas": "86-96",
+ "doi": "10.23925/2175-3520.2021i53p86-96",
+ "acesso": "aberto",
+ "secoes": [
+  "3.3",
+  "5.3",
+  "5.4"
+ ],
+ "porque": "Questionário com 212 egressos do ProUni sobre ascensão profissional, econômica e pessoal. É da PUC-SP e dialoga direto com seu Cap. 5.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

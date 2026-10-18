@@ -1,0 +1,24 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Caseiro",
+   "nome": "Luiz"
+  },
+  {
+   "sobrenome": "Maciente",
+   "nome": "Aguinaldo"
+  }
+ ],
+ "ano": "2019",
+ "titulo": "Estratificação horizontal e inserção no mercado formal",
+ "periodico": "Tempo Social",
+ "url": "https://revistas.usp.br/ts/article/view/200986",
+ "secoes": [
+  "3.2",
+  "3.3"
+ ],
+ "alerta": "Um dos mais úteis da lista: mostra que o tipo de curso e de instituição pesa na inserção formal, o que é o centro do seu argumento. Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

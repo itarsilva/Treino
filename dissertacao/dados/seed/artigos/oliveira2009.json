@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Oliveira",
+   "nome": ""
+  }
+ ],
+ "ano": "2009",
+ "titulo": "(referência a completar)",
+ "secoes": [
+  "3.2"
+ ],
+ "status": "faltando",
+ "alerta": "Citado na seção 3.2, sem referência na lista.",
+ "origem": "dissertacao"
+}

@@ -1,0 +1,24 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "DeFillippi",
+   "nome": "Robert J."
+  },
+  {
+   "sobrenome": "Arthur",
+   "nome": "Michael B."
+  }
+ ],
+ "ano": "1994",
+ "titulo": "The boundaryless career: a competency-based perspective",
+ "periodico": "Journal of Organizational Behavior",
+ "volume": "15",
+ "numero": "4",
+ "paginas": "307-324",
+ "secoes": [
+  "2.4"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

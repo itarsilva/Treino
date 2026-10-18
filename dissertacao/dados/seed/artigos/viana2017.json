@@ -1,0 +1,22 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Viana",
+   "nome": ""
+  },
+  {
+   "sobrenome": "Diniz",
+   "nome": ""
+  }
+ ],
+ "ano": "2017",
+ "titulo": "Os jovens das camadas populares na universidade pública: acesso e permanência",
+ "url": "https://www.scielo.br/j/rk/a/TJkmTvBNS5tr3TPXQtvbRMs/",
+ "secoes": [
+  "3.1"
+ ],
+ "alerta": "Trata de universidade pública; o ProUni é em IES privada. Use para contraste. Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

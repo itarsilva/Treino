@@ -1,0 +1,20 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Pinto",
+   "nome": ""
+  }
+ ],
+ "ano": "2022",
+ "titulo": "O perfil do egresso dos cursos de Administração no Brasil",
+ "periodico": "RAM: Revista de Administração Mackenzie",
+ "secoes": [
+  "2.2",
+  "2.5"
+ ],
+ "url": "https://humanas.blog.scielo.org/blog/2022/12/05/o-perfil-do-egresso-dos-cursos-de-administracao-no-brasil/",
+ "alerta": "O link é do blog do SciELO, não do artigo. Achar o artigo na RAM. Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

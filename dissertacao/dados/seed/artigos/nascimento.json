@@ -1,0 +1,20 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Nascimento",
+   "nome": ""
+  }
+ ],
+ "ano": "",
+ "titulo": "Panorama de oportunidades para os egressos do ensino superior no Brasil",
+ "periodico": "Ensaio: Avaliação e Políticas Públicas em Educação",
+ "url": "https://www.scielo.br/j/ensaio/a/GkNt9yjtrjWXgYFCzQpVTKk",
+ "secoes": [
+  "2.3",
+  "3.3"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

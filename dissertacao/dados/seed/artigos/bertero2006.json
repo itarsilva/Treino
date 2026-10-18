@@ -1,0 +1,19 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Bertero",
+   "nome": "Carlos Osmar"
+  }
+ ],
+ "ano": "2006",
+ "titulo": "Administração no Brasil: potencialidades, problemas e perspectivas",
+ "periodico": "Revista de Administração de Empresas",
+ "url": "https://www.scielo.br/j/rae/a/5qd9dc8FMbrM4NQcymtPcwB/",
+ "secoes": [
+  "2.2"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

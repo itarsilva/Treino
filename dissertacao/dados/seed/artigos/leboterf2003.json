@@ -1,0 +1,18 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Le Boterf",
+   "nome": "Guy"
+  }
+ ],
+ "ano": "2003",
+ "titulo": "Desenvolvendo a competência dos profissionais",
+ "edicao": "3",
+ "editora": "Artmed",
+ "secoes": [
+  "2.5"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

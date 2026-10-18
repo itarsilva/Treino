@@ -1,0 +1,19 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Chaves",
+   "nome": "Vera Lúcia Jacob"
+  }
+ ],
+ "ano": "2010",
+ "titulo": "Políticas de expansão da educação superior (1995-2010)",
+ "url": "https://www.scielo.br/j/rbedu/a/QKyJmCvwkGxsJqg7vSCC4xk/",
+ "secoes": [
+  "2.1",
+  "3"
+ ],
+ "alerta": "O título da planilha parece resumido e varia entre as linhas. Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

@@ -1,0 +1,30 @@
+{
+ "tipo": "capitulo",
+ "autores": [
+  {
+   "sobrenome": "Bourdieu",
+   "nome": "Pierre"
+  }
+ ],
+ "ano": "1998",
+ "titulo": "Os três estados do capital cultural",
+ "organizadores": [
+  {
+   "sobrenome": "Nogueira",
+   "nome": "Maria Alice"
+  },
+  {
+   "sobrenome": "Catani",
+   "nome": "Afrânio"
+  }
+ ],
+ "livro": "Escritos de educação",
+ "editora": "Vozes",
+ "secoes": [
+  "3.2",
+  "3.3"
+ ],
+ "status": "lendo",
+ "origem": "planilha",
+ "alerta": "Marcado como lido na planilha: registre o fichamento. Não cite o link do Scribd; cite o livro (o mesmo de 'A escola conservadora'). Faltam as páginas."
+}

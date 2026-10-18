@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Schein",
+   "nome": "Edgar H."
+  }
+ ],
+ "ano": "1978",
+ "titulo": "Career dynamics: matching individual and organizational needs",
+ "editora": "Addison-Wesley",
+ "secoes": [
+  "2.4"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

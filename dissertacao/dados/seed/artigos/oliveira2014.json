@@ -1,0 +1,18 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Oliveira",
+   "nome": ""
+  }
+ ],
+ "ano": "2014",
+ "titulo": "Estilos reflexivos e atitudes de carreira proteana: versão brasileira",
+ "url": "https://pepsic.bvsalud.org/scielo.php?script=sci_arttext&pid=S1984-66572014000100009",
+ "secoes": [
+  "2.4"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

@@ -1,0 +1,22 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Nicolini",
+   "nome": "Alexandre"
+  }
+ ],
+ "ano": "2003",
+ "titulo": "Qual será o futuro das fábricas de administradores?",
+ "periodico": "Revista de Administração de Empresas",
+ "volume": "43",
+ "numero": "2",
+ "paginas": "44-54",
+ "secoes": [
+  "2.1",
+  "2.2"
+ ],
+ "origem": "dissertacao",
+ "status": "citado",
+ "url": "http://www.spell.org.br/documentos/ver/11173"
+}

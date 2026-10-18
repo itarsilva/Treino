@@ -1,0 +1,19 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Araújo",
+   "nome": ""
+  }
+ ],
+ "ano": "2017",
+ "titulo": "Democratização do acesso à educação superior no Brasil",
+ "periodico": "Revista Diálogo Educacional",
+ "url": "http://educa.fcc.org.br/scielo.php?script=sci_arttext&pid=S1981-416x2017000401241",
+ "secoes": [
+  "3.1"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

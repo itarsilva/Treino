@@ -1,0 +1,30 @@
+{
+ "tipo": "capitulo",
+ "autores": [
+  {
+   "sobrenome": "Savickas",
+   "nome": "Mark L."
+  }
+ ],
+ "ano": "2013",
+ "titulo": "Career construction theory and practice",
+ "organizadores": [
+  {
+   "sobrenome": "Lent",
+   "nome": "Robert W."
+  },
+  {
+   "sobrenome": "Brown",
+   "nome": "Steven D."
+  }
+ ],
+ "livro": "Career development and counseling: putting theory and research to work",
+ "edicao": "2",
+ "editora": "Wiley",
+ "paginas": "147-183",
+ "secoes": [
+  "2.4"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

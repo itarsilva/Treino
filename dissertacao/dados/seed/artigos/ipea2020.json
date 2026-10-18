@@ -1,0 +1,15 @@
+{
+ "tipo": "relatorio",
+ "autores": [
+  {
+   "instituicao": "Instituto de Pesquisa Econômica Aplicada"
+  }
+ ],
+ "ano": "2020",
+ "titulo": "Mercado de trabalho e empregabilidade no Brasil",
+ "editora": "IPEA",
+ "status": "conferir",
+ "alerta": "Não encontrei publicação do IPEA com este título. Localizar o documento original ou remover.",
+ "origem": "dissertacao",
+ "secoes": []
+}

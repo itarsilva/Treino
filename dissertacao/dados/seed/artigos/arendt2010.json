@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Arendt",
+   "nome": "Hannah"
+  }
+ ],
+ "ano": "2010",
+ "titulo": "A condição humana",
+ "edicao": "12",
+ "editora": "Forense Universitária",
+ "alerta": "Está nas referências, mas não é citada no texto. Citar ou remover.",
+ "origem": "dissertacao",
+ "status": "citado",
+ "secoes": []
+}

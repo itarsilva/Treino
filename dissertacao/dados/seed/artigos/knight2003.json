@@ -1,0 +1,21 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Knight",
+   "nome": "Peter"
+  },
+  {
+   "sobrenome": "Yorke",
+   "nome": "Mantz"
+  }
+ ],
+ "ano": "2003",
+ "titulo": "Assessment, learning and employability",
+ "editora": "Open University Press",
+ "secoes": [
+  "2.3"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

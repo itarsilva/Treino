@@ -1,0 +1,17 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Dutra",
+   "nome": "Joel Souza"
+  }
+ ],
+ "ano": "2004",
+ "titulo": "Competências: conceitos e instrumentos para a gestão de pessoas na empresa moderna",
+ "editora": "Atlas",
+ "secoes": [
+  "2.5"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

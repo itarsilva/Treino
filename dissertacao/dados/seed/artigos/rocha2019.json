@@ -1,0 +1,18 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Rocha",
+   "nome": "Vera"
+  }
+ ],
+ "ano": "2019",
+ "titulo": "Ensino superior no Brasil: uma análise sobre a inclusão de alunos bolsistas",
+ "periodico": "Revista Brasileira de Educação",
+ "secoes": [
+  "3.1"
+ ],
+ "status": "conferir",
+ "alerta": "Faltam volume, número, páginas e DOI. Não localizei o artigo: confirmar se existe.",
+ "origem": "dissertacao"
+}

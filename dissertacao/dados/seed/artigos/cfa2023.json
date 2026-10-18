@@ -1,0 +1,20 @@
+{
+ "tipo": "relatorio",
+ "autores": [
+  {
+   "instituicao": "Conselho Federal de Administração"
+  }
+ ],
+ "ano": "2023",
+ "titulo": "Pesquisa nacional Sistema CFA/CRAs: perfil, formação, atuação e oportunidades de trabalho do administrador (7. ed.)",
+ "editora": "CFA",
+ "url": "https://cfa.org.br/wp-content/uploads/2025/02/zPesquisa_Perfil_E01_A4_16122024.pdf",
+ "acesso": "aberto",
+ "secoes": [
+  "2.2",
+  "2.5"
+ ],
+ "porque": "Dados oficiais e recentes (mais de 14 mil respondentes) sobre perfil e mercado do administrador. Base para a seção 2.2, hoje vazia.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

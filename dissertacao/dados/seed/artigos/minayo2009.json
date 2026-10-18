@@ -1,0 +1,19 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Minayo",
+   "nome": "Maria Cecília de Souza"
+  }
+ ],
+ "ano": "2009",
+ "titulo": "Pesquisa social: teoria, método e criatividade",
+ "edicao": "28",
+ "editora": "Vozes",
+ "secoes": [
+  "4.1"
+ ],
+ "origem": "dissertacao",
+ "status": "citado",
+ "orgs": true
+}

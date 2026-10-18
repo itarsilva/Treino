@@ -1,0 +1,33 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Vieira",
+   "nome": "André de Holanda Padilha"
+  },
+  {
+   "sobrenome": "Honorato",
+   "nome": "Gabriela"
+  },
+  {
+   "sobrenome": "Rodrigues",
+   "nome": "Leonardo"
+  }
+ ],
+ "ano": "2022",
+ "titulo": "Educação superior e resultados no mercado de trabalho no Brasil: uma revisão da literatura e dos dados disponíveis",
+ "periodico": "Revista Brasileira de Sociologia",
+ "volume": "10",
+ "numero": "25",
+ "paginas": "193-218",
+ "doi": "10.20336/rbs.879",
+ "acesso": "aberto",
+ "secoes": [
+  "2.3",
+  "3.3",
+  "4.2"
+ ],
+ "porque": "Mapeia as bases de dados nacionais sobre inserção de egressos (RAIS, PNAD, Censo). Ajuda a sustentar a lacuna e a escolher dados para o Cap. 4.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

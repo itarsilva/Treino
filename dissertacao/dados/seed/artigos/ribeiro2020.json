@@ -1,0 +1,23 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Ribeiro",
+   "nome": "Carlos Antonio Costa"
+  },
+  {
+   "sobrenome": "Carvalhaes",
+   "nome": "Flavio"
+  }
+ ],
+ "ano": "2020",
+ "titulo": "Educação, mobilidade social e desigualdades: diálogo com os clássicos",
+ "url": "https://revistas.ufrj.br/index.php/rce/article/view/62806",
+ "secoes": [
+  "3.2",
+  "3.3"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

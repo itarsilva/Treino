@@ -1,0 +1,25 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Collins",
+   "nome": "Patricia Hill"
+  },
+  {
+   "sobrenome": "Bilge",
+   "nome": "Sirma"
+  }
+ ],
+ "ano": "2021",
+ "titulo": "Interseccionalidade",
+ "tradutor": "Rane Souza",
+ "editora": "Boitempo",
+ "acesso": "biblioteca",
+ "secoes": [
+  "3.2",
+  "3.3"
+ ],
+ "porque": "Você anotou 'colocar o termo interseccionalidade' no sumário. Obra de referência para articular classe, raça e gênero na trajetória dos bolsistas.",
+ "origem": "sugestao",
+ "status": "sugerido"
+}

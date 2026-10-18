@@ -1,0 +1,23 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Kilimnik",
+   "nome": "Zélia Miranda"
+  },
+  {
+   "sobrenome": "Castilho",
+   "nome": "Ione Vasques"
+  }
+ ],
+ "ano": "2006",
+ "titulo": "Flexibilização e empregabilidade individual: proposição de um modelo",
+ "periodico": "Cadernos EBAPE.BR",
+ "url": "http://www.scielo.br/j/cebape/a/9VTbVsJwKMyPGF8hKJwQSTM/",
+ "secoes": [
+  "2.3"
+ ],
+ "alerta": "Veio da sua planilha. Dados incompletos: conferir autores, ano e periódico no link.",
+ "origem": "planilha",
+ "status": "conferir"
+}

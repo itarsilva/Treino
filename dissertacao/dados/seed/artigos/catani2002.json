@@ -1,0 +1,21 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Catani",
+   "nome": "Afrânio Mendes"
+  },
+  {
+   "sobrenome": "Oliveira",
+   "nome": "João Ferreira de"
+  }
+ ],
+ "ano": "2002",
+ "titulo": "Educação superior no Brasil: reestruturação e metamorfose das universidades públicas",
+ "editora": "Vozes",
+ "secoes": [
+  "3.3"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

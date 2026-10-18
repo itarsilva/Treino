@@ -1,0 +1,18 @@
+{
+ "tipo": "livro",
+ "autores": [
+  {
+   "sobrenome": "Severino",
+   "nome": "Antônio Joaquim"
+  }
+ ],
+ "ano": "2007",
+ "titulo": "Metodologia do trabalho científico",
+ "edicao": "23",
+ "editora": "Cortez",
+ "secoes": [
+  "4.1"
+ ],
+ "origem": "dissertacao",
+ "status": "citado"
+}

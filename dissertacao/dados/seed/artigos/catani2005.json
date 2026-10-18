@@ -1,0 +1,23 @@
+{
+ "tipo": "artigo",
+ "autores": [
+  {
+   "sobrenome": "Catani",
+   "nome": "Afrânio Mendes"
+  },
+  {
+   "sobrenome": "Gilioli",
+   "nome": "Renato de Sousa Porto"
+  }
+ ],
+ "ano": "2005",
+ "titulo": "O ProUni na encruzilhada: entre a cidadania e a privatização",
+ "periodico": "Linhas Críticas",
+ "url": "https://www.researchgate.net/publication/279494199",
+ "secoes": [
+  "3"
+ ],
+ "alerta": "Faltam volume e páginas.",
+ "origem": "planilha",
+ "status": "conferir"
+}
