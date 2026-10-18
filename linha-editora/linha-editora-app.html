@@ -311,6 +311,7 @@ const S = {
     fields: [
       { k: "nome", l: "Nome", req: 1, full: 1 }, { k: "email", l: "E-mail", t: "email" }, { k: "telefone", l: "Telefone" },
       { k: "cidade", l: "Cidade/UF" }, { k: "agente", l: "Agente literário" },
+      { k: "qtdTitulos", l: "Quantidade de títulos", t: "int", hint: "Quantos títulos o autor tem com a editora (contratados ou publicados)" },
       { k: "contrato", l: "Nº do contrato" }, { k: "royalty", l: "Royalties (% s/ preço de capa)", t: "num", hint: "Referência de mercado: 8% a 12%" },
       { k: "inicio", l: "Início do contrato", t: "date" }, { k: "fim", l: "Fim do contrato", t: "date" },
       { k: "adiantamento", l: "Adiantamento pago (R$)", t: "money" }, { k: "redes", l: "Redes sociais" },
@@ -318,7 +319,7 @@ const S = {
     ],
     cols: [
       { l: "Autor", v: r => `<b>${esc(r.nome)}</b>${r.exemplo ? '<span class="ex">exemplo</span>' : ""}<div style="color:var(--muted);font-size:12px">${esc(r.email || "")}</div>`, cls: "txt" },
-      { l: "Títulos", v: r => D.titulos.filter(t => t.autor === r.nome).length, cls: "num" },
+      { l: "Títulos", v: r => { const noCat = D.titulos.filter(t => t.autor === r.nome).length; if (r.qtdTitulos === "" || r.qtdTitulos == null) return noCat; const q = num(r.qtdTitulos); return q === noCat ? nf.format(q) : `${nf.format(q)}<div style="color:var(--muted);font-size:12px">${noCat} no catálogo</div>`; }, cls: "num" },
       { l: "Royalties", v: r => r.royalty ? r.royalty + "%" : "—", cls: "num" },
       { l: "Adiantamento", v: r => brl(r.adiantamento), cls: "num" },
       { l: "Gerado", v: r => brl(royaltiesGerados(r)), cls: "num" },
