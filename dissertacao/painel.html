@@ -332,7 +332,7 @@ const S = {
   artigos: new Map(), fichas: new Map(), secoes: [],
   norm: store.get("norm", "apa"), tab: "painel",
   fStatus: store.get("fStatus", ""), fSec: "", q: "",
-  current: null, pdf: null, pdfText: [], mode: "pag", zoom: 1.2,
+  current: null, pdf: null, pdfText: [], pageOff: 0, mode: "pag", zoom: 1.2,
   loaded: { artigos: false, secoes: false },
 };
 
@@ -355,7 +355,8 @@ function apaAuthors(list) {
   return joinList(xs, "&");
 }
 function apaEditors(list) {
-  return joinList((list || []).map(a => isInst(a) ? a.instituicao : ((a.nome ? initials(a.nome) + " " : "") + a.sobrenome)), "&");
+  const xs = (list || []).map(a => isInst(a) ? a.instituicao : ((a.nome ? initials(a.nome) + " " : "") + a.sobrenome));
+  return xs.length === 2 ? xs[0] + " & " + xs[1] : joinList(xs, "&");
 }
 function abntName(a) { return isInst(a) ? a.instituicao.toUpperCase() : (a.sobrenome || "").toUpperCase() + (a.nome ? ", " + a.nome : ""); }
 const abntAuthors = list => (list || []).map(abntName).join("; ");
@@ -728,6 +729,8 @@ async function showPdf(buf) {
     const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf), isEvalSupported: false }).promise;
     if (S.current !== forId) return;
     S.pdf = pdf; S.pdfText = new Array(pdf.numPages).fill(null);
+    const range = /^(\d+)\s*[-–]\s*(\d+)$/.exec((S.artigos.get(forId)?.paginas || "").trim());
+    S.pageOff = range && (+range[2] - +range[1] + 1) === pdf.numPages ? +range[1] - 1 : 0;
     setReaderTools(true); paintPdf();
     extractText(pdf, forId);
   } catch { doc.innerHTML = `<p class="empty">Não consegui abrir este PDF. Ele pode estar protegido ou corrompido.</p>`; }
@@ -751,7 +754,7 @@ function paintPdf() {
   if (S.mode === "txt") {
     for (let i = 1; i <= pdf.numPages; i++) {
       const d = document.createElement("div"); d.className = "txtpage"; d.dataset.page = i;
-      d.innerHTML = `<h4>PÁGINA ${i} DO PDF</h4><div class="body"></div>`;
+      d.innerHTML = `<h4>${S.pageOff ? "P. " + (i + S.pageOff) + " DA REVISTA · " : ""}PÁGINA ${i} DO PDF</h4><div class="body"></div>`;
       d.querySelector(".body").textContent = S.pdfText[i - 1] ?? "Extraindo texto…";
       doc.appendChild(d);
     }
@@ -760,7 +763,7 @@ function paintPdf() {
   pageObs = new IntersectionObserver(ents => ents.forEach(en => { if (en.isIntersecting && !en.target.dataset.done) { en.target.dataset.done = "1"; renderPage(en.target); } }), { root: doc, rootMargin: "600px 0px" });
   for (let i = 1; i <= pdf.numPages; i++) {
     const c = document.createElement("canvas"); c.dataset.page = i; c.width = 600; c.height = 800; c.setAttribute("aria-label", "Página " + i);
-    const lbl = document.createElement("div"); lbl.className = "pg-label"; lbl.textContent = "p. " + i + " do PDF";
+    const lbl = document.createElement("div"); lbl.className = "pg-label"; lbl.textContent = (S.pageOff ? "p. " + (i + S.pageOff) + " da revista · " : "") + "p. " + i + " do PDF";
     doc.append(c, lbl); pageObs.observe(c);
   }
 }
@@ -792,8 +795,8 @@ document.addEventListener("selectionchange", () => {
     floatBtn.addEventListener("mousedown", e => e.preventDefault());
     floatBtn.addEventListener("click", () => { addQuote(floatBtn.dataset.text, floatBtn.dataset.page); document.getSelection().removeAllRanges(); floatBtn.hidden = true; }); }
   if (!floatBtn.isConnected) doc.appendChild(floatBtn);
-  floatBtn.dataset.text = text.replace(/\s*\n\s*/g, " "); floatBtn.dataset.page = host.dataset.page;
-  floatBtn.textContent = "+ Citação (p. " + host.dataset.page + ")";
+  floatBtn.dataset.text = text.replace(/\s*\n\s*/g, " "); floatBtn.dataset.page = String(+host.dataset.page + S.pageOff);
+  floatBtn.textContent = "+ Citação (p. " + floatBtn.dataset.page + ")";
   floatBtn.style.top = (r.top - dr.top + doc.scrollTop - 38) + "px"; floatBtn.style.left = Math.max(8, r.left - dr.left) + "px"; floatBtn.hidden = false;
 });
 
@@ -820,7 +823,7 @@ function renderFicha() {
     <label class="f"><span>Conceitos-chave <em class="note">separe por vírgula</em></span><input type="text" data-k="conceitos" value="${esc(f.conceitos)}"></label>
     <div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px"><span class="eyebrow">Citações diretas</span><button class="btn sm" type="button" id="addQ">+ Citação</button></div>
       <div class="quotes" id="quotes"></div>
-      <p class="note" style="margin-top:6px">${S.pdf ? "Dica: no modo Texto, selecione um trecho do PDF e clique em “+ Citação”. A página entra sozinha." : "Cole o trecho e informe a página. A citação já sai formatada para colar na dissertação."}</p></div>
+      <p class="note" style="margin-top:6px">${S.pdf ? (S.pageOff ? "Dica: no modo Texto, selecione um trecho e clique em “+ Citação”. A página da revista entra sozinha." : "Dica: no modo Texto, selecione um trecho e clique em “+ Citação”. Entra a página do PDF: troque pela página da revista se forem diferentes.") : "Cole o trecho e informe a página. A citação já sai formatada para colar na dissertação."}</p></div>
     <label class="f"><span>Paráfrase / resumo com suas palavras</span><textarea data-k="resumo" rows="4">${esc(f.resumo)}</textarea></label>
     <label class="f"><span>Análise crítica <em class="note">limites, diálogo com Bourdieu, com seus dados</em></span><textarea data-k="analise" rows="3">${esc(f.analise)}</textarea></label>
     <div><span class="eyebrow">Usar nas seções</span><div class="secbox" id="fSecs" style="margin-top:6px">${secs.map(n => `<label title="${esc(secTitle(n))}"><input type="checkbox" value="${n}" ${(a.secoes || []).includes(n) ? "checked" : ""}>${n}</label>`).join("")}</div></div>
@@ -896,7 +899,7 @@ async function preFichar() {
   const a = S.artigos.get(S.current); if (!a || !S.sample) return;
   let corpus = "";
   if (S.pdf) {
-    const pages = S.pdfText.map((t, i) => t ? `[p. ${i + 1}]\n${t}` : "").filter(Boolean);
+    const pages = S.pdfText.map((t, i) => t ? `[p. ${i + 1 + S.pageOff}]\n${t}` : "").filter(Boolean);
     corpus = pages.join("\n\n").slice(0, 120000);
     if (!corpus) { $("#aiMsg").textContent = "Ainda extraindo o texto do PDF. Tente de novo em alguns segundos."; return; }
   } else if ((draft.resumo || "").trim().length > 200) corpus = draft.resumo;
