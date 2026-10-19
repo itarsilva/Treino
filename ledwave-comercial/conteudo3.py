@@ -34,7 +34,7 @@ DIFERENCIAIS = [
     ("Estoque", "Temos estoque próprio: menos espera entre a assinatura e a tela acesa.", "Prazo médio de entrega", "Confirmar prazos"),
     ("Acervo", "Um acervo amplo de modelos e formatos para cada aplicação: indoor, outdoor, curvo, transparente, piso.", "Catálogo de produtos / acervo de locação", "Confirmar significado"),
     ("Tempo de vida", "Mais de 15 anos de mercado e painéis feitos para durar.", "Ano de fundação + vida útil dos painéis", "Confirmar significado"),
-    ("No hall", "[Descrever com o comercial]", "[Definir]", "Confirmar significado"),
+    ("Know-how", "Mais de 15 anos fabricando, instalando e operando painéis de LED: sabemos o que funciona em cada tipo de espaço, do PDV ao maior painel da América Latina.", "Histórico de projetos + Boulevard.Live", "OK"),
     ("Prova social", "Marcas como Nordestão, Rosewood, Beto Carrero World e Museu do Amanhã escolheram a LedWave.", "Cases e depoimentos", "OK"),
     ("Única fábrica", "Fabricamos no Brasil, com linha de produção própria em Goiânia.", "Confirmar se é a única fábrica do Brasil antes de dizer 'única'", "Confirmar"),
     ("Certificações", "Produtos certificados e processos dentro das normas.", "Lista de certificações", "Confirmar lista"),
@@ -77,7 +77,7 @@ CASES = [
     ("Animalia", "Hotéis, Parques, Clubes e Piscinas", "Entretenimento; Experiência", "Confirmar segmento e detalhar"),
     ("Rosewood", "Hotéis, Parques, Clubes e Piscinas", "Status; Experiência; Retrofit / arquitetura", "Detalhar"),
     ("Beto Carrero World", "Hotéis, Parques, Clubes e Piscinas", "Entretenimento; Experiência", "Detalhar"),
-    ("Cesstto", "[Confirmar nome e segmento]", "", "Confirmar"),
+    ("Cestto", "[Confirmar segmento]", "", "Confirmar"),
     ("Museu do Amanhã", "Poder Público e Mobiliário Urbano", "Experiência; Retrofit / arquitetura", "Detalhar"),
 ]
 
