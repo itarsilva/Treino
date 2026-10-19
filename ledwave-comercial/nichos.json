@@ -24,6 +24,26 @@
    "O que mais atrasa ou encarece uma troca de vitrine? Já perderam uma promoção por não dar tempo de imprimir?",
    "Se a vitrine fica a mesma por semanas, o que acontece com o fluxo de quem passa todo dia na frente? Quanto isso pesa na venda da coleção nova?",
    "Se você pudesse trocar a vitrine de todas as lojas pelo celular, em minutos, o que faria diferente na próxima campanha?"
+  ],
+  "propositos": [
+   "Branding",
+   "Experiência",
+   "Trade"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Preço",
+    "Vamos comparar o custo total: impressos, locações e vendas perdidas de um ano contra o investimento no painel, que fica com você por muitos anos."
+   ],
+   [
+    "Gestão de conteúdo",
+    "Você não fica sozinho: entregamos o software, o treinamento e, se quiser, a produção e a programação do conteúdo."
+   ],
+   [
+    "Percepção de valor",
+    "O valor não está na tela, está no que ela gera: receita de mídia, economia de impressos, fluxo e marca. Vamos colocar esses números lado a lado."
+   ]
   ]
  },
  {
@@ -51,6 +71,28 @@
    "Quanto tempo leva para uma oferta sair do comercial e chegar à gôndola? O fornecedor pede comprovação de exposição?",
    "Quanto de verba de trade vira papel que ninguém mede? Quanto você deixa de faturar por não vender mídia dentro da loja?",
    "Se as telas fossem pagas pela indústria e ainda gerassem receita, quantas lojas você colocaria no piloto?"
+  ],
+  "propositos": [
+   "Retail media",
+   "Trade",
+   "Eficiência operacional"
+  ],
+  "cases": [
+   "Nordestão"
+  ],
+  "objecoes": [
+   [
+    "Gestão de conteúdo",
+    "Você não fica sozinho: entregamos o software, o treinamento e, se quiser, a produção e a programação do conteúdo."
+   ],
+   [
+    "Aprovação por financeiro",
+    "Preparo um resumo de uma página com investimento, retorno e prazo, e apresento junto com você para o financeiro."
+   ],
+   [
+    "Momento financeiro",
+    "Podemos começar por um piloto ou pela locação, que vira despesa mensal em vez de investimento, e crescer por fases."
+   ]
   ]
  },
  {
@@ -78,6 +120,26 @@
    "Como vocês se diferenciam das farmácias concorrentes na mesma rua? Campanhas sazonais chegam a tempo em todas as lojas?",
    "Se o cliente escolhe a farmácia mais visível, quanto fluxo vocês perdem por ter fachada igual às outras? E quanto a indústria investiria se tivesse onde?",
    "Uma rede de telas que se paga com a indústria e destaca a sua fachada ajudaria na meta deste ano?"
+  ],
+  "propositos": [
+   "Retail media",
+   "Trade",
+   "Branding"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Política comercial",
+    "Explique as condições com transparência e leve a proposta já dentro da alçada aprovada, com alternativas."
+   ],
+   [
+    "Gestão de conteúdo",
+    "Você não fica sozinho: entregamos o software, o treinamento e, se quiser, a produção e a programação do conteúdo."
+   ],
+   [
+    "Percepção de valor",
+    "O valor não está na tela, está no que ela gera: receita de mídia, economia de impressos, fluxo e marca. Vamos colocar esses números lado a lado."
+   ]
   ]
  },
  {
@@ -105,6 +167,26 @@
    "Como o preço é atualizado hoje? A conveniência é vista da pista? Algum anunciante local já procurou vocês?",
    "Quantos motoristas passam reto por não verem o preço ou a oferta a tempo? Quanto vale um ponto a mais de conversão da pista?",
    "Se o mesmo totem mostrasse preço, promoção da conveniência e ainda vendesse mídia, como isso mudaria a margem do posto?"
+  ],
+  "propositos": [
+   "Mídia",
+   "Eficiência operacional",
+   "Branding"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Política local / licenças",
+    "Apoiamos o licenciamento: projeto técnico, documentação e orientação sobre as regras da sua cidade."
+   ],
+   [
+    "Fabricação de estrutura metálica",
+    "A estrutura faz parte do projeto: dimensionamos, fabricamos e instalamos com responsabilidade técnica, sem você precisar de outro fornecedor."
+   ],
+   [
+    "Consumo de energia",
+    "O LED é eficiente, e o projeto inclui ajuste automático de brilho e programação de horário. Calculamos o consumo real do seu painel na proposta."
+   ]
   ]
  },
  {
@@ -132,6 +214,26 @@
    "Quanto tempo de tela apagada teve no último ano? Qual a maior dificuldade: ponto, licenciamento, venda ou manutenção?",
    "Quanto custou em receita cada dia de tela apagada? Quantos pontos bons a concorrência ocupou enquanto você decidia?",
    "Um parceiro que fabrica, mantém e entende de operação de mídia aceleraria o seu plano de expansão?"
+  ],
+  "propositos": [
+   "Mídia",
+   "Status",
+   "Retrofit / arquitetura"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Política local / licenças",
+    "Apoiamos o licenciamento: projeto técnico, documentação e orientação sobre as regras da sua cidade."
+   ],
+   [
+    "SLA",
+    "O prazo de atendimento fica escrito no contrato. [Preencher prazos oficiais de SLA]"
+   ],
+   [
+    "Crédito",
+    "Trabalhamos com parceiros de financiamento e com locação, que exige menos crédito do que a compra."
+   ]
   ]
  },
  {
@@ -159,6 +261,26 @@
    "O mall media atual é fácil de vender? O shopping tem um ponto de experiência que gera visita espontânea?",
    "Se o shopping não é destino, quanto da visita migra para o online ou para o concorrente? Quanto inventário de mídia fica sem venda?",
    "Uma experiência-âncora que gera fluxo e mídia premium ajudaria no próximo Natal?"
+  ],
+  "propositos": [
+   "Experiência",
+   "Entretenimento",
+   "Mídia"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Aprovação por financeiro",
+    "Preparo um resumo de uma página com investimento, retorno e prazo, e apresento junto com você para o financeiro."
+   ],
+   [
+    "Concorrência",
+    "Compare fábrica, estoque, equipe técnica, garantia e cases. O mais barato que apaga custa mais caro."
+   ],
+   [
+    "Percepção de valor",
+    "O valor não está na tela, está no que ela gera: receita de mídia, economia de impressos, fluxo e marca. Vamos colocar esses números lado a lado."
+   ]
   ]
  },
  {
@@ -186,6 +308,26 @@
    "O cliente chega já decidido pela internet? O que o showroom oferece que o site não oferece?",
    "Quantas vendas se perdem quando o cliente sai do showroom sem emoção? Quanto custa cada evento de lançamento sem estrutura própria?",
    "Se o showroom pudesse colocar o cliente na estrada antes do test-drive, como isso afetaria a conversão?"
+  ],
+  "propositos": [
+   "Status",
+   "Experiência",
+   "Branding"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Preço",
+    "Vamos comparar o custo total: impressos, locações e vendas perdidas de um ano contra o investimento no painel, que fica com você por muitos anos."
+   ],
+   [
+    "Momento financeiro",
+    "Podemos começar por um piloto ou pela locação, que vira despesa mensal em vez de investimento, e crescer por fases."
+   ],
+   [
+    "Gestão de conteúdo",
+    "Você não fica sozinho: entregamos o software, o treinamento e, se quiser, a produção e a programação do conteúdo."
+   ]
   ]
  },
  {
@@ -213,6 +355,26 @@
    "O visitante entende o empreendimento só com maquete e perspectivas? Qual a conversão de visita em proposta?",
    "Cada mês a mais de ciclo de vendas custa quanto em custo financeiro da obra? Quantas visitas saem sem se imaginar no imóvel?",
    "Se o stand fizesse o cliente viver o apartamento e o painel fosse reaproveitado nos próximos lançamentos, faria sentido avaliar?"
+  ],
+  "propositos": [
+   "Status",
+   "Retrofit / arquitetura",
+   "Experiência"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Forma de pagamento",
+    "Temos opções: à vista, parcelado, financiamento e locação. Montamos a que cabe no seu fluxo de caixa."
+   ],
+   [
+    "Fabricação de estrutura metálica",
+    "A estrutura faz parte do projeto: dimensionamos, fabricamos e instalamos com responsabilidade técnica, sem você precisar de outro fornecedor."
+   ],
+   [
+    "Preço",
+    "Vamos comparar o custo total: impressos, locações e vendas perdidas de um ano contra o investimento no painel, que fica com você por muitos anos."
+   ]
   ]
  },
  {
@@ -240,6 +402,26 @@
    "Quanto tempo leva para uma campanha nacional chegar a todas as lojas? Os franqueados aplicam o material corretamente?",
    "Qual o custo de uma campanha impressa multiplicado pelo número de lojas? O que a inconsistência faz com o valor da marca?",
    "Se uma campanha chegasse a todas as lojas em um clique, padronizada, quanto isso valeria para a rede e para o franqueado?"
+  ],
+  "propositos": [
+   "Branding",
+   "Eficiência operacional",
+   "Trade"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Forma de pagamento",
+    "Temos opções: à vista, parcelado, financiamento e locação. Montamos a que cabe no seu fluxo de caixa."
+   ],
+   [
+    "Crédito",
+    "Trabalhamos com parceiros de financiamento e com locação, que exige menos crédito do que a compra."
+   ],
+   [
+    "Gestão de conteúdo",
+    "Você não fica sozinho: entregamos o software, o treinamento e, se quiser, a produção e a programação do conteúdo."
+   ]
   ]
  },
  {
@@ -267,6 +449,26 @@
    "Quantas vezes por ano reimprimem o cardápio? Os pratos de maior margem estão em destaque?",
    "Quanto deixam de ganhar quando o cliente pede o item de menor margem por falta de destaque? Quanto custam as reimpressões?",
    "Se o cardápio mudasse sozinho por turno e destacasse o que dá mais lucro, quanto isso mudaria no ticket médio?"
+  ],
+  "propositos": [
+   "Entretenimento",
+   "Experiência",
+   "Eficiência operacional"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Preço",
+    "Vamos comparar o custo total: impressos, locações e vendas perdidas de um ano contra o investimento no painel, que fica com você por muitos anos."
+   ],
+   [
+    "Fobia digital",
+    "Atualizar a tela é tão simples quanto postar no Instagram. Treinamos a sua equipe, e a LedWave pode cuidar do conteúdo para você."
+   ],
+   [
+    "Momento financeiro",
+    "Podemos começar por um piloto ou pela locação, que vira despesa mensal em vez de investimento, e crescer por fases."
+   ]
   ]
  },
  {
@@ -294,6 +496,26 @@
    "Quem está no fundo consegue ler as letras e ver o pregador? A transmissão tem a qualidade que vocês gostariam?",
    "Quando as pessoas não enxergam bem, o que acontece com a participação no louvor e na mensagem? E com a audiência online?",
    "Se toda a comunidade, presente e online, visse a mensagem com clareza, como isso fortaleceria o ministério?"
+  ],
+  "propositos": [
+   "Insumo de trabalho",
+   "Experiência",
+   "Entretenimento"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Forma de pagamento",
+    "Temos opções: à vista, parcelado, financiamento e locação. Montamos a que cabe no seu fluxo de caixa."
+   ],
+   [
+    "Insegurança técnica",
+    "Fazemos a visita técnica, mostramos a especificação certa para o seu espaço e você vê uma demonstração antes de decidir."
+   ],
+   [
+    "Aprovação por financeiro",
+    "Preparo um resumo de uma página com investimento, retorno e prazo, e apresento junto com você para o financeiro."
+   ]
   ]
  },
  {
@@ -321,6 +543,30 @@
    "Já perderam eventos para concorrentes com melhor estrutura? A área de lazer tem programação noturna?",
    "Quanto somam as locações no ano? Quanto vale um evento corporativo perdido?",
    "Uma estrutura fixa que vira diferencial de venda e gera novos produtos de lazer faria sentido no plano do ano?"
+  ],
+  "propositos": [
+   "Entretenimento",
+   "Experiência",
+   "Status"
+  ],
+  "cases": [
+   "Beto Carrero World",
+   "Rosewood",
+   "Animalia"
+  ],
+  "objecoes": [
+   [
+    "Consumo de energia",
+    "O LED é eficiente, e o projeto inclui ajuste automático de brilho e programação de horário. Calculamos o consumo real do seu painel na proposta."
+   ],
+   [
+    "Manutenção",
+    "Temos equipe técnica e estoque de peças próprios, e oferecemos contrato de manutenção preventiva."
+   ],
+   [
+    "Momento financeiro",
+    "Podemos começar por um piloto ou pela locação, que vira despesa mensal em vez de investimento, e crescer por fases."
+   ]
   ]
  },
  {
@@ -348,6 +594,26 @@
    "Já tiveram falha técnica ao vivo? O fornecedor atual dá conta de jobs simultâneos e de outras praças?",
    "O que uma falha ao vivo custou em relação com o cliente final? Quantos jobs deixaram de pegar por falta de estrutura?",
    "Um parceiro com estoque, equipe e backup próprios permitiria aceitar jobs maiores com tranquilidade?"
+  ],
+  "propositos": [
+   "Insumo de trabalho",
+   "Entretenimento",
+   "Experiência"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Preço",
+    "Vamos comparar o custo total: impressos, locações e vendas perdidas de um ano contra o investimento no painel, que fica com você por muitos anos."
+   ],
+   [
+    "SLA",
+    "O prazo de atendimento fica escrito no contrato. [Preencher prazos oficiais de SLA]"
+   ],
+   [
+    "Concorrência",
+    "Compare fábrica, estoque, equipe técnica, garantia e cases. O mais barato que apaga custa mais caro."
+   ]
   ]
  },
  {
@@ -375,6 +641,26 @@
    "A comunicação interna chega a todos? A recepção mostra quem vocês são?",
    "O que a falta de informação causa em engajamento, segurança e produtividade? Que impressão o visitante leva?",
    "Se a cultura e os resultados estivessem visíveis em todas as unidades, o que mudaria no clima e na percepção de clientes?"
+  ],
+  "propositos": [
+   "Branding",
+   "Status",
+   "Retrofit / arquitetura"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Aprovação por financeiro",
+    "Preparo um resumo de uma página com investimento, retorno e prazo, e apresento junto com você para o financeiro."
+   ],
+   [
+    "Gestão de conteúdo",
+    "Você não fica sozinho: entregamos o software, o treinamento e, se quiser, a produção e a programação do conteúdo."
+   ],
+   [
+    "Percepção de valor",
+    "O valor não está na tela, está no que ela gera: receita de mídia, economia de impressos, fluxo e marca. Vamos colocar esses números lado a lado."
+   ]
   ]
  },
  {
@@ -402,6 +688,28 @@
    "Qual a conversão de visita em matrícula? A infraestrutura é citada pelos pais como critério?",
    "Quanto vale cada matrícula perdida ao longo dos anos de curso? Quanto gastam em locação para formaturas e eventos?",
    "Se o auditório e o pátio mostrassem inovação na visita dos pais, como ficaria a captação?"
+  ],
+  "propositos": [
+   "Insumo de trabalho",
+   "Experiência",
+   "Status"
+  ],
+  "cases": [
+   "Museu do Amanhã"
+  ],
+  "objecoes": [
+   [
+    "Momento financeiro",
+    "Podemos começar por um piloto ou pela locação, que vira despesa mensal em vez de investimento, e crescer por fases."
+   ],
+   [
+    "Forma de pagamento",
+    "Temos opções: à vista, parcelado, financiamento e locação. Montamos a que cabe no seu fluxo de caixa."
+   ],
+   [
+    "Fobia digital",
+    "Atualizar a tela é tão simples quanto postar no Instagram. Treinamos a sua equipe, e a LedWave pode cuidar do conteúdo para você."
+   ]
   ]
  },
  {
@@ -429,6 +737,26 @@
    "Como os pacientes avaliam a recepção? A sinalização e a chamada são claras?",
    "O que a ansiedade na espera faz com o NPS e as avaliações online? Quantos serviços o paciente desconhece?",
    "Uma recepção que informa, acalma e divulga serviços ajudaria nas metas de satisfação e de receita?"
+  ],
+  "propositos": [
+   "Eficiência operacional",
+   "Experiência",
+   "Branding"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Insegurança técnica",
+    "Fazemos a visita técnica, mostramos a especificação certa para o seu espaço e você vê uma demonstração antes de decidir."
+   ],
+   [
+    "Aprovação por financeiro",
+    "Preparo um resumo de uma página com investimento, retorno e prazo, e apresento junto com você para o financeiro."
+   ],
+   [
+    "Consumo de energia",
+    "O LED é eficiente, e o projeto inclui ajuste automático de brilho e programação de horário. Calculamos o consumo real do seu painel na proposta."
+   ]
   ]
  },
  {
@@ -456,6 +784,26 @@
    "Há fila de patrocinadores sem espaço? O patrocinador pede comprovação?",
    "Quanto de receita de patrocínio fica na mesa por limitação de placas estáticas?",
    "Se o mesmo espaço comportasse 10x mais cotas com comprovação, quanto isso pagaria do investimento?"
+  ],
+  "propositos": [
+   "Entretenimento",
+   "Mídia",
+   "Experiência"
+  ],
+  "cases": [],
+  "objecoes": [
+   [
+    "Crédito",
+    "Trabalhamos com parceiros de financiamento e com locação, que exige menos crédito do que a compra."
+   ],
+   [
+    "Manutenção",
+    "Temos equipe técnica e estoque de peças próprios, e oferecemos contrato de manutenção preventiva."
+   ],
+   [
+    "Fabricação de estrutura metálica",
+    "A estrutura faz parte do projeto: dimensionamos, fabricamos e instalamos com responsabilidade técnica, sem você precisar de outro fornecedor."
+   ]
   ]
  },
  {
@@ -483,6 +831,28 @@
    "A informação de emergência chega rápido a quem está na rua? A cidade tem pontos turísticos digitais?",
    "Quanto custa uma comunicação lenta em emergências? Quanto a cidade perde em turismo e eventos?",
    "Um modelo em que a mídia custeia o equipamento e a cidade ganha comunicação pública faria sentido?"
+  ],
+  "propositos": [
+   "Mídia",
+   "Experiência",
+   "Retrofit / arquitetura"
+  ],
+  "cases": [
+   "Museu do Amanhã"
+  ],
+  "objecoes": [
+   [
+    "Política local / licenças",
+    "Apoiamos o licenciamento: projeto técnico, documentação e orientação sobre as regras da sua cidade."
+   ],
+   [
+    "Consumo de energia",
+    "O LED é eficiente, e o projeto inclui ajuste automático de brilho e programação de horário. Calculamos o consumo real do seu painel na proposta."
+   ],
+   [
+    "SLA",
+    "O prazo de atendimento fica escrito no contrato. [Preencher prazos oficiais de SLA]"
+   ]
   ]
  }
 ]

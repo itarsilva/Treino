@@ -7,6 +7,7 @@ from openpyxl.comments import Comment
 from openpyxl.utils import get_column_letter
 
 from conteudo import NICHOS, LEDWAVE, ROTEIRO, TECNICAS, OBJECOES_GERAIS, FRASES_GERAIS, BLOCOS, TIPOS_IDEIA, STATUS_IDEIA
+from conteudo3 import PROPOSITOS, DIFERENCIAIS, OBJECOES_COMERCIAL, CASES, RESULTADOS, NICHO_MAPA
 from conteudo2 import (SPIN, ORCAMENTO, REFERENCIA_TECNICA, CADENCIA, COLD_CALL, ESCUTA_ATIVA,
                        METODO_OBJECAO, ROLEPLAY_CENARIO, ROLEPLAY_SCRIPT, ROLEPLAY_AVALIACAO)
 
@@ -112,6 +113,7 @@ rows = [
     ("Como contribuir (gestores)", "Toda ideia nova entra na aba Banco de Ideias (uma linha por ideia). Na reunião do time, as ideias com status 'Aprovada' são levadas para a matriz Nichos. A coluna 'Ideias no Banco' da matriz mostra quantas contribuições cada nicho tem."),
     ("Células editáveis", "Fundo amarelo = campo para preencher ou escolher. Todo o texto das abas de conteúdo também pode ser editado e melhorado. Não apague as colunas A das abas Nichos e Listas: elas alimentam as fórmulas."),
     ("Fatos sobre a LedWave", "Na aba LedWave – Prova, a coluna Status diz se o dado já tem fonte pública ou se precisa ser validado com a apresentação executiva oficial. Só use em reunião dados 'Fonte pública' ou já validados."),
+    ("Insights do comercial", "As abas Propósitos de Compra, Diferenciais e Cases organizam o que o time comercial trouxe na reunião. Cada nicho da matriz tem os seus propósitos de compra, cases de referência e objeções mais prováveis (colunas T a V). Itens marcados 'Confirmar' precisam de detalhe do comercial antes de ir para o cliente."),
     ("Adicionar um nicho", "Inclua uma nova linha no fim da matriz Nichos (e nas abas SPIN e Orçamento, com o mesmo nome). Ele aparece automaticamente na lista do Gerador e do Banco de Ideias (até a linha 60)."),
 ]
 r = 4
@@ -182,10 +184,10 @@ falas = [
     f'"GANCHO: "&{col("F")}',
     f'"DOR: "&{col("C")}{NL}"PERGUNTE (Situação): "&{spin("B")}{NL}"PERGUNTE (Problema): "&{spin("C")}',
     f'"CUSTO DA INAÇÃO: "&{col("D")}{NL}"PERGUNTE (Implicação): "&{spin("D")}',
-    f'"ORIGEM: "&INDEX(\'LedWave – Prova\'!$C:$C,5){NL}"PROVA 1: "&INDEX(\'LedWave – Prova\'!$C:$C,7){NL}"PROVA 2: "&INDEX(\'LedWave – Prova\'!$C:$C,9){NL}"PROVA DO NICHO: "&{col("N")}{NL}"Feche com: E é por isso que estamos aqui."',
-    f'"PROPÓSITO: "&{col("E")}{NL}"HISTÓRIA: "&{col("G")}{NL}"FRASE DE EFEITO (pausa de 3 s): "&{col("K")}',
+    f'"ORIGEM: "&INDEX(\'LedWave – Prova\'!$C:$C,5){NL}"PROVA 1: "&INDEX(\'LedWave – Prova\'!$C:$C,7){NL}"PROVA 2: "&INDEX(\'LedWave – Prova\'!$C:$C,9){NL}"CASE DE REFERÊNCIA: "&IF({col("U")}="","use o Boulevard.Live (sem case do segmento mapeado)",{col("U")}){NL}"Feche com: E é por isso que estamos aqui."',
+    f'"PROPÓSITO DE COMPRA (descubra qual pesa mais): "&{col("T")}{NL}"PROPÓSITO: "&{col("E")}{NL}"HISTÓRIA: "&{col("G")}{NL}"FRASE DE EFEITO (pausa de 3 s): "&{col("K")}',
     f'"1. RECEITA: "&{col("H")}{NL}"2. EXPERIÊNCIA: "&{col("I")}{NL}"3. OPERAÇÃO: "&{col("J")}{NL}"SOLUÇÃO: "&{col("M")}',
-    f'"OBJEÇÃO PROVÁVEL: "&{col("P")}{NL}"RESPOSTA: "&{col("Q")}{NL}"O QUE VOCÊ VAI MEDIR: "&{col("R")}',
+    f'"OBJEÇÃO PROVÁVEL: "&{col("P")}{NL}"RESPOSTA: "&{col("Q")}{NL}"OUTRAS OBJEÇÕES PROVÁVEIS (respostas na aba Objeções): "&{col("V")}{NL}"O QUE VOCÊ VAI MEDIR: "&{col("R")}',
     f'"PERGUNTE (Necessidade): "&{spin("E")}{NL}"FRASE: "&{col("K")}{NL}"FECHAMENTO: "&{col("L")}{NL}"PRÓXIMO PASSO: "&{col("S")}',
 ]
 for i, (bloco, share, obj, tec, como, slide, erro) in enumerate(ROTEIRO):
@@ -252,30 +254,90 @@ wp["A3"] = "As linhas 5 (Origem), 7 (Reconhecimento) e 9 (Projeto-ícone) alimen
 wp["A3"].font = Font(name=F, size=9, italic=True, color=MAGENTA)
 wp.freeze_panes = "B5"
 
+# ---------------------------------------------------------------- Propósitos de Compra
+wpc = sheet("Propósitos de Compra", MAGENTA)
+title(wpc, "Propósitos de compra: por que o cliente compra", "Insight do time comercial. Descubra na conversa qual propósito pesa mais e conduza a apresentação por ele.", span=6)
+cols = ["Propósito", "O que o cliente quer de verdade", "Pergunta para identificar", "Resultados esperados ligados", "Nichos onde mais aparece", "Observações do gestor"]
+w = [24, 50, 45, 36, 45, 30]
+header(wpc, 3, cols, w)
+for i, (prop, quer, perg, res) in enumerate(PROPOSITOS):
+    r = 4 + i
+    nichos = "; ".join(k for k, v in NICHO_MAPA.items() if prop in v[0])
+    body(wpc, r, [prop, quer, perg, res, nichos, ""], bold_first=True, height=est_height([quer, perg, res, nichos], [50, 45, 36, 45]))
+    wpc.cell(row=r, column=6).fill = PatternFill("solid", fgColor=EDIT)
+zebra(wpc, 4, 3 + len(PROPOSITOS), 5)
+r = 5 + len(PROPOSITOS)
+wpc.cell(row=r, column=1, value="Resultados esperados (lista do comercial)").font = Font(name=F, size=12, bold=True, color=NAVY)
+for i, res in enumerate(RESULTADOS):
+    c = wpc.cell(row=r + 1 + i // 3, column=1 + i % 3, value=res)
+    c.font = Font(name=F, size=10)
+    c.border = BORDER
+wpc.freeze_panes = "B4"
+
+# ---------------------------------------------------------------- Diferenciais
+wdf = sheet("Diferenciais", MAGENTA)
+title(wdf, "Diferenciais da LedWave", "Insight do time comercial. Use 3 a 5 por apresentação, escolhidos pelo propósito de compra do cliente. 'Confirmar' = validar o texto com o comercial antes de usar com cliente.", span=5)
+cols = ["Diferencial", "Como falar para o cliente", "Prova / o que levar", "Status", "Observações do gestor"]
+w = [26, 70, 42, 20, 30]
+header(wdf, 3, cols, w)
+for i, (d, falar, prova, st) in enumerate(DIFERENCIAIS):
+    r = 4 + i
+    body(wdf, r, [d, falar, prova, st, ""], bold_first=True, height=est_height([falar, prova], [70, 42]))
+    for c in (4, 5):
+        wdf.cell(row=r, column=c).fill = PatternFill("solid", fgColor=EDIT)
+ld = 3 + len(DIFERENCIAIS)
+wdf.conditional_formatting.add(f"D4:D{ld}", FormulaRule(formula=['LEFT($D4,9)="Confirmar"'], font=Font(color="B00020", bold=True)))
+wdf.conditional_formatting.add(f"D4:D{ld}", FormulaRule(formula=['$D4="OK"'], font=Font(color="1B7F3B", bold=True)))
+wdf.freeze_panes = "B4"
+
+# ---------------------------------------------------------------- Cases
+wcs = sheet("Cases", MAGENTA)
+title(wcs, "Cases de referência", "Cases citados pelo time comercial. Preencha desafio, entrega e resultado: é isso que entra nas apresentações.", span=9)
+cols = ["Case", "Segmento (nicho)", "Propósitos de compra", "Desafio do cliente", "O que a LedWave entregou", "Resultado (número, se houver)", "Fotos/vídeo (link)", "Autorizado para uso com clientes?", "Status"]
+w = [22, 30, 30, 36, 36, 32, 24, 18, 22]
+header(wcs, 3, cols, w)
+for i, (case, seg, props, st) in enumerate(CASES):
+    r = 4 + i
+    body(wcs, r, [case, seg, props, "", "", "", "", "", st], bold_first=True, height=40)
+    for c in range(4, 10):
+        wcs.cell(row=r, column=c).fill = PatternFill("solid", fgColor=EDIT)
+for rr in range(4 + len(CASES), 4 + len(CASES) + 10):
+    for c in range(1, 10):
+        cell = wcs.cell(row=rr, column=c)
+        cell.fill = PatternFill("solid", fgColor=EDIT)
+        cell.border = BORDER
+dv_aut = DataValidation(type="list", formula1='"Sim,Não,A confirmar"', allow_blank=True)
+wcs.add_data_validation(dv_aut)
+dv_aut.add(f"H4:H{3 + len(CASES) + 10}")
+wcs.freeze_panes = "B4"
+
 # ---------------------------------------------------------------- Nichos
 wn = sheet("Nichos", MAGENTA)
-title(wn, "Matriz de Nichos: o porquê de cada cliente", "Uma linha por nicho. É a fonte do Gerador de Roteiro. Melhore à vontade; registre a mudança na coluna 'Última contribuição'.", span=22)
+title(wn, "Matriz de Nichos: o porquê de cada cliente", "Uma linha por nicho. É a fonte do Gerador de Roteiro. Melhore à vontade; registre a mudança na coluna 'Última contribuição'.", span=25)
 cols = ["Nicho", "Decisor típico", "Dor principal (o mundo dele hoje)", "Custo da inação", "Propósito (o porquê)",
         "Gancho de abertura", "História / analogia", "Argumento 1: Receita", "Argumento 2: Experiência e marca",
         "Argumento 3: Operação e custo", "Frase de efeito", "Frase de fechamento", "Solução recomendada",
         "Prova / case (a completar)", "Perguntas de descoberta", "Objeção nº 1", "Resposta à objeção",
-        "KPIs que o cliente vai medir", "Próximo passo (CTA)", "Ideias no Banco", "Última contribuição (gestor/data)", "Notas"]
+        "KPIs que o cliente vai medir", "Próximo passo (CTA)",
+        "Propósitos de compra (comercial)", "Cases de referência", "Objeções mais prováveis (comercial)", "Ideias no Banco", "Última contribuição (gestor/data)", "Notas"]
 keys = ["nicho", "decisor", "dor", "inacao", "proposito", "gancho", "historia", "arg_receita", "arg_exp", "arg_oper",
         "frase", "fechamento", "solucao", "prova", "perguntas", "objecao", "resposta", "kpi", "cta"]
-w = [26, 26] + [38] * 17 + [11, 22, 26]
+w = [26, 26] + [38] * 17 + [30, 26, 34, 11, 22, 26]
 header(wn, 3, cols, w)
 for i, n in enumerate(NICHOS):
     r = 4 + i
     vals = [n[k] for k in keys]
+    pr, cs, ob = NICHO_MAPA[n["nicho"]]
+    vals += ["; ".join(pr), "; ".join(cs), "; ".join(ob)]
     body(wn, r, vals + [f"=COUNTIF('Banco de Ideias'!$C:$C,A{r})", "", ""], bold_first=True,
-         height=est_height(vals, w[:19]))
+         height=est_height(vals, w[:22]))
     wn.cell(row=r, column=11).font = Font(name=F, size=10, bold=True, color=MAGENTA)
-    wn.cell(row=r, column=20).alignment = Alignment(horizontal="center", vertical="top")
-    for c in (21, 22):
+    wn.cell(row=r, column=23).alignment = Alignment(horizontal="center", vertical="top")
+    for c in (24, 25):
         wn.cell(row=r, column=c).fill = PatternFill("solid", fgColor=EDIT)
-zebra(wn, 4, 3 + N, 22)
+zebra(wn, 4, 3 + N, 25)
 wn.freeze_panes = "B4"
-wn.auto_filter.ref = f"A3:V{3+N}"
+wn.auto_filter.ref = f"A3:Y{3+N}"
 
 # ---------------------------------------------------------------- SPIN por Nicho
 wsp = sheet("SPIN por Nicho")
@@ -323,6 +385,10 @@ cols = ["Nicho", "Objeção", "Resposta", "Técnica", "Funcionou em campo? (gest
 w = [26, 38, 70, 24, 18, 40]
 header(wob, 3, cols, w)
 r = 4
+for obj, cat, resp, prova in OBJECOES_COMERCIAL:
+    tec = f"{cat} · Leve: {prova}"
+    body(wob, r, ["Todos (insight do comercial)", obj, resp, tec, "", ""], bold_first=True, height=est_height([obj, resp, tec], [38, 70, 24]))
+    r += 1
 for nicho, obj, resp, tec in OBJECOES_GERAIS:
     body(wob, r, [nicho, obj, resp, tec, "", ""], bold_first=True, height=est_height([obj, resp], [38, 70]))
     r += 1

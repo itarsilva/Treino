@@ -111,7 +111,7 @@ async function deck(n) {
     objects: [
       marca(HEX.lt1),
       { placeholder: { options: { name: "title", type: "title", x: 0.9, y: 1.5, w: 11.5, h: 0.5, fontSize: 18, bold: true, color: C.accent1, align: "left", margin: 0 }, text: "" } },
-      { placeholder: { options: { name: "body", type: "body", x: 0.9, y: 2.2, w: 9.0, h: 4.2, fontSize: 32, bold: true, color: C.background1, valign: "top", align: "left", margin: 0 }, text: "" } },
+      { placeholder: { options: { name: "body", type: "body", x: 0.9, y: 2.2, w: 9.0, h: 3.6, fontSize: 32, bold: true, color: C.background1, valign: "top", align: "left", margin: 0 }, text: "" } },
     ],
   });
   pres.defineSlideMaster({
@@ -235,14 +235,38 @@ async function deck(n) {
   ], { x: 0.95, y: 5.55, w: 11.4, h: 0.95, fontSize: 17, valign: "middle", objectName: "Venda ou locação" });
   s.addNotes(`[Solução completa · ~1 min] Mensagem central: "Não vendemos painel. Entregamos o resultado que o painel gera."`);
 
+  // 6b. Diferenciais
+  s = pres.addSlide({ masterName: "Conteudo", sectionTitle: "LedWave" });
+  s.addText("Por que a LedWave", { placeholder: "title" });
+  const difs = [
+    ["FaSync", "Solução 360°", "Do projeto ao conteúdo, um só parceiro"],
+    ["FaIndustry", "Fábrica própria", "Linha de produção no Brasil, em Goiânia"],
+    ["FaExchangeAlt", "Venda ou locação", "O modelo comercial que cabe no seu negócio"],
+    ["FaBoxes", "Estoque próprio", "Menos espera entre a assinatura e a tela acesa"],
+    ["FaMapMarkedAlt", "Atendimento nacional", "Goiânia, São Paulo, Brasília e Orlando (EUA)"],
+    ["FaDraftingCompass", "Sob medida", "Formato e resolução para o seu espaço"],
+    ["FaLaptopCode", "Software de gestão", "Conteúdo e venda programática de mídia"],
+    ["FaShieldAlt", "Garantia e suporte", "Equipe técnica própria para a tela não apagar"],
+  ];
+  for (let i = 0; i < difs.length; i++) {
+    const x = 0.6 + (i % 4) * 3.08, y = 1.75 + Math.floor(i / 4) * 2.45;
+    card(s, x, y, 2.85, 2.2, "Diferencial " + difs[i][1]);
+    await circleIcon(s, x + 0.3, y + 0.3, 0.7, difs[i][0], i % 2 === 0 ? HEX.dk2 : HEX.accent1, HEX.lt1, difs[i][1]);
+    txt(s, difs[i][1], { x: x + 0.3, y: y + 1.1, w: 2.35, h: 0.4, fontSize: 16, bold: true, objectName: difs[i][1] + " título" });
+    txt(s, difs[i][2], { x: x + 0.3, y: y + 1.5, w: 2.35, h: 0.65, fontSize: 14, color: C.text2, objectName: difs[i][1] + " texto" });
+  }
+  s.addNotes(`[Diferenciais · ~1 min] Não leia os oito. Escolha os 2 ou 3 que respondem ao propósito de compra do cliente (${n.propositos.join(", ")}) e conte cada um em uma frase.`);
+
   // 7. Marcas
   s = pres.addSlide({ masterName: "Conteudo", sectionTitle: "LedWave" });
   s.addText("Quem confia na LedWave", { placeholder: "title" });
-  const marcas = ["Volkswagen", "Globo", "Riachuelo"];
-  for (let i = 0; i < 3; i++) {
-    const x = 0.6 + i * 4.1;
-    card(s, x, 1.85, 3.8, 1.7, "Marca " + marcas[i]);
-    txt(s, marcas[i], { x: x, y: 1.85, w: 3.8, h: 1.7, fontSize: 28, bold: true, align: "center", valign: "middle", color: C.text2, objectName: "Marca nome " + (i + 1) });
+  const destaque = new Set(n.cases);
+  const marcas = [...n.cases, ...["Nordestão", "Rosewood", "Beto Carrero World", "Museu do Amanhã", "Animalia", "Volkswagen"].filter(m => !destaque.has(m))].slice(0, 6);
+  for (let i = 0; i < 6; i++) {
+    const x = 0.6 + (i % 3) * 4.1, y = 1.7 + Math.floor(i / 3) * 1.15;
+    const dest = destaque.has(marcas[i]);
+    card(s, x, y, 3.8, 0.95, "Marca " + marcas[i], dest ? C.accent1 : C.background2);
+    txt(s, marcas[i], { x: x, y: y, w: 3.8, h: 0.95, fontSize: 22, bold: true, align: "center", valign: "middle", color: dest ? C.background1 : C.text2, objectName: "Marca nome " + (i + 1) });
   }
   const credenciais = [
     ["FaTrophy", "Ranking Exame", "4 anos seguidos, nº 1 do segmento em 2025"],
@@ -251,12 +275,12 @@ async function deck(n) {
   ];
   for (let i = 0; i < 3; i++) {
     const x = 0.6 + i * 4.1;
-    await circleIcon(s, x, 4.1, 0.85, credenciais[i][0], HEX.accent1, HEX.lt1, credenciais[i][1]);
-    txt(s, credenciais[i][1], { x: x + 1.05, y: 4.1, w: 2.75, h: 0.45, fontSize: 17, bold: true, objectName: credenciais[i][1] + " título" });
-    txt(s, credenciais[i][2], { x: x + 1.05, y: 4.6, w: 2.75, h: 1.0, fontSize: 14, color: C.text2, objectName: credenciais[i][1] + " texto" });
+    await circleIcon(s, x, 4.45, 0.85, credenciais[i][0], HEX.dk2, HEX.lt1, credenciais[i][1]);
+    txt(s, credenciais[i][1], { x: x + 1.05, y: 4.45, w: 2.75, h: 0.45, fontSize: 17, bold: true, objectName: credenciais[i][1] + " título" });
+    txt(s, credenciais[i][2], { x: x + 1.05, y: 4.95, w: 2.75, h: 1.0, fontSize: 14, color: C.text2, objectName: credenciais[i][1] + " texto" });
   }
-  txt(s, "Substitua ou complete com logos de clientes do segmento " + n.nicho + ".", { x: 0.6, y: 6.25, w: 12, h: 0.3, fontSize: 11, italic: true, color: HEX.accent6, objectName: "Instrução logos" });
-  s.addNotes(`[Prova social · ~1 min] Se houver cliente do mesmo segmento, troque um dos nomes por ele e conte o resultado em uma frase. Apague a linha de instrução antes de enviar o arquivo.`);
+  txt(s, "Troque os nomes pelos logos oficiais dos clientes antes de enviar o arquivo.", { x: 0.6, y: 6.25, w: 12, h: 0.3, fontSize: 11, italic: true, color: HEX.accent6, objectName: "Instrução logos" });
+  s.addNotes(`[Prova social · ~1 min] ${n.cases.length ? "Cases do segmento (em destaque): " + n.cases.join(", ") + ". Conte o de maior afinidade em uma frase." : "Sem case mapeado do segmento: escolha o cliente com o propósito de compra mais parecido."} Apague a linha de instrução antes de enviar o arquivo.`);
 
   // 8. Propósito
   pres.addSection({ title: "Por que digitalizar" });
@@ -264,7 +288,11 @@ async function deck(n) {
   s.addText("Por que digitalizar o seu espaço", { placeholder: "title" });
   s.addText(n.proposito, { placeholder: "body" });
   await circleIcon(s, 10.6, 2.3, 1.9, "FaLightbulb", HEX.accent1, HEX.lt1, "Propósito");
-  s.addNotes(`[Propósito · ~1 min] Fale devagar. Este é o porquê da conversa. Pausa de 3 segundos no final.`);
+  n.propositos.forEach((pp, i) => {
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.9 + i * 2.9, y: 6.0, w: 2.7, h: 0.55, rectRadius: 0.27, fill: { color: C.text1 }, line: { color: HEX.accent1, width: 1.5 }, objectName: "Propósito de compra " + (i + 1) });
+    txt(s, pp, { x: 0.9 + i * 2.9, y: 6.0, w: 2.7, h: 0.55, fontSize: 14, bold: true, align: "center", valign: "middle", color: C.background1, objectName: "Propósito de compra texto " + (i + 1) });
+  });
+  s.addNotes(`[Propósito · ~1 min] Fale devagar. Este é o porquê da conversa. Pausa de 3 segundos no final.\nPropósitos de compra mais comuns neste nicho: ${n.propositos.join(", ")}. Confirme qual pesa mais para este cliente e apague os outros.`);
 
   // 9. Imagine
   s = pres.addSlide({ masterName: "Conteudo", sectionTitle: "Por que digitalizar" });
@@ -309,7 +337,7 @@ async function deck(n) {
   const kpis = itens(n.kpi).slice(0, 5);
   txt(s, kpis.map((k, i) => ({ text: k, options: { bullet: true, breakLine: i < kpis.length - 1, paraSpaceAfter: 10 } })),
     { x: 7.6, y: 2.65, w: 4.8, h: 3.7, fontSize: 16, color: C.background1, objectName: "Indicadores" });
-  s.addNotes(`[Solução · ~1,5 min] Mostre só o que faz sentido para o espaço do cliente; apague o resto.\nObjeção provável: ${n.objecao}\nResposta: ${n.resposta}`);
+  s.addNotes(`[Solução · ~1,5 min] Mostre só o que faz sentido para o espaço do cliente; apague o resto.\nObjeção provável: ${n.objecao}\nResposta: ${n.resposta}\n` + n.objecoes.map(o => `Objeção (comercial): ${o[0]}\nResposta: ${o[1]}`).join("\n"));
 
   // 12. Projeto em destaque
   s = pres.addSlide({ masterName: "Conteudo", sectionTitle: "Ganhos e solução" });
@@ -319,8 +347,8 @@ async function deck(n) {
   txt(s, "1.125 m²", { x: 1.0, y: 2.65, w: 5.2, h: 1.2, fontSize: 60, bold: true, color: C.background1, objectName: "Boulevard número" });
   txt(s, "O maior painel de LED da América Latina, em Brasília. Inspirado na Times Square e instalado no ponto de maior fluxo de pessoas e veículos da cidade.", { x: 1.0, y: 4.05, w: 5.2, h: 2.2, fontSize: 16, color: C.background1, objectName: "Boulevard texto" });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.9, y: 1.75, w: 5.8, h: 4.8, rectRadius: 0.12, fill: { color: C.background2 }, line: { color: HEX.accent3, width: 1.5, dashType: "dash" }, objectName: "Área case do segmento" });
-  txt(s, "Case do seu segmento", { x: 7.3, y: 2.1, w: 5.0, h: 0.5, fontSize: 18, bold: true, color: C.accent1, objectName: "Case título" });
-  txt(s, "[Nome do cliente do segmento]\n\n[Desafio em uma frase]\n\n[O que a LedWave entregou]\n\n[Resultado]", { x: 7.3, y: 2.75, w: 5.0, h: 3.5, fontSize: 15, color: C.text2, objectName: "Case conteúdo" });
+  txt(s, n.cases.length ? "Case: " + n.cases[0] : "Case do seu segmento", { x: 7.3, y: 2.1, w: 5.0, h: 0.5, fontSize: 18, bold: true, color: C.accent1, objectName: "Case título" });
+  txt(s, (n.cases.length ? "" : "[Nome do cliente do segmento]\n\n") + "[Desafio em uma frase]\n\n[O que a LedWave entregou]\n\n[Resultado]", { x: 7.3, y: 2.75, w: 5.0, h: 3.5, fontSize: 15, color: C.text2, objectName: "Case conteúdo" });
   s.addNotes(`[Prova · ~1 min] Preencha o case do segmento com um cliente real antes da reunião. Sem case do segmento, apague o card da direita e fale só do Boulevard.Live.`);
 
   // 13. Fechamento
