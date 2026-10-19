@@ -11,7 +11,7 @@ from conteudo2 import SPIN, ORCAMENTO
 from conteudo3 import PROPOSITOS, DIFERENCIAIS, OBJECOES_COMERCIAL, CASES, NICHO_MAPA
 
 OUT = sys.argv[1]
-NAVY, MAGENTA, EDIT, WHITE, GREY = "1B1340", "C2185B", "FFF8D6", "FFFFFF", "F5F5F7"
+NAVY, MAGENTA, EDIT, WHITE, GREY = "3D3D3D", "8A5CF6", "FFF8D6", "FFFFFF", "F5F5F7"
 F = "Arial"
 thin = Side(style="thin", color="D0CCE0")
 BORDER = Border(left=thin, right=thin, top=thin, bottom=thin)

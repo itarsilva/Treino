@@ -17,13 +17,18 @@ const THEME = {
   headFontFace: "Arial",
   bodyFontFace: "Arial",
   colors: {
-    dk1: "140C2E", lt1: "FFFFFF", dk2: "2B1A63", lt2: "F3F0FA",
-    accent1: "E0218A", accent2: "4F6BFF", accent3: "8B5CF6",
-    accent4: "22C3A6", accent5: "FFB020", accent6: "6B6385",
-    hlink: "4F6BFF", folHlink: "8B5CF6",
+    // Identidade LedWave: cinza do logotipo + degradê de LED (ciano → azul → roxo → magenta)
+    dk1: "3D3D3D", lt1: "FFFFFF", dk2: "5F5F5F", lt2: "F2F3F7",
+    accent1: "E011FF", accent2: "12D9FF", accent3: "658DFF",
+    accent4: "8A5CF6", accent5: "3EB1FE", accent6: "7A7A7A",
+    hlink: "658DFF", folHlink: "8A5CF6",
   },
 };
 const HEX = THEME.colors;
+const ASSETS = path.join(__dirname, "assets");
+const LOGO = path.join(ASSETS, "logo-ledwave.png"); // 829 x 284
+const PIXELS = path.join(ASSETS, "pixels-capa.png"); // 542 x 634
+const FAIXA = path.join(ASSETS, "pixels-faixa.png"); // 542 x 128
 
 const ICONE_NICHO = {
   "Varejo de Moda e Vitrines": "FaTshirt",
@@ -85,40 +90,44 @@ async function deck(n) {
   const C = pres.SchemeColor;
   const W = 13.333;
 
-  const marca = (cor) => ({ text: { text: "LedWave", options: { x: 0.6, y: 0.4, w: 3, h: 0.4, fontSize: 16, bold: true, color: cor, margin: 0, isTextBox: true } } });
+  const marca = (w) => ({ image: { path: LOGO, x: 0.6, y: 0.45, w, h: w * 284 / 829 } });
 
   pres.defineSlideMaster({
     title: "Capa",
-    background: { color: HEX.dk1 },
+    background: { color: HEX.lt1 },
     objects: [
-      marca(HEX.lt1),
-      { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 2.3, w: 7.6, h: 1.9, fontSize: 40, bold: true, color: C.background1, valign: "bottom", align: "left", margin: 0 }, text: "" } },
-      { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 4.35, w: 7.6, h: 1.2, fontSize: 20, color: "D9D2F0", valign: "top", align: "left", margin: 0 }, text: "" } },
+      marca(3.0),
+      { image: { path: PIXELS, x: 8.6, y: 1.0, w: 4.27, h: 5.0 } },
+      { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 2.3, w: 7.3, h: 1.9, fontSize: 40, bold: true, color: C.text1, valign: "bottom", align: "left", margin: 0 }, text: "" } },
+      { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 4.35, w: 7.3, h: 1.2, fontSize: 20, color: C.text2, valign: "top", align: "left", margin: 0 }, text: "" } },
     ],
   });
   pres.defineSlideMaster({
     title: "Fechamento",
-    background: { color: HEX.dk1 },
+    background: { color: HEX.lt1 },
     objects: [
-      marca(HEX.lt1),
-      { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 1.6, w: 7.6, h: 2.7, fontSize: 34, bold: true, color: C.background1, valign: "bottom", align: "left", margin: 0 }, text: "" } },
-      { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 4.5, w: 7.6, h: 1.5, fontSize: 20, color: "D9D2F0", valign: "top", align: "left", margin: 0 }, text: "" } },
+      marca(2.4),
+      { image: { path: FAIXA, x: 10.15, y: 6.5, w: 2.54, h: 0.6 } },
+      { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 1.6, w: 7.6, h: 2.7, fontSize: 34, bold: true, color: C.text1, valign: "bottom", align: "left", margin: 0 }, text: "" } },
+      { placeholder: { options: { name: "body", type: "body", x: 0.6, y: 4.5, w: 7.6, h: 1.4, fontSize: 20, color: C.text2, valign: "top", align: "left", margin: 0 }, text: "" } },
     ],
   });
   pres.defineSlideMaster({
     title: "Destaque",
-    background: { color: HEX.dk2 },
+    background: { color: HEX.lt2 },
     objects: [
-      marca(HEX.lt1),
+      marca(1.8),
+      { image: { path: FAIXA, x: 9.95, y: 6.45, w: 2.75, h: 0.65 } },
       { placeholder: { options: { name: "title", type: "title", x: 0.9, y: 1.5, w: 11.5, h: 0.5, fontSize: 18, bold: true, color: C.accent1, align: "left", margin: 0 }, text: "" } },
-      { placeholder: { options: { name: "body", type: "body", x: 0.9, y: 2.2, w: 9.0, h: 3.6, fontSize: 32, bold: true, color: C.background1, valign: "top", align: "left", margin: 0 }, text: "" } },
+      { placeholder: { options: { name: "body", type: "body", x: 0.9, y: 2.2, w: 9.0, h: 3.6, fontSize: 32, bold: true, color: C.text1, valign: "top", align: "left", margin: 0 }, text: "" } },
     ],
   });
   pres.defineSlideMaster({
     title: "Conteudo",
     background: { color: HEX.lt1 },
     objects: [
-      { text: { text: "LedWave  ·  " + n.nicho, options: { x: 0.6, y: 6.95, w: 9, h: 0.3, fontSize: 10, color: HEX.accent6, margin: 0, isTextBox: true } } },
+      { image: { path: LOGO, x: 0.6, y: 6.86, w: 1.05, h: 1.05 * 284 / 829 } },
+      { text: { text: n.nicho, options: { x: 1.85, y: 6.92, w: 9, h: 0.3, fontSize: 10, color: HEX.accent6, margin: 0, isTextBox: true } } },
       { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 0.45, w: 12.1, h: 0.9, fontSize: 32, bold: true, color: C.text1, valign: "middle", align: "left", margin: 0 }, text: "" } },
     ],
     slideNumber: { x: 12.2, y: 6.95, w: 0.5, h: 0.3, fontSize: 10, color: HEX.accent6, align: "right" },
@@ -139,8 +148,8 @@ async function deck(n) {
   let s = pres.addSlide({ masterName: "Capa", sectionTitle: "Abertura" });
   s.addText(n.nicho, { placeholder: "title" });
   s.addText(n.frase, { placeholder: "body" });
-  txt(s, "Proposta para [Nome do cliente]  ·  [Data]", { x: 0.6, y: 6.6, w: 7.6, h: 0.4, fontSize: 14, color: "B8AED8", objectName: "Cliente e data" });
-  await circleIcon(s, 9.2, 1.9, 3.3, iconeNicho, HEX.accent1, HEX.lt1, "Ícone do nicho");
+  txt(s, "Proposta para [Nome do cliente]  ·  [Data]", { x: 0.6, y: 6.6, w: 7.6, h: 0.4, fontSize: 14, color: HEX.accent6, objectName: "Cliente e data" });
+  await circleIcon(s, 8.05, 4.55, 1.8, iconeNicho, HEX.dk2, HEX.lt1, "Ícone do nicho");
   s.addNotes(`[Abertura · ~1 min] Cumprimente, combine o objetivo e o tempo da reunião (15 min) e peça permissão: "Posso começar com uma pergunta?"\nDecisor típico: ${n.decisor}.`);
 
   // 2. Gancho
@@ -155,7 +164,7 @@ async function deck(n) {
   s = pres.addSlide({ masterName: "Conteudo", sectionTitle: "O seu cenário" });
   s.addText("O desafio de hoje", { placeholder: "title" });
   const col = [
-    ["Como é hoje", n.dor, "FaExclamationTriangle", HEX.accent2],
+    ["Como é hoje", n.dor, "FaExclamationTriangle", HEX.accent3],
     ["O custo de esperar", n.inacao, "FaHourglassHalf", HEX.accent1],
   ];
   for (let i = 0; i < 2; i++) {
@@ -310,7 +319,7 @@ async function deck(n) {
   s.addText("Três ganhos para o seu negócio", { placeholder: "title" });
   const ganhos = [
     ["FaChartLine", "Mais receita", n.arg_receita, HEX.accent1],
-    ["FaStar", "Mais experiência", n.arg_exp, HEX.accent2],
+    ["FaStar", "Mais experiência", n.arg_exp, HEX.accent4],
     ["FaCogs", "Menos custo", n.arg_oper, HEX.accent3],
   ];
   for (let i = 0; i < 3; i++) {
@@ -343,7 +352,7 @@ async function deck(n) {
   s = pres.addSlide({ masterName: "Conteudo", sectionTitle: "Ganhos e solução" });
   s.addText("Projeto em destaque", { placeholder: "title" });
   card(s, 0.6, 1.75, 6.0, 4.8, "Card Boulevard", C.text1);
-  txt(s, "Boulevard.Live", { x: 1.0, y: 2.1, w: 5.2, h: 0.5, fontSize: 18, bold: true, color: C.accent1, objectName: "Boulevard título" });
+  txt(s, "Boulevard.Live", { x: 1.0, y: 2.1, w: 5.2, h: 0.5, fontSize: 18, bold: true, color: C.accent2, objectName: "Boulevard título" });
   txt(s, "1.125 m²", { x: 1.0, y: 2.65, w: 5.2, h: 1.2, fontSize: 60, bold: true, color: C.background1, objectName: "Boulevard número" });
   txt(s, "O maior painel de LED da América Latina, em Brasília. Inspirado na Times Square e instalado no ponto de maior fluxo de pessoas e veículos da cidade.", { x: 1.0, y: 4.05, w: 5.2, h: 2.2, fontSize: 16, color: C.background1, objectName: "Boulevard texto" });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.9, y: 1.75, w: 5.8, h: 4.8, rectRadius: 0.12, fill: { color: C.background2 }, line: { color: HEX.accent3, width: 1.5, dashType: "dash" }, objectName: "Área case do segmento" });
@@ -356,10 +365,10 @@ async function deck(n) {
   s = pres.addSlide({ masterName: "Fechamento", sectionTitle: "Próximo passo" });
   s.addText(n.frase, { placeholder: "title" });
   s.addText(n.fechamento, { placeholder: "body" });
-  card(s, 8.8, 2.3, 3.9, 3.25, "Card próximo passo", C.accent1);
-  txt(s, "Próximo passo", { x: 9.15, y: 2.6, w: 3.2, h: 0.45, fontSize: 18, bold: true, color: C.background1, objectName: "Próximo passo título" });
+  card(s, 8.8, 2.3, 3.9, 3.25, "Card próximo passo", C.text2);
+  txt(s, "Próximo passo", { x: 9.15, y: 2.6, w: 3.2, h: 0.45, fontSize: 18, bold: true, color: C.accent2, objectName: "Próximo passo título" });
   txt(s, n.cta, { x: 9.15, y: 3.1, w: 3.2, h: 2.3, fontSize: 15, color: C.background1, objectName: "Próximo passo texto" });
-  txt(s, "[Nome do executivo]  ·  [Telefone / WhatsApp]  ·  [E-mail]  ·  ledwave.com.br", { x: 0.6, y: 6.6, w: 12, h: 0.4, fontSize: 14, color: "B8AED8", objectName: "Contato" });
+  txt(s, "[Nome do executivo]  ·  [Telefone / WhatsApp]  ·  [E-mail]  ·  ledwave.com.br", { x: 0.6, y: 6.6, w: 9, h: 0.4, fontSize: 14, color: HEX.accent6, objectName: "Contato" });
   s.addNotes(`[Fechamento · ~1,5 min] Termine no ponto alto: repita a frase de efeito e proponha o próximo passo com duas opções de data ("quinta ou sexta?"). Nunca termine com "alguma dúvida?".\nPergunta de necessidade: ${n.spin[3]}`);
 
   const file = path.join(OUT, arquivo(n.nicho));
