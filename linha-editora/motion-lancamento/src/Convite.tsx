@@ -1,39 +1,24 @@
 import { AbsoluteFill, Easing, Img, Interactive, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { body, display } from "./fonts";
+import { Assinatura } from "./Assinatura";
+import { jost, mono, spectral } from "./fonts";
 
 export const Convite: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
   return (
-    <AbsoluteFill name="Convite" style={{ backgroundColor: "#1F6B53", justifyContent: "center", alignItems: "center" }}>
+    <AbsoluteFill name="Convite" style={{ backgroundColor: "#F8F8F8", paddingLeft: 90, paddingRight: 90, paddingTop: 230 }}>
       <Interactive.Div
         name="Dia da semana"
-        style={{
-          fontFamily: body,
-          fontSize: 56,
-          fontWeight: 600,
-          letterSpacing: 6,
-          textTransform: "uppercase",
-          color: "#CFE8DD",
-          opacity: interpolate(frame, [0, 0.6 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }),
-        }}
+        style={{ fontFamily: mono, fontSize: 32, letterSpacing: 10, color: "#001F3F",
+          opacity: interpolate(frame, [0, 0.5 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) }}
       >
-        Quarta-feira
+        QUARTA-FEIRA
       </Interactive.Div>
       <Interactive.Div
         name="Data"
-        style={{
-          marginTop: 16,
-          fontFamily: display,
-          fontWeight: 600,
-          fontSize: 190,
-          lineHeight: 1,
-          textAlign: "center",
-          color: "#FFFFFF",
-          opacity: interpolate(frame, [0.2 * fps, 0.9 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }),
-          scale: interpolate(frame, [0.2 * fps, 1.1 * fps], [0.85, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.spring({ damping: 200 }), output: "perceptual-scale" }),
-        }}
+        style={{ marginTop: 24, fontFamily: jost, fontWeight: 300, fontSize: 190, lineHeight: 1, letterSpacing: -3, color: "#001F3F",
+          opacity: interpolate(frame, [0.1 * fps, 0.8 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }),
+          translate: interpolate(frame, [0.1 * fps, 1 * fps], ["0px 50px", "0px 0px"], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }) }}
       >
         21 de
         <br />
@@ -41,39 +26,29 @@ export const Convite: React.FC = () => {
       </Interactive.Div>
       <Interactive.Div
         name="Convite"
-        style={{
-          marginTop: 56,
-          fontFamily: body,
-          fontSize: 68,
-          fontWeight: 600,
-          color: "#FFFFFF",
-          opacity: interpolate(frame, [0.9 * fps, 1.5 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }),
-        }}
+        style={{ marginTop: 48, fontFamily: spectral, fontStyle: "italic", fontSize: 60, color: "#001F3F",
+          opacity: interpolate(frame, [0.8 * fps, 1.4 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }) }}
       >
-        Esperamos você!
+        Esperamos você.
       </Interactive.Div>
       <Interactive.Div
-        name="Cartão do WhatsApp"
-        style={{
-          marginTop: 90,
-          backgroundColor: "#FFFFFF",
-          borderRadius: 28,
-          padding: 32,
-          display: "flex",
-          alignItems: "center",
-          gap: 32,
-          opacity: interpolate(frame, [1.5 * fps, 2.1 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }),
-          translate: interpolate(frame, [1.5 * fps, 2.1 * fps], ["0px 50px", "0px 0px"], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }),
-        }}
+        name="WhatsApp"
+        style={{ marginTop: 90, display: "flex", alignItems: "center", gap: 44, paddingTop: 56, borderTop: "2px solid #A8A9AD",
+          opacity: interpolate(frame, [1.4 * fps, 2 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.bezier(0.16, 1, 0.3, 1) }) }}
       >
-        <Img name="QR WhatsApp" src={staticFile("qrcode-whatsapp.png")} style={{ width: 260, height: 260 }} />
-        <Interactive.Div name="Texto do WhatsApp" style={{ fontFamily: body, color: "#16211D", fontSize: 44, lineHeight: 1.3 }}>
-          Fale com a gente
-          <br />
-          no WhatsApp
-          <br />
-          <b>(11) 91331-1813</b>
-        </Interactive.Div>
+        <Img name="QR WhatsApp" src={staticFile("qrcode-whatsapp.png")} style={{ width: 270, height: 270 }} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <span style={{ fontFamily: mono, fontSize: 30, letterSpacing: 8, color: "#001F3F" }}>WHATSAPP</span>
+          <span style={{ fontFamily: jost, fontWeight: 300, fontSize: 58, color: "#001F3F" }}>(11) 91331-1813</span>
+          <span style={{ fontFamily: spectral, fontSize: 44, color: "#001F3F" }}>Aponte a câmera</span>
+        </div>
+      </Interactive.Div>
+      <Interactive.Div
+        name="Assinatura"
+        style={{ position: "absolute", left: 90, bottom: 150,
+          opacity: interpolate(frame, [2 * fps, 2.6 * fps], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) }}
+      >
+        <Assinatura escala={0.55} cor="#001F3F" corPrata="#A8A9AD" inicio={2 * 30} />
       </Interactive.Div>
     </AbsoluteFill>
   );

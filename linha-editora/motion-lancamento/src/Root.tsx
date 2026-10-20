@@ -1,21 +1,23 @@
 import { Composition, Folder } from "remotion";
+import { Abertura } from "./Abertura";
 import { Amanha } from "./Amanha";
 import { Convite } from "./Convite";
 import { Lancamento } from "./Lancamento";
 import { LancamentoVideo } from "./LancamentoVideo";
-import { Livros } from "./Livros";
+import { Titulos } from "./Titulos";
 
-// Vertical 1080x1920 para Stories e Reels. Duração total: 90 + 110 + 110 + 150 − 3 transições de 15 = 415 quadros
+// Vertical 1080x1920 para Stories e Reels. Duração: 75 + 95 + 115 + 130 + 165 − 4 transições de 15 = 520 quadros
 export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Folder name="Cenas">
-        <Composition id="Amanha" component={Amanha} width={1080} height={1920} fps={30} durationInFrames={90} />
-        <Composition id="Lancamento" component={Lancamento} width={1080} height={1920} fps={30} durationInFrames={110} />
-        <Composition id="Livros" component={Livros} width={1080} height={1920} fps={30} durationInFrames={110} />
-        <Composition id="Convite" component={Convite} width={1080} height={1920} fps={30} durationInFrames={150} />
+        <Composition id="Abertura" component={Abertura} width={1080} height={1920} fps={30} durationInFrames={75} />
+        <Composition id="Amanha" component={Amanha} width={1080} height={1920} fps={30} durationInFrames={95} />
+        <Composition id="Lancamento" component={Lancamento} width={1080} height={1920} fps={30} durationInFrames={115} />
+        <Composition id="Titulos" component={Titulos} width={1080} height={1920} fps={30} durationInFrames={130} />
+        <Composition id="Convite" component={Convite} width={1080} height={1920} fps={30} durationInFrames={165} />
       </Folder>
-      <Composition id="LancamentoLinhaEditora" component={LancamentoVideo} width={1080} height={1920} fps={30} durationInFrames={415} />
+      <Composition id="LancamentoLinhaEditora" component={LancamentoVideo} width={1080} height={1920} fps={30} durationInFrames={520} />
     </>
   );
 };

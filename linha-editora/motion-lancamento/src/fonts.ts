@@ -1,10 +1,14 @@
 import { loadFont } from "@remotion/fonts";
 import { staticFile } from "remotion";
 
-// Mesma tipografia do app da Linha Editora: Literata nos títulos, IBM Plex Sans no texto.
-// Arquivos locais em public/ (fontes variáveis), para o vídeo renderizar sem internet.
-export const display = "Literata";
-export const body = "IBM Plex Sans";
+// Tipografia do manual da marca (marca/README.md): Jost nos títulos, Spectral no texto, IBM Plex Mono nos rótulos.
+// Arquivos locais em public/, para o vídeo renderizar sem internet.
+export const jost = "Jost";
+export const spectral = "Spectral";
+export const mono = "IBM Plex Mono";
 
-loadFont({ family: display, url: staticFile("Literata.woff2"), weight: "200 900" });
-loadFont({ family: body, url: staticFile("IBMPlexSans.woff2"), weight: "100 700" });
+loadFont({ family: jost, url: staticFile("Jost.woff2"), weight: "100 900" });
+loadFont({ family: spectral, url: staticFile("Spectral-Light.woff2"), weight: "300" });
+loadFont({ family: spectral, url: staticFile("Spectral-Regular.woff2"), weight: "400" });
+loadFont({ family: spectral, url: staticFile("Spectral-Italic.woff2"), weight: "400", style: "italic" });
+loadFont({ family: mono, url: staticFile("IBMPlexMono-Regular.woff2"), weight: "400" });
