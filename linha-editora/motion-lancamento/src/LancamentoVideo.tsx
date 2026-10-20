@@ -1,31 +1,31 @@
 import { linearTiming, TransitionSeries } from "@remotion/transitions";
-import { fade } from "@remotion/transitions/fade";
-import { Abertura } from "./Abertura";
-import { Amanha } from "./Amanha";
 import { Convite } from "./Convite";
-import { Lancamento } from "./Lancamento";
-import { Titulos } from "./Titulos";
+import { Estante } from "./Estante";
+import { LinhaEscreve } from "./LinhaEscreve";
+import { persiana } from "./Persiana";
+import { PrimeiraLinha } from "./PrimeiraLinha";
+import { Regua } from "./Regua";
 
-// Transições sóbrias (fade), de acordo com a personalidade da marca: editorial e silenciosa.
+// As cenas se ligam por uma persiana de linhas verticais, o grafismo de apoio da marca.
 export const LancamentoVideo: React.FC = () => (
   <TransitionSeries>
-    <TransitionSeries.Sequence name="Abertura" durationInFrames={75}>
-      <Abertura />
+    <TransitionSeries.Sequence name="Primeira linha" durationInFrames={140}>
+      <PrimeiraLinha />
     </TransitionSeries.Sequence>
-    <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: 15 })} />
-    <TransitionSeries.Sequence name="Amanhã" durationInFrames={95}>
-      <Amanha />
+    <TransitionSeries.Transition presentation={persiana({ faixas: 18 })} timing={linearTiming({ durationInFrames: 18 })} />
+    <TransitionSeries.Sequence name="A linha escreve" durationInFrames={110}>
+      <LinhaEscreve />
     </TransitionSeries.Sequence>
-    <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: 15 })} />
-    <TransitionSeries.Sequence name="Lançamento" durationInFrames={115}>
-      <Lancamento />
+    <TransitionSeries.Transition presentation={persiana({ faixas: 18 })} timing={linearTiming({ durationInFrames: 18 })} />
+    <TransitionSeries.Sequence name="Régua" durationInFrames={125}>
+      <Regua />
     </TransitionSeries.Sequence>
-    <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: 15 })} />
-    <TransitionSeries.Sequence name="Títulos" durationInFrames={130}>
-      <Titulos />
+    <TransitionSeries.Transition presentation={persiana({ faixas: 18 })} timing={linearTiming({ durationInFrames: 18 })} />
+    <TransitionSeries.Sequence name="Estante" durationInFrames={140}>
+      <Estante />
     </TransitionSeries.Sequence>
-    <TransitionSeries.Transition presentation={fade()} timing={linearTiming({ durationInFrames: 15 })} />
-    <TransitionSeries.Sequence name="Convite" durationInFrames={165}>
+    <TransitionSeries.Transition presentation={persiana({ faixas: 18 })} timing={linearTiming({ durationInFrames: 18 })} />
+    <TransitionSeries.Sequence name="Convite" durationInFrames={200}>
       <Convite />
     </TransitionSeries.Sequence>
   </TransitionSeries>
