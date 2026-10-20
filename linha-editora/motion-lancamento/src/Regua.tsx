@@ -1,4 +1,5 @@
 import { AbsoluteFill, Easing, Interactive, interpolate, useCurrentFrame } from "remotion";
+import { LENTO } from "./ritmo";
 import { jost, mono } from "./fonts";
 
 // Uma régua de dias desliza até o 21; a marca do dia se ergue como a linha principal.
@@ -6,7 +7,7 @@ const c = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const DIA = 180, Y = 1300, PRIMEIRO = 8, ULTIMO = 28;
 
 export const Regua: React.FC = () => {
-  const frame = useCurrentFrame();
+  const frame = useCurrentFrame() / LENTO;
   const desliza = interpolate(frame, [0, 58], [0, 1], { ...c, easing: Easing.bezier(0.33, 0, 0.1, 1) });
   const centroDia = 12 + (21 - 12) * desliza;
   const ofs = 540 - (centroDia - PRIMEIRO) * DIA;

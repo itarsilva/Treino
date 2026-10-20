@@ -1,4 +1,5 @@
 import { Easing, interpolate, useCurrentFrame } from "remotion";
+import { LENTO } from "./ritmo";
 import simbolo from "./simbolo-paths.json";
 
 // Símbolo oficial, com os vetores extraídos do manual da marca (página 4).
@@ -16,7 +17,7 @@ const pecas = [
 }).sort((a, b) => a.x - b.x);
 
 export const Simbolo: React.FC<Props> = ({ altura, corLombada, corPrata, inicio = 0, animar = true }) => {
-  const frame = useCurrentFrame();
+  const frame = useCurrentFrame() / LENTO;
   const largura = (altura * simbolo.w) / simbolo.h;
   return (
     <svg width={largura} height={altura} viewBox={`0 0 ${simbolo.w} ${simbolo.h}`} style={{ overflow: "visible" }}>

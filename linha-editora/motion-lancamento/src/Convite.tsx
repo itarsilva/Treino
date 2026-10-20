@@ -1,4 +1,5 @@
 import { AbsoluteFill, Easing, Img, Interactive, interpolate, staticFile, useCurrentFrame } from "remotion";
+import { LENTO } from "./ritmo";
 import { Assinatura } from "./Assinatura";
 import { jost, mono, spectral } from "./fonts";
 
@@ -6,7 +7,7 @@ import { jost, mono, spectral } from "./fonts";
 const c = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 export const Convite: React.FC = () => {
-  const frame = useCurrentFrame();
+  const frame = useCurrentFrame() / LENTO;
   const ease = Easing.bezier(0.16, 1, 0.3, 1);
   const op = (a: number) => interpolate(frame, [a, a + 16], [0, 1], { ...c, easing: ease });
   return (

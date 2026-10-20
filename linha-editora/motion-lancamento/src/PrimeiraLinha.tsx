@@ -1,4 +1,5 @@
 import { AbsoluteFill, Easing, Interactive, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { LENTO } from "./ritmo";
 import { mono, spectral } from "./fonts";
 import { ESPESSURA, PECAS, SIMBOLO_W } from "./geometria";
 
@@ -8,7 +9,7 @@ const ease = Easing.bezier(0.16, 1, 0.3, 1), suave = Easing.bezier(0.65, 0, 0.35
 const c = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 export const PrimeiraLinha: React.FC = () => {
-  const frame = useCurrentFrame();
+  const frame = useCurrentFrame() / LENTO;
   const { fps } = useVideoConfig();
   const morph = interpolate(frame, [52, 88], [0, 1], { ...c, easing: suave });
   return (

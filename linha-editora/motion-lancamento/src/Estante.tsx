@@ -1,4 +1,5 @@
 import { AbsoluteFill, Easing, Interactive, interpolate, useCurrentFrame } from "remotion";
+import { LENTO } from "./ritmo";
 import { jost, mono } from "./fonts";
 
 // Os três títulos viram lombadas que deslizam para a prateleira; a última pousa inclinada, como no símbolo.
@@ -11,7 +12,7 @@ const LIVROS = [
 ];
 
 export const Estante: React.FC = () => {
-  const frame = useCurrentFrame();
+  const frame = useCurrentFrame() / LENTO;
   const ease = Easing.bezier(0.16, 1, 0.3, 1);
   return (
     <AbsoluteFill name="Estante" style={{ backgroundColor: "#F8F8F8" }}>

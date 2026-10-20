@@ -1,10 +1,11 @@
 import { Easing, interpolate, useCurrentFrame } from "remotion";
+import { LENTO } from "./ritmo";
 
 // Grafismo de apoio do manual: linhas verticais em ritmo, alinhadas a uma base comum.
 type Props = { quantidade: number; altura: number; cor: string; espaco: number; inicio?: number };
 
 export const Grafismo: React.FC<Props> = ({ quantidade, altura, cor, espaco, inicio = 0 }) => {
-  const frame = useCurrentFrame();
+  const frame = useCurrentFrame() / LENTO;
   return (
     <div style={{ display: "flex", alignItems: "flex-end", gap: espaco, height: altura }}>
       {Array.from({ length: quantidade }).map((_, i) => (

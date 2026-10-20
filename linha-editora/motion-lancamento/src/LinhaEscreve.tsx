@@ -1,4 +1,5 @@
 import { AbsoluteFill, Easing, Interactive, interpolate, useCurrentFrame } from "remotion";
+import { LENTO } from "./ritmo";
 import { jost, mono, spectral } from "./fonts";
 
 // Uma linha atravessa a tela como um cursor e, por onde passa, escreve "Amanhã".
@@ -6,7 +7,7 @@ const c = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const X0 = 90, LARGURA = 860;
 
 export const LinhaEscreve: React.FC = () => {
-  const frame = useCurrentFrame();
+  const frame = useCurrentFrame() / LENTO;
   const corre = interpolate(frame, [8, 46], [0, 1], { ...c, easing: Easing.bezier(0.45, 0, 0.2, 1) });
   const x = X0 + LARGURA * corre;
   return (
