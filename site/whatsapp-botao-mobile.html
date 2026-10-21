@@ -1,0 +1,27 @@
+<!-- LedWave — botão flutuante de WhatsApp SÓ NO CELULAR.
+     No computador ele fica escondido, porque lá o botão atual já aparece.
+     Troque o href pelo link EXATO do botão atual (clique direito nele → Copiar endereço do link),
+     assim o GTM continua contando a conversão "Botão WhatsApp das LPs". -->
+<a href="COLE_AQUI_O_LINK_DO_BOTAO_ATUAL"
+   class="lw-whatsapp-mobile"
+   target="_blank" rel="noopener"
+   aria-label="Fale com a LedWave no WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+       alt="WhatsApp" width="60" height="60">
+</a>
+<style>
+  .lw-whatsapp-mobile { display: none; }
+  @media (max-width: 767px) {
+    .lw-whatsapp-mobile {
+      display: block;
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 60px;
+      height: 60px;
+      z-index: 99999;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .25));
+    }
+    .lw-whatsapp-mobile img { width: 100%; height: 100%; display: block; }
+  }
+</style>
