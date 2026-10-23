@@ -6,6 +6,7 @@ import { LinhaEscreve } from "./LinhaEscreve";
 import { PrimeiraLinha } from "./PrimeiraLinha";
 import { Regua } from "./Regua";
 import { dur } from "./ritmo";
+import { DURACAO, ReelsLancamento } from "./reels/ReelsLancamento";
 import { Capa, Foto1, Foto2, Foto3, Foto4, Obrigado } from "./carrossel/Slides";
 
 // Vertical 1080x1920 para Stories e Reels. Durações base multiplicadas por LENTO (ritmo.ts): cenas menos as 4 transições
@@ -27,6 +28,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="Carrossel-05" component={Foto4} width={1080} height={1350} fps={30} durationInFrames={1} />
         <Composition id="Carrossel-06-obrigado" component={Obrigado} width={1080} height={1350} fps={30} durationInFrames={1} />
       </Folder>
+      <Composition id="ReelsLancamento" component={ReelsLancamento} width={1080} height={1920} fps={30} durationInFrames={DURACAO} />
       <Composition id="LancamentoLinhaEditora" component={LancamentoVideo} width={1080} height={1920} fps={30} durationInFrames={dur(140) + dur(110) + dur(125) + dur(140) + dur(200) - 4 * dur(18)} />
     </>
   );
