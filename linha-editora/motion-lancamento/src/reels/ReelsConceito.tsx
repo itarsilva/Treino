@@ -173,8 +173,7 @@ const Prologo: React.FC = () => {
   );
 };
 
-const LOMBADAS = ["fotos/foto9.jpg", "fotos/f20.jpg", "fotos/foto11.jpg", "fotos/f22.jpg", "fotos/foto12.jpg", "fotos/f19.jpg"];
-const Estante: React.FC<{ dur: number }> = ({ dur }) => {
+const Estante: React.FC<{ dur: number; lombadas: string[] }> = ({ dur, lombadas: LOMBADAS }) => {
   const f = useCurrentFrame();
   const n = LOMBADAS.length, vao = 12, lw = (W - vao * (n - 1)) / n;
   return (
@@ -227,27 +226,56 @@ const CENAS: Cena[] = [
 ];
 // Transição de entrada de cada cena (a primeira é a que sai do prólogo).
 type Qualquer = TransitionPresentation<Record<string, unknown>>;
-const ENTRADAS = [abrirLivro, pagina, lombada, persiana({ faixas: 14 }), pagina, lombada, traco] as unknown as Qualquer[];
-const TR = 34, PROLOGO = 130, ESTANTE = 150, FECHA = 180;
-export const DURACAO_CONCEITO = PROLOGO + CENAS.reduce((s, c) => s + c.dur, 0) + ESTANTE + FECHA - (CENAS.length + 2) * TR;
+type Roteiro = { cenas: Cena[]; entradas: Qualquer[]; lombadas: string[]; som: boolean };
 
-export const ReelsConceito: React.FC = () => {
+const ROTEIROS: Record<"completa" | "ultimos", Roteiro> = {
+  // Versão com os vídeos da noite e as fotos.
+  completa: {
+    cenas: CENAS,
+    entradas: [abrirLivro, pagina, lombada, persiana({ faixas: 14 }), pagina, lombada, traco] as unknown as Qualquer[],
+    lombadas: ["fotos/foto9.jpg", "fotos/f20.jpg", "fotos/foto11.jpg", "fotos/f22.jpg", "fotos/foto12.jpg", "fotos/f19.jpg"],
+    som: true,
+  },
+  // Versão só com o último material enviado (f19 a f22); sem som, porque chegou como imagem.
+  ultimos: {
+    cenas: [
+      { m: { foto: "fotos/f20.jpg" }, dur: 165, capitulo: "CAPÍTULO I", rotulo: "CAPÍTULO I · OS ENCONTROS", frase: "A linha que conecta histórias.", liga: [[355, 470], [900, 745]] },
+      { m: { foto: "fotos/f19.jpg" }, dur: 150, capitulo: "CAPÍTULO I", frase: "Conversas que viram capítulos.", liga: [[300, 630], [675, 640]] },
+      { m: { foto: "fotos/f22.jpg" }, dur: 150, capitulo: "CAPÍTULO II", rotulo: "CAPÍTULO II · AS VOZES", frase: "Cada leitor traz a sua história.", liga: [[403, 620], [720, 600]] },
+      { m: { foto: "fotos/f21.jpg" }, dur: 165, capitulo: "CAPÍTULO III", rotulo: "CAPÍTULO III · QUEM ESCREVE", frase: "Quem lê, quem escreve.", liga: [[221, 540], [562, 580]] },
+    ],
+    entradas: [abrirLivro, pagina, lombada, traco] as unknown as Qualquer[],
+    lombadas: ["fotos/f20.jpg", "fotos/f19.jpg", "fotos/f22.jpg", "fotos/f21.jpg"],
+    som: false,
+  },
+};
+const TR = 34, PROLOGO = 130, ESTANTE = 150, FECHA = 180;
+export const duracaoConceito = (versao: keyof typeof ROTEIROS) => {
+  const c = ROTEIROS[versao].cenas;
+  return PROLOGO + c.reduce((s, x) => s + x.dur, 0) + ESTANTE + FECHA - (c.length + 2) * TR;
+};
+export const DURACAO_CONCEITO = duracaoConceito("completa");
+
+export const ReelsConceito: React.FC<{ versao?: keyof typeof ROTEIROS }> = ({ versao = "completa" }) => {
   const f = useCurrentFrame();
-  const vol = interpolate(f, [0, 30, DURACAO_CONCEITO - 50, DURACAO_CONCEITO], [0, 0.3, 0.3, 0], clamp);
+  const r = ROTEIROS[versao], total = duracaoConceito(versao);
+  const vol = interpolate(f, [0, 30, total - 50, total], [0, 0.3, 0.3, 0], clamp);
   return (
     <AbsoluteFill style={{ backgroundColor: AZUL }}>
       {/* som ambiente da festa, contínuo e baixo */}
-      <Audio src={staticFile("videos/v184803.mp4")} volume={vol} />
-      <Sequence from={450}><Audio src={staticFile("videos/v195734.mp4")} volume={vol} /></Sequence>
-      <Sequence from={880}><Audio src={staticFile("videos/v183108.mp4")} volume={vol} /></Sequence>
+      {r.som && <>
+        <Audio src={staticFile("videos/v184803.mp4")} volume={vol} />
+        <Sequence from={450}><Audio src={staticFile("videos/v195734.mp4")} volume={vol} /></Sequence>
+        <Sequence from={880}><Audio src={staticFile("videos/v183108.mp4")} volume={vol} /></Sequence>
+      </>}
       <TransitionSeries>
         <TransitionSeries.Sequence name="Prólogo" durationInFrames={PROLOGO}><Prologo /></TransitionSeries.Sequence>
-        {CENAS.flatMap((c, i) => [
-          <TransitionSeries.Transition key={`t${i}`} presentation={ENTRADAS[i]} timing={linearTiming({ durationInFrames: TR })} />,
+        {r.cenas.flatMap((c, i) => [
+          <TransitionSeries.Transition key={`t${i}`} presentation={r.entradas[i]} timing={linearTiming({ durationInFrames: TR })} />,
           <TransitionSeries.Sequence key={`c${i}`} name={c.frase} durationInFrames={c.dur}><CenaFoto c={c} /></TransitionSeries.Sequence>,
         ])}
         <TransitionSeries.Transition presentation={abrirLivro as unknown as Qualquer} timing={linearTiming({ durationInFrames: TR })} />
-        <TransitionSeries.Sequence name="Epílogo" durationInFrames={ESTANTE}><Estante dur={ESTANTE} /></TransitionSeries.Sequence>
+        <TransitionSeries.Sequence name="Epílogo" durationInFrames={ESTANTE}><Estante dur={ESTANTE} lombadas={r.lombadas} /></TransitionSeries.Sequence>
         <TransitionSeries.Transition presentation={persiana({ faixas: 18 })} timing={linearTiming({ durationInFrames: TR })} />
         <TransitionSeries.Sequence name="Fechamento" durationInFrames={FECHA}><Fechamento /></TransitionSeries.Sequence>
       </TransitionSeries>
