@@ -15,7 +15,7 @@ export const Capa: React.FC = () => (
       A primeira linha da nossa história.
     </div>
     <div style={{ position: "absolute", left: 80, right: 80, top: 450, height: 780, overflow: "hidden" }}>
-      <Img src={staticFile("fotos/foto10.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 22%" }} />
+      <Img src={staticFile("fotos/foto10.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 0%" }} />
     </div>
     <div style={{ position: "absolute", left: 80, bottom: 60 }}>
       <Linhas n={24} altura={42} cor="#A8A9AD" espaco={14} />
@@ -28,19 +28,19 @@ export const Capa: React.FC = () => (
 
 // 02 a 05 · Fotos do lançamento
 export const Foto1: React.FC = () => (
-  <SlideFoto foto="fotos/foto11.jpg" posicao="50% 30%" numero="02" rotulo="O LANÇAMENTO"
+  <SlideFoto foto="fotos/foto11.jpg" posicao="50% 0%" numero="02" rotulo="O LANÇAMENTO"
     legenda={<>O lançamento da casa e dos seus <i>três primeiros títulos</i>, na Livraria da Vila.</>} />
 );
 export const Foto2: React.FC = () => (
-  <SlideFoto foto="fotos/foto9.jpg" posicao="50% 25%" numero="03" rotulo="ENCONTROS"
+  <SlideFoto foto="fotos/foto9.jpg" posicao="50% 0%" numero="03" rotulo="ENCONTROS"
     legenda={<>Toda história começa por uma linha, e por quem está ao lado.</>} />
 );
 export const Foto3: React.FC = () => (
-  <SlideFoto foto="fotos/foto12.jpg" posicao="50% 30%" numero="04" rotulo="LEITORES"
+  <SlideFoto foto="fotos/foto12.jpg" posicao="50% 0%" numero="04" rotulo="LEITORES"
     legenda={<>Leitores, colegas e amigos que vieram celebrar com a gente.</>} />
 );
 export const Foto4: React.FC = () => (
-  <SlideFoto foto="fotos/foto13.jpg" posicao="50% 28%" numero="05" rotulo="NOVOS TÍTULOS"
+  <SlideFoto foto="fotos/foto13.jpg" posicao="50% 0%" numero="05" rotulo="NOVOS TÍTULOS"
     legenda={<><i>Direito Processual e Capitalismo</i>, 2ª edição, nas mãos de quem lê.</>} />
 );
 
