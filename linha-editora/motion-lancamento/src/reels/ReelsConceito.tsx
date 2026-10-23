@@ -236,16 +236,19 @@ const ROTEIROS: Record<"completa" | "ultimos", Roteiro> = {
     lombadas: ["fotos/foto9.jpg", "fotos/f20.jpg", "fotos/foto11.jpg", "fotos/f22.jpg", "fotos/foto12.jpg", "fotos/f19.jpg"],
     som: true,
   },
-  // Versão só com o último material enviado (f19 a f22); sem som, porque chegou como imagem.
+  // Versão só com o último material enviado (f19 a f26); sem som, porque chegou como imagem.
   ultimos: {
     cenas: [
-      { m: { foto: "fotos/f20.jpg" }, dur: 165, capitulo: "CAPÍTULO I", rotulo: "CAPÍTULO I · OS ENCONTROS", frase: "A linha que conecta histórias.", liga: [[355, 470], [900, 745]] },
-      { m: { foto: "fotos/f19.jpg" }, dur: 150, capitulo: "CAPÍTULO I", frase: "Conversas que viram capítulos.", liga: [[300, 630], [675, 640]] },
-      { m: { foto: "fotos/f22.jpg" }, dur: 150, capitulo: "CAPÍTULO II", rotulo: "CAPÍTULO II · AS VOZES", frase: "Cada leitor traz a sua história.", liga: [[403, 620], [720, 600]] },
-      { m: { foto: "fotos/f21.jpg" }, dur: 165, capitulo: "CAPÍTULO III", rotulo: "CAPÍTULO III · QUEM ESCREVE", frase: "Quem lê, quem escreve.", liga: [[221, 540], [562, 580]] },
+      { m: { foto: "fotos/f20.jpg" }, dur: 125, capitulo: "CAPÍTULO I", rotulo: "CAPÍTULO I · OS ENCONTROS", frase: "A linha que conecta histórias.", liga: [[355, 470], [900, 745]] },
+      { m: { foto: "fotos/f19.jpg" }, dur: 120, capitulo: "CAPÍTULO I", frase: "Conversas que viram capítulos.", liga: [[300, 630], [675, 640]] },
+      { m: { foto: "fotos/f25.jpg" }, dur: 120, capitulo: "CAPÍTULO I", frase: "Entre estantes, novas leituras.", liga: [[422, 790], [854, 800]] },
+      { m: { foto: "fotos/f22.jpg" }, dur: 120, capitulo: "CAPÍTULO II", rotulo: "CAPÍTULO II · AS VOZES", frase: "Cada leitor traz a sua história.", liga: [[403, 620], [720, 600]] },
+      { m: { foto: "fotos/f24.jpg" }, dur: 125, capitulo: "CAPÍTULO III", rotulo: "CAPÍTULO III · QUEM ESCREVE", frase: "Um encontro em cada dedicatória.", liga: [[221, 520], [466, 460]] },
+      { m: { foto: "fotos/f21.jpg" }, dur: 120, capitulo: "CAPÍTULO III", frase: "Quem lê, quem escreve.", liga: [[221, 540], [562, 580]] },
+      { m: { foto: "fotos/f26.jpg" }, dur: 150, capitulo: "CAPÍTULO III", rotulo: "AUTOR", frase: "Marcelo Grillo", grande: true },
     ],
-    entradas: [abrirLivro, pagina, lombada, traco] as unknown as Qualquer[],
-    lombadas: ["fotos/f20.jpg", "fotos/f19.jpg", "fotos/f22.jpg", "fotos/f21.jpg"],
+    entradas: [abrirLivro, pagina, lombada, persiana({ faixas: 14 }), pagina, lombada, traco] as unknown as Qualquer[],
+    lombadas: ["fotos/f20.jpg", "fotos/f19.jpg", "fotos/f25.jpg", "fotos/f22.jpg", "fotos/f24.jpg", "fotos/f26.jpg"],
     som: false,
   },
 };
