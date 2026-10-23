@@ -10,6 +10,9 @@ const AZUL = "#001F3F", PRATA = "#A8A9AD", OFF = "#F8F8F8";
 const W = 1080, H = 1920;
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const sai = Easing.bezier(0.16, 1, 0.3, 1);
+// Ritmo geral: todos os tempos abaixo estão em quadros-base e são esticados por L (mais lento = maior).
+const L = 1.6;
+const q = (n: number) => Math.round(n * L);
 
 type Midia = { foto: string } | { video: string; inicio: number; vel?: number };
 
@@ -23,7 +26,7 @@ const Quadro: React.FC<{ m: Midia; pos?: string }> = ({ m, pos = "50% 15%" }) =>
 
 // ── A · Abertura: nove lombadas sobem, "21.10" entra e as lombadas se abrem para o primeiro corte
 const Abertura: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useCurrentFrame() / L;
   const { fps } = useVideoConfig();
   const largura = interpolate(f, [44, 62], [10, W / 9], { ...clamp, easing: Easing.in(Easing.cubic) });
   return (
@@ -55,7 +58,7 @@ const MONTAGEM: Midia[] = [
 const PALAVRAS = ["Uma noite.", "Três títulos.", "Uma linha."];
 
 const Corte: React.FC<{ m: Midia }> = ({ m }) => {
-  const f = useCurrentFrame();
+  const f = useCurrentFrame() / L;
   const p = interpolate(f, [0, VARRE], [0, 1], { ...clamp, easing: Easing.inOut(Easing.cubic) });
   const zoom = interpolate(f, [0, CORTE + VARRE], [1.14, 1.0], { ...clamp, easing: sai });
   return (
@@ -67,14 +70,14 @@ const Corte: React.FC<{ m: Midia }> = ({ m }) => {
 };
 
 const Montagem: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useCurrentFrame() / L;
   const i = Math.min(PALAVRAS.length - 1, Math.floor(f / 60));
   const g = f - i * 60;
   const sobe = interpolate(g, [0, 10], [1, 0], { ...clamp, easing: sai });
   return (
     <AbsoluteFill>
       {MONTAGEM.map((m, k) => (
-        <Sequence key={k} from={k * CORTE} durationInFrames={CORTE + VARRE * (k === MONTAGEM.length - 1 ? 2 : 1)}><Corte m={m} /></Sequence>
+        <Sequence key={k} from={q(k * CORTE)} durationInFrames={q(CORTE + VARRE * (k === MONTAGEM.length - 1 ? 2 : 1))}><Corte m={m} /></Sequence>
       ))}
       <AbsoluteFill style={{ background: `linear-gradient(to top, ${AZUL}d9 0%, ${AZUL}00 38%)` }} />
       <div style={{ position: "absolute", left: 80, bottom: 260, overflow: "hidden", height: 170 }}>
@@ -95,7 +98,7 @@ const LOMBADAS = ["fotos/foto9.jpg", "fotos/f20.jpg", "fotos/foto11.jpg", "fotos
 const VAO = 14, LW = (W - VAO * 4) / 5;
 
 const Estante: React.FC<{ dur: number }> = ({ dur }) => {
-  const f = useCurrentFrame();
+  const f = useCurrentFrame() / L;
   const { fps } = useVideoConfig();
   return (
     <AbsoluteFill style={{ backgroundColor: AZUL }}>
@@ -123,17 +126,17 @@ const Estante: React.FC<{ dur: number }> = ({ dur }) => {
 
 // ── D · Marcelo: a foto revelada pela estante e o autógrafo em câmera lenta
 const Marcelo: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useCurrentFrame() / L;
   const linha = interpolate(f, [6, 30], [0, 1], { ...clamp, easing: sai });
   return (
     <AbsoluteFill style={{ backgroundColor: AZUL }}>
-      <Sequence durationInFrames={45}>
-        <AbsoluteFill style={{ transform: `scale(${interpolate(f, [0, 45], [1, 1.06])})`, transformOrigin: "50% 0%" }}>
+      <Sequence durationInFrames={q(50)}>
+        <AbsoluteFill style={{ transform: `scale(${interpolate(f, [0, 50], [1, 1.06])})`, transformOrigin: "50% 0%" }}>
           <Img src={staticFile("fotos/f21.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 20%" }} />
         </AbsoluteFill>
       </Sequence>
-      <Sequence from={45}>
-        <Corte m={{ video: "v192106", inicio: 222, vel: 0.5 }} />
+      <Sequence from={q(50)}>
+        <Corte m={{ video: "v192106", inicio: 222, vel: 0.4 }} />
       </Sequence>
       <AbsoluteFill style={{ background: `linear-gradient(to top, ${AZUL}e6 0%, ${AZUL}00 35%)` }} />
       <div style={{ position: "absolute", left: 80, right: 80, bottom: 220 }}>
@@ -151,7 +154,7 @@ const GRADE: Midia[] = [{ foto: "fotos/f19.jpg" }, { video: "v195734", inicio: 1
 const PALAVRAS_GRADE = ["LEITORES", "AUTORES", "AMIGOS"];
 
 const Grade: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useCurrentFrame() / L;
   const { fps } = useVideoConfig();
   const cw = W / 2, ch = H / 2;
   const traco = interpolate(f, [0, 24], [0, 1], { ...clamp, easing: sai });
@@ -177,7 +180,7 @@ const Grade: React.FC = () => {
 
 // ── F · Fechamento: as linhas caem em ritmo e a assinatura se forma
 const Fechamento: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useCurrentFrame() / L;
   const { fps } = useVideoConfig();
   return (
     <AbsoluteFill style={{ backgroundColor: AZUL }}>
@@ -203,7 +206,7 @@ const Fechamento: React.FC = () => {
 };
 
 const A = 62, B = MONTAGEM.length * CORTE + VARRE, C = 110, D = 140, E = 115, F = 150;
-export const DURACAO_RITMO = A + B + C + D + E + F;
+export const DURACAO_RITMO = q(A + B + C + D + E + F);
 
 export const ReelsRitmo: React.FC = () => {
   const f = useCurrentFrame();
@@ -213,12 +216,14 @@ export const ReelsRitmo: React.FC = () => {
     <AbsoluteFill style={{ backgroundColor: AZUL }}>
       <Audio src={staticFile("videos/v184803.mp4")} volume={vol} />
       <Sequence from={450}><Audio src={staticFile("videos/v195734.mp4")} volume={vol} /></Sequence>
-      <Sequence durationInFrames={A}><Abertura /></Sequence>
-      <Sequence from={A - VARRE} durationInFrames={B + VARRE}><Montagem /></Sequence>
-      <Sequence from={A + B} durationInFrames={C}><Estante dur={C} /></Sequence>
-      <Sequence from={A + B + C} durationInFrames={D}><Marcelo /></Sequence>
-      <Sequence from={A + B + C + D} durationInFrames={E}><Grade /></Sequence>
-      <Sequence from={A + B + C + D + E} durationInFrames={F}><Fechamento /></Sequence>
+      <Sequence from={880}><Audio src={staticFile("videos/v183108.mp4")} volume={vol} /></Sequence>
+      <Sequence from={1155}><Audio src={staticFile("videos/v192106.mp4")} volume={vol} /></Sequence>
+      <Sequence durationInFrames={q(A)}><Abertura /></Sequence>
+      <Sequence from={q(A - VARRE)} durationInFrames={q(B + VARRE)}><Montagem /></Sequence>
+      <Sequence from={q(A + B)} durationInFrames={q(C)}><Estante dur={C} /></Sequence>
+      <Sequence from={q(A + B + C)} durationInFrames={q(D)}><Marcelo /></Sequence>
+      <Sequence from={q(A + B + C + D)} durationInFrames={q(E)}><Grade /></Sequence>
+      <Sequence from={q(A + B + C + D + E)} durationInFrames={q(F)}><Fechamento /></Sequence>
     </AbsoluteFill>
   );
 };
