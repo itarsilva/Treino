@@ -1,0 +1,145 @@
+<title>LedWave Google Ads e SEO</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: relatório de uma coluna, leitura de cima para baixo — resumo, números, ações por data, próximos passos */
+:root{
+  --bg:#fbfbfd; --surface:#ffffff; --fg:#1d1d1f; --mute:#5f5f68; --line:#e2e2ea;
+  --accent:#b8237f; --accent-2:#0a9fc0; --soft:#f3eef6;
+  --ok:#1f7a4a; --ok-bg:#e6f4ec; --warn:#9a5b00; --warn-bg:#fdf1dc; --bad:#b42318; --bad-bg:#fde8e6; --info:#1e5fa8; --info-bg:#e5effa;
+  --display:'Poppins',ui-sans-serif,system-ui,sans-serif;
+  --body:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121216; --surface:#1b1b21; --fg:#ececf1; --mute:#a3a3ad; --line:#2e2e38;
+  --accent:#ef6bbf; --accent-2:#4fd2ef; --soft:#24202a;
+  --ok:#6fd39a; --ok-bg:#16301f; --warn:#f2bd62; --warn-bg:#33270f; --bad:#ff8a80; --bad-bg:#3a1714; --info:#8fc1ff; --info-bg:#152539;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121216; --surface:#1b1b21; --fg:#ececf1; --mute:#a3a3ad; --line:#2e2e38;
+  --accent:#ef6bbf; --accent-2:#4fd2ef; --soft:#24202a;
+  --ok:#6fd39a; --ok-bg:#16301f; --warn:#f2bd62; --warn-bg:#33270f; --bad:#ff8a80; --bad-bg:#3a1714; --info:#8fc1ff; --info-bg:#152539;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+header{border-bottom:3px solid transparent;border-image:linear-gradient(90deg,var(--accent-2),var(--accent)) 1;padding-bottom:24px;margin-bottom:32px}
+.eyebrow{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-size:clamp(28px,5vw,38px);line-height:1.15;margin:8px 0 12px;text-wrap:balance}
+h2{font-family:var(--display);font-size:22px;line-height:1.3;margin:48px 0 12px;text-wrap:balance}
+h3{font-family:var(--display);font-size:17px;margin:28px 0 8px}
+p{margin:0 0 12px;max-width:68ch}
+.meta{color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;gap:4px 18px}
+.alert{background:var(--bad-bg);color:var(--fg);border:1px solid var(--bad);border-radius:8px;padding:14px 16px;margin:24px 0}
+.alert strong{color:var(--bad)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.kpi .v{font-family:var(--display);font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:13px;color:var(--mute)}
+.tbl{overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-weight:600;font-size:13px;background:var(--soft)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td.date{font-family:var(--mono);font-size:13px;white-space:nowrap;color:var(--mute)}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.ok{background:var(--ok-bg);color:var(--ok)} .warn{background:var(--warn-bg);color:var(--warn)} .bad{background:var(--bad-bg);color:var(--bad)} .info{background:var(--info-bg);color:var(--info)}
+ul{padding-left:20px;margin:0 0 12px} li{margin:4px 0;max-width:68ch}
+.note{font-size:14px;color:var(--mute)}
+code{font-family:var(--mono);font-size:13px;background:var(--soft);padding:1px 5px;border-radius:4px;word-break:break-all}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--mute)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Relatório para a gerência</div>
+  <h1>Google Ads e SEO da LedWave: o que foi feito e o que vem a seguir</h1>
+  <div class="meta"><span>Período: 15/10 a 26/10/2026</span><span>Conta: LedWave BR (Google Ads)</span><span>Responsável: gestão de tráfego</span></div>
+</header>
+
+<div class="alert"><strong>Ação urgente:</strong> em 26/10 o Google Ads mostrou o aviso "O saldo se esgotou". A conta é pré-paga: sem novo pagamento, todas as campanhas param, inclusive a campanha que coloca a LedWave em 1º lugar em "painel de led".</div>
+
+<h2>Resumo</h2>
+<p>Fizemos um diagnóstico completo da conta de Google Ads e do SEO do site. Os três problemas que mais custavam dinheiro eram: buscas de iluminação (lâmpada, fita de LED, neon) gerando cliques pagos; a campanha "Topo", que coloca a LedWave em 1º lugar, mandando o cliente para uma página sem botão de WhatsApp no celular; e conversões medidas de forma inflada.</p>
+<p>As correções de base já foram aplicadas na conta. Agora estamos criando landing pages por segmento no RD Station (postos, igrejas, varejo, eventos e outros) e ligando cada uma à campanha do seu segmento, no mesmo modelo usado pelo concorrente D Show.</p>
+
+<h2>Ponto de partida (diagnóstico de 17/10)</h2>
+<p class="note">Dados do Google Ads, últimos 30 dias (16/09 a 15/10/2026).</p>
+<div class="kpis">
+  <div class="kpi"><div class="v">R$ 17.229</div><div class="l">Investimento em 30 dias</div></div>
+  <div class="kpi"><div class="v">343</div><div class="l">Conversões registradas</div></div>
+  <div class="kpi"><div class="v">R$ 50</div><div class="l">Custo médio por conversão</div></div>
+  <div class="kpi"><div class="v">0</div><div class="l">Conversões da campanha Topo em 210 cliques</div></div>
+</div>
+
+<h3>Problemas encontrados</h3>
+<div class="tbl"><table>
+<thead><tr><th>Problema</th><th>Impacto</th></tr></thead>
+<tbody>
+<tr><td>Campanha Topo ("painel de led") levava para uma página sem WhatsApp no celular</td><td>R$ 965 em 30 dias sem nenhum contato</td></tr>
+<tr><td>Botão de WhatsApp do site some no celular (em todo o site)</td><td>A maioria das buscas vem do celular; esses visitantes não tinham como chamar no WhatsApp</td></tr>
+<tr><td>Buscas de iluminação, neon e letreiro gerando cliques (a LedWave não vende esses produtos)</td><td>Desperdício e "conversões" de baixa qualidade</td></tr>
+<tr><td>Várias campanhas disputando as mesmas buscas (marca em 8 campanhas)</td><td>Dados de aprendizado divididos e pouco controle de qual página aparece</td></tr>
+<tr><td>Conversões contadas em dobro e com valor R$ 0 ou R$ 1</td><td>O Google otimizava para cliques fracos em vez de orçamentos</td></tr>
+<tr><td>Campanha PSQ | Painel de LED com custo por conversão de R$ 114 a R$ 122</td><td>Mais que o dobro da média da conta</td></tr>
+<tr><td>Títulos das páginas do site longos e repetidos; páginas duplicadas; endereço diferente entre site e cadastro</td><td>Prejudica o posicionamento orgânico (SEO)</td></tr>
+</tbody></table></div>
+
+<h2>O que já foi feito</h2>
+<div class="tbl"><table>
+<thead><tr><th>Data</th><th>Ação</th><th>Por quê</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td class="date">17/10</td><td>Buscas "painel de led", "painel led" e "painel de led preço" concentradas só na campanha Topo (negativas em 7 campanhas)</td><td>Pedido da diretoria: aparecer em 1º nesses termos</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">17/10</td><td>Pausadas 5 palavras-chave de iluminação e criadas 10 negativas na campanha Parques, Clubes e Hotéis (~R$ 560/mês)</td><td>Buscas de lâmpada, fita de LED e neon não são clientes da LedWave</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">17/10</td><td>Conversões reorganizadas: fim da contagem em dobro, valores por tipo de contato (formulário 100, ligação 80, WhatsApp 30), meta de compra antiga desativada</td><td>O Google passa a buscar quem pede orçamento, não quem só clica</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">17/10</td><td>Conferida a aplicação automática de recomendações do Google (já desligada)</td><td>Evitar que o Google desfaça a organização sozinho</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">19/10</td><td>Lista "Não vendemos" criada com 41 termos e aplicada em 10 campanhas de pesquisa (script 01)</td><td>Bloquear de uma vez buscas de quem não é cliente</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">19/10</td><td>Relatório semanal automático do Google Ads em planilha no Drive (script 02)</td><td>Acompanhar a conta toda segunda sem ferramenta paga</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">21/10</td><td>Cada busca na sua campanha: marca só na campanha LEADS (clique ~R$ 1,30 em vez de ~R$ 12,80), "painel de led" fora da Parques, +5 termos na lista (script 03)</td><td>Parar de pagar caro pela própria marca e organizar o aprendizado</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">22/10</td><td>Identificado que o WhatsApp não aparece no celular em todo o site; código do botão entregue</td><td>Era a causa das 0 conversões da Topo</td><td><span class="chip warn">Aguardando site</span></td></tr>
+<tr><td class="date">26/10</td><td>Diagnóstico de SEO do site e análise do anúncio do concorrente D Show</td><td>Entender por que a LedWave não aparece em 1º no Google</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">26/10</td><td>Textos de 9 landing pages por segmento, anúncios para 9 segmentos (15 títulos e 4 descrições cada) e a página "Quanto custa um painel de LED"</td><td>Anúncio e página falando a mesma língua do cliente sobem a nota de qualidade e baixam o custo</td><td><span class="chip ok">Concluído</span></td></tr>
+<tr><td class="date">26/10</td><td>Landing pages de Postos e de Painel de LED criadas no RD Station, com Google Tag Manager ativo</td><td>Primeiras páginas do novo modelo por segmento</td><td><span class="chip info">Em andamento</span></td></tr>
+<tr><td class="date">26/10</td><td>Anúncio novo da campanha Topo apontando para a LP Painel de LED</td><td>Trocar a página sem WhatsApp por uma página com formulário e WhatsApp</td><td><span class="chip info">Em andamento</span></td></tr>
+</tbody></table></div>
+
+<h2>O que aprendemos com o concorrente</h2>
+<p>O anúncio da D Show que aparece no topo é <strong>pago</strong>, não orgânico. Eles usam uma landing page do RD Station feita só para supermercados, um título com oferta concreta ("Visite Showroom São Paulo") e o botão de ligação. A LedWave já tem as mesmas ferramentas (RD Station, domínio próprio <code>conteudo.ledwave.com.br</code>, recurso de ligação) e argumentos mais fortes: fábrica própria desde 2011, 1º do segmento no ranking Exame 2025, cases como o Grupo Mateus e o placar do Estádio Olímpico de Goiânia.</p>
+<p>Logo abaixo do anúncio dele, o Google mostra perguntas como "Quanto custa um painel de LED 2x1?". Esse espaço é gratuito, e a LedWave pode ocupá-lo porque já publica preços na loja online. Por isso foi escrita a página "Quanto custa um painel de LED".</p>
+
+<h2>Próximos passos</h2>
+<div class="tbl"><table>
+<thead><tr><th>Quando</th><th>Ação</th><th>Responsável</th></tr></thead>
+<tbody>
+<tr><td class="date">Hoje</td><td>Pagar o saldo do Google Ads</td><td>Financeiro</td></tr>
+<tr><td class="date">Esta semana</td><td>Botão de WhatsApp no celular em todo o site</td><td>Responsável pelo site</td></tr>
+<tr><td class="date">Esta semana</td><td>Publicar LP de Postos e ligar na campanha "Conversão - Posto de Gasolina"; pausar o anúncio antigo da Topo</td><td>Gestão de tráfego</td></tr>
+<tr><td class="date">Semana 2</td><td>LPs de Varejo, Igrejas e Parques/Clubes/Hotéis; reativar campanhas Igreja e Supermercado com as proteções</td><td>Gestão de tráfego</td></tr>
+<tr><td class="date">Semana 2</td><td>Campanha "Postos - Topo" para aparecer em 1º nas buscas de postos</td><td>Gestão de tráfego</td></tr>
+<tr><td class="date">Semana 3</td><td>LPs de Eventos e Farmácias; publicar a página de preços no site (após confirmar valores)</td><td>Tráfego e site</td></tr>
+<tr><td class="date">Semana 4</td><td>LP Corporativo; corrigir títulos e páginas duplicadas do site; padronizar endereço no Google Meu Negócio</td><td>Tráfego e site</td></tr>
+<tr><td class="date">Toda segunda</td><td>Análise do relatório semanal: custo por segmento, buscas a bloquear, presença em 1º lugar</td><td>Gestão de tráfego</td></tr>
+</tbody></table></div>
+
+<h2>Decisões e confirmações pendentes</h2>
+<ul>
+  <li><strong>Campanha Topo:</strong> manter o 1º lugar em "painel de led" é decisão da diretoria. Se, mesmo com a página nova, ela continuar sem converter, vale rever o orçamento dela.</li>
+  <li><strong>Ofertas para os anúncios:</strong> a LedWave tem showroom em SP ou Goiânia? Pronta entrega? Garantia de 2 anos em todos os painéis? São os argumentos mais fortes do concorrente.</li>
+  <li><strong>Preços da loja:</strong> confirmar os valores atuais antes de publicar a página de preços.</li>
+  <li><strong>Cases com autorização</strong> (igrejas, postos, farmácias, clubes, empresas) para as landing pages.</li>
+  <li><strong>Ferramenta de acesso:</strong> o teste gratuito do Adplane terminou em 19/10. Hoje as mudanças são feitas por scripts gratuitos do próprio Google Ads; a assinatura do Adplane permitiria mudanças diretas e mais rápidas.</li>
+</ul>
+
+<h2>Como vamos medir</h2>
+<p>As mudanças de conversão e de páginas mexem no aprendizado do Google, então os primeiros 7 a 14 dias oscilam. A comparação justa começa em <strong>02/11</strong>, contra os números de 17/10 acima:</p>
+<ul>
+  <li>Conversões da campanha Topo (era 0 em 210 cliques)</li>
+  <li>Custo por conversão da conta (era R$ 50) e da PSQ | Painel de LED (era R$ 114)</li>
+  <li>Percentual de vezes em 1º lugar nas buscas de "painel de led" (era 11% a 16%)</li>
+  <li>Leads no RD Station por campanha e por segmento</li>
+  <li>Conversões de WhatsApp depois da correção no celular</li>
+</ul>
+
+<footer>Fontes: Google Ads (via Adplane até 19/10 e planilha do script 02), RD Station, site ledwave.com.br e loja.ledwave.com.br. Os resultados das ações ainda não podem ser medidos; este documento registra o que foi feito e a linha de base para comparação.</footer>
+</div>
