@@ -281,3 +281,21 @@ Estes títulos são fortes, mas eu não consegui confirmar. Se a LedWave oferece
 | Parques, clubes e hotéis | landing page RD "Parques, clubes e hotéis" |
 | Corporativo | landing page RD "Corporativo" |
 | Arquitetura e home design | landing page RD "Arquitetura" |
+
+---
+
+## Sitelinks com descrição: Igrejas (nível da campanha "Pesquisa | Igreja")
+
+O concorrente D Show ocupa a tela inteira com 5 sitelinks **com descrição**. Sitelink sem descrição aparece pequeno, em uma linha só.
+Limites: texto ≤ 25 caracteres, cada linha de descrição ≤ 35.
+
+| Texto | Descrição 1 | Descrição 2 | URL final |
+|---|---|---|---|
+| Visite Showroom em SP | Veja os painéis funcionando | Av. Nove de Julho, 3624 - SP | LP Igrejas (`#showroom`, se o RD permitir âncora) |
+| Peça Seu Orçamento | Proposta rápida pelo WhatsApp | Projeto sob medida para o templo | LP Igrejas |
+| Preço de Painel de LED | Valores por tamanho e resolução | Indoor e outdoor, direto da fábrica | `https://ledwave.com.br/preco-de-painel-de-led/` |
+| Igrejas Atendidas | Vídeo e fotos de projetos reais | Painéis no altar, palco e laterais | LP Igrejas |
+| Aluguel p/ Conferências | Painel de LED para congressos | Entrega, montagem e suporte | LP Igrejas |
+| Fabricante Desde 2011 | Fábrica própria em Goiânia | 1º do segmento no ranking Exame | `https://ledwave.com.br/` |
+
+Mesmo modelo para as outras verticais: trocar "Igrejas Atendidas", "Aluguel p/ Conferências" e a descrição 2 de "Peça Seu Orçamento" pelo segmento.
