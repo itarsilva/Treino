@@ -76,7 +76,7 @@ Palavras-chave sugeridas (correspondência de frase) estão no `passo-a-passo-rd
 
 - [ ] **Eventos** — abrir "Painéis de LED - Compra e Locação", deixar só termos de aluguel, LP Eventos, reativar
 - [ ] **Farmácias** — LP + reativar Pesquisa \| Farmácia
-- [ ] **SEO — preços (3 páginas competindo):** o site já tem `/preco-de-painel-de-led/`, `/quanto-custa-um-painel-de-led-guia-de-precos/` e `/blog/quanto-custa-um-led/`. **Não criar uma 4ª.** No Search Console, ver qual delas tem mais cliques/impressões, reescrevê-la com o conteúdo de `../site/pagina-quanto-custa-painel-de-led.html` (preços confirmados + links para a loja) e redirecionar (301) as outras duas para ela
+- [ ] **SEO — consolidação:** seguir `../seo/plano-consolidacao-urls.md`. Fase 1: 301 dos temas preço (fica `/preco-de-painel-de-led/`), outdoor e telão área externa. Fase 2: noindex em tags, `/nova-home/`, UTMs nos links internos
 - [ ] **SEO — loja:** testar 1 página de produto em search.google.com/test/rich-results (precisa aparecer "Snippets de produto" ou "Listagens do comerciante" com preço) e cadastrar a loja no Merchant Center com listagens gratuitas
 - [ ] **SEO:** Yoast → padrão de título `%%title%% | LedWave` (tirar "- Aluguel e Venda de Painel de LED - LedWave - Inovando Experiências")
 
