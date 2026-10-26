@@ -14,7 +14,7 @@ Objetivo: deixar **todas as landing pages publicadas e testadas** antes de o sal
 | 1 | Painel de LED (geral) | LP Google Ads – Painel de LED | `lp-google-ads-painel-de-led` | já criada | PSQ \| Painel de LED - Topo | ✅ criada (conferir checklist) |
 | 2 | Postos | LP Google Ads – Postos | `lp-google-ads-postos` | já criada | Conversão - Posto de Gasolina | ✅ criada (conferir checklist) |
 | 3 | Varejo | LP Google Ads – Varejo | `lp-google-ads-varejo` | `obrigado-mercados-e-atacados` | PSQ \| Varejo e Supermercados | 🟡 terminar e publicar |
-| 4 | Parques, clubes e hotéis | LP Google Ads – Clubes e Hotéis | `lp-google-ads-clubes-hoteis` | `obrigado-google-ads` | PSQ - Parques, Clubes e Hotéis | ⬜ |
+| 4 | Parques, clubes e hotéis | LP Google Ads – Clubes e Hotéis | `lp-google-ads-clubes-hoteis` | `obrigado-google-ads` | PSQ - Parques, Clubes e Hotéis | ✅ publicada 26/10 (falta teste do formulário) |
 | 5 | Igrejas | LP Google Ads – Igrejas | `lp-google-ads-igrejas` | `obrigado-google-ads` | Pesquisa \| Igreja | ⬜ |
 | 6 | Eventos (aluguel) | LP Google Ads – Eventos | `lp-google-ads-eventos` | `obrigado-google-ads` | Painéis de LED - Compra e Locação | ⬜ |
 | 7 | Farmácias | LP Google Ads – Farmácias | `lp-google-ads-farmacias` | `obrigado-google-ads` | Pesquisa \| Farmácia | ⬜ |
