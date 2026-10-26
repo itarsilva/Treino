@@ -27,7 +27,7 @@ Objetivo: deixar **todas as landing pages publicadas e testadas** antes de o sal
 
 ---
 
-## Passo 1: criar a página de obrigado (uma vez só)
+## Passo 1: criar a página de obrigado (uma vez só) ✅ feito em 26/10
 
 1. RD Station → **Conversão → Landing Pages** → abra a página `obrigado-mercados-e-atacados` → **⋮ → Duplicar**.
 2. Nome: **Obrigado – Google Ads**.
