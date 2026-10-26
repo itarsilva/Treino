@@ -56,7 +56,7 @@ formulário que já funciona no site e um botão de WhatsApp visível no celular
 3. Fabricamos, instalamos e damos suporte.
 
 **Perguntas frequentes**
-- *Quanto custa?* Depende do tamanho e da resolução. Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/quanto-custa-painel-de-led/).
+- *Quanto custa?* Depende do tamanho e da resolução. Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/preco-de-painel-de-led/).
 - *Dá para trocar o conteúdo sozinho?* ⚠️ confirmar como funciona o software de conteúdo e responder aqui.
 - *Atendem minha cidade?* Atendemos todo o Brasil, com unidades em Goiânia, São Paulo e Brasília.
 
@@ -88,7 +88,7 @@ formulário que já funciona no site e um botão de WhatsApp visível no celular
 
 **Perguntas frequentes**
 - *Qual resolução usar?* Para templos médios, painéis indoor P2.5 a P3.9 costumam funcionar bem. A equipe confirma pela distância do público.
-- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/quanto-custa-painel-de-led/).
+- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/preco-de-painel-de-led/).
 - *Dá para alugar só para uma conferência?* Sim, também alugamos para eventos.
 
 **Botão:** Quero um orçamento para minha igreja
@@ -148,7 +148,7 @@ formulário que já funciona no site e um botão de WhatsApp visível no celular
 
 **Perguntas frequentes**
 - *O painel aguenta chuva e sol?* Sim, os painéis outdoor têm proteção à prova d'água nos módulos e no gabinete.
-- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/quanto-custa-painel-de-led/).
+- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/preco-de-painel-de-led/).
 - *Atendem minha cidade?* Atendemos todo o Brasil.
 
 **Botão:** Quero um painel para meu posto
@@ -175,7 +175,7 @@ formulário que já funciona no site e um botão de WhatsApp visível no celular
 **Como funciona:** 1) Conte quantas lojas e o tipo de espaço. 2) Mandamos o projeto e a proposta. 3) Instalamos e damos suporte.
 
 **Perguntas frequentes**
-- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/quanto-custa-painel-de-led/).
+- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/preco-de-painel-de-led/).
 - *Dá para usar na vitrine sem bloquear a visão?* Sim, com o painel Glass transparente.
 
 **Botão:** Quero um projeto para minha farmácia
@@ -230,7 +230,7 @@ formulário que já funciona no site e um botão de WhatsApp visível no celular
 
 **Perguntas frequentes**
 - *Qual a diferença para um videowall de TVs?* O painel de LED não tem as bordas entre as telas e pode ter qualquer tamanho.
-- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/quanto-custa-painel-de-led/).
+- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/preco-de-painel-de-led/).
 
 **Botão:** Quero um projeto para minha empresa
 
