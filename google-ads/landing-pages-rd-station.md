@@ -22,7 +22,12 @@ formulário que já funciona no site e um botão de WhatsApp visível no celular
 |---|---|---|
 | Varejo / supermercado | `.../painel-de-led-varejo` | Conversão – Posto de Gasolina* e novo grupo "Varejo" |
 | Igrejas | `.../painel-de-led-igreja` | Grupo "igreja" da PSQ \| Painel de LED |
-| Eventos (aluguel) | `.../aluguel-painel-de-led-eventos` | Parques, Clubes e Hotéis + grupos de aluguel |
+| Eventos (aluguel) | `.../aluguel-painel-de-led-eventos` | Painéis de LED - Compra e Locação (reativar) ou grupo novo na Parques |
+| Postos | `.../painel-de-led-posto` | Conversão - Posto de Gasolina |
+| Farmácias | `.../painel-de-led-farmacia` | Pesquisa \| Farmácia (reativar) |
+| Parques, clubes e hotéis | `.../painel-de-led-clubes-hoteis` | PSQ - Parques, Clubes e Hotéis |
+| Corporativo | `.../painel-de-led-corporativo` | Pesquisa \| Corporativo (reativar) |
+| Arquitetura e home design | `.../painel-de-led-arquitetura` | Display \| Arquitetura - LHD (ou grupo novo de pesquisa) |
 
 \* Postos são varejo; dá para usar a página de varejo até existir uma específica.
 
@@ -119,3 +124,138 @@ formulário que já funciona no site e um botão de WhatsApp visível no celular
 - *Quanto custa o aluguel?* Depende do tamanho, dos dias e da cidade — peça o orçamento pelo formulário ou WhatsApp.
 
 **Botão:** Consultar disponibilidade para minha data
+
+---
+
+## 4. Postos de combustível
+
+**Título:** Painel de LED para postos de combustível
+**Subtítulo:** Preços, ofertas da conveniência e a sua marca visíveis de longe, de dia e à noite.
+
+**Opções do campo "O que você precisa?":** Totem de preços · Painel na cobertura/fachada · Telas na conveniência · Outro
+
+**Benefícios**
+- **Visto de longe, de dia e à noite.** Painéis outdoor com alto brilho para o sol forte.
+- **Feito para área externa.** Módulos e gabinetes com proteção à prova d'água.
+- **Troque preços e ofertas na hora**, sem trocar placa.
+
+**Prova**
+- Fabricante desde 2011, com linha de produção própria em Goiânia.
+- 1º do segmento de painéis de LED no ranking **Negócios em Expansão 2025** (Exame/BTG).
+- ⚠️ Inserir postos ou redes atendidas (nome, cidade, foto).
+
+**Como funciona:** 1) Envie fotos do posto. 2) Indicamos tamanho e modelo e mandamos a proposta. 3) Fabricamos, instalamos e damos suporte.
+
+**Perguntas frequentes**
+- *O painel aguenta chuva e sol?* Sim, os painéis outdoor têm proteção à prova d'água nos módulos e no gabinete.
+- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/quanto-custa-painel-de-led/).
+- *Atendem minha cidade?* Atendemos todo o Brasil.
+
+**Botão:** Quero um painel para meu posto
+
+---
+
+## 5. Farmácias
+
+**Título:** Painel de LED para farmácias
+**Subtítulo:** Fachadas, vitrines e telas que mostram as ofertas certas na hora certa — para uma loja ou para a rede inteira.
+
+**Opções do campo "O que você precisa?":** Fachada · Vitrine (painel transparente) · Telas internas · Projeto para rede · Outro
+
+**Benefícios**
+- **Ofertas trocadas na hora**, em todas as lojas.
+- **Vitrine que não esconde a loja.** O painel Glass é transparente: quem passa vê a oferta e o interior.
+- **Projeto para redes.** Uma empresa para fabricar, instalar e dar suporte em todas as unidades.
+
+**Prova**
+- Fabricante desde 2011, com linha de produção própria em Goiânia.
+- Experiência em varejo: parceira do **Grupo Mateus** em retail media e **Prêmio Top Trade 2025**.
+- ⚠️ Inserir farmácias atendidas, se houver.
+
+**Como funciona:** 1) Conte quantas lojas e o tipo de espaço. 2) Mandamos o projeto e a proposta. 3) Instalamos e damos suporte.
+
+**Perguntas frequentes**
+- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/quanto-custa-painel-de-led/).
+- *Dá para usar na vitrine sem bloquear a visão?* Sim, com o painel Glass transparente.
+
+**Botão:** Quero um projeto para minha farmácia
+
+---
+
+## 6. Parques, clubes e hotéis
+
+**Título:** Telões de LED para clubes, hotéis e parques
+**Subtítulo:** Jogos, eventos e avisos para sócios e hóspedes — em painéis feitos para área externa e piscina.
+
+**Opções do campo "O que você precisa?":** Área da piscina · Quadra/campo · Salão de eventos · Recepção · Aluguel para evento · Outro
+
+**Benefícios**
+- **Feito para área externa.** À prova d'água e com alto brilho para o sol.
+- **Mais movimento no clube.** Transmita jogos, eventos e programação para os sócios.
+- **Compra, aluguel ou assinatura mensal.**
+
+**Prova**
+- Painel de **12 × 8 m** no placar do novo **Estádio Olímpico de Goiânia**.
+- Fabricante desde 2011, com linha de produção própria em Goiânia.
+- ⚠️ Inserir clubes ou hotéis atendidos, se houver.
+
+**Como funciona:** 1) Envie fotos e medidas do espaço. 2) Indicamos tamanho e modelo. 3) Instalamos e damos suporte.
+
+**Perguntas frequentes**
+- *Pode ficar perto da piscina?* ⚠️ confirmar distância e certificação de proteção (IP) com a engenharia.
+- *Dá para alugar só para um evento?* Sim.
+
+**Botão:** Quero um telão para meu espaço
+
+---
+
+## 7. Corporativo
+
+**Título:** Painéis e videowalls de LED para empresas
+**Subtítulo:** Recepções, auditórios, showrooms e salas de reunião com imagem nítida mesmo de perto.
+
+**Opções do campo "O que você precisa?":** Recepção · Auditório · Sala de reunião · Showroom/estande · Outro
+
+**Benefícios**
+- **Imagem nítida de perto.** Painéis indoor de alta resolução (P1.8 e P2.5).
+- **Sem emendas.** Diferente de várias TVs lado a lado.
+- **Projeto completo**, da medição ao suporte.
+
+**Prova**
+- 1º do segmento de painéis de LED no ranking **Negócios em Expansão 2025** (Exame/BTG).
+- Expositora na **NRF 2026**, em Nova York.
+- ⚠️ Inserir empresas atendidas, se houver autorização.
+
+**Como funciona:** 1) Conte o espaço e o uso. 2) Mandamos o projeto e a proposta. 3) Instalamos e damos suporte.
+
+**Perguntas frequentes**
+- *Qual a diferença para um videowall de TVs?* O painel de LED não tem as bordas entre as telas e pode ter qualquer tamanho.
+- *Quanto custa?* Veja valores de referência em [Quanto custa um painel de LED](https://ledwave.com.br/quanto-custa-painel-de-led/).
+
+**Botão:** Quero um projeto para minha empresa
+
+---
+
+## 8. Arquitetura e home design
+
+**Título:** Painéis de LED sob medida para projetos de arquitetura
+**Subtítulo:** Do briefing à instalação: painéis integrados a residências e interiores de alto padrão.
+
+**Opções do campo "O que você precisa?":** Sou arquiteto(a) com projeto · Residência · Home theater · Comercial · Outro
+
+**Benefícios**
+- **Sob medida para o projeto.** Tamanho, formato e acabamento definidos com o arquiteto.
+- **Do briefing ao pós-venda** com a mesma empresa.
+- **Opções que se integram ao ambiente**, como o painel Glass transparente.
+
+**Prova**
+- Fabricante desde 2011, com linha de produção própria em Goiânia.
+- ⚠️ Inserir 1 ou 2 projetos residenciais com foto (com autorização do cliente).
+
+**Como funciona:** 1) Envie a planta ou o briefing. 2) Nossa equipe técnica propõe a solução. 3) Fabricamos e instalamos.
+
+**Perguntas frequentes**
+- *Vocês atendem arquitetos de outras cidades?* Sim, atendemos todo o Brasil.
+- *Tem opção de assinatura?* Sim, o painel pode ser assinado por mensalidade.
+
+**Botão:** Enviar meu projeto

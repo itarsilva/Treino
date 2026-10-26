@@ -114,6 +114,141 @@ Só usei fatos já confirmados (site, imprensa, loja). Ofertas que dependem de c
 3. Fizemos o placar de 12x8 m do novo Estádio Olímpico de Goiânia. Consulte sua data. (82)
 4. Informe data e cidade pelo WhatsApp e receba a proposta. Atendemos todo o Brasil. (81)
 
+## Postos de combustível
+
+**Títulos**
+
+1. Painel de LED para Postos (25)
+2. Preço do Combustível em LED (27)
+3. Totem de Preços em LED (22)
+4. Ofertas da Conveniência em LED (30)
+5. Visível de Dia e à Noite (24)
+6. Painel Outdoor Resistente (25)
+7. À Prova de Chuva e Sol (22)
+8. Fábrica Própria em Goiânia (26)
+9. Fabricante Desde 2011 (21)
+10. Projeto e Instalação Completos (30)
+11. Venda ou Assinatura Mensal (26)
+12. Atendemos Todo o Brasil (23)
+13. Orçamento Rápido no WhatsApp (28)
+14. Ligue Grátis 0800 943 7800 (26)
+15. Suporte e Pós-Venda Próprios (28)
+
+**Descrições**
+
+1. Painéis de LED para postos: preços, ofertas da conveniência e marca visíveis de longe. (86)
+2. Painéis outdoor com módulos e gabinetes à prova d'água, com brilho para o sol forte. (84)
+3. Fabricante desde 2011, com linha de produção própria em Goiânia. Venda ou assinatura. (85)
+4. Peça seu projeto pelo WhatsApp ou ligue grátis: 0800 943 7800. (62)
+
+## Farmácias
+
+**Títulos**
+
+1. Painel de LED para Farmácia (27)
+2. Fachada de LED para Farmácias (29)
+3. Ofertas em LED na Vitrine (25)
+4. Telas de LED no Balcão (22)
+5. Painel Glass para Vitrine (25)
+6. Mais Clientes Entrando na Loja (30)
+7. Projeto Para Redes de Farmácia (30)
+8. Fábrica Própria em Goiânia (26)
+9. Fabricante Desde 2011 (21)
+10. Venda ou Assinatura Mensal (26)
+11. Instalação em Todo o Brasil (27)
+12. Orçamento Rápido no WhatsApp (28)
+13. Ligue Grátis 0800 943 7800 (26)
+14. Suporte e Pós-Venda Próprios (28)
+15. Troque as Ofertas na Hora (25)
+
+**Descrições**
+
+1. Fachadas, vitrines e telas de LED para farmácias e redes. Ofertas trocadas na hora. (83)
+2. Painel Glass transparente para vitrine: a loja continua visível e a oferta aparece. (83)
+3. Projeto para uma loja ou para a rede inteira. Fabricante desde 2011, fábrica própria. (85)
+4. Peça seu orçamento pelo WhatsApp ou ligue grátis: 0800 943 7800. (64)
+
+## Parques, clubes e hotéis
+
+**Títulos**
+
+1. Painel de LED para Clubes (25)
+2. Telão de LED Área Externa (25)
+3. Painel de LED para Piscina (26)
+4. Painel de LED para Hotéis (25)
+5. Telão para Parques e Resorts (28)
+6. À Prova de Chuva e Sol (22)
+7. Painel Outdoor Alto Brilho (26)
+8. Jogos, Eventos e Avisos (23)
+9. Fábrica Própria em Goiânia (26)
+10. Fabricante Desde 2011 (21)
+11. Compra, Aluguel ou Assinatura (29)
+12. Atendemos Todo o Brasil (23)
+13. Orçamento Rápido no WhatsApp (28)
+14. Ligue Grátis 0800 943 7800 (26)
+15. Projeto e Instalação Completos (30)
+
+**Descrições**
+
+1. Telões de LED para clubes, hotéis e parques: jogos, eventos e avisos para os sócios. (84)
+2. Painéis outdoor à prova d'água e com alto brilho, para piscina e área externa. (78)
+3. Compra, aluguel para eventos ou assinatura mensal. Fabricante desde 2011. (73)
+4. Envie fotos do espaço pelo WhatsApp e receba a proposta. Atendemos todo o Brasil. (81)
+
+## Corporativo
+
+**Títulos**
+
+1. Painel de LED Corporativo (25)
+2. Videowall de LED para Empresas (30)
+3. LED para Recepção e Auditório (29)
+4. Painel para Sala de Reunião (27)
+5. Imagem Nítida de Perto (22)
+6. Painéis Indoor P1.8 e P2.5 (26)
+7. Projeto Sob Medida (18)
+8. Fábrica Própria em Goiânia (26)
+9. Fabricante Desde 2011 (21)
+10. Venda ou Assinatura Mensal (26)
+11. Instalação em Todo o Brasil (27)
+12. Orçamento Rápido no WhatsApp (28)
+13. Ligue Grátis 0800 943 7800 (26)
+14. Suporte e Pós-Venda Próprios (28)
+15. 1º em Painéis no Ranking Exame (30)
+
+**Descrições**
+
+1. Painéis e videowalls de LED para recepções, auditórios, showrooms e salas de reunião. (85)
+2. Painéis indoor de alta resolução (P1.8 e P2.5) para imagem nítida mesmo de perto. (81)
+3. 1º do segmento de painéis de LED no ranking Negócios em Expansão 2025 (Exame/BTG). (82)
+4. Projeto, instalação e suporte com a mesma empresa. Peça seu orçamento pelo WhatsApp. (84)
+
+## Arquitetura e home design
+
+**Títulos**
+
+1. Painel de LED para Arquitetos (29)
+2. Painel de LED Residencial (25)
+3. LED para Home Theater (21)
+4. Projeto Sob Medida (18)
+5. Do Briefing à Instalação (24)
+6. Painel Glass Transparente (25)
+7. Alta Resolução para Interiores (30)
+8. Fábrica Própria em Goiânia (26)
+9. Fabricante Desde 2011 (21)
+10. Parceria com Arquitetos (23)
+11. Instalação em Todo o Brasil (27)
+12. Orçamento Rápido no WhatsApp (28)
+13. Ligue Grátis 0800 943 7800 (26)
+14. Suporte e Pós-Venda Próprios (28)
+15. Venda ou Assinatura Mensal (26)
+
+**Descrições**
+
+1. Painéis de LED sob medida para projetos residenciais e de interiores de alto padrão. (84)
+2. Do briefing à instalação e ao pós-venda: projeto completo com a mesma empresa. (78)
+3. Painéis indoor de alta resolução e Glass transparente para integrar ao ambiente. (80)
+4. Fabricante desde 2011. Envie o projeto pelo WhatsApp e receba a proposta. (73)
+
 ## ⚠️ Só use se for verdade (confirmar antes)
 
 Estes títulos são fortes, mas eu não consegui confirmar. Se a LedWave oferecer, troque por algum título genérico acima:
@@ -131,3 +266,8 @@ Estes títulos são fortes, mas eu não consegui confirmar. Se a LedWave oferece
 | Varejo e supermercados | landing page RD "Varejo" |
 | Igrejas | landing page RD "Igrejas" |
 | Eventos (aluguel) | landing page RD "Eventos" |
+| Postos | landing page RD "Postos" |
+| Farmácias | landing page RD "Farmácias" |
+| Parques, clubes e hotéis | landing page RD "Parques, clubes e hotéis" |
+| Corporativo | landing page RD "Corporativo" |
+| Arquitetura e home design | landing page RD "Arquitetura" |
