@@ -59,6 +59,7 @@ Regra para TODA campanha reativada: aplicar a lista **"Não vendemos"** + negati
 Para cada uma: criar a LP no RD → testar no celular → apontar a campanha → títulos novos.
 
 - [ ] **Postos** — LP + campanha Conversão - Posto de Gasolina
+- [ ] **Postos - Topo** — criar campanha conforme `campanha-postos-topo.md` (só depois da LP pronta)
 - [ ] **Parques, clubes e hotéis** — LP + campanha PSQ - Parques, Clubes e Hotéis
 - [ ] **Varejo** — LP + reativar APAS / Painel LED Supermercado (conferir tipo antes)
 - [ ] **Igrejas** — LP + reativar Pesquisa \| Igreja
