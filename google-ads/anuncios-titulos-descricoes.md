@@ -23,15 +23,15 @@ Só usei fatos já confirmados (site, imprensa, loja). Ofertas que dependem de c
 11. Projeto e Instalação Completos (30)
 12. Veja Preços de Painel de LED (28)
 13. Suporte e Pós-Venda Próprios (28)
-14. Painel de LED 3D Robótico (25)
-15. Painéis P1.8 a P8 (17)
+14. Visite Nosso Showroom em SP (27)
+15. Agende Visita ao Showroom (25)
 
 **Descrições**
 
 1. Fabricante de painéis de LED desde 2011, com linha de produção própria em Goiânia. (82)
 2. Venda, aluguel ou assinatura mensal. Projeto, instalação e pós-venda em todo o Brasil. (86)
 3. 1º do segmento de painéis de LED no ranking Negócios em Expansão 2025 (Exame/BTG). (82)
-4. Veja preços de referência e peça seu orçamento pelo WhatsApp ou no 0800 943 7800. (81)
+4. Visite nosso showroom em São Paulo e veja os painéis funcionando. Agende no WhatsApp. (85)
 
 ## Varejo e supermercados
 
@@ -249,12 +249,22 @@ Só usei fatos já confirmados (site, imprensa, loja). Ofertas que dependem de c
 3. Painéis indoor de alta resolução e Glass transparente para integrar ao ambiente. (80)
 4. Fabricante desde 2011. Envie o projeto pelo WhatsApp e receba a proposta. (73)
 
+## Showroom em São Paulo (confirmado em 26/10)
+
+Usar em qualquer grupo no lugar de títulos genéricos:
+
+- Visite Nosso Showroom em SP (27)
+- Showroom LedWave em São Paulo (29)
+- Agende Visita ao Showroom (25)
+- Veja os Painéis Funcionando (27)
+
+Descrição: Visite nosso showroom em São Paulo e veja os painéis funcionando. Agende no WhatsApp. (85)
+
 ## ⚠️ Só use se for verdade (confirmar antes)
 
 Estes títulos são fortes, mas eu não consegui confirmar. Se a LedWave oferecer, troque por algum título genérico acima:
 
 - Pronta Entrega (14)
-- Showroom em São Paulo (21)
 - Showroom em Goiânia (19)
 - Garantia de 2 Anos (18)
 
