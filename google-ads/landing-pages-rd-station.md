@@ -259,3 +259,12 @@ formulário que já funciona no site e um botão de WhatsApp visível no celular
 - *Tem opção de assinatura?* Sim, o painel pode ser assinado por mensalidade.
 
 **Botão:** Enviar meu projeto
+
+---
+
+## Bloco "Showroom" (usar em todas as LPs, antes do rodapé)
+
+**Título:** Venha ver os painéis funcionando
+**Texto:** Visite nosso showroom em São Paulo: Av. Nove de Julho, 3624 — São Paulo/SP. Agende sua visita pelo WhatsApp.
+**Botão:** Agendar visita (link do WhatsApp)
+**Formulário:** acrescentar a opção "Quero visitar o showroom em SP" no campo "O que você precisa?"
