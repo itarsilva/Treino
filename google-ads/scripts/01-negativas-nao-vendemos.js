@@ -18,11 +18,14 @@ var NEGATIVAS = [
   'embutir', 'sobrepor', 'refletor', 'spot',
   '12w', '18w', '24w', '36w', '40w',
   'neon', 'acrílico', 'acrilico', 'projetor',
-  'grátis', 'gratis', 'atacado',
+  'grátis', 'gratis',
   'curso', 'cursos', 'emprego', 'vaga', 'vagas', 'salário', 'salario',
   'pdf', 'shopee', 'usado', 'usados',
   '"luz de led"', '"luz led"', '"letreiro neon"', '"letreiro luminoso"',
-  '"fornecedor de led"', '"anuncie aqui"', '"como fazer"', '"mercado livre"'
+  '"fornecedor de led"', '"anuncie aqui"', '"como fazer"', '"mercado livre"',
+  // "atacado" só em frase: atacados e atacarejos são clientes da campanha de Varejo
+  '"led atacado"', '"fita de led atacado"', '"lampada led atacado"',
+  '"comprar no atacado"', '"preço de atacado"'
 ];
 
 function main() {

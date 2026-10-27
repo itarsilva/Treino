@@ -19,7 +19,6 @@ acrilico
 projetor
 grátis
 gratis
-atacado
 curso
 cursos
 emprego
@@ -39,3 +38,8 @@ usados
 "anuncie aqui"
 "como fazer"
 "mercado livre"
+"led atacado"
+"fita de led atacado"
+"lampada led atacado"
+"comprar no atacado"
+"preço de atacado"
