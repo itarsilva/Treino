@@ -15,7 +15,7 @@ Objetivo: deixar **todas as landing pages publicadas e testadas** antes de o sal
 | 2 | Postos | LP Google Ads – Postos | `lp-google-ads-postos` | já criada | Conversão - Posto de Gasolina | ✅ criada (conferir checklist) |
 | 3 | Varejo | LP Google Ads – Varejo | `lp-google-ads-varejo` | `obrigado-mercados-e-atacados` | PSQ \| Varejo e Supermercados | 🟡 terminar e publicar |
 | 4 | Parques, clubes e hotéis | LP Google Ads – Clubes e Hotéis | `lp-google-ads-clubes-hoteis` | `obrigado-google-ads` | PSQ - Parques, Clubes e Hotéis | ✅ publicada 26/10 · campanha ativada 27/10 (R$ 50/dia) |
-| 5 | Igrejas | Digitalize: Igrejas e Celebrações Religiosas (página original, ajustada) | `digitalize-igrejas-e-celebracoes-religiosas` | `obrigado-igreja` | Pesquisa \| Igreja | ✅ publicada 26/10 |
+| 5 | Igrejas | Digitalize: Igrejas e Celebrações Religiosas (página original, ajustada) | `digitalize-igrejas-e-celebracoes-religiosas` | `obrigado-igreja` | Pesquisa \| Igreja | ✅ publicada 26/10 · campanha ativada 27/10 (R$ 40/dia) |
 | 6 | Eventos (aluguel) | LP Google Ads – Eventos | `lp-google-ads-eventos` | `obrigado-google-ads` | Painéis de LED - Compra e Locação | ⛔ não vamos fazer (decisão 26/10) |
 | 7 | Farmácias | LP Google Ads – Farmácias | `lp-google-ads-farmacias` | `obrigado-google-ads` | Pesquisa \| Farmácia | ✅ publicada 26/10 (página Digitalize ajustada; confirmar URL) |
 | 8 | Corporativo | LP Google Ads – Corporativo | `lp-google-ads-corporativo` | `obrigado-google-ads` | Pesquisa \| Corporativo | ⬜ |
