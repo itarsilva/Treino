@@ -4,30 +4,38 @@
  * Só LÊ a conta e grava os dados na planilha abaixo. Não altera nada no Google Ads.
  * Abas criadas/atualizadas a cada execução:
  *   - Info                 : quando o relatório foi gerado
+ *   - Campanhas ontem      : desempenho por campanha no dia anterior
+ *   - Campanhas no período : desempenho por campanha desde o início do plano de mídia (INICIO_PLANO)
  *   - Campanhas 7d         : desempenho por campanha nos últimos 7 dias
  *   - Campanhas 30d        : desempenho por campanha nos últimos 30 dias
  *   - Termos de pesquisa   : buscas com clique nos últimos 7 dias (até 500, maior gasto primeiro)
  *   - Topo diário          : campanha "PSQ | Painel de LED - Topo" dia a dia (30 dias)
  *   - Conversões por ação  : conversões por ação de conversão (30 dias)
  *
- * Agende em: Scripts → coluna Frequência → Semanal, segunda-feira, 7h.
+ * Agende em: Scripts → coluna Frequência → Diária, 7h.
  */
 
 var URL_DA_PLANILHA =
     'https://docs.google.com/spreadsheets/d/15RyLoBl8HWbat_sHPMp-1kDmy7sVp1E3kEVj3dJsj78/edit';
 var ID_CAMPANHA_TOPO = '24316794456';
 var MAX_TERMOS = 500;
+// Primeiro dia do plano de mídia atual (R$ 17.000 de 27/10 a 25/11/2026).
+var INICIO_PLANO = '2026-10-27';
 
 function main() {
   var planilha = SpreadsheetApp.openByUrl(URL_DA_PLANILHA);
+  var fuso = AdsApp.currentAccount().getTimeZone();
+  var hoje = Utilities.formatDate(new Date(), fuso, 'yyyy-MM-dd');
 
-  escreverAba(planilha, 'Campanhas 7d', relatorioCampanhas('LAST_7_DAYS'));
-  escreverAba(planilha, 'Campanhas 30d', relatorioCampanhas('LAST_30_DAYS'));
+  escreverAba(planilha, 'Campanhas ontem', relatorioCampanhas('DURING YESTERDAY'));
+  escreverAba(planilha, 'Campanhas no período',
+      relatorioCampanhas("BETWEEN '" + INICIO_PLANO + "' AND '" + hoje + "'"));
+  escreverAba(planilha, 'Campanhas 7d', relatorioCampanhas('DURING LAST_7_DAYS'));
+  escreverAba(planilha, 'Campanhas 30d', relatorioCampanhas('DURING LAST_30_DAYS'));
   escreverAba(planilha, 'Termos de pesquisa', relatorioTermos());
   escreverAba(planilha, 'Topo diário', relatorioTopo());
   escreverAba(planilha, 'Conversões por ação', relatorioConversoes());
 
-  var fuso = AdsApp.currentAccount().getTimeZone();
   escreverAba(planilha, 'Info', [
     ['Conta', 'Atualizado em'],
     [AdsApp.currentAccount().getName(),
@@ -36,7 +44,8 @@ function main() {
   Logger.log('Relatório gravado em ' + URL_DA_PLANILHA);
 }
 
-function relatorioCampanhas(periodo) {
+// filtroData: "DURING LAST_7_DAYS" ou "BETWEEN 'aaaa-mm-dd' AND 'aaaa-mm-dd'".
+function relatorioCampanhas(filtroData) {
   var linhas = [[
     'Campanha', 'Status', 'Tipo', 'Gasto (R$)', 'Cliques', 'Impressões',
     'CPC médio (R$)', 'Conversões', 'Custo/conv. (R$)', 'Valor conv.',
@@ -47,7 +56,7 @@ function relatorioCampanhas(periodo) {
       'metrics.cost_micros, metrics.clicks, metrics.impressions, ' +
       'metrics.conversions, metrics.conversions_value, metrics.search_impression_share ' +
       'FROM campaign ' +
-      'WHERE segments.date DURING ' + periodo + ' AND metrics.impressions > 0 ' +
+      'WHERE segments.date ' + filtroData + ' AND metrics.impressions > 0 ' +
       'ORDER BY metrics.cost_micros DESC').rows();
   while (rows.hasNext()) {
     var r = rows.next();
