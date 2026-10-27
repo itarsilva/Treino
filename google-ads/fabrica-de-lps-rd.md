@@ -17,7 +17,7 @@ Objetivo: deixar **todas as landing pages publicadas e testadas** antes de o sal
 | 4 | Parques, clubes e hotéis | LP Google Ads – Clubes e Hotéis | `lp-google-ads-clubes-hoteis` | `obrigado-google-ads` | PSQ - Parques, Clubes e Hotéis | ✅ publicada 26/10 · campanha ativada 27/10 (R$ 50/dia) |
 | 5 | Igrejas | Digitalize: Igrejas e Celebrações Religiosas (página original, ajustada) | `digitalize-igrejas-e-celebracoes-religiosas` | `obrigado-igreja` | Pesquisa \| Igreja | ✅ publicada 26/10 · campanha ativada 27/10 (R$ 40/dia) |
 | 6 | Eventos (aluguel) | LP Google Ads – Eventos | `lp-google-ads-eventos` | `obrigado-google-ads` | Painéis de LED - Compra e Locação | ⛔ não vamos fazer (decisão 26/10) |
-| 7 | Farmácias | Digitalize: Farmácias (página original, ajustada) | `digitalize-farmacias` | `obrigado-google-ads` | Pesquisa \| Farmácia | ✅ publicada 26/10 · anúncio em criação 27/10 |
+| 7 | Farmácias | Digitalize: Farmácias (página original, ajustada) | `digitalize-farmacias` | `obrigado-google-ads` | Pesquisa \| Farmácia | ✅ publicada 26/10 · campanha ativada 27/10 (R$ 30/dia, palavras genéricas pausadas) |
 | 8 | Corporativo | LP Google Ads – Corporativo | `lp-google-ads-corporativo` | `obrigado-google-ads` | Pesquisa \| Corporativo | ⬜ |
 | 9 | Arquitetura | LP Google Ads – Arquitetura | `lp-google-ads-arquitetura` | `obrigado-google-ads` | Display \| Arquitetura - LHD | ⬜ |
 
