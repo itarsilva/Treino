@@ -6,23 +6,30 @@ O Google pode gastar até 2× o orçamento diário num dia de muita busca, mas n
 
 ---
 
-## Divisão por campanha
+## Divisão por campanha (revisada em 28/10 com a exportação do Google Ads Editor)
 
-| # | Campanha | Papel | R$/dia | R$ no mês | % |
+A exportação de 28/10 mostrou 15 campanhas ativas somando **R$ 991/dia** (≈ R$ 30 mil/mês). A divisão abaixo volta para R$ 540/dia usando o custo por conversão de 30 dias (até 19/10).
+
+| # | Campanha | Custo/conv. 30d | Antes (R$/dia) | **Novo (R$/dia)** | R$ no mês |
 |---|---|---|---|---|---|
-| 1 | **PSQ \| Painel de LED** (genérica) | Maior volume de leads (57 conversões em outubro) | 180 | 5.400 | 32% |
-| 2 | **PMX (Performance Max)** | Alcance em todos os canais do Google | 90 | 2.700 | 16% |
-| 3 | **PSQ \| Painel de LED - Topo** | 1º lugar em "painel de led" (pedido da diretoria) | 70 | 2.100 | 12% |
-| 4 | **PSQ - Parques, Clubes e Hotéis** | Vertical com LP própria | 50 | 1.500 | 9% |
-| 5 | **PSQ \| Varejo e Supermercados** | Vertical com LP própria (campanha nova) | 50 | 1.500 | 9% |
-| 6 | **Pesquisa \| Igreja** | Vertical com LP própria | 40 | 1.200 | 7% |
-| 7 | **LEADS - Search - Painéis de LED** (marca) | Quem busca "ledwave"; clique barato | 30 | 900 | 5% |
-| 8 | **Pesquisa \| Farmácia** | Vertical com LP própria | 30 | 900 | 5% |
-| | **Subtotal ativo** | | **540** | **16.200** | 95% |
-| | **Reserva** | Corporativo e Postos quando as LPs ficarem prontas, ou reforço de quem converter melhor | — | 800 | 5% |
-| | **Total** | | | **17.000** | 100% |
+| 1 | PMX \| Institucional | R$ 24,58 | 131 | **110** | 3.300 |
+| 2 | PSQ \| Painel de LED (grupos 03 Preço e 06 Varejo pausados) | R$ 114,34 | 180 | **100** | 3.000 |
+| 3 | Pesquisa - LedWave - Painéis e Telões LED | R$ 57,37 | 132 | **80** | 2.400 |
+| 4 | PSQ \| Painel de LED - Topo (diretoria) | — (0 conv.) | 100 | **70** | 2.100 |
+| 5 | PSQ - Parques, Clubes e Hotéis (só Pesquisa) | R$ 36,58 | 50 | **50** | 1.500 |
+| 6 | LEADS - Search - Painéis de LED (só Pesquisa) | R$ 26,38 | 66 | **40** | 1.200 |
+| 7 | Pesquisa \| Igreja (sem parceiros) | nova | 40 | **30** | 900 |
+| 8 | PSQ \| Varejo e Supermercados | nova | 40 | **30** | 900 |
+| 9 | Pesquisa \| Farmácia (sem parceiros) | nova | 30 | **20** | 600 |
+| 10 | PESQUISA \| CONCORRENTES (teste) | sem dados | 10 | **10** | 300 |
+| | **Subtotal** | | 779 | **540** | **16.200** |
+| | **Reserva** | | | | **800** |
 
-Ficam **pausadas**: Conversão - Posto de Gasolina (até saber o motivo), Pesquisa | Corporativo e Display | Arquitetura (sem LP ainda) e Painéis de LED - Compra e Locação (Eventos fora do plano).
+**Pausadas em 28/10:** PSQ \| Serviços + Termos Genéricos (R$ 69,74/conv., disputa buscas genéricas), PSQ \| Institucional (marca a R$ 9,79/clique; a marca fica na LEADS), PMAX - Subverticais (estava pausada até 19/10), Campanha Tráfego - Nova e [Search] LedWave venda de painel (todos os grupos já pausados).
+
+**Redes:** LEADS e Parques estavam com Rede de Display ligada; Igreja e Farmácia com parceiros de pesquisa. Tudo passa a "Google search" apenas.
+
+Arquivo de importação: `editor/alteracoes-2026-10-28.csv`.
 
 ## Calendário de ativação
 
