@@ -9,9 +9,9 @@
 | Título provisório | A indústria da atenção em escala global |
 | Subtítulo (apresentação) | Quem são os maiores grupos de comunicação e marketing, quem os controla, como se ramificam e o que isso significa para o Brasil |
 | Programa | Mestrado em Administração · PUC-SP |
-| Autoria | **a confirmar** (a apresentação de orientação está em nome de Rodolfo) |
-| Destino | **a definir**: trabalho de disciplina ou periódico (qual?) |
-| Norma de citação | **a definir**: o material está em APA 7; a PUC-SP usa ABNT |
+| Autoria | Rodolfo e o usuário (coautores) |
+| Destino | Periódico (**qual? a definir**) e também trabalho de disciplina (**qual? regras do docente?**) |
+| Norma de citação | **a definir pelo periódico-alvo**; o material está em APA 7; a disciplina pode exigir ABNT |
 | Entrega | 4/12/2026 |
 | Fase atual | Fechamento de método e dados (S1 do cronograma) — redação ainda não iniciada |
 
@@ -83,7 +83,8 @@ Pasta: https://drive.google.com/drive/folders/1zYckyihfQ2wfkn7S5sm0uTd7rxrmJjJ4
 
 ## Decisões em aberto (levar ao orientador)
 
-- [ ] Destino do artigo e norma (ABNT ou APA 7)
+- [ ] Periódico-alvo e norma (ABNT ou APA 7); conferir se a entrega na disciplina afeta o ineditismo exigido pelo periódico
+- [ ] Núcleo teórico — proposta em discussão (28/10): Dependência de Recursos como eixo + estrutura de propriedade (com propriedade comum) como segunda lente; Institucional só se houver dado sobre práticas no Brasil
 - [ ] Núcleo teórico: quais 2–3 lentes ficam
 - [ ] Nome do desenho metodológico (multivocal × documental + revisão)
 - [ ] Bases da revisão sistemática (Scopus, WoS, SPELL?) e recorte temporal
