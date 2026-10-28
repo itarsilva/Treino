@@ -15,17 +15,19 @@ A exportação de 28/10 mostrou 15 campanhas ativas somando **R$ 991/dia** (≈ 
 | 1 | PMX \| Institucional | R$ 24,58 | 131 | **110** | 3.300 |
 | 2 | PSQ \| Painel de LED (grupos 03 Preço e 06 Varejo pausados) | R$ 114,34 | 180 | **100** | 3.000 |
 | 3 | Pesquisa - LedWave - Painéis e Telões LED | R$ 57,37 | 132 | **80** | 2.400 |
-| 4 | PSQ \| Painel de LED - Topo (diretoria) | — (0 conv.) | 100 | **70** | 2.100 |
+| 4 | PSQ \| Painel de LED - Topo (diretoria) | — (0 conv.) | 100 | **100** (era 70; +30 da reserva em 28/10) | 3.000 |
 | 5 | PSQ - Parques, Clubes e Hotéis (só Pesquisa) | R$ 36,58 | 50 | **50** | 1.500 |
 | 6 | LEADS - Search - Painéis de LED (só Pesquisa) | R$ 26,38 | 66 | **40** | 1.200 |
 | 7 | Pesquisa \| Igreja (sem parceiros) | nova | 40 | **30** | 900 |
 | 8 | PSQ \| Varejo e Supermercados | nova | 40 | **30** | 900 |
 | 9 | Pesquisa \| Farmácia (sem parceiros) | nova | 30 | **20** | 600 |
 | 10 | PESQUISA \| CONCORRENTES (teste) | sem dados | 10 | **10** | 300 |
-| | **Subtotal** | | 779 | **540** | **16.200** |
-| | **Reserva** | | | | **800** |
+| | **Subtotal** | | 779 | **570** | **17.100** |
+| | **Reserva** | | | | **usada na Topo** (≈ R$ 840 até 25/11) |
 
 **Pausadas em 28/10:** PSQ \| Serviços + Termos Genéricos (R$ 69,74/conv., disputa buscas genéricas), PSQ \| Institucional (marca a R$ 9,79/clique; a marca fica na LEADS), PMAX - Subverticais (estava pausada até 19/10), Campanha Tráfego - Nova e [Search] LedWave venda de painel (todos os grupos já pausados).
+
+**Topo em 28/10:** nota de qualidade 2/10 em [painel de led] (CTR esperada e experiência na página abaixo da média). Ajustes: [painel led] pausada (buscas de luminária), orçamento R$ 100/dia, limite de CPC R$ 12 → R$ 15, 4 sitelinks com descrição e 6 frases de destaque. Voltar o limite para R$ 12 quando a nota passar de 5/10. Como a reserva foi para a Topo, o total fica em ~R$ 17.100: acompanhar o teto semanal e, se passar, cortar R$ 10/dia da PMX.
 
 **Redes:** LEADS e Parques estavam com Rede de Display ligada; Igreja e Farmácia com parceiros de pesquisa. Tudo passa a "Google search" apenas.
 
