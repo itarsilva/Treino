@@ -66,9 +66,26 @@ body:not(.notes) .note{display:none}
 .hero h1{font:800 clamp(36px,5.2vw,62px)/1.04 var(--f-display);letter-spacing:-.025em;margin-top:14px}
 .hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .lead{color:var(--on-panel-muted);margin-top:18px}
-.ticker{margin-top:28px;border-radius:8px;background:#000;padding:10px;border:1px solid var(--panel-2)}
-.ticker canvas{display:block;width:100%;height:auto;max-width:100%}
-.ticker small{display:block;font:11px var(--f-mono);color:var(--on-panel-muted);margin-top:8px}
+/* painel de LED atual: tela full color de pixel fino, moldura fina, playlist de ofertas */
+.ticker{margin-top:28px}
+.screen{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:10px;background:#000;padding:6px;box-shadow:0 0 0 1px #2a3045,0 30px 60px -20px rgb(23 209 253 / .35),0 30px 80px -30px rgb(230 24 255 / .35)}
+.stage{position:relative;width:100%;height:100%;border-radius:5px;overflow:hidden;background:#05070d}
+.slide{position:absolute;inset:0;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:4%;padding:5% 6%;opacity:0;transform:scale(1.03);transition:opacity .7s ease,transform 1.2s ease}
+.slide.on{opacity:1;transform:none}
+.slide .k{font:600 clamp(9px,1.3vw,13px)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:#ffffffcc}
+.slide .t{font:800 clamp(20px,3.4vw,40px)/1.02 var(--f-display);color:#fff;letter-spacing:-.02em;margin-top:6%}
+.slide .p{display:inline-block;margin-top:7%;font:800 clamp(14px,2.2vw,26px)/1 var(--f-display);color:#0b0d16;background:#fff;border-radius:6px;padding:.35em .55em}
+.slide .art{justify-self:center;width:100%;max-width:220px;aspect-ratio:1;display:grid;place-items:center}
+.slide .art svg{width:100%;height:100%;filter:drop-shadow(0 12px 24px rgb(0 0 0 / .45))}
+.s1{background:radial-gradient(120% 120% at 85% 20%,#3dafff 0,#1638b8 45%,#070b24 100%)}
+.s2{background:radial-gradient(120% 120% at 85% 20%,#e618ff 0,#5b17b8 50%,#12062a 100%)}
+.s3{background:radial-gradient(120% 120% at 85% 20%,#17d1fd 0,#0a6f8f 45%,#03141c 100%)}
+.pixels{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgb(0 0 0 / .22) 1px,transparent 1px),linear-gradient(90deg,rgb(0 0 0 / .22) 1px,transparent 1px);background-size:3px 3px;mix-blend-mode:multiply}
+.gloss{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgb(255 255 255 / .10) 0,rgb(255 255 255 / 0) 38%)}
+.bar{position:absolute;left:6%;right:6%;bottom:5%;height:3px;border-radius:2px;background:rgb(255 255 255 / .2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#fff}
+.bar i.run{width:100%;transition:width 4s linear}
+.ticker small{display:block;font:12px var(--f-body);color:var(--on-panel-muted);margin-top:10px}
 .proof{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:14px;color:var(--on-panel-muted)}
 .proof span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--grad);margin-right:8px;vertical-align:1px}
 
@@ -178,15 +195,27 @@ footer{padding-block:28px;font-size:13px;color:var(--muted)}
     <p class="eyebrow">LedWave · para distribuidoras e autopeças</p>
     <h1>Seu balcão vende mais quando a <em>vitrine é digital</em></h1>
     <p class="lead">Painéis de LED e telas no balcão, na fachada e na expedição, com ofertas e marcas parceiras trocadas pelo celular. A LedWave projeta, instala e dá suporte.</p>
-    <div class="ticker" aria-label="Exemplo de painel de LED com oferta rolando">
-      <canvas id="led" width="960" height="120"></canvas>
-      <small>Exemplo de conteúdo no painel do balcão · troca remota, sem reimprimir cartaz</small>
+    <div class="ticker">
+      <div class="screen" role="img" aria-label="Exemplo de painel de LED no balcão mostrando ofertas que se alternam">
+        <div class="stage" id="stage">
+          <div class="slide s1 on"><div><p class="k">Oferta do balcão</p><p class="t">Kit embreagem com 15% off</p><span class="p">Só esta semana</span></div>
+            <div class="art"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="78" fill="#dfe6f2"/><circle cx="100" cy="100" r="78" fill="none" stroke="#8fa2c4" stroke-width="10"/><circle cx="100" cy="100" r="46" fill="#9fb0cc"/><circle cx="100" cy="100" r="18" fill="#2b3550"/><g fill="#2b3550">
+              <rect x="95" y="30" width="10" height="20" rx="3"/><rect x="95" y="150" width="10" height="20" rx="3"/><rect x="30" y="95" width="20" height="10" rx="3"/><rect x="150" y="95" width="20" height="10" rx="3"/></g></svg></div></div>
+          <div class="slide s2"><div><p class="k">Baterias</p><p class="t">Troca na hora, teste grátis</p><span class="p">60Ah · 70Ah · 100Ah</span></div>
+            <div class="art"><svg viewBox="0 0 200 200" aria-hidden="true"><rect x="58" y="44" width="22" height="16" rx="3" fill="#c9cfdb"/><rect x="120" y="44" width="22" height="16" rx="3" fill="#c9cfdb"/><rect x="30" y="56" width="140" height="104" rx="12" fill="#1c1f2b"/><rect x="30" y="56" width="140" height="26" rx="12" fill="#2c3142"/><path d="M106 96 84 128h16l-6 24 26-36h-16l6-20z" fill="#ffd23f"/></svg></div></div>
+          <div class="slide s3"><div><p class="k">Revisão rápida</p><p class="t">Filtro + óleo 5W30</p><span class="p">Combo com desconto</span></div>
+            <div class="art"><svg viewBox="0 0 200 200" aria-hidden="true"><rect x="40" y="70" width="58" height="96" rx="10" fill="#e9eef7"/><rect x="40" y="70" width="58" height="22" rx="10" fill="#17a6d6"/><rect x="40" y="104" width="58" height="8" fill="#c7d2e4"/><rect x="40" y="122" width="58" height="8" fill="#c7d2e4"/><rect x="40" y="140" width="58" height="8" fill="#c7d2e4"/><path d="M118 52h34l8 16v94a10 10 0 0 1-10 10h-30a10 10 0 0 1-10-10V68z" fill="#f2b705"/><rect x="128" y="40" width="18" height="14" rx="3" fill="#1c1f2b"/><rect x="116" y="96" width="46" height="34" rx="4" fill="#1c1f2b"/><text x="139" y="118" text-anchor="middle" font-family="Poppins,Arial" font-weight="800" font-size="13" fill="#fff">5W30</text></svg></div></div>
+          <div class="pixels"></div><div class="gloss"></div>
+          <div class="bar"><i id="bar"></i></div>
+        </div>
+      </div>
+      <small>Exemplo de conteúdo no painel do balcão · ofertas trocadas pelo celular, sem reimprimir cartaz</small>
     </div>
     <div class="proof"><span>Compra ou locação</span><span>Instalação em todo o Brasil</span><span>Gestão de conteúdo remota</span></div>
     <div class="note"><span class="tag">Nota RD · Hero</span>
       <ul>
         <li>No RD, use o modelo de LP com formulário à direita do título. No celular o formulário vem logo depois do título.</li>
-        <li>O letreiro animado pode virar um GIF curto ou vídeo do painel real instalado. Vídeo real converte mais que mockup.</li>
+        <li>A tela animada pode virar um vídeo curto de um painel real instalado, com as ofertas rodando. Vídeo real converte mais que mockup.</li>
         <li>Título com no máximo 10 palavras e um benefício só: vender mais no balcão.</li>
       </ul>
     </div>
@@ -381,34 +410,13 @@ function calc(){
 }
 ['cM','cV','cL'].forEach(id => $(id).addEventListener('input', calc)); calc();
 
-/* letreiro de LED em matriz de pontos */
+/* painel: playlist de ofertas com transição suave */
 (function(){
-  const cv = $('led'), ctx = cv.getContext('2d');
-  const COLS = 160, ROWS = 20, cell = cv.width / COLS;
-  const msg = '   OFERTA DO BALCÃO  •  KIT EMBREAGEM 15% OFF  •  BATERIA 60AH NA TROCA  •  FILTRO + ÓLEO 5W30   ';
-  const off = document.createElement('canvas'); const o = off.getContext('2d');
-  o.font = '900 17px Arial, sans-serif'; const w = Math.ceil(o.measureText(msg).width);
-  off.width = w; off.height = ROWS; o.font = '900 17px Arial, sans-serif'; o.fillStyle = '#fff'; o.textBaseline = 'middle'; o.fillText(msg, 0, ROWS/2 + 1);
-  const px = o.getImageData(0, 0, w, ROWS).data;
-  const lit = (x, y) => px[((y*w) + (x % w)) * 4 + 3] > 110;
-  const css = getComputedStyle(document.documentElement);
-  const dim = css.getPropertyValue('--led-dim').trim() || '#161b2e';
-  const stops = [[23,209,253],[101,141,255],[164,98,220],[230,24,255]];
-  const colAt = x => { const t = x/(COLS-1)*(stops.length-1), i = Math.min(stops.length-2, Math.floor(t)), f = t-i, a = stops[i], b = stops[i+1]; return 'rgb('+a.map((v,k)=>Math.round(v+(b[k]-v)*f)).join(',')+')'; };
-  const cols = Array.from({length:COLS}, (_, x) => colAt(x));
-  let shift = 0, last = 0;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function draw(t){
-    if(t - last > 45){ last = t; shift = (shift + 1) % w;
-      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, cv.width, cv.height);
-      for(let y = 0; y < ROWS; y++) for(let x = 0; x < COLS; x++){
-        ctx.fillStyle = lit(x + shift, y) ? cols[x] : dim;
-        const r = cell*0.78, gx = x*cell + (cell-r)/2, gy = y*(cv.height/ROWS) + (cell-r)/2;
-        ctx.beginPath(); ctx.roundRect ? ctx.roundRect(gx, gy, r, r, r*0.28) : ctx.rect(gx, gy, r, r); ctx.fill();
-      }
-    }
-    if(!reduce) requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
+  const slides = [...document.querySelectorAll('#stage .slide')], bar = $('bar');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let i = 0;
+  const run = () => { bar.classList.remove('run'); void bar.offsetWidth; bar.classList.add('run'); };
+  run();
+  setInterval(() => { slides[i].classList.remove('on'); i = (i + 1) % slides.length; slides[i].classList.add('on'); run(); }, 4000);
 })();
 </script>
