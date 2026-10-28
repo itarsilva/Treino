@@ -1,0 +1,399 @@
+<title>LP Distribuidora de Peças</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: barra de notas fixa no topo; LP em faixas largas (hero escuro tipo painel de LED, seções claras), coluna de 1120px; notas do RD aparecem como fichas tracejadas dentro de cada seção */
+:root{
+  --bg:#f4f6f8; --surface:#ffffff; --ink:#131a22; --muted:#5a6675; --line:#d9dfe6;
+  --panel:#0f141b; --panel-2:#18202b; --on-panel:#eef2f6; --on-panel-muted:#9aa7b6;
+  --led:#ffb020; --led-dim:#3a2c12; --accent:#1f6feb; --on-accent:#ffffff;
+  --note:#7a4dd8; --note-soft:#f1ebff; --ok:#13795b;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b0f14; --surface:#131a22; --ink:#e8edf2; --muted:#9aa6b4; --line:#253040;
+  --panel:#06090d; --panel-2:#111821; --on-panel:#eef2f6; --on-panel-muted:#9aa7b6;
+  --led:#ffb020; --led-dim:#2a2010; --accent:#5b9bff; --on-accent:#06090d;
+  --note:#b394ff; --note-soft:#221a3a; --ok:#4fd1a1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b0f14; --surface:#131a22; --ink:#e8edf2; --muted:#9aa6b4; --line:#253040;
+  --panel:#06090d; --panel-2:#111821; --on-panel:#eef2f6; --on-panel-muted:#9aa7b6;
+  --led:#ffb020; --led-dim:#2a2010; --accent:#5b9bff; --on-accent:#06090d;
+  --note:#b394ff; --note-soft:#221a3a; --ok:#4fd1a1; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0}
+h2{font:800 clamp(32px,4.4vw,48px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.01em}
+h3{font:700 19px/1.25 var(--f-body)}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:18px;color:var(--muted);max-width:62ch}
+section.band{padding-block:72px}
+.sec-head{display:grid;gap:12px;margin-bottom:36px;max-width:760px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* barra da proposta */
+.toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.toolbar .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.toolbar b{font:700 14px var(--f-body)}
+.toolbar span{font-size:13px;color:var(--muted)}
+.toolbar .sp{flex:1}
+.switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--note);border:1px solid var(--note);border-radius:999px;padding:5px 12px;background:none}
+.switch[aria-pressed="true"]{background:var(--note);color:var(--surface)}
+
+/* notas para o RD */
+.note{border:1.5px dashed var(--note);background:var(--note-soft);color:var(--ink);border-radius:10px;padding:14px 16px;font-size:14px;margin-top:22px;display:grid;gap:6px}
+.note .tag{font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--note)}
+.note ul{margin:0;padding-left:18px;display:grid;gap:3px}
+.note code{font:12.5px var(--f-mono);background:var(--surface);padding:1px 5px;border-radius:4px}
+body:not(.notes) .note{display:none}
+
+/* hero */
+.hero{background:var(--panel);color:var(--on-panel)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;padding-block:56px 64px;align-items:start}
+.hero .eyebrow{color:var(--led)}
+.hero h1{font:900 clamp(44px,6.6vw,84px)/.92 var(--f-display);text-transform:uppercase;letter-spacing:.005em;margin-top:14px}
+.hero h1 em{font-style:normal;color:var(--led)}
+.hero .lead{color:var(--on-panel-muted);margin-top:18px}
+.ticker{margin-top:28px;border-radius:8px;background:#000;padding:10px;border:1px solid var(--panel-2)}
+.ticker canvas{display:block;width:100%;height:auto;max-width:100%}
+.ticker small{display:block;font:11px var(--f-mono);color:var(--on-panel-muted);margin-top:8px}
+.proof{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:14px;color:var(--on-panel-muted)}
+.proof span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--led);margin-right:8px;vertical-align:1px}
+
+form.lead-form{background:var(--surface);color:var(--ink);border-radius:14px;padding:24px;display:grid;gap:12px;box-shadow:0 18px 50px rgb(0 0 0 / .35)}
+.lead-form h2{font-size:30px}
+.lead-form p.sub{font-size:14px;color:var(--muted)}
+.lead-form label{display:grid;gap:4px;font-size:13px;font-weight:600}
+.lead-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lead-form input,.lead-form select{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 11px;width:100%;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips label{display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer}
+.chips input{width:auto;padding:0}
+.cta{font:700 16px var(--f-body);background:var(--led);color:#1a1205;border:0;border-radius:10px;padding:14px 18px;cursor:pointer}
+.cta:hover{filter:brightness(1.06)}
+.micro{font-size:12px;color:var(--muted);text-align:center}
+.sent{background:var(--note-soft);border-radius:8px;padding:10px 12px;font-size:13.5px}
+
+/* dores */
+.pains{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.pain{background:var(--surface);padding:22px;display:grid;gap:8px;align-content:start}
+.pain .q{font:800 22px/1.05 var(--f-display);text-transform:uppercase}
+.pain p{font-size:15px;color:var(--muted)}
+
+/* aplicações */
+.apps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.app{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:18px;align-items:start}
+.app .scr{aspect-ratio:4/3;max-width:100%;border-radius:6px;background:var(--panel);display:grid;place-items:center;font:800 18px/1 var(--f-display);color:var(--led);text-transform:uppercase;text-align:center;padding:8px;background-image:radial-gradient(var(--led-dim) 1px,transparent 1.3px);background-size:6px 6px}
+.app p{font-size:15px;color:var(--muted);margin-top:6px}
+.spec{font:12px var(--f-mono);color:var(--muted);margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.spec span{border:1px solid var(--line);border-radius:4px;padding:1px 6px}
+
+/* mídia que se paga */
+.money{background:var(--panel);color:var(--on-panel)}
+.money .eyebrow{color:var(--led)}
+.money .lead{color:var(--on-panel-muted)}
+.money-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.calc{background:var(--panel-2);border-radius:14px;padding:24px;display:grid;gap:16px}
+.calc label{display:grid;gap:6px;font-size:14px;color:var(--on-panel-muted)}
+.calc .val{font:500 14px var(--f-mono);color:var(--on-panel)}
+.calc input[type=range]{width:100%;accent-color:var(--led)}
+.result{border-top:1px solid #2a3442;padding-top:16px;display:grid;gap:4px}
+.result .big{font:900 48px/1 var(--f-display);color:var(--led);font-variant-numeric:tabular-nums}
+.result small{font-size:12.5px;color:var(--on-panel-muted)}
+
+/* passos */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;counter-reset:s}
+.step{border-top:3px solid var(--ink);padding-top:14px;display:grid;gap:6px;align-content:start}
+.step::before{counter-increment:s;content:counter(s,decimal-leading-zero);font:500 13px var(--f-mono);color:var(--muted)}
+.step p{font-size:15px;color:var(--muted)}
+
+/* prova social */
+.cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;gap:12px}
+.case blockquote{margin:0;font-size:16px}
+.case .who{font-size:13px;color:var(--muted)}
+.ph{display:inline-block;font:12px var(--f-mono);color:var(--note);border:1px dashed var(--note);border-radius:4px;padding:1px 6px}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:820px}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.faq summary{font-weight:600;cursor:pointer}
+.faq details p{margin-top:8px;color:var(--muted);font-size:15px}
+
+/* cta final */
+.final{background:var(--led);color:#1a1205}
+.final .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding-block:44px}
+.final h2{font-size:clamp(30px,4vw,44px)}
+.final a{font:700 16px var(--f-body);background:#1a1205;color:var(--led);text-decoration:none;border-radius:10px;padding:14px 20px}
+
+/* plano RD */
+.plan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.plan > div{background:var(--surface);border:1.5px dashed var(--note);border-radius:12px;padding:20px;display:grid;gap:10px;align-content:start}
+.plan h3{color:var(--note)}
+.plan ol,.plan ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:14.5px}
+.plan code{font:12.5px var(--f-mono)}
+footer{padding-block:28px;font-size:13px;color:var(--muted)}
+
+@media (max-width:900px){
+  .hero .wrap,.money-grid{grid-template-columns:minmax(0,1fr)}
+  .pains,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .apps,.cases,.plan{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .pains,.steps{grid-template-columns:minmax(0,1fr)}
+  .app{grid-template-columns:minmax(0,1fr)}
+  .app .scr{max-width:200px}
+  .lead-form .row2{grid-template-columns:minmax(0,1fr)}
+  section.band{padding-block:52px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="toolbar"><div class="wrap">
+  <b>Proposta de LP · Digitalize sua Distribuidora de Peças</b>
+  <span>Modelo para montar no editor de Landing Pages do RD Station</span>
+  <span class="sp"></span>
+  <button class="switch" id="tgl" type="button" aria-pressed="true">Notas para o RD: visíveis</button>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div style="min-width:0">
+    <p class="eyebrow">LedWave · para distribuidoras e autopeças</p>
+    <h1>Seu balcão vende mais quando a <em>vitrine é digital</em></h1>
+    <p class="lead">Painéis de LED e telas no balcão, na fachada e na expedição, com ofertas e marcas parceiras trocadas pelo celular. A LedWave projeta, instala e dá suporte.</p>
+    <div class="ticker" aria-label="Exemplo de painel de LED com oferta rolando">
+      <canvas id="led" width="960" height="120"></canvas>
+      <small>Exemplo de conteúdo no painel do balcão · troca remota, sem reimprimir cartaz</small>
+    </div>
+    <div class="proof"><span>Compra ou locação</span><span>Instalação em todo o Brasil</span><span>Gestão de conteúdo remota</span></div>
+    <div class="note"><span class="tag">Nota RD · Hero</span>
+      <ul>
+        <li>No RD, use o modelo de LP com formulário à direita do título. No celular o formulário vem logo depois do título.</li>
+        <li>O letreiro animado pode virar um GIF curto ou vídeo do painel real instalado. Vídeo real converte mais que mockup.</li>
+        <li>Título com no máximo 10 palavras e um benefício só: vender mais no balcão.</li>
+      </ul>
+    </div>
+  </div>
+
+  <form class="lead-form" id="form" novalidate>
+    <h2>Receba um projeto para sua loja</h2>
+    <p class="sub">Leva 1 minuto. Um especialista responde em até 1 dia útil.</p>
+    <label for="fNome">Nome<input id="fNome" required autocomplete="name"></label>
+    <div class="row2">
+      <label for="fZap">WhatsApp<input id="fZap" required inputmode="tel" placeholder="(11) 90000-0000"></label>
+      <label for="fMail">E-mail<input id="fMail" type="email" required autocomplete="email"></label>
+    </div>
+    <label for="fEmp">Empresa<input id="fEmp" required autocomplete="organization"></label>
+    <div class="row2">
+      <label for="fLojas">Quantas lojas?<select id="fLojas"><option>1 loja</option><option>2 a 5</option><option>6 a 20</option><option>Mais de 20</option></select></label>
+      <label for="fNec">Interesse<select id="fNec"><option>Compra</option><option>Locação fixa (12 meses ou mais)</option><option>Ainda não sei</option></select></label>
+    </div>
+    <fieldset style="border:0;padding:0;margin:0;display:grid;gap:6px">
+      <legend style="font-size:13px;font-weight:600;padding:0;margin-bottom:6px">Onde quer o painel?</legend>
+      <div class="chips">
+        <label for="l1"><input type="checkbox" id="l1">Balcão</label>
+        <label for="l2"><input type="checkbox" id="l2">Fachada</label>
+        <label for="l3"><input type="checkbox" id="l3">Área de espera</label>
+        <label for="l4"><input type="checkbox" id="l4">Expedição</label>
+      </div>
+    </fieldset>
+    <button class="cta" type="submit">Quero meu projeto</button>
+    <p class="micro">Sem custo e sem compromisso. Seus dados ficam só com a LedWave.</p>
+    <p class="sent" id="sent" hidden>Exemplo: no RD, aqui o lead vai para a página de obrigado.</p>
+    <div class="note"><span class="tag">Nota RD · Formulário</span>
+      <ul>
+        <li>Identificador da conversão: <code>digitalize-distribuidora-de-pecas</code> (o mesmo da LP atual, para não quebrar o histórico).</li>
+        <li>Reaproveite campos que já existem na conta: <code>Celular (WhatsApp)</code>, <code>Quantidade de lojas</code>, <code>Qual a sua necessidade?</code>, <code>Qual tipo de ambiente vai ser instalado?</code>.</li>
+        <li>Máximo 7 campos. Segmento não precisa: a LP já é do segmento, grave como campo oculto <code>Segmento de atuação = Distribuidora de peças</code>.</li>
+      </ul>
+    </div>
+  </form>
+</div></header>
+
+<main>
+<section class="band"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">O que trava a venda no balcão</p>
+    <h2>Quatro situações que toda distribuidora conhece</h2>
+  </div>
+  <div class="pains">
+    <div class="pain"><p class="q">Fila parada</p><p>O mecânico espera o pedido olhando para a parede. Esse tempo podia mostrar a oferta de pastilha ou bateria do dia.</p></div>
+    <div class="pain"><p class="q">Cartaz vencido</p><p>Preço mudou, a promoção acabou e o cartaz impresso continua lá. Reimprimir toda semana custa e atrasa.</p></div>
+    <div class="pain"><p class="q">Verba sem vitrine</p><p>Fabricantes de filtros, lubrificantes e baterias têm verba de trade marketing. Sem um espaço de mídia, ela vai para outra loja.</p></div>
+    <div class="pain"><p class="q">Fachada apagada</p><p>Na rua de autopeças todas as lojas parecem iguais. Quem passa de carro não vê o que você tem de diferente.</p></div>
+  </div>
+  <div class="note"><span class="tag">Nota RD · Dores</span>
+    <ul><li>Bloco de 4 colunas com título curto e duas linhas. Fale a língua do balcão: mecânico, pedido, verba de trade, rua de autopeças.</li></ul>
+  </div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Onde o LED entra na sua loja</p>
+    <h2>Um painel para cada ponto da jornada</h2>
+    <p class="lead">Cada local tem sua especificação. A gente indica o painel certo depois de ver as fotos do espaço.</p>
+  </div>
+  <div class="apps">
+    <div class="app"><div class="scr">Oferta<br>do dia</div><div><h3>Balcão de atendimento</h3><p>Ofertas, kits e lançamentos rodando enquanto o cliente espera. Muda o preço pelo celular em segundos.</p><div class="spec"><span>interno</span><span>P2.5 a P3.9</span><span>TV ou LED</span></div></div></div>
+    <div class="app"><div class="scr">Aberto<br>até 20h</div><div><h3>Fachada</h3><p>Painel visível da rua, de dia e à noite, com marcas, horário e promoções. Sua loja vira referência no quarteirão.</p><div class="spec"><span>externo</span><span>P6 a P10</span><span>alto brilho</span></div></div></div>
+    <div class="app"><div class="scr">Marca<br>parceira</div><div><h3>Área de espera</h3><p>Vídeos de marcas parceiras, dicas técnicas e treinamentos para o mecânico que aguarda a separação.</p><div class="spec"><span>interno</span><span>TV profissional</span><span>playlist</span></div></div></div>
+    <div class="app"><div class="scr">Pedido<br>pronto</div><div><h3>Expedição</h3><p>Painel de status dos pedidos para motoboys e clientes de retirada. Menos gente perguntando no balcão.</p><div class="spec"><span>interno</span><span>LED ou TV</span><span>integração opcional</span></div></div></div>
+  </div>
+  <div class="note"><span class="tag">Nota RD · Aplicações</span>
+    <ul>
+      <li>Troque as telinhas ilustrativas por fotos de instalações reais da LedWave em autopeças ou varejo.</li>
+      <li>As especificações (pixel pitch) são valores típicos; confirme com o time técnico antes de publicar.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="band money"><div class="wrap money-grid">
+  <div class="sec-head" style="margin:0">
+    <p class="eyebrow">Mídia que se paga</p>
+    <h2>Seus fornecedores podem pagar pelo painel</h2>
+    <p class="lead">Venda espaço no painel para as marcas que você já distribui. A cota mensal de cada marca ajuda a pagar a locação, e o fornecedor ganha uma vitrine medida dentro do ponto de venda.</p>
+    <div class="note" style="color:var(--ink)"><span class="tag">Nota RD · Simulador</span>
+      <ul><li>O editor do RD não roda simuladores. Use uma imagem com 3 cenários prontos ou um link para esta calculadora.</li><li>Esse é o argumento que diferencia a LedWave de um vendedor de TV.</li></ul>
+    </div>
+  </div>
+  <div class="calc" aria-label="Simulação de receita com mídia">
+    <label for="cM">Marcas anunciando no painel <span class="val" id="vM"></span><input type="range" id="cM" min="1" max="12" value="4"></label>
+    <label for="cV">Cota mensal por marca <span class="val" id="vV"></span><input type="range" id="cV" min="200" max="3000" step="100" value="800"></label>
+    <label for="cL">Lojas com painel <span class="val" id="vL"></span><input type="range" id="cL" min="1" max="20" value="3"></label>
+    <div class="result">
+      <small>Receita estimada com mídia</small>
+      <div class="big" id="rMes"></div>
+      <small id="rAno"></small>
+      <small>Simulação ilustrativa. O valor real depende do fluxo da loja e da negociação com cada marca.</small>
+    </div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Como funciona</p>
+    <h2>Do primeiro contato ao painel ligado</h2>
+  </div>
+  <div class="steps">
+    <div class="step"><h3>Diagnóstico</h3><p>Você manda fotos do balcão e da fachada pelo WhatsApp. A gente avalia distância de leitura, luz e medidas.</p></div>
+    <div class="step"><h3>Projeto e proposta</h3><p>Indicamos tamanho e tipo de painel, com opção de compra ou locação mensal.</p></div>
+    <div class="step"><h3>Instalação</h3><p>Equipe LedWave instala, configura e treina sua equipe para trocar o conteúdo.</p></div>
+    <div class="step"><h3>Conteúdo no ar</h3><p>Você atualiza ofertas pelo celular. Suporte e manutenção inclusos na locação.</p></div>
+  </div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow">Quem já digitalizou</p>
+    <h2>Lojas que trocaram o cartaz pelo LED</h2>
+  </div>
+  <div class="cases">
+    <div class="case"><span class="ph">logo do cliente</span><blockquote>“Depoimento real de um cliente LedWave do varejo ou de autopeças, falando do resultado no balcão.”</blockquote><p class="who"><span class="ph">nome, cargo, empresa</span></p></div>
+    <div class="case"><span class="ph">logo do cliente</span><blockquote>“Segundo depoimento, de preferência com um número: aumento de venda de um item, redução de cartazes, verba de marca captada.”</blockquote><p class="who"><span class="ph">nome, cargo, empresa</span></p></div>
+    <div class="case"><span class="ph">foto da instalação</span><blockquote>“Terceiro: foto antes e depois da fachada ou do balcão.”</blockquote><p class="who"><span class="ph">cidade / UF</span></p></div>
+  </div>
+  <div class="note"><span class="tag">Nota RD · Prova social</span>
+    <ul><li>Os textos acima são marcadores. Só publique com depoimentos e logos autorizados de clientes reais.</li><li>Se ainda não houver case em autopeças, use cases de supermercado e postos (Vibra) e diga isso no título da seção.</li></ul>
+  </div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><p class="eyebrow">Dúvidas comuns</p><h2>Perguntas antes do orçamento</h2></div>
+  <div class="faq">
+    <details open><summary>É melhor comprar ou alugar?</summary><p>Na locação você paga por mês, com manutenção e suporte inclusos, e troca de equipamento quando quiser. A compra faz sentido para quem quer o ativo e já tem equipe técnica. A proposta mostra as duas opções.</p></details>
+    <details><summary>Preciso de alguém para criar o conteúdo?</summary><p>Não. Você troca ofertas e imagens pelo celular, e entregamos modelos prontos para começar.</p></details>
+    <details><summary>Funciona na fachada com sol forte?</summary><p>Sim. Para área externa usamos painel de alto brilho e proteção contra chuva, próprio para ficar ligado o dia todo.</p></details>
+    <details><summary>Quanto tempo leva para instalar?</summary><p>Depende do tamanho e do local. Na proposta você recebe o prazo combinado para o seu projeto.</p></details>
+    <details><summary>Atendem minha cidade?</summary><p>A LedWave atende todo o Brasil. Informe a cidade no WhatsApp e confirmamos a logística.</p></details>
+  </div>
+  <div class="note"><span class="tag">Nota RD · FAQ</span><ul><li>Confirme prazos, garantia e área de atendimento com o comercial antes de publicar. Não coloquei números que eu não tenho como confirmar.</li></ul></div>
+</div></section>
+</main>
+
+<section class="final"><div class="wrap">
+  <h2>Mande uma foto do seu balcão e receba o projeto</h2>
+  <a href="#form">Quero meu projeto</a>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="sec-head"><p class="eyebrow" style="color:var(--note)">Para montar no RD Station</p><h2>Plano de configuração</h2><p class="lead">Esta parte não vai para a LP. É o checklist para quem for montar no RD.</p></div>
+  <div class="plan">
+    <div><h3>Página de obrigado</h3>
+      <ul>
+        <li>Título: “Recebemos! Agora mande as fotos do local.”</li>
+        <li>Botão de WhatsApp com mensagem pronta: “Olá, preenchi o formulário da LP de distribuidoras e vou mandar as fotos.”</li>
+        <li>Vídeo curto de uma instalação.</li>
+      </ul>
+    </div>
+    <div><h3>Automação (fluxo)</h3>
+      <ol>
+        <li>Na hora: e-mail de confirmação + tarefa para o vendedor.</li>
+        <li>D+2: e-mail com case e fotos de instalação.</li>
+        <li>D+5: e-mail “Seus fornecedores pagam o painel” com os 3 cenários.</li>
+        <li>D+10: último contato pedindo as fotos do local.</li>
+      </ol>
+    </div>
+    <div><h3>Rastreio e qualificação</h3>
+      <ul>
+        <li>QR code impresso com UTM: <code>?utm_source=qrcode&amp;utm_medium=impresso&amp;utm_campaign=digitalize-distribuidora</code>.</li>
+        <li>Lead scoring: mais pontos para “Mais de 20” lojas, fachada e compra.</li>
+        <li>Lead com 6+ lojas vai direto para o comercial; os demais entram no fluxo.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Proposta de LP para a campanha Digitalize · LedWave. Textos e números ilustrativos devem ser validados antes de publicar.</div></footer>
+
+<script>
+const $ = id => document.getElementById(id);
+$('tgl').addEventListener('click', e => {
+  const on = document.body.classList.toggle('notes');
+  e.currentTarget.setAttribute('aria-pressed', on);
+  e.currentTarget.textContent = 'Notas para o RD: ' + (on ? 'visíveis' : 'ocultas');
+});
+document.body.classList.add('notes');
+$('form').addEventListener('submit', e => { e.preventDefault(); $('sent').hidden = false; });
+
+const brl = n => n.toLocaleString('pt-BR', {style:'currency', currency:'BRL', maximumFractionDigits:0});
+function calc(){
+  const m = +$('cM').value, v = +$('cV').value, l = +$('cL').value;
+  $('vM').textContent = m; $('vV').textContent = brl(v); $('vL').textContent = l;
+  $('rMes').textContent = brl(m*v*l) + '/mês';
+  $('rAno').textContent = brl(m*v*l*12) + ' em 12 meses';
+}
+['cM','cV','cL'].forEach(id => $(id).addEventListener('input', calc)); calc();
+
+/* letreiro de LED em matriz de pontos */
+(function(){
+  const cv = $('led'), ctx = cv.getContext('2d');
+  const COLS = 160, ROWS = 20, cell = cv.width / COLS;
+  const msg = '   OFERTA DO BALCÃO  •  KIT EMBREAGEM 15% OFF  •  BATERIA 60AH NA TROCA  •  FILTRO + ÓLEO 5W30   ';
+  const off = document.createElement('canvas'); const o = off.getContext('2d');
+  o.font = '900 17px Arial, sans-serif'; const w = Math.ceil(o.measureText(msg).width);
+  off.width = w; off.height = ROWS; o.font = '900 17px Arial, sans-serif'; o.fillStyle = '#fff'; o.textBaseline = 'middle'; o.fillText(msg, 0, ROWS/2 + 1);
+  const px = o.getImageData(0, 0, w, ROWS).data;
+  const lit = (x, y) => px[((y*w) + (x % w)) * 4 + 3] > 110;
+  const css = getComputedStyle(document.documentElement);
+  const on = css.getPropertyValue('--led').trim() || '#ffb020', dim = css.getPropertyValue('--led-dim').trim() || '#2a2010';
+  let shift = 0, last = 0;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function draw(t){
+    if(t - last > 45){ last = t; shift = (shift + 1) % w;
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, cv.width, cv.height);
+      for(let y = 0; y < ROWS; y++) for(let x = 0; x < COLS; x++){
+        ctx.fillStyle = lit(x + shift, y) ? on : dim;
+        ctx.beginPath(); ctx.arc(x*cell + cell/2, y*(cv.height/ROWS) + cell/2, cell*0.36, 0, 6.283); ctx.fill();
+      }
+    }
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
