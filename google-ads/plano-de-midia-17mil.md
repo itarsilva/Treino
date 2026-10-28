@@ -29,7 +29,7 @@ A exportação de 28/10 mostrou 15 campanhas ativas somando **R$ 991/dia** (≈ 
 
 **Redes:** LEADS e Parques estavam com Rede de Display ligada; Igreja e Farmácia com parceiros de pesquisa. Tudo passa a "Google search" apenas.
 
-Arquivo de importação: `editor/alteracoes-2026-10-28.csv`.
+Arquivo de importação: `editor/alteracoes-2026-10-28.csv` — **importado no Editor em 28/10** (exportação de conferência: 10 campanhas ativas, R$ 540/dia).
 
 ## Calendário de ativação
 
