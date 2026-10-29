@@ -241,6 +241,32 @@ async function icon(name, color) {
   ], { x: 0.95, y: 5.5, w: 11.4, h: 1.2, fontSize: 15, valign: "middle", objectName: "Critério texto" });
   s.addNotes("Faça uma pergunta por vez e anote as palavras do lead: o executivo vai usá-las na reunião. Perfil bom sem projeto ou prazo = MQL em nutrição, com retorno marcado.");
 
+  // 8b. Aluguel para eventos (vertical pausada)
+  s = content("Aluguel de painel para eventos: vertical pausada", "Jornada");
+  card(s, 0.6, 1.6, 12.1, 0.95, "Aviso pausa", C.background2);
+  await circleIcon(s, 0.85, 1.75, 0.65, "FaPause", HEX.accent1, "Pausa");
+  txt(s, [
+    { text: "No momento, a locação de painéis para eventos está pausada. ", options: { bold: true } },
+    { text: "Vamos retomar em breve, então nenhum desses leads se perde: todos ficam registrados para o retorno." },
+  ], { x: 1.75, y: 1.6, w: 10.7, h: 0.95, fontSize: 16, valign: "middle", objectName: "Aviso texto" });
+  card(s, 0.6, 2.8, 6.6, 3.85, "Mensagem evento", C.text2);
+  await circleIcon(s, 0.9, 3.05, 0.55, "FaWhatsapp", HEX.accent2, "Mensagem evento");
+  txt(s, "Mensagem para o lead", { x: 1.6, y: 3.05, w: 5.3, h: 0.55, fontSize: 18, bold: true, color: C.accent2, valign: "middle", objectName: "Mensagem evento título" });
+  txt(s, "\"Oi, [Nome]! Aqui é a [Pryscila/Kelly], da LedWave. Obrigada pelo contato! No momento, a locação de painéis para eventos está pausada, mas vamos retomar em breve. Posso guardar seu contato e te avisar assim que voltarmos? E se você tiver um projeto de painel fixo, como fachada, loja ou igreja, já consigo te ajudar agora.\"", { x: 0.9, y: 3.8, w: 6.0, h: 2.7, fontSize: 18, italic: true, color: C.background1, objectName: "Mensagem evento texto" });
+  txt(s, "O que fazer", { x: 7.6, y: 2.8, w: 5.1, h: 0.5, fontSize: 20, bold: true, color: C.accent1, objectName: "Evento passos título" });
+  const passosEvento = [
+    "Enviar a mensagem e anotar data, cidade e tipo do evento",
+    "Perguntar se há projeto de painel fixo: se sim, segue a qualificação",
+    "Salesforce: Nutrição, motivo \"Locação de eventos pausada\"",
+    "Na volta da vertical, essa lista é a primeira a ser chamada",
+  ];
+  for (let i = 0; i < 4; i++) {
+    const y = 3.45 + i * 0.8;
+    num(s, 7.6, y, 0.5, i + 1, GRAD[i + 2], "Passo evento " + (i + 1));
+    txt(s, passosEvento[i], { x: 8.3, y: y - 0.1, w: 4.4, h: 0.7, fontSize: 14, valign: "middle", objectName: "Passo evento texto " + (i + 1) });
+  }
+  s.addNotes("Vale para quem pede telão ou painel para um evento pontual (show, casamento, formatura, feira). Seja gentil e rápida: o lead precisa sair da conversa sabendo que vamos voltar e que o contato dele está guardado. Não indique concorrentes nem passe previsão de data de retorno.");
+
   // 9. Agendamento e passagem
   s = content("Etapa 4: agendar e passar o bastão", "Jornada");
   txt(s, "Na conversa", { x: 0.6, y: 1.7, w: 6, h: 0.45, fontSize: 20, bold: true, color: C.accent1, objectName: "Na conversa título" });
