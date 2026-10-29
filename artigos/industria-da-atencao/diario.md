@@ -23,3 +23,4 @@ Registro curto de cada sessão: o que foi feito, o que foi decidido, o que ficou
 - Criada a mesa de trabalho no claude.ai (mesmo formato da dissertação): https://claude.ai/artifact/CC4yGNUmA5mhGh8STh3x1a — 21 textos na biblioteca e 11 seções com pendências.
 - Criado o modelo de escrita (roteiro com lacunas) no Google Drive do usuário: https://docs.google.com/document/d/1sT1VJDuGxbLqHzcj58uNIN1-_UDAT4Q76RjxYaOsWQw/edit
 - Criada a versão 0 do artigo (rascunho comentado a partir das Tabelas 1–7): https://docs.google.com/document/d/1AriTcmfhSpv2tPbe6vTnKe1s_7cP3mrDCKLOY6HIqI0/edit. Detectada divergência entre Tabela 4 e apresentação nos dados de controle.
+- Mesa de trabalho ligada à Versão 0: cada texto mostra seção, parágrafo e trecho onde entra; painel 2.1/2.2 alinhado à Versão 0. Primeira ficha (Adams et al., 2017) feita pelo usuário.

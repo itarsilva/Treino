@@ -168,6 +168,7 @@ Estrutura de cada projeto: `artigos/<projeto>/leitura/` com `PLANO_DE_LEITURA.md
   - "Uso no artigo" responde à pergunta-guia do plano e aponta seção e dado (tabela) que o texto ajuda a interpretar?
   - A linha correspondente foi lançada na `MATRIZ.md`?
 - **Não fichar por ele.** Se pedir resumo de um texto, oferecer no máximo a estrutura (seções, conceitos a procurar) e devolver a tarefa.
+- **Ligação ficha → rascunho:** quando houver uma versão do artigo (ex.: `versao-0.html`), cada texto da biblioteca na mesa de trabalho guarda `insercoes` (seção, parágrafo, trecho do rascunho que o cita, o que conferir). Ao incluir um texto novo ou uma versão nova do rascunho, atualizar esses campos com `ArtifactData` (ler antes; pinar a versão). Ao revisar uma ficha, dizer se ela confirma, corrige ou não sustenta cada trecho.
 - **Da matriz ao texto:** quando a matriz tiver 8–10 linhas, orientar a leitura por coluna e a montagem de um parágrafo por categoria, com tensões entre autores explícitas.
 
 ## Formato das entregas
