@@ -96,10 +96,10 @@ async function icon(name, color) {
   pres.addSection({ title: "Abertura" });
   let s = pres.addSlide({ masterName: "Capa", sectionTitle: "Abertura" });
   s.addText("Jornada do lead: playbook das SDRs", { placeholder: "title" });
-  s.addText("Do primeiro contato à reunião com o executivo", { placeholder: "body" });
+  s.addText("Do primeiro contato à oportunidade no Salesforce", { placeholder: "body" });
   txt(s, "Pryscila Almeida  ·  Kelly  ·  Time de Growth e Comercial", { x: 0.6, y: 6.6, w: 7.3, h: 0.4, fontSize: 14, color: HEX.accent6, objectName: "Equipe" });
   await circleIcon(s, 8.05, 4.55, 1.8, "FaHeadset", HEX.dk2, "Ícone SDR");
-  s.addNotes("Abertura: o objetivo é que todo lead seja respondido em até 5 minutos no horário comercial, qualificado em uma conversa e entregue ao executivo com tudo registrado.");
+  s.addNotes("Abertura: o objetivo é que todo lead seja respondido em até 5 minutos no horário comercial, qualificado em uma conversa e registrado como oportunidade no Salesforce, para o gerente da vertical indicar o executivo.");
 
   // 2. Ponto de partida
   s = content("Onde estamos hoje", "Abertura");
@@ -125,7 +125,7 @@ async function icon(name, color) {
   const princ = [
     ["FaBolt", "Velocidade vence", "Lead quente respondido em até 5 minutos"],
     ["FaStore", "Fale do negócio dele", "Abra com o nicho e a origem do lead"],
-    ["FaSearch", "SDR qualifica", "O executivo vende; o SDR entende e agenda"],
+    ["FaSearch", "SDR qualifica", "O executivo vende; o SDR entende e gera a oportunidade"],
     ["FaCalendarCheck", "Sempre um próximo passo", "Toda conversa termina com uma data"],
     ["FaDatabase", "Está no Salesforce", "O que não foi registrado não aconteceu"],
   ];
@@ -144,7 +144,7 @@ async function icon(name, color) {
     ["Entrada e prioridade", "quente, morno, frio"],
     ["1º contato", "ligação + WhatsApp"],
     ["Qualificação", "6 perguntas, 15 min"],
-    ["Agendamento", "reunião + nota de passagem"],
+    ["Oportunidade", "Salesforce + gerente da vertical"],
     ["Cadência", "7 toques em 10 dias"],
     ["Nutrição ou saída", "sempre com motivo"],
     ["Salesforce", "em todas as etapas"],
@@ -159,7 +159,7 @@ async function icon(name, color) {
   card(s, 0.6, 5.0, 12.1, 1.2, "Faixa regra", C.background2);
   txt(s, [
     { text: "Regra de ouro: ", options: { bold: true, color: C.accent4 } },
-    { text: "o lead só sai da fila com reunião agendada ou com motivo registrado. Respondeu na cadência? Volta para a qualificação." },
+    { text: "o lead só sai da fila como oportunidade passada ao gerente da vertical ou com motivo registrado. Respondeu na cadência? Volta para a qualificação." },
   ], { x: 0.95, y: 5.0, w: 11.4, h: 1.2, fontSize: 17, valign: "middle", objectName: "Regra de ouro" });
 
   // 5. Priorização
@@ -268,19 +268,19 @@ async function icon(name, color) {
   s.addNotes("Vale para quem pede telão ou painel para um evento pontual (show, casamento, formatura, feira). Seja gentil e rápida: o lead precisa sair da conversa sabendo que vamos voltar e que o contato dele está guardado. Não indique concorrentes nem passe previsão de data de retorno.");
 
   // 9. Agendamento e passagem
-  s = content("Etapa 4: agendar e passar o bastão", "Jornada");
+  s = content("Etapa 4: gerar a oportunidade e passar o bastão", "Jornada");
   txt(s, "Na conversa", { x: 0.6, y: 1.7, w: 6, h: 0.45, fontSize: 20, bold: true, color: C.accent1, objectName: "Na conversa título" });
-  txt(s, "\"Faz sentido uma conversa de 30 minutos com o [executivo], nosso especialista em [nicho]. Ele mostra como ficaria no seu espaço. Terça às 10h ou quinta às 15h?\"", { x: 0.6, y: 2.25, w: 5.9, h: 1.6, fontSize: 16, italic: true, objectName: "Script agenda" });
+  txt(s, "\"Faz sentido uma conversa de 30 minutos com um especialista nosso em [nicho]. Vou registrar tudo e passar para o nosso gerente de [nicho], que indica o especialista ideal para o seu projeto. Assim você não repete nada. Qual o melhor dia e período para ele te chamar?\"", { x: 0.6, y: 2.25, w: 5.9, h: 1.65, fontSize: 15, italic: true, objectName: "Script agenda" });
   txt(s, "Depois", { x: 0.6, y: 4.0, w: 6, h: 0.45, fontSize: 20, bold: true, color: C.accent1, objectName: "Depois título" });
   txt(s, [
-    { text: "Confirmação no WhatsApp com data, hora e formato", options: { bullet: true, breakLine: true } },
-    { text: "Pedir uma foto do espaço para a simulação", options: { bullet: true, breakLine: true } },
-    { text: "Lembrete na véspera e 1 hora antes", options: { bullet: true, breakLine: true } },
-    { text: "Faltou? Remarcar no mesmo dia", options: { bullet: true } },
+    { text: "Gerar a oportunidade no Salesforce com a nota completa", options: { bullet: true, breakLine: true } },
+    { text: "Passar ao gerente da vertical, que indica o executivo", options: { bullet: true, breakLine: true } },
+    { text: "Confirmar no WhatsApp e pedir uma foto do espaço", options: { bullet: true, breakLine: true } },
+    { text: "Acompanhar: executivo indicado e contato feito", options: { bullet: true } },
   ], { x: 0.6, y: 4.5, w: 5.9, h: 2.0, fontSize: 15, paraSpaceAfter: 6, objectName: "Depois lista" });
   card(s, 7.0, 1.7, 5.7, 4.95, "Nota de passagem", C.text2);
-  txt(s, "Nota de passagem no Salesforce", { x: 7.35, y: 1.95, w: 5.0, h: 0.5, fontSize: 18, bold: true, color: C.accent2, objectName: "Nota título" });
-  const nota = ["Empresa, nicho e contato", "Decisor(es)", "Projeto: local, medidas, indoor/outdoor", "Propósito de compra", "Dor nas palavras do cliente", "Prazo ou evento", "Compra ou locação e investimento", "Objeções que apareceram", "Origem, TAG e próximo passo"];
+  txt(s, "Nota da oportunidade no Salesforce", { x: 7.35, y: 1.95, w: 5.0, h: 0.5, fontSize: 18, bold: true, color: C.accent2, objectName: "Nota título" });
+  const nota = ["Empresa, nicho e contato", "Decisor(es)", "Projeto: local, medidas, indoor/outdoor", "Propósito de compra", "Dor nas palavras do cliente", "Prazo ou evento", "Compra ou locação e investimento", "Objeções que apareceram", "Origem, TAG e melhor dia para o contato"];
   txt(s, nota.map((t, i) => ({ text: t, options: { bullet: true, breakLine: i < nota.length - 1 } })), { x: 7.35, y: 2.6, w: 5.0, h: 3.9, fontSize: 15, color: C.background1, paraSpaceAfter: 5, objectName: "Nota campos" });
 
   // 10. Cadência
@@ -345,7 +345,7 @@ async function icon(name, color) {
   card(s, 7.0, 1.7, 5.7, 4.95, "Salesforce", C.text2);
   await circleIcon(s, 7.35, 1.95, 0.7, "FaDatabase", HEX.accent3, "Salesforce");
   txt(s, "Salesforce, na hora", { x: 8.2, y: 2.05, w: 4.3, h: 0.5, fontSize: 18, bold: true, color: C.accent2, objectName: "Salesforce título" });
-  const sf = ["Status: Novo → Em contato → MQL → SQL → Executivo", "Cada ligação, WhatsApp e e-mail como atividade", "TAG obrigatória (Prospecção Ativa ou evento)", "Nicho, origem, temperatura, propósito, prazo, decisor", "Motivo de perda sempre preenchido", "Todo lead aberto com uma próxima tarefa e data"];
+  const sf = ["Status: Novo → Em contato → MQL → Oportunidade (SQL) → Gerente → Executivo", "Cada ligação, WhatsApp e e-mail como atividade", "TAG obrigatória (Prospecção Ativa ou evento)", "Nicho, origem, temperatura, propósito, prazo, decisor", "Motivo de perda sempre preenchido", "Todo lead aberto com uma próxima tarefa e data"];
   txt(s, sf.map((t, i) => ({ text: t, options: { bullet: true, breakLine: i < sf.length - 1 } })), { x: 7.35, y: 2.85, w: 5.0, h: 3.6, fontSize: 14, color: C.background1, paraSpaceAfter: 6, objectName: "Salesforce regras" });
 
   // 13. Indicadores
@@ -386,7 +386,7 @@ async function icon(name, color) {
   // 15. Fechamento
   s = pres.addSlide({ masterName: "Destaque", sectionTitle: "Gestão" });
   s.addText("Para lembrar", { placeholder: "title" });
-  s.addText("Responder rápido, conversar sobre o negócio do cliente e entregar ao executivo uma reunião com tudo anotado.", { placeholder: "body" });
+  s.addText("Responder rápido, conversar sobre o negócio do cliente e entregar ao gerente da vertical uma oportunidade com tudo anotado.", { placeholder: "body" });
 
   await pres.writeFile({ fileName: OUT });
   await applyTheme(OUT, THEME);
