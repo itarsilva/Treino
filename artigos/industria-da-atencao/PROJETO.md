@@ -107,6 +107,10 @@ Plano, modelo de ficha e matriz de síntese também em [`leitura/`](leitura/READ
 | S5 | 23/11–29/11 | Redação |
 | S6 | 30/11–4/12 | Revisão final e entrega (4/12) |
 
+## Modelo de escrita
+
+Roteiro com lacunas, seção por seção: [Google Docs](https://docs.google.com/document/d/1sT1VJDuGxbLqHzcj58uNIN1-_UDAT4Q76RjxYaOsWQw/edit) (cópia em [`modelo-de-escrita.html`](modelo-de-escrita.html)).
+
 ## Estrutura do artigo (a preencher)
 
 | Seção | Pergunta que responde | Tabelas/figuras | Status |
