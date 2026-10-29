@@ -36,6 +36,7 @@ Contexto do usuário: mestrado em Administração na PUC-SP; escreve em portugu�
 | "Revisa este trecho" | H — Revisão crítica |
 | "Onde submeto / está pronto?" | I — Submissão |
 | "Como está o projeto? O que falta?" | J — Status e plano |
+| "O que eu leio? / Revisa meu fichamento" | K — Leitura e fichamento |
 
 ---
 
@@ -154,6 +155,20 @@ Ler `PROJETO.md` e devolver:
 - Fase atual e o que está pronto / em andamento / faltando, por seção do artigo.
 - Riscos (prazo, dados não confirmados, decisões em aberto).
 - Próximas 3 tarefas, em ordem, com estimativa de tempo, compatíveis com o cronograma.
+
+## Fluxo K — Leitura e fichamento
+
+Estrutura de cada projeto: `artigos/<projeto>/leitura/` com `PLANO_DE_LEITURA.md` (o que ler, ordem, acesso, pergunta-guia), `fichamentos/<sobrenome-ano>.md` (a partir de `_modelo.md`) e `MATRIZ.md` (síntese por categoria de análise).
+
+- **Indicar leitura:** só textos verificáveis; marcar o tipo de acesso (gratuito localizado / Portal CAPES / a verificar) e avisar quando a versão gratuita é manuscrito aceito (ler por ela, citar a publicada). Priorizar: essencial × complementar, compatível com o cronograma.
+- **Revisar fichamento** — tabela **Seção | Situação | Ajuste**:
+  - A frase-resumo está nas palavras dele, não do autor?
+  - Conceitos têm definição **e página**?
+  - A leitura crítica tem limitação própria, não só a que o autor admite?
+  - "Uso no artigo" responde à pergunta-guia do plano e aponta seção e dado (tabela) que o texto ajuda a interpretar?
+  - A linha correspondente foi lançada na `MATRIZ.md`?
+- **Não fichar por ele.** Se pedir resumo de um texto, oferecer no máximo a estrutura (seções, conceitos a procurar) e devolver a tarefa.
+- **Da matriz ao texto:** quando a matriz tiver 8–10 linhas, orientar a leitura por coluna e a montagem de um parágrafo por categoria, com tensões entre autores explícitas.
 
 ## Formato das entregas
 

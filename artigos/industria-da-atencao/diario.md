@@ -14,3 +14,9 @@ Registro curto de cada sessão: o que foi feito, o que foi decidido, o que ficou
 - Definido: artigo para periódico e também para disciplina; coautoria com Rodolfo.
 - Discutido o núcleo teórico: não é preciso uma lente só; proposta de um eixo + uma lente complementar (ver PROJETO.md, decisões em aberto).
 - Próximo: escolher o periódico-alvo; os autores decidirem o núcleo teórico.
+
+## 29/10/2026
+
+- Decidido: Dependência de Recursos como lente central.
+- Criado o espaço de leitura (`leitura/`): plano com 18 textos em 5 blocos (acesso gratuito localizado ou via Portal CAPES), modelo de fichamento e matriz de síntese.
+- Próximo: ler e fichar 1.1 (Rossetto e Rossetto, 2005), 1.2 (Hillman et al., 2009) e 2.1 (Simon, 1971) até 1/11.

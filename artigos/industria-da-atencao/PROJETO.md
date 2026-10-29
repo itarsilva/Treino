@@ -84,11 +84,15 @@ Pasta: https://drive.google.com/drive/folders/1zYckyihfQ2wfkn7S5sm0uTd7rxrmJjJ4
 ## Decisões em aberto (levar ao orientador)
 
 - [ ] Periódico-alvo e norma (ABNT ou APA 7); conferir se a entrega na disciplina afeta o ineditismo exigido pelo periódico
-- [ ] Núcleo teórico — proposta em discussão (28/10): Dependência de Recursos como eixo + estrutura de propriedade (com propriedade comum) como segunda lente; Institucional só se houver dado sobre práticas no Brasil
+- [x] Lente central: **Dependência de Recursos** (decidido em 29/10). Em aberto: manter estrutura de propriedade como lente complementar?
 - [ ] Núcleo teórico: quais 2–3 lentes ficam
 - [ ] Nome do desenho metodológico (multivocal × documental + revisão)
 - [ ] Bases da revisão sistemática (Scopus, WoS, SPELL?) e recorte temporal
 - [ ] Peso da parte Brasil (define se a Teoria Institucional entra)
+
+## Leitura
+
+Plano, fichamentos e matriz de síntese em [`leitura/`](leitura/README.md).
 
 ## Cronograma
 
