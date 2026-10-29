@@ -111,6 +111,8 @@ Plano, modelo de ficha e matriz de síntese também em [`leitura/`](leitura/READ
 
 Roteiro com lacunas, seção por seção: [Google Docs](https://docs.google.com/document/d/1sT1VJDuGxbLqHzcj58uNIN1-_UDAT4Q76RjxYaOsWQw/edit) (cópia em [`modelo-de-escrita.html`](modelo-de-escrita.html)).
 
+**Versão 0 (rascunho comentado, 29/10):** [Google Docs](https://docs.google.com/document/d/1AriTcmfhSpv2tPbe6vTnKe1s_7cP3mrDCKLOY6HIqI0/edit) (cópia em [`versao-0.html`](versao-0.html)). Pendência nova: Tabela 4 diverge da apresentação nos dados de controle (Havas, Omnicom).
+
 ## Estrutura do artigo (a preencher)
 
 | Seção | Pergunta que responde | Tabelas/figuras | Status |

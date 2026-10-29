@@ -22,3 +22,4 @@ Registro curto de cada sessão: o que foi feito, o que foi decidido, o que ficou
 - Próximo: ler e fichar 1.1 (Rossetto e Rossetto, 2005), 1.2 (Hillman et al., 2009) e 2.1 (Simon, 1971) até 1/11.
 - Criada a mesa de trabalho no claude.ai (mesmo formato da dissertação): https://claude.ai/artifact/CC4yGNUmA5mhGh8STh3x1a — 21 textos na biblioteca e 11 seções com pendências.
 - Criado o modelo de escrita (roteiro com lacunas) no Google Drive do usuário: https://docs.google.com/document/d/1sT1VJDuGxbLqHzcj58uNIN1-_UDAT4Q76RjxYaOsWQw/edit
+- Criada a versão 0 do artigo (rascunho comentado a partir das Tabelas 1–7): https://docs.google.com/document/d/1AriTcmfhSpv2tPbe6vTnKe1s_7cP3mrDCKLOY6HIqI0/edit. Detectada divergência entre Tabela 4 e apresentação nos dados de controle.
