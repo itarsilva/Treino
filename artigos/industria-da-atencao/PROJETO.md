@@ -92,7 +92,9 @@ Pasta: https://drive.google.com/drive/folders/1zYckyihfQ2wfkn7S5sm0uTd7rxrmJjJ4
 
 ## Leitura
 
-Plano, fichamentos e matriz de síntese em [`leitura/`](leitura/README.md).
+**Mesa de trabalho (fichamento):** https://claude.ai/artifact/CC4yGNUmA5mhGh8STh3x1a — painel das seções, biblioteca, leitura do PDF ao lado da ficha e referências.
+
+Plano, modelo de ficha e matriz de síntese também em [`leitura/`](leitura/README.md).
 
 ## Cronograma
 
