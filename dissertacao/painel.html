@@ -829,7 +829,7 @@ function renderFicha() {
     <div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px"><span class="eyebrow">Citações diretas</span><button class="btn sm" type="button" id="addQ">+ Citação</button></div>
       <div class="quotes" id="quotes"></div>
       <p class="note" style="margin-top:6px">${S.pdf ? (S.pageOff ? "Dica: no modo Texto, selecione um trecho e clique em “+ Citação”. A página da revista entra sozinha." : "Dica: no modo Texto, selecione um trecho e clique em “+ Citação”. Entra a página do PDF: troque pela página da revista se forem diferentes.") : "Cole o trecho e informe a página. A citação já sai formatada para colar na dissertação."}</p></div>
-    <label class="f"><span>Paráfrase / resumo com suas palavras</span><textarea data-k="resumo" rows="14">${esc(f.resumo)}</textarea></label>
+    <div class="f" style="display:flex;flex-direction:column;gap:6px"><label class="f" for="fResumo"><span>Resumo detalhado / paráfrase <em class="note">leia a partir dele e complemente com a sua leitura</em></span></label>${S.sample ? `<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn sm" type="button" id="resBtn">Gerar resumo detalhado</button><span class="note" id="resMsg">${S.pdf ? "O Claude lê o PDF inteiro e escreve um resumo longo, na ordem do texto, com as páginas." : "Abra o PDF para gerar o resumo detalhado."}</span></div>` : ""}<textarea id="fResumo" data-k="resumo" rows="22">${esc(f.resumo)}</textarea></div>
     <label class="f"><span>Análise crítica <em class="note">limites, diálogo com Bourdieu, com seus dados</em></span><textarea data-k="analise" rows="8">${esc(f.analise)}</textarea></label>
     <div><span class="eyebrow">Usar nas seções</span><div class="secbox" id="fSecs" style="margin-top:6px">${secs.map(n => `<label title="${esc(secTitle(n))}"><input type="checkbox" value="${n}" ${(a.secoes || []).includes(n) ? "checked" : ""}>${n}</label>`).join("")}</div></div>
     <label class="f"><span>Como entra na dissertação</span><textarea data-k="uso" rows="4">${esc(f.uso)}</textarea></label>
@@ -844,6 +844,7 @@ function renderFicha() {
   $("#addQ").onclick = () => addQuote("", "");
   $("#preBtn") && ($("#preBtn").onclick = preFichar);
   $("#driveBtn") && ($("#driveBtn").onclick = saveToDrive);
+  $("#resBtn") && ($("#resBtn").onclick = resumoDetalhado);
   $("#fSecs").onchange = async () => { if (!S.db) return; try { await S.db.doc("artigos/" + id).update({ secoes: $$("#fSecs input:checked").map(i => i.value) }); setSaved("Salvo"); } catch (err) { toast(writeErr(err)); } };
   $$("[data-k]", pane).forEach(el => el.addEventListener("input", () => { draft[el.dataset.k] = el.value; touch(); }));
 }
@@ -918,7 +919,7 @@ async function preFichar() {
     const r = await S.sample.json(`Você ajuda um mestrando em Administração (PUC-SP) a fichar artigos para a dissertação "PROUNI: carreira e empregabilidade dos egressos dos cursos de graduação em Administração da cidade de São Paulo". Referencial: Bourdieu (capital cultural e social), empregabilidade (Yorke, Fugate, Tomlinson), teorias de carreira.
 
 Leia o texto do artigo abaixo (as marcas [p. N] indicam a página do PDF) e responda SÓ com JSON:
-{"objetivo":"objetivo, problema e pergunta do texto, em 3 a 5 frases", "metodo":"tipo de estudo, base empírica, amostra, período, local e técnicas, em 4 a 6 frases (se for ensaio teórico, diga quais autores e debates mobiliza)", "resultados":"principais resultados e argumentos, passo a passo, em 3 a 5 parágrafos curtos separados por linha em branco, com a página entre parênteses quando possível", "conceitos":"cada conceito-chave seguido de dois-pontos e da definição do autor, separados por ponto e vírgula", "resumo":"paráfrase completa com suas palavras, de 3 a 4 parágrafos separados por linha em branco, cobrindo todo o argumento do texto", "analise":"2 a 3 parágrafos: como o texto dialoga com a dissertação (Bourdieu, empregabilidade, carreira, egressos do ProUni), em que seções pode entrar, contribuições e limites", "citacoes":[{"texto":"trecho LITERAL copiado do texto", "pagina":"N"}]}
+{"objetivo":"objetivo, problema e pergunta do texto, em 3 a 5 frases", "metodo":"tipo de estudo, base empírica, amostra, período, local e técnicas, em 4 a 6 frases (se for ensaio teórico, diga quais autores e debates mobiliza)", "resultados":"principais resultados e argumentos, passo a passo, em 3 a 5 parágrafos curtos separados por linha em branco, com a página entre parênteses quando possível", "conceitos":"cada conceito-chave seguido de dois-pontos e da definição do autor, separados por ponto e vírgula", "resumo":"resumo detalhado, de 1.000 a 1.800 palavras, seguindo a ordem do texto, com um subtítulo curto em linha própria para cada parte e cada parágrafo terminando com a página entre parênteses, como (p. 116); explique argumentos, conceitos, dados, exemplos e conclusões com suas palavras", "analise":"2 a 3 parágrafos: como o texto dialoga com a dissertação (Bourdieu, empregabilidade, carreira, egressos do ProUni), em que seções pode entrar, contribuições e limites", "citacoes":[{"texto":"trecho LITERAL copiado do texto", "pagina":"N"}]}
 Regras: escreva em português; de 8 a 12 citações diretas relevantes (algumas curtas, de uma frase, e algumas longas, de 3 a 5 linhas), copiadas palavra por palavra do texto, com a página da marca [p. N] anterior; cubra o texto inteiro, não só o começo; não invente nada que não esteja no texto.
 
 REFERÊNCIA: ${plain(refHTML(a, "apa"))}
@@ -934,6 +935,47 @@ ${corpus}`, { modelTier: "default" });
     $("#aiMsg") && ($("#aiMsg").textContent = e?.code === "not_granted" ? "Você não permitiu o uso do Claude nesta página." : e?.code === "rate_limited" ? "Muitos pedidos seguidos. Espere um minuto." : "Não consegui fazer o pré-fichamento agora.");
   }
   $("#preBtn") && ($("#preBtn").disabled = false);
+}
+
+/* ---------- Claude: resumo detalhado (guia de leitura) ---------- */
+let resumoArm = false;
+async function resumoDetalhado() {
+  const a = S.artigos.get(S.current); if (!a || !S.sample || !draft) return;
+  const btn = $("#resBtn"), msg = $("#resMsg");
+  if (!S.pdf) { msg.textContent = "Abra o PDF do artigo para o Claude ler o texto inteiro."; return; }
+  if (S.pdfText.some(t => t === null)) { msg.textContent = "Ainda extraindo o texto do PDF. Tente de novo em alguns segundos."; return; }
+  const corpus = S.pdfText.map((t, i) => t ? `[p. ${i + 1 + S.pageOff}]\n${t}` : "").filter(Boolean).join("\n\n").slice(0, 150000);
+  if (!corpus.trim()) { msg.textContent = "Este PDF não tem texto selecionável (pode ser imagem escaneada)."; return; }
+  if ((draft.resumo || "").trim() && !resumoArm) { resumoArm = true; btn.textContent = "Clique de novo para substituir o resumo atual"; return; }
+  resumoArm = false; btn.disabled = true; btn.textContent = "Gerando…";
+  msg.textContent = "O Claude está lendo o texto inteiro. O resumo aparece no campo enquanto é escrito (1 a 2 minutos).";
+  const forId = S.current, before = draft.resumo || "";
+  const field = () => $('#fichaPane [data-k="resumo"]');
+  try {
+    const { text, truncated } = await S.sample(`Você ajuda um mestrando em Administração (PUC-SP) que pesquisa "PROUNI: carreira e empregabilidade dos egressos dos cursos de graduação em Administração da cidade de São Paulo".
+Escreva um RESUMO DETALHADO do texto abaixo. Ele vai ler o seu resumo antes do original e complementar depois, então o resumo precisa ser completo e fiel.
+Regras:
+- Português, texto simples (sem markdown, sem asteriscos, sem negrito).
+- Siga a ordem do próprio texto. Para cada parte, comece com um subtítulo curto numa linha própria (ex.: "1. Introdução e problema").
+- Entre 1.200 e 2.000 palavras.
+- Em cada parte, explique os argumentos, os conceitos (com a definição do autor), os dados, os exemplos, os autores com quem o texto dialoga e as conclusões.
+- Termine cada parágrafo com a página entre parênteses, como (p. 116), usando as marcas [p. N] do texto.
+- Reformule com suas palavras. Se usar uma expressão do autor, ponha entre aspas com a página.
+- Não invente nada que não esteja no texto.
+- No fim, uma parte "Pontos para a dissertação" com 3 a 6 itens, um por linha começando com "- ", ligando o texto ao PROUNI, ao capital cultural, à empregabilidade e à carreira dos egressos de Administração.
+
+REFERÊNCIA: ${plain(refHTML(a, "apa"))}
+
+TEXTO:
+${corpus}`, { modelTier: "default", cache: false, onText: ({ text }) => { const t = field(); if (S.current === forId && t) t.value = text; } });
+    if (S.current !== forId) return;
+    draft.resumo = text.trim(); const t = field(); if (t) t.value = draft.resumo; touch();
+    const m = $("#resMsg"); if (m) m.textContent = truncated ? "O resumo foi cortado no fim por ser longo demais. Complete a parte final ou gere de novo." : "Resumo pronto. Leia a partir dele e complemente com a sua leitura.";
+  } catch (e) {
+    if (S.current === forId) { const t = field(); if (t) t.value = e?.text ? e.text : before; if (e?.text) { draft.resumo = e.text; touch(); } }
+    const m = $("#resMsg"); if (m) m.textContent = e?.code === "not_granted" ? "Você não permitiu o uso do Claude nesta página." : e?.code === "rate_limited" ? "Muitos pedidos seguidos. Espere um minuto." : e?.code === "cancelled" ? "Interrompido." : "Não consegui gerar o resumo agora. Tente de novo em instantes.";
+  }
+  const b = $("#resBtn"); if (b) { b.disabled = false; b.textContent = "Gerar resumo detalhado"; }
 }
 
 /* ---------- Salvar no Google Drive (formato dos lotes de inserção) ---------- */
