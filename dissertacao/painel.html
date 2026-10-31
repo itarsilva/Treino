@@ -824,16 +824,16 @@ function renderFicha() {
       <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" type="button" id="cpRef">Copiar referência</button><button class="btn sm" type="button" id="cpCite">Copiar citação ${esc(cite(a))}</button></div></div>
     ${a.alerta ? `<div class="row" style="padding:0;border:0"><div class="alert"><span>${esc(a.alerta)}</span></div></div>` : ""}
     ${S.sample ? `<div class="ai"><p id="aiMsg">${S.pdf ? "O Claude lê o PDF aberto e propõe um pré-fichamento. Ele só preenche os campos vazios." : "Abra o PDF (ou cole um trecho no Resumo) para o Claude propor um pré-fichamento."}</p><button class="btn sm primary" type="button" id="preBtn">Pré-fichar com o Claude</button></div>` : ""}
-    ${FIELDS.map(([k, l]) => `<label class="f"><span>${l}</span><textarea data-k="${k}" rows="3">${esc(f[k])}</textarea></label>`).join("")}
+    ${FIELDS.map(([k, l]) => `<label class="f"><span>${l}</span><textarea data-k="${k}" rows="7">${esc(f[k])}</textarea></label>`).join("")}
     <label class="f"><span>Conceitos-chave <em class="note">separe por vírgula</em></span><input type="text" data-k="conceitos" value="${esc(f.conceitos)}"></label>
     <div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px"><span class="eyebrow">Citações diretas</span><button class="btn sm" type="button" id="addQ">+ Citação</button></div>
       <div class="quotes" id="quotes"></div>
       <p class="note" style="margin-top:6px">${S.pdf ? (S.pageOff ? "Dica: no modo Texto, selecione um trecho e clique em “+ Citação”. A página da revista entra sozinha." : "Dica: no modo Texto, selecione um trecho e clique em “+ Citação”. Entra a página do PDF: troque pela página da revista se forem diferentes.") : "Cole o trecho e informe a página. A citação já sai formatada para colar na dissertação."}</p></div>
-    <label class="f"><span>Paráfrase / resumo com suas palavras</span><textarea data-k="resumo" rows="4">${esc(f.resumo)}</textarea></label>
-    <label class="f"><span>Análise crítica <em class="note">limites, diálogo com Bourdieu, com seus dados</em></span><textarea data-k="analise" rows="3">${esc(f.analise)}</textarea></label>
+    <label class="f"><span>Paráfrase / resumo com suas palavras</span><textarea data-k="resumo" rows="14">${esc(f.resumo)}</textarea></label>
+    <label class="f"><span>Análise crítica <em class="note">limites, diálogo com Bourdieu, com seus dados</em></span><textarea data-k="analise" rows="8">${esc(f.analise)}</textarea></label>
     <div><span class="eyebrow">Usar nas seções</span><div class="secbox" id="fSecs" style="margin-top:6px">${secs.map(n => `<label title="${esc(secTitle(n))}"><input type="checkbox" value="${n}" ${(a.secoes || []).includes(n) ? "checked" : ""}>${n}</label>`).join("")}</div></div>
-    <label class="f"><span>Como entra na dissertação</span><textarea data-k="uso" rows="2">${esc(f.uso)}</textarea></label>
-    ${S.mcp ? `<div class="ai"><p id="driveMsg">Gera um documento no seu Google Drive (pasta “Dissertação PROUNI — Inserções”) com a seção, a referência e o que colar no trabalho.</p><button class="btn sm primary" type="button" id="driveBtn">Salvar no Drive</button></div>` : ""}
+    <label class="f"><span>Como entra na dissertação</span><textarea data-k="uso" rows="4">${esc(f.uso)}</textarea></label>
+    ${S.mcp ? `<div class="ai"><p id="driveMsg">Gera no seu Google Drive (pasta “Dissertação PROUNI — Inserções”) um documento no formato dos lotes: parágrafos redigidos para cada seção marcada, onde colar, pendências e a referência.</p><button class="btn sm primary" type="button" id="driveBtn">Salvar no Drive</button></div>` : ""}
     ${(f.drive || []).length ? `<div class="note">Salvo no Drive: ${f.drive.map(d => `<a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(new Date(d.em).toLocaleString("pt-BR"))}</a>`).join(" · ")}</div>` : ""}
     ${f.atualizadoEm ? `<p class="note">Última alteração: ${esc(new Date(f.atualizadoEm).toLocaleString("pt-BR"))}</p>` : ""}
   </div>`;
@@ -918,8 +918,8 @@ async function preFichar() {
     const r = await S.sample.json(`Você ajuda um mestrando em Administração (PUC-SP) a fichar artigos para a dissertação "PROUNI: carreira e empregabilidade dos egressos dos cursos de graduação em Administração da cidade de São Paulo". Referencial: Bourdieu (capital cultural e social), empregabilidade (Yorke, Fugate, Tomlinson), teorias de carreira.
 
 Leia o texto do artigo abaixo (as marcas [p. N] indicam a página do PDF) e responda SÓ com JSON:
-{"objetivo":"", "metodo":"", "resultados":"", "conceitos":"termo1, termo2", "resumo":"paráfrase de 4-6 frases em português", "analise":"2-3 frases sobre como dialoga com a dissertação e limites", "citacoes":[{"texto":"trecho LITERAL copiado do texto", "pagina":"N"}]}
-Regras: escreva em português; até 5 citações curtas e relevantes, copiadas palavra por palavra do texto, com a página da marca [p. N] anterior; não invente nada que não esteja no texto.
+{"objetivo":"objetivo, problema e pergunta do texto, em 3 a 5 frases", "metodo":"tipo de estudo, base empírica, amostra, período, local e técnicas, em 4 a 6 frases (se for ensaio teórico, diga quais autores e debates mobiliza)", "resultados":"principais resultados e argumentos, passo a passo, em 3 a 5 parágrafos curtos separados por linha em branco, com a página entre parênteses quando possível", "conceitos":"cada conceito-chave seguido de dois-pontos e da definição do autor, separados por ponto e vírgula", "resumo":"paráfrase completa com suas palavras, de 3 a 4 parágrafos separados por linha em branco, cobrindo todo o argumento do texto", "analise":"2 a 3 parágrafos: como o texto dialoga com a dissertação (Bourdieu, empregabilidade, carreira, egressos do ProUni), em que seções pode entrar, contribuições e limites", "citacoes":[{"texto":"trecho LITERAL copiado do texto", "pagina":"N"}]}
+Regras: escreva em português; de 8 a 12 citações diretas relevantes (algumas curtas, de uma frase, e algumas longas, de 3 a 5 linhas), copiadas palavra por palavra do texto, com a página da marca [p. N] anterior; cubra o texto inteiro, não só o começo; não invente nada que não esteja no texto.
 
 REFERÊNCIA: ${plain(refHTML(a, "apa"))}
 
@@ -927,7 +927,7 @@ TEXTO:
 ${corpus}`, { modelTier: "default" });
     if (S.current !== forId) return;
     ["objetivo", "metodo", "resultados", "conceitos", "resumo", "analise"].forEach(k => { if (!(draft[k] || "").trim() && r[k]) draft[k] = String(r[k]); });
-    (r.citacoes || []).slice(0, 8).forEach(q => { if (q?.texto) draft.citacoes.push({ texto: String(q.texto), pagina: String(q.pagina || ""), secao: "", sugerida: true }); });
+    (r.citacoes || []).slice(0, 15).forEach(q => { if (q?.texto) draft.citacoes.push({ texto: String(q.texto), pagina: String(q.pagina || ""), secao: "", sugerida: true }); });
     dirty = true; renderFicha(); touch();
     $("#aiMsg") && ($("#aiMsg").textContent = "Pré-fichamento feito. Revise cada campo e confira as citações no PDF.");
   } catch (e) {
@@ -936,54 +936,110 @@ ${corpus}`, { modelTier: "default" });
   $("#preBtn") && ($("#preBtn").disabled = false);
 }
 
-/* ---------- Salvar no Google Drive ---------- */
+/* ---------- Salvar no Google Drive (formato dos lotes de inserção) ---------- */
 const DRIVE_FOLDER = "1uVRLWa01CIRW9tDsEmvyyGaxbApdiOIw";
-function driveHTML(a, f) {
-  const secs = [...new Set([...(a.secoes || []), ...(f.citacoes || []).map(q => q.secao).filter(Boolean)])]
-    .sort((x, y) => sectionNums().indexOf(x) - sectionNums().indexOf(y));
-  const BLUE = "background-color:#cfe2f3", YEL = "background-color:#fff2cc";
-  const body = "font-family:'Times New Roman';font-size:12pt;line-height:1.5;text-align:justify";
-  const note = t => `<p style="font-family:Arial;font-size:10pt"><span style="${YEL}">${t}</span></p>`;
-  const quote = q => {
-    const extra = [!(q.pagina || "").trim() && "falta a página", q.sugerida && "sugerida pelo Claude: confira no PDF"].filter(Boolean);
-    return `<p style="${body}">${esc(quoteText(q, a))}${extra.length ? ` <span style="${YEL}">⚠ ${esc(extra.join("; "))}</span>` : ""}</p>`;
-  };
+const BLUE = "background-color:#cfe2f3", YEL = "background-color:#fff2cc";
+const BODY = "font-family:'Times New Roman';font-size:12pt;line-height:1.5;text-align:justify;text-indent:1.25cm";
+const dNote = t => `<p style="font-family:Arial;font-size:10pt"><span style="${YEL}">${t}</span></p>`;
+const dDraft = t => `<p style="${BODY}"><span style="${BLUE}">${esc(t)}</span></p>`;
+function fichaSections(a, f) {
+  const order = sectionNums();
+  return [...new Set([...(a.secoes || []), ...(f.citacoes || []).map(q => q.secao).filter(Boolean)])]
+    .sort((x, y) => order.indexOf(x) - order.indexOf(y));
+}
+/** Trechos entre aspas que não aparecem, palavra por palavra, em nenhuma citação do fichamento. */
+function unmatchedQuotes(text, f) {
+  const norm = s => s.replace(/\s+/g, " ").trim().toLowerCase();
+  const pool = (f.citacoes || []).map(q => norm(q.texto || ""));
+  return [...text.matchAll(/[“"]([^”"]{12,})[”"]/g)].map(m => m[1]).filter(t => !pool.some(p => p.includes(norm(t))));
+}
+async function draftForDrive(a, f, secs) {
+  const quotes = (f.citacoes || []).filter(q => (q.texto || "").trim())
+    .map(q => `- "${q.texto.trim()}" ${cite(a, { page: (q.pagina || "").trim() })}${q.secao ? " [seção " + q.secao + "]" : ""}`).join("\n");
+  const r = await S.sample.json(`Você ajuda um mestrando em Administração (PUC-SP) a levar um fichamento para a dissertação "PROUNI: carreira e empregabilidade dos egressos dos cursos de graduação em Administração da cidade de São Paulo". Referencial: Bourdieu (capital cultural e social), empregabilidade (Yorke, Fugate, Tomlinson), carreira (Schein, Hall, Savickas).
+
+Escreva, para CADA seção abaixo, de 2 a 4 parágrafos em português acadêmico (registro de dissertação), usando SOMENTE a fonte fichada. Regras:
+- Cite no formato ${S.norm === "apa" ? "APA 7" : "ABNT"}: use exatamente ${cite(a)} ou ${cite(a, { narrative: true })}.
+- Citações diretas: copie palavra por palavra da lista, entre aspas curvas “ ”, com a citação e a página exatamente como estão na lista. Não crie citações diretas novas.
+- Não invente dados, páginas nem autores. Ligue o argumento da fonte ao problema da pesquisa e diga os limites quando houver.
+- Não comece com "Nesta seção". Sem títulos nem listas dentro dos parágrafos.
+Responda só com JSON: {"secoes":[{"numero":"3.2","paragrafos":["...","..."]}],"pendencias":["o que ainda falta para essas seções ficarem completas"]}
+
+SEÇÕES: ${secs.map(n => n + " " + secTitle(n)).join("; ")}
+REFERÊNCIA: ${plain(refHTML(a, "apa"))}
+OBJETIVO: ${f.objetivo || ""}
+MÉTODO: ${f.metodo || ""}
+RESULTADOS E ARGUMENTOS: ${f.resultados || ""}
+CONCEITOS: ${f.conceitos || ""}
+PARÁFRASE DO MESTRANDO: ${f.resumo || ""}
+ANÁLISE CRÍTICA DO MESTRANDO: ${f.analise || ""}
+COMO ENTRA NA DISSERTAÇÃO: ${f.uso || ""}
+CITAÇÕES DIRETAS:
+${quotes || "(nenhuma)"}`, { modelTier: "default", cache: false });
+  return r && Array.isArray(r.secoes) ? r : { secoes: [], pendencias: [] };
+}
+function driveHTML(a, f, secs, drafted) {
+  const date = new Date().toLocaleDateString("pt-BR");
   const qs = (f.citacoes || []).filter(q => (q.texto || "").trim());
-  let h = `<h1>${esc(cite(a, { narrative: true }))}: o que colocar no trabalho</h1>`;
-  h += `<p style="font-family:Arial;font-size:10pt;color:#555">${esc(new Date().toLocaleDateString("pt-BR"))} · norma ${S.norm === "apa" ? "APA 7" : "ABNT"} · gerado pelo painel de fichamentos</p>`;
-  h += `<h2>Referência</h2><p style="${body}">${refHTML(a)}</p>`;
-  h += `<p style="font-family:Arial;font-size:10pt">Citação no texto: <b>${esc(cite(a))}</b> ou <b>${esc(cite(a, { narrative: true }))}</b>.</p>`;
-  h += note("ONDE: inclua a referência acima na lista de REFERÊNCIAS, em ordem alfabética.");
-  (secs.length ? secs : [""]).forEach(n => {
-    h += `<h2>${n ? "Seção " + esc(n) + " " + esc(secTitle(n)) : "Sem seção definida"}</h2>`;
-    h += note(n ? `ONDE COLAR: na seção ${esc(n)} ${esc(secTitle(n))}.` : "Marque em “Usar nas seções” onde este texto entra.");
-    const mine = qs.filter(q => q.secao === n || (!q.secao && n === (secs[0] || "")));
-    if (mine.length) { h += `<p style="font-family:Arial;font-size:10pt"><b>Citações diretas, prontas para colar:</b></p>`; mine.forEach(q => { h += quote(q); }); }
+  let h = `<h1>Dissertação PROUNI: inserções a partir do fichamento de ${esc(cite(a, { narrative: true }))}</h1>`;
+  h += `<p style="font-family:Arial;font-size:10pt;color:#555">${esc(date)} · gerado pelo painel de fichamentos</p>`;
+  h += `<h2>Como usar</h2><p>Cada bloco indica <b>onde colar</b> no documento da dissertação. Seu original não foi alterado.</p>`;
+  h += `<p><span style="${BLUE}">Fundo AZUL</span> = rascunho redigido pelo Claude a partir do seu fichamento. Reescreva com a sua voz antes de assumir como seu.</p>`;
+  h += `<p><span style="${YEL}">Fundo AMARELO</span> = instrução ou pendência. Não cole.</p>`;
+  h += `<p>Norma usada: ${S.norm === "apa" ? "APA 7" : "ABNT"}.</p>`;
+  const bySec = new Map((drafted?.secoes || []).map(s => [String(s.numero), s.paragrafos || []]));
+  let n = 1;
+  secs.forEach(num => {
+    h += `<h2>Bloco ${n++} · Seção ${esc(num)} ${esc(secTitle(num))}</h2>`;
+    h += dNote(`ONDE COLAR: na seção ${esc(num)} “${esc(secTitle(num))}”, no ponto do argumento em que a fonte entra (se a seção estiver vazia, logo abaixo do título). Fonte usada: ${esc(cite(a, { narrative: true }))}.`);
+    const paras = bySec.get(num) || [];
+    if (paras.length) {
+      paras.forEach(p => { h += dDraft(p); });
+      const bad = paras.flatMap(p => unmatchedQuotes(p, f));
+      if (bad.length) h += dNote(`⚠ CONFIRA: estes trechos entre aspas não batem palavra por palavra com o seu fichamento: ${bad.map(b => "“" + esc(b) + "”").join("; ")}.`);
+    } else {
+      const mine = qs.filter(q => !q.secao || q.secao === num);
+      h += dNote(drafted ? "O Claude não redigiu parágrafos para esta seção. Use as citações abaixo." : "Rascunho indisponível agora (o Claude não respondeu). Use as citações e a paráfrase abaixo.");
+      mine.forEach(q => { h += `<p style="${BODY}">${esc(quoteText(q, a))}</p>`; });
+      if ((f.resumo || "").trim()) h += dDraft(f.resumo.trim().replace(/\.?\s*$/, "") + " " + cite(a) + ".");
+    }
   });
-  if ((f.resumo || "").trim()) {
-    h += `<h2>Paráfrase (citação indireta)</h2>` + note("Texto azul: adapte com a sua voz antes de colar. A citação no fim já está na norma.");
-    h += `<p style="${body}"><span style="${BLUE}">${esc(f.resumo.trim().replace(/\.?\s*$/, ""))} ${esc(cite(a))}.</span></p>`;
-  }
-  if ((f.uso || "").trim()) h += `<h2>Como entra na dissertação</h2><p style="${body}">${esc(f.uso)}</p>`;
-  if ((f.analise || "").trim()) h += `<h2>Sua análise crítica</h2><p style="${body}">${esc(f.analise)}</p>`;
+  const pend = [...(drafted?.pendencias || [])];
+  qs.forEach(q => { if (!(q.pagina || "").trim()) pend.push(`Falta a página da citação “${q.texto.trim().slice(0, 60)}…”.`); else if (q.sugerida) pend.push(`Confira no PDF a citação “${q.texto.trim().slice(0, 60)}…” (sugerida pelo Claude).`); });
+  if (a.alerta) pend.push(a.alerta);
+  if (pend.length) h += dNote("PENDÊNCIAS: " + pend.map((p, i) => `(${i + 1}) ${esc(p)}`).join(" "));
+  h += `<h2>Bloco ${n++} · Referência para a lista de REFERÊNCIAS</h2>`;
+  h += dNote("ONDE COLAR: na lista de REFERÊNCIAS, em ordem alfabética.");
+  h += `<p style="font-family:'Times New Roman';font-size:12pt;line-height:1.5;margin-left:1.27cm;text-indent:-1.27cm">${refHTML(a)}</p>`;
+  h += `<h2>Anexo · Material do fichamento</h2>` + dNote("Para consulta. Não cole.");
+  if (qs.length) { h += `<p><b>Citações diretas</b></p>`; qs.forEach(q => { h += `<p style="${BODY}">${esc(quoteText(q, a))}${q.secao ? " [seção " + esc(q.secao) + "]" : ""}</p>`; }); }
+  [["resumo", "Paráfrase"], ["analise", "Análise crítica"], ["uso", "Como entra na dissertação"]].forEach(([k, l]) => { if ((f[k] || "").trim()) h += `<p><b>${l}</b></p><p style="${BODY}">${esc(f[k])}</p>`; });
   return `<html><head><meta charset="utf-8"></head><body style="font-family:Arial">${h}</body></html>`;
 }
 async function saveToDrive() {
   const id = S.current, a = S.artigos.get(id); if (!a || !S.mcp || !draft) return;
   const btn = $("#driveBtn"), msg = $("#driveMsg");
-  btn.disabled = true; msg.textContent = "Criando o documento no seu Drive…";
+  const secs = fichaSections(a, draft);
+  if (!secs.length) { msg.textContent = "Marque em “Usar nas seções” onde este texto entra e clique de novo."; return; }
+  btn.disabled = true;
   await flushSave();
-  const secs = (a.secoes || []).join(", ");
-  const title = `Inserção — ${cite(a, { narrative: true })}${secs ? " — seção " + secs : ""} (${new Date().toLocaleDateString("pt-BR").replace(/\//g, "-")})`;
+  const f = { ...draft };
+  let drafted = null;
+  if (S.sample) {
+    msg.textContent = "O Claude está redigindo os parágrafos de cada seção. Isso leva até um minuto…";
+    try { drafted = await draftForDrive(a, f, secs); } catch { drafted = null; }
+  }
+  msg.textContent = "Criando o documento no seu Drive…";
+  const title = `Inserções — ${cite(a, { narrative: true })} — seção ${secs.join(", ")} (${new Date().toLocaleDateString("pt-BR").replace(/\//g, "-")})`;
   try {
-    const r = await S.mcp.callTool("Google Drive", "create_file", { title, textContent: driveHTML(a, draft), contentMimeType: "text/html", parentId: DRIVE_FOLDER });
+    const r = await S.mcp.callTool("Google Drive", "create_file", { title, textContent: driveHTML(a, f, secs, drafted), contentMimeType: "text/html", parentId: DRIVE_FOLDER });
     const p = r.payload || {};
     const url = p.viewUrl || (p.id ? "https://docs.google.com/document/d/" + p.id + "/edit" : "");
     if (S.current === id && draft) { draft.drive = [...(draft.drive || []), { url, titulo: title, em: new Date().toISOString() }]; dirty = true; await flushSave(); renderFicha(); }
     const m = $("#driveMsg"); if (m) m.innerHTML = url ? `Documento criado: <a href="${esc(url)}" target="_blank" rel="noopener">abrir no Drive</a>.` : "Documento criado na pasta Dissertação PROUNI — Inserções.";
   } catch (e) {
-    const c = e?.code;
-    msg.textContent = c === "server_not_connected" ? "O Google Drive não está conectado. Adicione em claude.ai → Configurações → Conectores."
+    const c = e?.code, m = $("#driveMsg") || msg;
+    m.textContent = c === "server_not_connected" ? "O Google Drive não está conectado. Adicione em claude.ai → Configurações → Conectores."
       : c === "needs_reauth" ? "A conexão com o Google Drive expirou. Reconecte em claude.ai → Configurações → Conectores."
       : c === "approval_required" || c === "not_in_manifest" ? "Para salvar, permita o acesso ao Google Drive quando o claude.ai pedir e clique de novo."
       : c === "selection_required" ? "Escolha qual conta do Google Drive usar quando o claude.ai pedir e clique de novo."
