@@ -331,7 +331,7 @@ const SEC_STATUS = { vazia: "Vazia", rascunho: "Rascunho", redigida: "Redigida",
 const CHAPTERS = { "1": "Introdução", "2": "Aportes teóricos", "3": "O PROUNI", "4": "Caminho metodológico", "5": "Apresentação e análise dos dados", "6": "Considerações finais", "ref": "Pós-textuais", "ap": "Pós-textuais" };
 
 const S = {
-  db: null, assets: null, sample: null,
+  db: null, assets: null, sample: null, mcp: null,
   artigos: new Map(), fichas: new Map(), secoes: [],
   norm: store.get("norm", "apa"), tab: "painel",
   fStatus: store.get("fStatus", ""), fSec: "", fEval: "", q: "",
@@ -833,6 +833,8 @@ function renderFicha() {
     <label class="f"><span>Análise crítica <em class="note">limites, diálogo com Bourdieu, com seus dados</em></span><textarea data-k="analise" rows="3">${esc(f.analise)}</textarea></label>
     <div><span class="eyebrow">Usar nas seções</span><div class="secbox" id="fSecs" style="margin-top:6px">${secs.map(n => `<label title="${esc(secTitle(n))}"><input type="checkbox" value="${n}" ${(a.secoes || []).includes(n) ? "checked" : ""}>${n}</label>`).join("")}</div></div>
     <label class="f"><span>Como entra na dissertação</span><textarea data-k="uso" rows="2">${esc(f.uso)}</textarea></label>
+    ${S.mcp ? `<div class="ai"><p id="driveMsg">Gera um documento no seu Google Drive (pasta “Dissertação PROUNI — Inserções”) com a seção, a referência e o que colar no trabalho.</p><button class="btn sm primary" type="button" id="driveBtn">Salvar no Drive</button></div>` : ""}
+    ${(f.drive || []).length ? `<div class="note">Salvo no Drive: ${f.drive.map(d => `<a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(new Date(d.em).toLocaleString("pt-BR"))}</a>`).join(" · ")}</div>` : ""}
     ${f.atualizadoEm ? `<p class="note">Última alteração: ${esc(new Date(f.atualizadoEm).toLocaleString("pt-BR"))}</p>` : ""}
   </div>`;
   renderQuotes();
@@ -841,6 +843,7 @@ function renderFicha() {
   $("#fSt").onchange = e => setArtStatus(id, e.target.value);
   $("#addQ").onclick = () => addQuote("", "");
   $("#preBtn") && ($("#preBtn").onclick = preFichar);
+  $("#driveBtn") && ($("#driveBtn").onclick = saveToDrive);
   $("#fSecs").onchange = async () => { if (!S.db) return; try { await S.db.doc("artigos/" + id).update({ secoes: $$("#fSecs input:checked").map(i => i.value) }); setSaved("Salvo"); } catch (err) { toast(writeErr(err)); } };
   $$("[data-k]", pane).forEach(el => el.addEventListener("input", () => { draft[el.dataset.k] = el.value; touch(); }));
 }
@@ -933,6 +936,63 @@ ${corpus}`, { modelTier: "default" });
   $("#preBtn") && ($("#preBtn").disabled = false);
 }
 
+/* ---------- Salvar no Google Drive ---------- */
+const DRIVE_FOLDER = "1uVRLWa01CIRW9tDsEmvyyGaxbApdiOIw";
+function driveHTML(a, f) {
+  const secs = [...new Set([...(a.secoes || []), ...(f.citacoes || []).map(q => q.secao).filter(Boolean)])]
+    .sort((x, y) => sectionNums().indexOf(x) - sectionNums().indexOf(y));
+  const BLUE = "background-color:#cfe2f3", YEL = "background-color:#fff2cc";
+  const body = "font-family:'Times New Roman';font-size:12pt;line-height:1.5;text-align:justify";
+  const note = t => `<p style="font-family:Arial;font-size:10pt"><span style="${YEL}">${t}</span></p>`;
+  const quote = q => {
+    const extra = [!(q.pagina || "").trim() && "falta a página", q.sugerida && "sugerida pelo Claude: confira no PDF"].filter(Boolean);
+    return `<p style="${body}">${esc(quoteText(q, a))}${extra.length ? ` <span style="${YEL}">⚠ ${esc(extra.join("; "))}</span>` : ""}</p>`;
+  };
+  const qs = (f.citacoes || []).filter(q => (q.texto || "").trim());
+  let h = `<h1>${esc(cite(a, { narrative: true }))}: o que colocar no trabalho</h1>`;
+  h += `<p style="font-family:Arial;font-size:10pt;color:#555">${esc(new Date().toLocaleDateString("pt-BR"))} · norma ${S.norm === "apa" ? "APA 7" : "ABNT"} · gerado pelo painel de fichamentos</p>`;
+  h += `<h2>Referência</h2><p style="${body}">${refHTML(a)}</p>`;
+  h += `<p style="font-family:Arial;font-size:10pt">Citação no texto: <b>${esc(cite(a))}</b> ou <b>${esc(cite(a, { narrative: true }))}</b>.</p>`;
+  h += note("ONDE: inclua a referência acima na lista de REFERÊNCIAS, em ordem alfabética.");
+  (secs.length ? secs : [""]).forEach(n => {
+    h += `<h2>${n ? "Seção " + esc(n) + " " + esc(secTitle(n)) : "Sem seção definida"}</h2>`;
+    h += note(n ? `ONDE COLAR: na seção ${esc(n)} ${esc(secTitle(n))}.` : "Marque em “Usar nas seções” onde este texto entra.");
+    const mine = qs.filter(q => q.secao === n || (!q.secao && n === (secs[0] || "")));
+    if (mine.length) { h += `<p style="font-family:Arial;font-size:10pt"><b>Citações diretas, prontas para colar:</b></p>`; mine.forEach(q => { h += quote(q); }); }
+  });
+  if ((f.resumo || "").trim()) {
+    h += `<h2>Paráfrase (citação indireta)</h2>` + note("Texto azul: adapte com a sua voz antes de colar. A citação no fim já está na norma.");
+    h += `<p style="${body}"><span style="${BLUE}">${esc(f.resumo.trim().replace(/\.?\s*$/, ""))} ${esc(cite(a))}.</span></p>`;
+  }
+  if ((f.uso || "").trim()) h += `<h2>Como entra na dissertação</h2><p style="${body}">${esc(f.uso)}</p>`;
+  if ((f.analise || "").trim()) h += `<h2>Sua análise crítica</h2><p style="${body}">${esc(f.analise)}</p>`;
+  return `<html><head><meta charset="utf-8"></head><body style="font-family:Arial">${h}</body></html>`;
+}
+async function saveToDrive() {
+  const id = S.current, a = S.artigos.get(id); if (!a || !S.mcp || !draft) return;
+  const btn = $("#driveBtn"), msg = $("#driveMsg");
+  btn.disabled = true; msg.textContent = "Criando o documento no seu Drive…";
+  await flushSave();
+  const secs = (a.secoes || []).join(", ");
+  const title = `Inserção — ${cite(a, { narrative: true })}${secs ? " — seção " + secs : ""} (${new Date().toLocaleDateString("pt-BR").replace(/\//g, "-")})`;
+  try {
+    const r = await S.mcp.callTool("Google Drive", "create_file", { title, textContent: driveHTML(a, draft), contentMimeType: "text/html", parentId: DRIVE_FOLDER });
+    const p = r.payload || {};
+    const url = p.viewUrl || (p.id ? "https://docs.google.com/document/d/" + p.id + "/edit" : "");
+    if (S.current === id && draft) { draft.drive = [...(draft.drive || []), { url, titulo: title, em: new Date().toISOString() }]; dirty = true; await flushSave(); renderFicha(); }
+    const m = $("#driveMsg"); if (m) m.innerHTML = url ? `Documento criado: <a href="${esc(url)}" target="_blank" rel="noopener">abrir no Drive</a>.` : "Documento criado na pasta Dissertação PROUNI — Inserções.";
+  } catch (e) {
+    const c = e?.code;
+    msg.textContent = c === "server_not_connected" ? "O Google Drive não está conectado. Adicione em claude.ai → Configurações → Conectores."
+      : c === "needs_reauth" ? "A conexão com o Google Drive expirou. Reconecte em claude.ai → Configurações → Conectores."
+      : c === "approval_required" || c === "not_in_manifest" ? "Para salvar, permita o acesso ao Google Drive quando o claude.ai pedir e clique de novo."
+      : c === "selection_required" ? "Escolha qual conta do Google Drive usar quando o claude.ai pedir e clique de novo."
+      : c === "tool_error" ? "O Google Drive recusou o documento: " + (e.message || "erro desconhecido")
+      : "Não tive resposta do Google Drive. O documento pode ter sido criado: confira a pasta antes de clicar de novo.";
+  }
+  const b = $("#driveBtn"); if (b) b.disabled = false;
+}
+
 /* ---------- Claude: rascunho de seção ---------- */
 let draftCtl = null;
 async function draftSection(num) {
@@ -997,8 +1057,8 @@ async function boot() {
   setNorm(S.norm);
   const c = window.claude;
   if (!c?.use) { $("#noDb").hidden = false; return; }
-  const [db, assets, sample] = await Promise.all([c.use("db"), c.use("assets").catch(() => null), c.use("sample").catch(() => null)]);
-  S.assets = assets; S.sample = sample;
+  const [db, assets, sample, mcp] = await Promise.all([c.use("db"), c.use("assets").catch(() => null), c.use("sample").catch(() => null), c.use("mcp").catch(() => null)]);
+  S.assets = assets; S.sample = sample; S.mcp = mcp;
   if (!db) { $("#noDb").hidden = false; $("#chapters").innerHTML = $("#lib").innerHTML = `<p class="empty">Sem acesso aos dados nesta visualização.</p>`; return; }
   S.db = db;
   const onErr = () => toast("A conexão com os dados caiu. Recarregue a página.");
