@@ -120,6 +120,7 @@ label.f > span{display:flex;justify-content:space-between;gap:8px}
 .row .alert{font-size:12.5px;margin-top:6px;color:var(--warn);display:flex;gap:6px}
 .row .alert::before{content:"!";font:600 11px var(--f-mono);border:1px solid currentColor;border-radius:50%;width:15px;height:15px;display:inline-grid;place-items:center;flex:none;margin-top:1px}
 .row .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.row .eval{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;font-size:12.5px;margin-top:6px;color:var(--muted)}
 .row .act{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
 .row .act select{width:auto;font-size:12px;padding:4px 6px}
 @media (max-width:640px){.row{grid-template-columns:minmax(0,1fr)}.row .act{flex-direction:row;align-items:center;justify-content:flex-start}}
@@ -224,6 +225,7 @@ label.f > span{display:flex;justify-content:space-between;gap:8px}
     <div class="filters">
       <input type="search" id="q" placeholder="Buscar por autor, título ou periódico" aria-label="Buscar">
       <select id="fSec" aria-label="Filtrar por seção"><option value="">Todas as seções</option></select>
+      <select id="fEval" aria-label="Filtrar por avaliação"><option value="">Todas as avaliações</option><option value="ok">Aprovados (grátis e com revisão por pares)</option><option value="capes">Via Portal CAPES</option><option value="nao_artigo">Não é artigo</option><option value="conferir">Conferir</option><option value="remover">Substituir ou remover</option></select>
     </div>
     <div class="fchips" id="fStatus"></div>
     <div class="lib" id="lib"><p class="empty">Carregando a biblioteca…</p></div>
@@ -324,6 +326,7 @@ const STATUS = [
   ["sugerido", "Sugerido"], ["lendo", "Lendo"], ["fichado", "Fichado"], ["citado", "Citado"],
   ["conferir", "Conferir dados"], ["faltando", "Falta referência"], ["descartado", "Descartado"]];
 const STATUS_LABEL = Object.fromEntries(STATUS);
+const EVAL = { ok: ["Aprovado", "st-citado"], capes: ["Via Portal CAPES", "st-fichado"], nao_artigo: ["Não é artigo", "st-aguardando"], conferir: ["Conferir", "st-lendo"], remover: ["Substituir ou remover", "st-faltando"] };
 const SEC_STATUS = { vazia: "Vazia", rascunho: "Rascunho", redigida: "Redigida", pronta: "Pronta", aguardando: "Aguardando dados" };
 const CHAPTERS = { "1": "Introdução", "2": "Aportes teóricos", "3": "O PROUNI", "4": "Caminho metodológico", "5": "Apresentação e análise dos dados", "6": "Considerações finais", "ref": "Pós-textuais", "ap": "Pós-textuais" };
 
@@ -331,7 +334,7 @@ const S = {
   db: null, assets: null, sample: null,
   artigos: new Map(), fichas: new Map(), secoes: [],
   norm: store.get("norm", "apa"), tab: "painel",
-  fStatus: store.get("fStatus", ""), fSec: "", q: "",
+  fStatus: store.get("fStatus", ""), fSec: "", fEval: "", q: "",
   current: null, pdf: null, pdfText: [], pageOff: 0, mode: "pag", zoom: 1.2,
   loaded: { artigos: false, secoes: false },
 };
@@ -554,7 +557,7 @@ function renderLib() {
     STATUS.filter(([k]) => counts[k]).map(([k, v]) => `<button type="button" data-st="${k}" aria-pressed="${S.fStatus === k}">${v}<span class="n">${counts[k]}</span></button>`).join("");
   const q = S.q.trim().toLowerCase();
   const list = [...S.artigos.entries()].filter(([, a]) =>
-    (!S.fStatus || a.status === S.fStatus) && (!S.fSec || (a.secoes || []).includes(S.fSec)) &&
+    (!S.fStatus || a.status === S.fStatus) && (!S.fSec || (a.secoes || []).includes(S.fSec)) && (!S.fEval || a.avaliacao?.nivel === S.fEval) &&
     (!q || [a.titulo, a.periodico, a.livro, a.editora, (a.autores || []).map(x => fam(x) + " " + (x.nome || "")).join(" "), a.ano].join(" ").toLowerCase().includes(q)))
     .sort((x, y) => sortKey(x[1]).localeCompare(sortKey(y[1])));
   if (!list.length) { $("#lib").innerHTML = `<p class="empty">Nenhum artigo com esses filtros.</p>`; return; }
@@ -568,6 +571,7 @@ function renderLib() {
         <span class="cite">${esc(cite(a))}</span>
         <div class="ti">${esc(a.titulo)}</div>
         <div class="src">${esc(src)}${a.doi ? ` · <a href="${esc(doiUrl(a.doi))}" target="_blank" rel="noopener">DOI</a>` : a.url ? ` · <a href="${esc(a.url)}" target="_blank" rel="noopener">link</a>` : ""}${acesso ? " · " + acesso : ""}</div>
+        ${a.avaliacao ? `<div class="eval"><span class="pill ${EVAL[a.avaliacao.nivel]?.[1] || ""}">${esc(EVAL[a.avaliacao.nivel]?.[0] || a.avaliacao.nivel)}</span><span>${esc(a.avaliacao.texto)}</span></div>` : ""}
         ${a.porque ? `<div class="why">${esc(a.porque)}</div>` : ""}
         ${a.alerta ? `<div class="alert"><span>${esc(a.alerta)}</span></div>` : ""}
         <div class="meta"><span class="pill st-${esc(a.status)}">${esc(STATUS_LABEL[a.status] || a.status)}</span>
@@ -583,6 +587,7 @@ function renderLib() {
 }
 $("#q").addEventListener("input", e => { S.q = e.target.value; renderLib(); });
 $("#fSec").addEventListener("change", e => { S.fSec = e.target.value; renderLib(); });
+$("#fEval").addEventListener("change", e => { S.fEval = e.target.value; renderLib(); });
 $("#fStatus").addEventListener("click", e => { const b = e.target.closest("[data-st]"); if (!b) return; S.fStatus = b.dataset.st; store.set("fStatus", S.fStatus); renderLib(); });
 $("#lib").addEventListener("click", e => {
   const o = e.target.closest("[data-open]"); if (o) return openArticle(o.dataset.open);
