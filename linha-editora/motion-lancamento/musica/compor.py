@@ -13,7 +13,7 @@ import wave
 import numpy as np
 
 SR = 44100
-BPM = 120
+BPM = float(sys.argv[2]) if len(sys.argv) > 2 else 120   # uso: compor.py saida.wav [bpm]
 TEMPO = 60 / BPM          # 0,5 s
 COMPASSO = 4 * TEMPO      # 2 s
 N_COMPASSOS = 14

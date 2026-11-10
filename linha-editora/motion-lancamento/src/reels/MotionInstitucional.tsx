@@ -1,11 +1,12 @@
-import { AbsoluteFill, Audio, Easing, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, Easing, interpolate, Sequence, spring, staticFile, useVideoConfig } from "remotion";
 import { Assinatura } from "../Assinatura";
 import { jost, mono } from "../fonts";
 import { Simbolo } from "../Simbolo";
-import { batida, Corte, ENTRA, Flutua, LinhasFrente, Rotulo, type Entrada } from "./MotionEngaja";
+import { batida, Corte, ENTRA, Flutua, LinhasFrente, Ritmo, Rotulo, useQuadro, type Entrada } from "./MotionEngaja";
 
 // Motion institucional da Linha Editora (1080 × 1920, 30 s), só com a linguagem gráfica da marca.
-// Segue a mesma trilha original (musica/compor.py): 120 BPM, um tempo = 15 quadros, um compasso = 60.
+// Trilha original (musica/compor.py) a 90 BPM. Os tempos abaixo estão em quadros-base de 120 BPM
+// (um tempo = 15, um compasso = 60) e são esticados por L = 4/3 no vídeo final (40 s).
 //   0–120    gancho: "Qual história você quer contar?" sobre letreiros vazados em profundidade
 //   120–360  drop: símbolo, estante, páginas e a linha que escreve, um por compasso
 //   360–600  os atributos da marca, um a cada meio compasso, alternando azul e branco
@@ -15,13 +16,15 @@ import { batida, Corte, ENTRA, Flutua, LinhasFrente, Rotulo, type Entrada } from
 const AZUL = "#001F3F", PRATA = "#A8A9AD", OFF = "#F8F8F8";
 const W = 1080, H = 1920;
 const TEMPO = 15, COMPASSO = 60;
-export const DURACAO_INSTITUCIONAL = 900;
+const L = 4 / 3;
+const q = (n: number) => Math.round(n * L);
+export const DURACAO_INSTITUCIONAL = q(900);
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const sai = Easing.bezier(0.16, 1, 0.3, 1);
 
 // Letreiro vazado gigante que atravessa a tela devagar, como camada de fundo.
 const Letreiro: React.FC<{ texto: string; y: number; tam: number; vel: number; cor: string; opacidade: number }> = ({ texto, y, tam, vel, cor, opacidade }) => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   return (
     <div style={{ position: "absolute", top: y, left: 0, whiteSpace: "nowrap", fontFamily: jost, fontWeight: 300, fontSize: tam, lineHeight: 1, letterSpacing: -tam * 0.03, color: "transparent", WebkitTextStroke: `2px ${cor}`, opacity: opacidade, transform: `translateX(${(vel > 0 ? -W : 0) + f * vel}px)` }}>
       {`${texto} ${texto} ${texto}`}
@@ -31,7 +34,7 @@ const Letreiro: React.FC<{ texto: string; y: number; tam: number; vel: number; c
 
 // ── 1 · Gancho ───────────────────────────────────────────────────────────────
 const Gancho: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const risco = interpolate(f, [96, 116], [0, 1], { ...clamp, easing: Easing.in(Easing.cubic) });
   const clarao = interpolate(f, [112, 120], [0, 1], clamp);
   return (
@@ -52,7 +55,7 @@ const Gancho: React.FC = () => {
 
 // ── 2 · Drop: quatro quadros gráficos ───────────────────────────────────────
 const QuadroSimbolo: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const pulso = batida(120 + f);
   return (
     <AbsoluteFill style={{ backgroundColor: AZUL }}>
@@ -70,7 +73,7 @@ const QuadroSimbolo: React.FC = () => {
 
 // Estante em três profundidades: a fileira do fundo é pequena e lenta, a da frente é grande e rápida.
 const Fileira: React.FC<{ y: number; alt: number; vel: number; cor: string; opacidade: number; semente: number }> = ({ y, alt, vel, cor, opacidade, semente }) => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const n = 40, passo = alt * 0.16;
   return (
     <div style={{ position: "absolute", left: 0, top: y, height: alt, width: n * passo, transform: `translateX(${-((f * vel) % (passo * 10))}px)`, opacity: opacidade }}>
@@ -84,7 +87,7 @@ const Fileira: React.FC<{ y: number; alt: number; vel: number; cor: string; opac
 };
 
 const QuadroEstante: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const pulso = batida(180 + f);
   return (
     <AbsoluteFill style={{ backgroundColor: OFF }}>
@@ -103,7 +106,7 @@ const QuadroEstante: React.FC = () => {
 
 // Páginas que se abrem em leque a partir da lombada, com o bumbo empurrando cada folha.
 const QuadroPaginas: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const { fps } = useVideoConfig();
   return (
     <AbsoluteFill style={{ backgroundColor: AZUL }}>
@@ -126,7 +129,7 @@ const QuadroPaginas: React.FC = () => {
 // A linha que escreve: um traço contínuo atravessa a tela e as palavras pousam sobre ele.
 const ESCRITA = "M -40 980 C 140 860, 260 1100, 420 980 S 700 860, 860 980 S 1060 1060, 1140 960";
 const QuadroLinha: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const t = interpolate(f, [0, 40], [0, 1], { ...clamp, easing: sai });
   return (
     <AbsoluteFill style={{ backgroundColor: AZUL }}>
@@ -162,7 +165,7 @@ const ATRIBUTOS: { palavra: string; entrada: Entrada }[] = [
 ];
 
 const Atributo: React.FC<{ i: number }> = ({ i }) => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const claro = i % 2 === 1;
   const fundo = claro ? OFF : AZUL, frente = claro ? AZUL : OFF;
   const a = ATRIBUTOS[i];
@@ -194,7 +197,7 @@ const LIVROS = [
 ];
 
 const Respiro: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const mergulho = interpolate(f, [92, 120], [1, 2.2], { ...clamp, easing: Easing.in(Easing.cubic) });
   const some = interpolate(f, [104, 120], [1, 0], clamp);
   return (
@@ -225,7 +228,7 @@ const Respiro: React.FC = () => {
 
 // ── 5 · Final ───────────────────────────────────────────────────────────────
 const Final: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const { fps } = useVideoConfig();
   const pulso = batida(720 + f);
   const entra = spring({ frame: f, fps, config: { damping: 15, stiffness: 110 } });
@@ -252,16 +255,18 @@ const Final: React.FC = () => {
 };
 
 export const MotionInstitucional: React.FC = () => (
-  <AbsoluteFill style={{ backgroundColor: AZUL }}>
-    <Audio src={staticFile("musica-lancamento.wav")} volume={(f) => interpolate(f, [DURACAO_INSTITUCIONAL - 45, DURACAO_INSTITUCIONAL], [1, 0], clamp)} />
-    <Sequence durationInFrames={120}><Gancho /></Sequence>
-    {DROP.map(({ C, entrada }, i) => (
-      <Sequence key={i} from={120 + i * COMPASSO} durationInFrames={COMPASSO + ENTRA}><Corte tipo={entrada}><C /></Corte></Sequence>
-    ))}
-    {ATRIBUTOS.map((a, i) => (
-      <Sequence key={a.palavra} from={360 + i * 30} durationInFrames={30 + ENTRA}><Corte tipo={a.entrada}><Atributo i={i} /></Corte></Sequence>
-    ))}
-    <Sequence from={600} durationInFrames={120}><Respiro /></Sequence>
-    <Sequence from={720} durationInFrames={180}><Final /></Sequence>
-  </AbsoluteFill>
+  <Ritmo.Provider value={L}>
+    <AbsoluteFill style={{ backgroundColor: AZUL }}>
+      <Audio src={staticFile("musica-institucional-90bpm.wav")} volume={(f) => interpolate(f, [DURACAO_INSTITUCIONAL - 60, DURACAO_INSTITUCIONAL], [1, 0], clamp)} />
+      <Sequence durationInFrames={q(120)}><Gancho /></Sequence>
+      {DROP.map(({ C, entrada }, i) => (
+        <Sequence key={i} from={q(120 + i * COMPASSO)} durationInFrames={q(COMPASSO + ENTRA)}><Corte tipo={entrada}><C /></Corte></Sequence>
+      ))}
+      {ATRIBUTOS.map((a, i) => (
+        <Sequence key={a.palavra} from={q(360 + i * 30)} durationInFrames={q(30 + ENTRA)}><Corte tipo={a.entrada}><Atributo i={i} /></Corte></Sequence>
+      ))}
+      <Sequence from={q(600)} durationInFrames={q(120)}><Respiro /></Sequence>
+      <Sequence from={q(720)} durationInFrames={DURACAO_INSTITUCIONAL - q(720)}><Final /></Sequence>
+    </AbsoluteFill>
+  </Ritmo.Provider>
 );

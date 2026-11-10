@@ -1,3 +1,4 @@
+import { createContext, useContext } from "react";
 import { AbsoluteFill, Audio, Easing, Img, interpolate, OffthreadVideo, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { Assinatura } from "../Assinatura";
 import { jost, mono, spectral } from "../fonts";
@@ -17,6 +18,10 @@ export const DURACAO_ENGAJA = 900;
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const sai = Easing.bezier(0.16, 1, 0.3, 1);
 
+// Ritmo: fator que estica o tempo das peças compartilhadas (1 = 120 BPM; 4/3 = 90 BPM).
+export const Ritmo = createContext(1);
+export const useQuadro = () => useCurrentFrame() / useContext(Ritmo);
+
 // Batida: 1 no tempo forte, cai em seguida. Só nos trechos com bumbo.
 export const temBumbo = (f: number) => (f >= 120 && f < 600) || (f >= 720 && f < 735);
 export const batida = (f: number) => (temBumbo(f) ? Math.exp(-(f % TEMPO) / 3.5) : 0);
@@ -25,7 +30,7 @@ export type Midia = { foto: string } | { video: string; inicio: number; vel?: nu
 
 // Camada de fundo: foto ou vídeo com zoom lento e um leve deslocamento (paralaxe).
 export const Fundo: React.FC<{ m: Midia; dur: number; deriva?: number; zoom?: [number, number] }> = ({ m, dur, deriva = 30, zoom = [1.08, 1.16] }) => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const z = interpolate(f, [0, dur], zoom);
   const x = interpolate(f, [0, dur], [-deriva, deriva]);
   const s = { width: "100%", height: "100%", objectFit: "cover" as const, objectPosition: "50% 18%" };
@@ -40,7 +45,7 @@ export const Fundo: React.FC<{ m: Midia; dur: number; deriva?: number; zoom?: [n
 
 // Texto grande que entra desfocado de baixo e depois flutua; uma cópia vazada em prata fica atrás, em outra profundidade.
 export const Flutua: React.FC<{ texto: string; tam: number; x: number; y: number; atraso?: number; fase?: number; italico?: boolean; vazado?: boolean; cor?: string; corVazado?: string }> = ({ texto, tam, x, y, atraso = 0, fase = 0, italico, vazado = true, cor = OFF, corVazado = PRATA }) => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const { fps } = useVideoConfig();
   const e = spring({ frame: f - atraso, fps, config: { damping: 14, stiffness: 120 } });
   const boia = Math.sin((f + fase) / 22) * 14;
@@ -57,7 +62,7 @@ export const Flutua: React.FC<{ texto: string; tam: number; x: number; y: number
 
 // Linhas verticais em primeiro plano, que correm mais rápido que o fundo (dá a profundidade).
 export const LinhasFrente: React.FC<{ n?: number; vel?: number; opacidade?: number }> = ({ n = 7, vel = 2.2, opacidade = 0.5 }) => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       {Array.from({ length: n }).map((_, i) => {
@@ -85,7 +90,7 @@ export type Entrada = "zoom" | "desliza" | "fatias" | "linha" | "abre" | "gira";
 export const ENTRA = 10;
 
 export const Corte: React.FC<{ tipo: Entrada; children: React.ReactNode }> = ({ tipo, children }) => {
-  const f = useCurrentFrame();
+  const f = useQuadro();
   const p = interpolate(f, [0, ENTRA], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
   if (tipo === "zoom") {
     return <AbsoluteFill style={{ transform: `scale(${1.35 - 0.35 * p})`, opacity: Math.min(1, p * 2), filter: `brightness(${1 + (1 - p) * 0.8})` }}>{children}</AbsoluteFill>;
