@@ -10,6 +10,7 @@ import { DURACAO, ReelsLancamento } from "./reels/ReelsLancamento";
 import { DURACAO_RITMO, ReelsRitmo } from "./reels/ReelsRitmo";
 import { DURACAO_CONCEITO, duracaoConceito, ReelsConceito } from "./reels/ReelsConceito";
 import { DURACAO_ENGAJA, MotionEngaja } from "./reels/MotionEngaja";
+import { DURACAO_INSTITUCIONAL, MotionInstitucional } from "./reels/MotionInstitucional";
 import { Capa, Foto1, Foto2, Foto3, Foto4, Obrigado } from "./carrossel/Slides";
 
 // Vertical 1080x1920 para Stories e Reels. Durações base multiplicadas por LENTO (ritmo.ts): cenas menos as 4 transições
@@ -36,6 +37,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="ReelsConceito" component={ReelsConceito} width={1080} height={1920} fps={30} durationInFrames={DURACAO_CONCEITO} />
       <Composition id="ReelsConceitoUltimos" component={ReelsConceito} defaultProps={{ versao: "ultimos" as const }} width={1080} height={1920} fps={30} durationInFrames={duracaoConceito("ultimos")} />
       <Composition id="MotionEngaja" component={MotionEngaja} width={1080} height={1920} fps={30} durationInFrames={DURACAO_ENGAJA} />
+      <Composition id="MotionInstitucional" component={MotionInstitucional} width={1080} height={1920} fps={30} durationInFrames={DURACAO_INSTITUCIONAL} />
       <Composition id="LancamentoLinhaEditora" component={LancamentoVideo} width={1080} height={1920} fps={30} durationInFrames={dur(140) + dur(110) + dur(125) + dur(140) + dur(200) - 4 * dur(18)} />
     </>
   );

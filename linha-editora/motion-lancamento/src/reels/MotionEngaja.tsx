@@ -18,13 +18,13 @@ const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const sai = Easing.bezier(0.16, 1, 0.3, 1);
 
 // Batida: 1 no tempo forte, cai em seguida. Só nos trechos com bumbo.
-const temBumbo = (f: number) => (f >= 120 && f < 600) || (f >= 720 && f < 735);
-const batida = (f: number) => (temBumbo(f) ? Math.exp(-(f % TEMPO) / 3.5) : 0);
+export const temBumbo = (f: number) => (f >= 120 && f < 600) || (f >= 720 && f < 735);
+export const batida = (f: number) => (temBumbo(f) ? Math.exp(-(f % TEMPO) / 3.5) : 0);
 
-type Midia = { foto: string } | { video: string; inicio: number; vel?: number };
+export type Midia = { foto: string } | { video: string; inicio: number; vel?: number };
 
 // Camada de fundo: foto ou vídeo com zoom lento e um leve deslocamento (paralaxe).
-const Fundo: React.FC<{ m: Midia; dur: number; deriva?: number; zoom?: [number, number] }> = ({ m, dur, deriva = 30, zoom = [1.08, 1.16] }) => {
+export const Fundo: React.FC<{ m: Midia; dur: number; deriva?: number; zoom?: [number, number] }> = ({ m, dur, deriva = 30, zoom = [1.08, 1.16] }) => {
   const f = useCurrentFrame();
   const z = interpolate(f, [0, dur], zoom);
   const x = interpolate(f, [0, dur], [-deriva, deriva]);
@@ -39,7 +39,7 @@ const Fundo: React.FC<{ m: Midia; dur: number; deriva?: number; zoom?: [number, 
 };
 
 // Texto grande que entra desfocado de baixo e depois flutua; uma cópia vazada em prata fica atrás, em outra profundidade.
-const Flutua: React.FC<{ texto: string; tam: number; x: number; y: number; atraso?: number; fase?: number; italico?: boolean; vazado?: boolean }> = ({ texto, tam, x, y, atraso = 0, fase = 0, italico, vazado = true }) => {
+export const Flutua: React.FC<{ texto: string; tam: number; x: number; y: number; atraso?: number; fase?: number; italico?: boolean; vazado?: boolean; cor?: string; corVazado?: string }> = ({ texto, tam, x, y, atraso = 0, fase = 0, italico, vazado = true, cor = OFF, corVazado = PRATA }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const e = spring({ frame: f - atraso, fps, config: { damping: 14, stiffness: 120 } });
@@ -49,14 +49,14 @@ const Flutua: React.FC<{ texto: string; tam: number; x: number; y: number; atras
   const base: React.CSSProperties = { position: "absolute", left: x, top: y, fontFamily: fonte, fontWeight: 300, fontStyle: italico ? "italic" : "normal", fontSize: tam, lineHeight: 1, letterSpacing: italico ? 0 : -tam * 0.03, whiteSpace: "nowrap" };
   return (
     <>
-      {vazado && <div style={{ ...base, color: "transparent", WebkitTextStroke: `2px ${PRATA}`, opacity: e * 0.7, transform: `translate(${18 + boia * 0.6}px, ${-22 - boia * 1.6}px) rotate(${-gira}deg)` }}>{texto}</div>}
-      <div style={{ ...base, color: OFF, opacity: e, filter: `blur(${(1 - e) * 18}px)`, textShadow: "0 12px 40px rgba(0,31,63,0.55)", transform: `translateY(${(1 - e) * 120 + boia}px) rotate(${gira}deg)` }}>{texto}</div>
+      {vazado && <div style={{ ...base, color: "transparent", WebkitTextStroke: `2px ${corVazado}`, opacity: e * 0.7, transform: `translate(${18 + boia * 0.6}px, ${-22 - boia * 1.6}px) rotate(${-gira}deg)` }}>{texto}</div>}
+      <div style={{ ...base, color: cor, opacity: e, filter: `blur(${(1 - e) * 18}px)`, textShadow: cor === OFF ? "0 12px 40px rgba(0,31,63,0.55)" : "none", transform: `translateY(${(1 - e) * 120 + boia}px) rotate(${gira}deg)` }}>{texto}</div>
     </>
   );
 };
 
 // Linhas verticais em primeiro plano, que correm mais rápido que o fundo (dá a profundidade).
-const LinhasFrente: React.FC<{ n?: number; vel?: number; opacidade?: number }> = ({ n = 7, vel = 2.2, opacidade = 0.5 }) => {
+export const LinhasFrente: React.FC<{ n?: number; vel?: number; opacidade?: number }> = ({ n = 7, vel = 2.2, opacidade = 0.5 }) => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -74,17 +74,17 @@ const Veu: React.FC<{ forca?: number }> = ({ forca = 1 }) => (
   <AbsoluteFill style={{ background: `linear-gradient(to top, ${AZUL}f0 0%, ${AZUL}aa ${30 * forca}%, ${AZUL}22 60%, ${AZUL}55 100%)` }} />
 );
 
-const Rotulo: React.FC<{ texto: string; y?: number }> = ({ texto, y = 110 }) => (
-  <div style={{ position: "absolute", left: 80, right: 80, top: y, display: "flex", justifyContent: "space-between", fontFamily: mono, fontSize: 24, letterSpacing: 6, color: OFF }}>
+export const Rotulo: React.FC<{ texto: string; y?: number; cor?: string }> = ({ texto, y = 110, cor = OFF }) => (
+  <div style={{ position: "absolute", left: 80, right: 80, top: y, display: "flex", justifyContent: "space-between", fontFamily: mono, fontSize: 24, letterSpacing: 6, color: cor }}>
     <span>LINHA EDITORA</span><span style={{ color: PRATA }}>{texto}</span>
   </div>
 );
 
 // ── Entradas de corte, uma por estilo ────────────────────────────────────────
-type Entrada = "zoom" | "desliza" | "fatias" | "linha" | "abre" | "gira";
-const ENTRA = 10;
+export type Entrada = "zoom" | "desliza" | "fatias" | "linha" | "abre" | "gira";
+export const ENTRA = 10;
 
-const Corte: React.FC<{ tipo: Entrada; children: React.ReactNode }> = ({ tipo, children }) => {
+export const Corte: React.FC<{ tipo: Entrada; children: React.ReactNode }> = ({ tipo, children }) => {
   const f = useCurrentFrame();
   const p = interpolate(f, [0, ENTRA], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
   if (tipo === "zoom") {
