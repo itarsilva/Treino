@@ -10,6 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+/* O RD aplica a fonte dele por cima: forçamos Poppins em tudo dentro da LP */
+.lw-page, .lw-page *, .lw-page h1, .lw-page h2, .lw-page h3, .lw-page p, .lw-page span, .lw-page b, .lw-page small,
+.lw-page a, .lw-page label, .lw-page input, .lw-page button { font-family: 'Poppins', Arial, sans-serif !important; }
 .lw-top{font-family:'Poppins',Arial,sans-serif;color:#f2f4fa;line-height:1.6;max-width:600px}
 .lw-top *{box-sizing:border-box;margin:0}
 .lw-top .lw-logo{display:block;height:46px;width:auto;margin-bottom:4px}
@@ -168,6 +172,16 @@
     </div></div>
   </div>
 </div>
+
+<!-- Garante que a fonte Poppins carregue mesmo se o editor remover o <link> acima -->
+<script>
+(function(){
+  var href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap';
+  if(!document.querySelector('link[href="'+href+'"]')){
+    var l=document.createElement('link'); l.rel='stylesheet'; l.href=href; document.head.appendChild(l);
+  }
+})();
+</script>
 
 <!-- Envio das conversões para o RD Station (integração de formulários) -->
 <script src="https://d335luupugsy2.cloudfront.net/js/integration/stable/rd-js-integration.min.js"></script>
