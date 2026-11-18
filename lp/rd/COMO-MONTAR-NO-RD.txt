@@ -1,0 +1,33 @@
+LP NRF 2027 · COMO MONTAR NO RD STATION
+
+1. Duplique a LP "NRF 2027 - Agendamento de reunião" (a de 2026 já tem fundo e formulário).
+
+2. PRIMEIRA SEÇÃO (topo)
+   - Fundo: mantenha a foto da feira com camada escura.
+   - Coluna ESQUERDA: apague os textos antigos, adicione um componente "HTML"
+     e cole o conteúdo de nrf-2027-bloco-1-topo.html.
+   - Coluna DIREITA: mantenha o FORMULÁRIO NATIVO do RD (não troque por HTML,
+     senão a conversão não entra no RD). Ajuste:
+       Título acima do form: Book your meeting
+       Subtítulo: Takes less than a minute. Limited slots during the show.
+       Campos: Name* | Phone* (placeholder: +1 212 555 0100) | Email* |
+               Company | Job title | 1 + 1 = ?*
+       Botão: Book my meeting  (cor sugerida: #4a5fe0)
+       Identificador da conversão: nrf-2027-agendamento
+
+3. SEGUNDA SEÇÃO (abaixo do topo)
+   - Apague os textos antigos em português/inglês.
+   - Deixe a seção com largura total, sem margens e com fundo branco.
+   - Adicione um componente "HTML" e cole o conteúdo de nrf-2027-bloco-2-conteudo.html.
+     Ele já inclui benefícios, como funciona, sobre a LedWave, chamada final e rodapé.
+
+4. RODAPÉ ANTIGO: pode remover (o bloco 2 já tem rodapé com o logo).
+
+5. CONFIGURAÇÕES
+   - Título da página (SEO): Meet LedWave at NRF 2027
+   - Página de obrigado em inglês:
+       Thanks! Your request is in.
+       We will email you within 1 business day to confirm your meeting time at NRF 2027.
+   - Tag nos leads: NRF 2027
+
+Antes de publicar: veja a prévia no celular e no computador.
