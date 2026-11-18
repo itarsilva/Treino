@@ -71,6 +71,9 @@
 .bld .scr.glass{background:linear-gradient(90deg,rgba(23,209,253,.55),rgba(101,141,255,.5),rgba(230,24,255,.55));box-shadow:0 0 30px -4px rgba(101,141,255,.6),0 0 0 1px rgba(255,255,255,.35)}
 .bld .scr.glass::after{background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.45) 0 1px,transparent 1px 4px)}
 .bld .stage img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.bld .scale{background:#05060a;border:1px solid var(--line);border-radius:10px;padding:8px 10px 6px}
+.bld .scale p{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.bld .scale svg{display:block;width:100%;height:auto}
 .bld .dim{position:absolute;right:10px;bottom:8px;font-size:11px;color:#c9cde0;background:rgba(0,0,0,.55);border:1px solid #2c3350;border-radius:999px;padding:1px 8px}
 .bld .kit h3{font-weight:700;font-size:19px;line-height:1.25}
 .bld .kit .pp{color:var(--muted);font-size:13px;margin-top:2px}
@@ -245,6 +248,33 @@
     return '<div class="scr'+(k.glass?' glass':'')+'" style="width:'+Math.round(w)+'px;height:'+Math.round(h)+'px"></div>'+dim;
   }
 
+  /* comparação de tamanho: tela e uma pessoa de 1,70 m na mesma escala */
+  function scaleSvg(k){
+    if(k.glass) return '';
+    var W=300, H=110, floor=H-14, pw=0.46, gap=0.35;
+    var s=Math.min((floor-12)/Math.max(k.h,1.7), (W-20)/(pw+gap+k.w));
+    var tot=(pw+gap+k.w)*s, x0=(W-tot)/2, px=x0, sx=x0+(pw+gap)*s;
+    var m=function(v){return (v*s).toFixed(1);};
+    var top=floor-1.7*s;
+    var person='<g fill="#c9cde0">'
+      +'<circle cx="'+(px+pw*s/2).toFixed(1)+'" cy="'+(top+0.11*s).toFixed(1)+'" r="'+m(0.11)+'"/>'
+      +'<rect x="'+(px+0.05*s).toFixed(1)+'" y="'+(top+0.25*s).toFixed(1)+'" width="'+m(0.36)+'" height="'+m(0.62)+'" rx="'+m(0.08)+'"/>'
+      +'<rect x="'+(px+0.1*s).toFixed(1)+'" y="'+(top+0.84*s).toFixed(1)+'" width="'+m(0.11)+'" height="'+m(0.86)+'" rx="'+m(0.04)+'"/>'
+      +'<rect x="'+(px+0.25*s).toFixed(1)+'" y="'+(top+0.84*s).toFixed(1)+'" width="'+m(0.11)+'" height="'+m(0.86)+'" rx="'+m(0.04)+'"/></g>';
+    var lab=function(x,y,t,a){return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" fill="#a2a8bd" font-size="9" font-family="Poppins,Arial,sans-serif" text-anchor="'+(a||'middle')+'">'+t+'</text>';};
+    var w=k.w, h=k.h, scrW=w*s, scrH=h*s;
+    var screenR='<rect x="'+sx.toFixed(1)+'" y="'+(floor-scrH).toFixed(1)+'" width="'+scrW.toFixed(1)+'" height="'+scrH.toFixed(1)+'" rx="1.5" fill="url(#g'+k.n+')"/>';
+    var size=k.cube?'1,00 × 1,00 m':String(w.toFixed(2)).replace('.',',')+' × '+String(h.toFixed(2)).replace('.',',')+' m';
+    return '<div class="scale"><p>Tamanho comparado a uma pessoa de 1,70 m</p>'
+      +'<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tela de '+size+' ao lado de uma pessoa de 1,70 m">'
+      +'<defs><linearGradient id="g'+k.n+'" x1="0" x2="1"><stop offset="0" stop-color="#17d1fd"/><stop offset=".5" stop-color="#658dff"/><stop offset="1" stop-color="#e618ff"/></linearGradient></defs>'
+      +'<line x1="6" x2="'+(W-6)+'" y1="'+floor+'" y2="'+floor+'" stroke="#2c3350" stroke-width="1"/>'
+      +person+screenR
+      +lab(px+pw*s/2, floor+11, '1,70 m')
+      +lab(sx+scrW/2, floor+11, size)
+      +'</svg></div>';
+  }
+
   var grid = document.getElementById('bld-grid'), sel = document.getElementById('bld-kit');
   sel.innerHTML = '<option value="">Escolha um kit</option>' + KITS.map(function(k){
     return '<option value="Kit '+pad(k.n)+' · '+esc(k.t)+'">Kit '+pad(k.n)+' · '+esc(k.t)+' · '+esc(k.p)+'</option>';
@@ -257,7 +287,7 @@
     var low = k.disp && parseInt(k.disp,10) <= 4;
     return '<article class="kit" data-tags="'+esc(k.tags.join('|'))+'">'
       +'<div class="top"><span class="num">KIT '+pad(k.n)+'</span>'+k.tags.map(function(t){return '<span class="chip">'+esc(t)+'</span>';}).join('')+'</div>'
-      +'<div class="stage">'+screen(k)+'</div>'
+      +'<div class="stage">'+screen(k)+'</div>'+scaleSvg(k)
       +'<div><h3>'+esc(k.t)+'</h3><p class="pp">'+esc(k.gab)+'</p></div>'
       +'<div class="price"><div>'+(k.de?'<s>De R$ '+brl(k.de)+'</s>':'')+'<small>Contribuinte</small><div class="big"><sup>R$</sup>'+brl(k.c)+'</div></div>'
       +'<div class="nc"><small>Não contribuinte</small><b>R$ '+brl(k.nc)+'</b></div></div>'
