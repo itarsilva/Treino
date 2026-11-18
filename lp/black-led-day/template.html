@@ -1,5 +1,6 @@
 <!--
   LedWave · LP BLACK LED DAY · CÓDIGO COMPLETO PARA O RD STATION
+  Fotos: @@FOTOS_NOTE@@
   Cole tudo num único componente HTML de uma LP em branco (seção de largura total, sem margens, fundo preto).
 
   ANTES DE PUBLICAR, troque:
@@ -57,7 +58,7 @@
 .bld .top{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .bld .num{font-weight:700;font-size:13px;color:#fff;background:var(--grad);border-radius:999px;padding:3px 11px}
 .bld .chip{font-size:12px;border:1px solid #3a4260;border-radius:999px;padding:2px 10px;color:#d6d9e4}
-.bld .stage{height:150px;border-radius:12px;background:radial-gradient(70% 90% at 50% 100%,rgba(101,141,255,.18),transparent 70%),#05060a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.bld .stage{height:180px;border-radius:12px;background:radial-gradient(70% 90% at 50% 100%,rgba(101,141,255,.18),transparent 70%),#05060a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .bld .scr{position:relative;border-radius:3px;background:
    radial-gradient(120% 90% at 20% 30%,rgba(23,209,253,.95),transparent 55%),
    radial-gradient(110% 90% at 85% 70%,rgba(230,24,255,.95),transparent 55%),
@@ -65,6 +66,7 @@
 .bld .scr::after{content:"";position:absolute;inset:0;border-radius:3px;background-image:linear-gradient(rgba(0,0,0,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.28) 1px,transparent 1px);background-size:3px 3px}
 .bld .scr.glass{background:linear-gradient(90deg,rgba(23,209,253,.55),rgba(101,141,255,.5),rgba(230,24,255,.55));box-shadow:0 0 30px -4px rgba(101,141,255,.6),0 0 0 1px rgba(255,255,255,.35)}
 .bld .scr.glass::after{background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.45) 0 1px,transparent 1px 4px)}
+.bld .stage img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
 .bld .dim{position:absolute;right:10px;bottom:8px;font-size:11px;color:#c9cde0;background:rgba(0,0,0,.55);border:1px solid #2c3350;border-radius:999px;padding:1px 8px}
 .bld .kit h3{font-weight:700;font-size:19px;line-height:1.25}
 .bld .kit .pp{color:var(--muted);font-size:13px;margin-top:2px}
@@ -202,12 +204,16 @@
 
   var KITS = @@KITS@@;
 
+  /* Fotos dos kits (do PDF). Para usar imagens subidas no RD, troque cada valor pelo link da imagem. */
+  var FOTOS = @@FOTOS@@;
+
   var brl = function(v){ return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); };
   var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); };
   var pad = function(n){ return (n<10?'0':'')+n; };
 
   /* tela desenhada na proporção real do kit, dentro de uma caixa de 150px */
   function screen(k){
+    if(FOTOS[k.n]) return '<img src="'+FOTOS[k.n]+'" alt="Kit '+pad(k.n)+': '+esc(k.t)+'" loading="lazy">';
     var maxW=230, maxH=120, r=k.w/k.h, w=maxW, h=w/r;
     if(h>maxH){ h=maxH; w=h*r; }
     if(k.cube){
