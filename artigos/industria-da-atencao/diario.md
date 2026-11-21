@@ -24,3 +24,8 @@ Registro curto de cada sessão: o que foi feito, o que foi decidido, o que ficou
 - Criado o modelo de escrita (roteiro com lacunas) no Google Drive do usuário: https://docs.google.com/document/d/1sT1VJDuGxbLqHzcj58uNIN1-_UDAT4Q76RjxYaOsWQw/edit
 - Criada a versão 0 do artigo (rascunho comentado a partir das Tabelas 1–7): https://docs.google.com/document/d/1AriTcmfhSpv2tPbe6vTnKe1s_7cP3mrDCKLOY6HIqI0/edit. Detectada divergência entre Tabela 4 e apresentação nos dados de controle.
 - Mesa de trabalho ligada à Versão 0: cada texto mostra seção, parágrafo e trecho onde entra; painel 2.1/2.2 alinhado à Versão 0. Primeira ficha (Adams et al., 2017) feita pelo usuário.
+
+## 21/11/2026
+
+- Mesa de trabalho: botões para baixar a ficha (e todas as fichas) em Word (.docx). Fonte da página salva em `mesa-de-trabalho.html`.
+- Situação: 2 fichas com conteúdo (Adams 2017 completa; Goldhaber 1997 parcial), 5 textos em "Lendo". Leitura atrasada em relação ao plano (essenciais até 15/11); entrega em 4/12.
