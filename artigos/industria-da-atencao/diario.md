@@ -29,3 +29,4 @@ Registro curto de cada sessão: o que foi feito, o que foi decidido, o que ficou
 
 - Mesa de trabalho: botões para baixar a ficha (e todas as fichas) em Word (.docx). Fonte da página salva em `mesa-de-trabalho.html`.
 - Situação: 2 fichas com conteúdo (Adams 2017 completa; Goldhaber 1997 parcial), 5 textos em "Lendo". Leitura atrasada em relação ao plano (essenciais até 15/11); entrega em 4/12.
+- Lista bibliográfica (ABNT, 30 referências em 6 blocos) para o orientador: https://docs.google.com/document/d/1gygSEeN53k6iPcdVwU7Mkk5VzASt5HlAL3tk9_ATCiQ/edit
