@@ -252,25 +252,26 @@
   function scaleSvg(k){
     var W=300, H=110, floor=H-14, pw=0.46, gap=0.35;
     var kw=k.glass?1:k.w, kh=k.glass?1:k.h;
-    var s=Math.min((floor-12)/Math.max(kh,1.7), (W-20)/(pw+gap+kw));
+    var s=Math.min((floor-18)/Math.max(kh,1.7), (W-20)/(pw+gap+kw));
     var tot=(pw+gap+kw)*s, x0=(W-tot)/2, px=x0, sx=x0+(pw+gap)*s;
     var m=function(v){return (v*s).toFixed(1);};
     var top=floor-1.7*s;
-    var person='<g fill="#c9cde0">'
-      +'<circle cx="'+(px+pw*s/2).toFixed(1)+'" cy="'+(top+0.11*s).toFixed(1)+'" r="'+m(0.11)+'"/>'
-      +'<rect x="'+(px+0.05*s).toFixed(1)+'" y="'+(top+0.25*s).toFixed(1)+'" width="'+m(0.36)+'" height="'+m(0.62)+'" rx="'+m(0.08)+'"/>'
-      +'<rect x="'+(px+0.1*s).toFixed(1)+'" y="'+(top+0.84*s).toFixed(1)+'" width="'+m(0.11)+'" height="'+m(0.86)+'" rx="'+m(0.04)+'"/>'
-      +'<rect x="'+(px+0.25*s).toFixed(1)+'" y="'+(top+0.84*s).toFixed(1)+'" width="'+m(0.11)+'" height="'+m(0.86)+'" rx="'+m(0.04)+'"/></g>';
+    /* silhueta humana em centímetros (46 × 170), escalada para 1,70 m */
+    var person='<g fill="#c9cde0" transform="translate('+px.toFixed(1)+' '+top.toFixed(1)+') scale('+(s/100).toFixed(4)+')">'
+      +'<ellipse cx="23" cy="11" rx="8.2" ry="10.5"/>'
+      +'<rect x="19.5" y="19" width="7" height="7" rx="2"/>'
+      +'<path d="M19 24C13 25 7 27 5.5 31C4 40 3.5 55 3.5 66C3.5 76 4 84 5 90C5.3 93 8.5 93 8.8 90C9.5 80 9.8 70 10.3 58L11 50C11.5 62 11 78 11.2 92C11 115 12 140 13 163C12 167 13 170 17 170L21.5 170C22 150 22 120 23 98C24 120 24 150 24.5 170L29 170C33 170 34 167 33 163C34 140 35 115 34.8 92C35 78 34.5 62 35 50L35.7 58C36.2 70 36.5 80 37.2 90C37.5 93 40.7 93 41 90C42 84 42.5 76 42.5 66C42.5 55 42 40 40.5 31C39 27 33 25 27 24Z"/>'
+      +'</g>';
     var lab=function(x,y,t,a){return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" fill="#a2a8bd" font-size="9" font-family="Poppins,Arial,sans-serif" text-anchor="'+(a||'middle')+'">'+t+'</text>';};
     var w=k.glass?1:k.w, h=k.glass?1:k.h, scrW=w*s, scrH=h*s;
     var screenR='<rect x="'+sx.toFixed(1)+'" y="'+(floor-scrH).toFixed(1)+'" width="'+scrW.toFixed(1)+'" height="'+scrH.toFixed(1)+'" rx="1.5" fill="url(#g'+k.n+')"'+(k.glass?' fill-opacity=".45" stroke="#c9cde0" stroke-opacity=".5"':'')+'/>';
     var size=k.glass?'1 m² (medida ilustrativa)':k.cube?'1,00 × 1,00 m':String(w.toFixed(2)).replace('.',',')+' × '+String(h.toFixed(2)).replace('.',',')+' m';
-    return '<div class="scale"><p>Tamanho comparado a uma pessoa de 1,70 m</p>'
+    return '<div class="scale">'
       +'<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tela de '+size+' ao lado de uma pessoa de 1,70 m">'
       +'<defs><linearGradient id="g'+k.n+'" x1="0" x2="1"><stop offset="0" stop-color="#17d1fd"/><stop offset=".5" stop-color="#658dff"/><stop offset="1" stop-color="#e618ff"/></linearGradient></defs>'
       +'<line x1="6" x2="'+(W-6)+'" y1="'+floor+'" y2="'+floor+'" stroke="#2c3350" stroke-width="1"/>'
       +person+screenR
-      +lab(px+pw*s/2, floor+11, '1,70 m')
+      +lab(px+pw*s/2, top-4, '1,70 m')
       +lab(sx+scrW/2, floor+11, size)
       +'</svg></div>';
   }
