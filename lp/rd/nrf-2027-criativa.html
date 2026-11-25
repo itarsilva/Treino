@@ -58,7 +58,9 @@
 .lw27 .rows small{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .lw27 .rows b{font-weight:700;font-size:20px;line-height:1.2}
 .lw27 .code{margin-top:auto;display:flex;align-items:center;gap:14px}
-.lw27 .code canvas{width:84px;height:84px;border-radius:8px;background:#fff}
+.lw27 .code .qr{width:104px;height:104px;flex:none;border-radius:10px;background:#fff;padding:4px;box-shadow:0 0 0 1px #2b3152,0 10px 30px -10px rgba(101,141,255,.6)}
+.lw27 .code p b{color:var(--fg);font-weight:600}
+.lw27 .code .tel{color:var(--fg);font-weight:600;font-variant-numeric:tabular-nums;user-select:all}
 .lw27 .code p{font-size:13px;color:var(--muted)}
 .lw27 form{padding:34px;display:grid;gap:12px;align-content:start}
 .lw27 form h3{font-weight:700;font-size:24px}
@@ -174,7 +176,7 @@
           <div><small>Dates</small><b>Jan 10–12</b></div>
           <div><small>Venue</small><b>Javits Center</b></div>
         </div>
-        <div class="code"><canvas id="lw27-code" width="84" height="84" aria-hidden="true"></canvas><p>Your pass is confirmed by email after you book.<br>Show it at the booth.</p></div>
+        <div class="code"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 116 116" class="qr" role="img" aria-label="QR code: WhatsApp do executivo LedWave, +1 (786) 955-5117"><g transform="scale(4)"><path fill="#fff" d="M0 0h29v29h-29z"/><path class="qrline" stroke="#0b0d17" d="M2 2.5h7m1 0h1m1 0h1m2 0h1m2 0h1m1 0h7m-25 1h1m5 0h1m4 0h4m3 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m2 0h2m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m1 0h4m4 0h1m1 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-15 1h1m3 0h3m-17 1h1m1 0h1m3 0h2m1 0h1m2 0h1m1 0h2m3 0h1m2 0h1m1 0h1m-24 1h2m1 0h1m3 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h2m-25 1h7m1 0h2m2 0h2m1 0h1m1 0h2m2 0h2m1 0h1m-24 1h1m1 0h1m3 0h1m2 0h1m3 0h1m2 0h1m1 0h1m1 0h1m-21 1h1m2 0h5m3 0h1m1 0h2m1 0h2m5 0h1m-24 1h1m1 0h1m1 0h1m3 0h2m3 0h2m2 0h2m3 0h2m-25 1h3m3 0h2m3 0h3m1 0h1m5 0h2m1 0h1m-23 1h2m3 0h1m1 0h1m4 0h3m1 0h4m-22 1h2m1 0h1m1 0h2m3 0h3m1 0h1m1 0h5m2 0h1m-16 1h1m1 0h1m3 0h1m1 0h1m3 0h1m3 0h1m-25 1h7m1 0h2m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m3 0h1m-25 1h1m5 0h1m3 0h3m1 0h1m1 0h1m3 0h1m2 0h1m-24 1h1m1 0h3m1 0h1m2 0h3m2 0h7m2 0h1m-24 1h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h2m1 0h1m2 0h1m1 0h2m-24 1h1m1 0h3m1 0h1m1 0h4m1 0h2m1 0h2m1 0h3m1 0h2m-25 1h1m5 0h1m2 0h1m4 0h1m1 0h5m-21 1h7m1 0h4m2 0h1m1 0h1m1 0h1m2 0h1m2 0h1"/></g></svg><p><b>Talk to our executive</b><br>Scan to chat on WhatsApp<br><span class="tel">+1 (786) 955-5117</span></p></div>
       </div>
 
       <form id="lw27-form" novalidate>
@@ -310,18 +312,7 @@
   }
   requestAnimationFrame(draw);
 
-  /* "código" decorativo do pass, em pixels */
-  (function(){
-    var c=$('lw27-code').getContext('2d'), n=12, s=84/n, seed=2723;
-    c.fillStyle='#fff'; c.fillRect(0,0,84,84);
-    for(var y=0;y<n;y++) for(var x=0;x<n;x++){
-      seed=(seed*9301+49297)%233280;
-      var corner=(x<3&&y<3)||(x>8&&y<3)||(x<3&&y>8);
-      if(corner ? !(x%2==1&&y%2==1&&(x==1||x==10)&&(y==1||y==10)) : seed/233280>.52){
-        var g=grad((x+y)/(2*n)); c.fillStyle='rgb('+(g[0]|0)+','+(g[1]|0)+','+(g[2]|0)+')'; c.fillRect(x*s+.5,y*s+.5,s-1,s-1);
-      }
-    }
-  })();
+
 
 
   /* filtro de produtos por tipo de loja */
